@@ -1,0 +1,315 @@
+%!TEX root = structure.tex
+
+\section{Introduction}
+Ce film d'animation combine divers sketchs ensemble.
+
+\section{L'objet \textit{Scene}}
+La pierre d'assise de ce projet est l'objet prototype \textit{Scene}, qui ressemble en certains aspects à l'objet prototype \textit{Oscillator}. L'objet \textit{Scene} est différent d'\textit{Oscillator} parce qu'il contrôle une bien plus grande quantité de variables. La meilleure façon de renvoyer ces variables à leurs variables globales homologues reste à déterminer.
+
+Je vois deux options. 
+La première option : L'objet \textit{Scene} pourrait contenir une copie des valeurs requises sous formes de propriétés (variables locales accessibles publiquement). La x-sheet se chargerait donc de faire rouler chaque instance de \textit{Scene} au bon moment, et ensuite appliquerait les propriétés de cette \textit{Scene}.
+
+Deuxième option : Les méthodes \textit{update} et \textit{mix} de l'objet \textit{Scene} se chargeraient elles-mêmes d'appliquer les propriétés aux variables globales. Je pense qu'il s'agit là de la meilleure solution.
+
+
+\begin{lstlisting}
+Scene = function(func) {
+    this.func = func;
+};
+
+Scene.prototype.update = function(t){
+    var that = this;
+    this.func(t, that);
+    this.makeGlobal();
+};
+
+Scene.prototype.mix = function(otherScene, l) {
+    this.makeGlobal();
+};
+
+Scene.prototype.makeGlobal = function() {
+    globalValues = this.localValues;
+};
+
+Scene.prototype.runSpiral = function(t) {
+
+};
+
+Scene.prototype.runPhysicsEngine = function(t) {
+
+};
+
+var explosion312 = new Scene(function(t, that) {
+    that.zoom = 2;
+    that.rotationSpeed = 12;
+    that.runSpiral(t);
+});
+
+var explosion320 = new Scene(function(t, that) {
+    that.localValues.sketch = {
+        zoom: 3,
+        rotationSpeed: 2
+    };
+    that.localValues.superEllipse = {
+        n2: 3,
+        sc: 20,
+        scPow: 7,
+        m: 8
+    };
+    that.runPhysicsEngine(t);
+});
+
+\end{lstlisting}
+
+\subsection{Ce qu'une instance de \textit{Scene} contrôle}
+Chaque \textit{Scene} doit pouvoir contrôler une énorme quantité de variables dans le sketch.
+\begin{enumerate}
+\item Les éléments généraux du sketch : le niveau de zoom, l'angle de rotation, la taille des cercles.
+\item Les valeurs du dégradé : les 3 valeurs R, G, et B, la valeur \textit{step}.
+\item Les paramètres de l'engin de physique : 
+\item Les paramètres de la spirale : 
+\end{enumerate}
+
+Mon idée pour l'instant c'est que chaque scène retournerait un objet littéral qui contiendrait chacune de ces valeurs, un peu comme ça : 
+\begin{lstlisting}
+return {
+    zoom: 3,
+    rotationAngle: 240,
+    gradient: {
+            r: 255,
+            g: 120,
+            b: 0
+    },
+    spiral: {
+        speed : 120,
+        angle : 12
+    },
+    physicsEngine: {
+        sc: 20,
+        scPow: 10
+    }
+}
+
+\end{lstlisting}
+
+\section{L'objet \textit{globalValues}}
+Une idée : Je pourrais avoir un objet littéral appelé \textit{globalValues} qui contiendrait toutes les données requises pour animer le film. De cette façon, tout serait bien classé et structuré au lieu d'être une énorme pile de variables distinctes. Je me servirais ensuite de cet objet pour accéder à toutes les valeurs dont j'ai besoin.
+\begin{lstlisting}
+//Déclaration de l'objet globalValues, structuré en arbre.
+var globalValues = {
+    graph: [],
+    gradient: {
+        color1: {
+            offset: 0,
+            r: 255,
+            g: 120,
+            b: 0
+        },
+        color2: {
+            offset: 0.2,
+            r: 255,
+            g: 120,
+            b: 0
+        },
+        color3: {
+            offset : 0.8,
+            r: 255,
+            g: 120,
+            b: 0
+        }
+    },
+    spiral: {
+        speed : 120,
+        angle : 12
+    },
+    physicsEngine: {
+        sc: 20,
+        scPow: 10
+    }
+}
+
+
+\end{lstlisting}
+
+L'objet \textit{globalValues} n'a pas besoin de contenir la valeur \textit{gradientSpeed} puisque cette valeur sert uniquement à l'objet \textit{Scene}. Même chose pour spiralSpeed, spiralAngle.
+
+L'objet \textit{globalValues} n'a besoin que des valeurs qui sont nécessaires pour \textit{imprimer} le sketch. Par exemple, je pourrais avoir une fonction \textit{printBackgroundGradient} : 
+
+\begin{lstlisting}
+function printBackgroundGradient() {
+    var gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, width);
+    var col1 = globalValues.gradient.color1;
+    var col2 = globalValues.gradient.color2;
+    var col3 = globalValues.gradient.color3;
+    gradient.addColorStop(col1.offset, "rgba(" + col1.r + ", " + col1.g + ", " + col1.b + ",1)");
+    gradient.addColorStop(col2.offset, "rgba(" + col2.r + ", " + col2.g + ", " + col2.b + ",1)");
+    gradient.addColorStop(col3.offset, "rgba(" + col3.r + ", " + col3.g + ", " + col3.b + ",1)");
+
+    ctx.fillStyle = gradient;
+    rect(-width * 0.5, -height * 0.5, width, height);
+}
+\end{lstlisting}
+
+\section{La fonction \textit{printDots}}
+
+Tout pourrait être imprimé avec seulement deux fonctions, donc. Une fonction pour imprimer le background et une fonction pour imprimer les points. Non, il me faut aussi contrôler le zoom et la rotation du sketch en général. Est-ce tout?
+
+\begin{lstlisting}
+function printDots() {
+    for (var i = 0; i < globalValues.graph.lenght; i++) {
+        var dot = globalValues.graph[i];
+        fill(dot.col.r, dot.col.g, dot.col.b);
+        ellipse(dot.pos.x, dot.pos.y, dot.size, dot.size);
+    }
+}
+\end{lstlisting}
+
+
+\section{Pensées et questions ouvertes} 
+Je crois que la variable publique qui contrôle l'angle de rotation du canvas devrait être \textit{rotationSpeed}, et non pas l'angle de rotation lui-même. 
+
+Les deux fonctions principales qui génèrent mes images, physicsEngine et runSpiral, devraient-elles être activées par les instances de \textit{Scene}, ou devraient-elle rouler continuellement, indépendamment, et lire elles-mêmes l'objet globalValues?
+
+Si je veux pouvoir faire une interpolation linéaire entre 2 spirales différentes (2 spirales rendues à des stades différents de leur course), et c'est une chose qu'il me faut absolument pouvoir faire, ça veut dire que la spirale doit être générée par l'instance de \textit{Scene} elle-même.
+
+La fonction \textit{physicsEngine} est bien différente parce qu'elle crée elle-même des transitions intéressantes lorsque ses valeurs sont modifiées. Cependant, puisqu'il faut que mes instances de \textit{Scene} génèrent elles-mêmes tous les points du graphe (pour que les interpolations linéaires en les scènes soient possibles), peut-être serait-ce mieux que les instances de \textit{Scene} roulent également leur propre \textit{physicsEngine}.
+
+La valeur localValues ne pourrait-elle pas contenir uniquement les données de positions, de couleurs et de taille de chaque point, les données nécessaires à la génération du fond d'écran dégradé, et les données \textit{rotationSpeed} et \textit{zoom}?
+
+Ainsi, toutes les autres données, tel que les paramètres multiples de mes superformules et de mes courbes de Lamé, seraient préservées à l'intérieur de chaque instance de \textit{Scene}, inutile et donc cachée au monde extérieur? Ça me semble bien être la meilleure façon de faire. Dans cette optique, je pourrais avoir un autre paramètre au prototype \textit{Scene} : \textit{privateValues}.
+
+\textit{privateValues} est un objet qui contient toutes les données dont une scène a besoin pour rouler et qui sont inutiles de partager à l'extérieur.
+
+\begin{lstlisting}
+var explosion320 = new Scene(function(t, that) {
+    that.localValues.sketch = {
+        zoom: 3,
+        rotationSpeed: 2
+    };
+    that.privateValues.superEllipse = {
+        n2: 3,
+        sc: 20,
+        scPow: 7,
+        m: 8
+    };
+    that.runPhysicsEngine(t);
+});
+\end{lstlisting}
+
+Ça me semble très positif de séparer les valeurs entre deux groupes : les valeurs qui sont communiquées à l'extérieur de l'objet et les valeurs qui y restent. Finalement, les données dans \textit{privateValues} sont les différents paramètres qui servent à générer les données dans \textit{localValues}.
+
+\section{L'array \textit{localValues.graph}}
+L'array \textit{localValues.graph} doit contenir 1000 objets différents déclarés ainsi :
+\begin{lstlisting}
+var dot = {
+    pos: createVector(10, 200),
+    col: {
+        r: 130,
+        g: 255,
+        b: 10
+    },
+    size: 10
+};
+this.localValues.graph.push(dot);
+\end{lstlisting}
+
+\section{Nouvelles idées pour 0.03}
+L'objet \textit{Scene} doit fonctionner d'une meilleure manière. Une scène doit pouvoir hériter d'une autre scène et avoir ses propres variantes. Des instances de l'objet \textit{Scene} doivent pouvoir se déclarer ainsi :
+
+\begin{lstlisting}
+//First, I declare a new Scene and add properties and methods to its prototype.
+
+var greenSpiral = new Scene();
+greenSpiral.setBackground(function(t){
+    //Stuff that can dynamically generate the background gradient.
+});
+greenSpiral.setPalette(2430);
+greenSpiral.setGraph(function(t){
+    //Stuff that generates the graph of x and y positions dynamically.
+});
+
+//Now, I declare a new variable that will inherit from greenSpiral, 
+//but have a different background color.
+
+var differentSpiral = new greenSpiral();
+differentSpiral.setBackground(function(){
+    //Stuff that defines a different background gradient than the prototype greenSpiral.
+});
+\end{lstlisting}
+
+À l'intérieur de mon prototype original de l'objet \textit{Scene}, je peux avoir de nombreuses commandes qui ouvrent la voie à la création de variantes.
+
+\begin{lstlisting}
+if (!this.privateValues.paletteIndex){
+    this.privateValues.paletteIndex = 514;
+}
+\end{lstlisting}
+
+Ceci permet, par exemple, à mon objet \textit{differentSpiral} d'hériter de tous les attributs et de toutes les méthodes de l'objet \textit{greenSpiral}, mais d'avoir une palette de couleur différente.
+
+Mon objet \textit{Scene} pourrait donc ressembler à ça :
+\begin{lstlisting}
+Scene = function(mainFunc) {
+    this.mainFunc = func;
+};
+
+Scene.prototype.setBackground = function(backgroundFunc) {
+    this.runBackground = backgroundFunc;
+};
+
+Scene.prototype.setColors = function(colorsFunc) {
+    this.runColors = colorsFunc;
+};
+
+Scene.prototype.run = function(offset) {
+    offset = (offset) ? offset : 0;
+    this.runBackground(drawCount - offset);
+    this.runLayout(drawCount - offset);
+    this.runGraph(drawCount - offset);
+    this.runColors(drawCount - offset);
+    this.makeGlobal();
+};
+
+Scene.prototype.runColors = function() {
+    if (!this.privateValues.paletteIndex) {
+            this.privateValues.paletteIndex = 1000;
+    }
+
+    if (allPalettes) {
+        this.privateValues.palette = allPalettes[this.privateValues.paletteIndex];
+    } else {
+        this.privateValues.palette = palette;
+    }
+
+    this.privateValues.colorGraph = [];
+    var currentColor = 0;
+    for (var i = 0; i < 1000; i++) {
+        var colorValues = hexToRgb(this.privateValues.palette[currentColor]);
+        currentColor++;
+        if (currentColor > 4) {
+            currentColor = 0;
+        }
+        this.privateValues.colorGraph.push(colorValues);
+    }
+};
+\end{lstlisting}
+
+\clearpage
+\section{Nouvelles notes}
+Je dois me créer un système pour ajuster les niveaux de mes couleurs. Ça ressemblerait un peu à ça:
+
+\begin{lstlisting}
+function adjustLevels(colInput, dark, mid, light) {
+    var r = colInput.r;
+    var g = colInput.g;
+    var b = colInput.b;
+    r = constrain(map(r, 0, 255, dark, 255), 0, 255);
+    g = constrain(map(g, 0, 255, dark, 255), 0, 255);
+    b = constrain(map(b, 0, 255, dark, 255), 0, 255);
+    return {
+        r: r, 
+        g: g, 
+        b: b
+    };
+}
+\end{lstlisting}

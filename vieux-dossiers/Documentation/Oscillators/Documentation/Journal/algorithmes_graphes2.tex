@@ -1,0 +1,88 @@
+%!TEX root = structure.tex
+\chapter{L'algorithme de Prim}
+\begin{figure}[h]
+\includegraphics[width=1\textwidth]{images/algorithme_de_prim_001}
+\caption{Les élégantes formes s'enchaînent.}
+\end{figure}
+
+Le premier algorithme que j'ai exploré est celui inventé par Prim. Il s'agit d'un \textit{arbre couvant de poids minimal}. C'est cet algorithme qui m'a donné envie d'en explorer mille autres. Cet algorithme trouve un sous-ensemble d'arêtes formant un arbre sur l'ensemble des sommets du graphe initial, et tel que la somme des poids de ces arêtes soit minimale. 
+
+\newpage
+\begin{lstlisting}
+// Cet algorithme prend un array nommé "vertices" qui contient des vecteurs avec des valeurs x et y.
+
+var unreached = vertices.slice();
+var reached = [];
+reached.push(unreached[0]);
+unreached.splice(0, 1);
+
+(function findEdges() {
+var record = 100000;
+var rIndex;
+var uIndex;
+for (var i = 0; i < reached.length; i++) {
+  for (var j = 0; j < unreached.length; j++) {
+    var v1 = reached[i];
+    var v2 = unreached[j];
+    var d = dist(v1.x, v1.y, v2.x, v2.y);
+    if (d < record) {
+      record = d;
+      rIndex = i;
+      uIndex = j;
+    }
+  }
+}
+drawEdge(reached[rIndex], unreached[uIndex]);
+
+reached.push(unreached[uIndex]);
+unreached.splice(uIndex, 1);
+if (unreached.length > 0 && !stopped) {
+  setTimeout(function() {
+    findEdges();
+  }, 1);
+}
+}());
+\end{lstlisting}
+L'\oe{}uf de Louvicourt
+\begin{lstlisting}
+for (var i = 0; i < 1000; i++) {
+    t = i/10;
+    x = cos(t) * sin(t/2.1) * 400 * i/1000;
+    y = sin(t) * 350;
+    x += width/2;
+    y += height/2;
+    var v = createVector(x, y);
+    vertices.push(v);
+}
+\end{lstlisting}
+
+
+\chapter{Près du Richelieu évasif}
+Demain, dès l'aube, j'irai par les sentiers fouler l'herbe menue. Je laisserai le vent baigner ma tête nue. J'irai seul par la nature. Heureux comme avec une femme.
+\section{Rêver est une chose importante}
+De la plus haute importance, dirais-je même. Les étoiles sont là pour ça. Les mers sont bondées de beaux liquides qui nous calment, qui guérissent nos meurtrissures. Les mers sont nos baumes. Les mers sont nos beaux horizons aperçus à vélo. La beauté majestueuse de l'océan Atlantique qui se jette dans nos yeux et baignent nos nerfs oculaires meurtris. Il nous est permis de rêver.
+\begin{lstlisting}
+var p = [];
+
+for (var i = 0; i < 3300; i++) {
+    var string="Oh yeah! J'aime 30 soleils!";
+    var t = i/50;
+    var x = sin(t) * cos(t * 2) * 560 * (i / 1050);
+    var y = pow(cos(t),11) * 760;
+    var v = createVector(x, y);
+    p.push(v);
+}
+\end{lstlisting}
+\section{Rêver est une chose importante}
+De la plus haute importance, dirais-je même. Les étoiles sont là pour ça. Les mers sont bondées de beaux liquides qui nous calment, qui guérissent nos meurtrissures. Les mers sont nos baumes. Les mers sont nos beaux horizons aperçus à vélo. La beauté majestueuse de l'océan Atlantique qui se jette dans nos yeux et baignent nos nerfs oculaires meurtris. Il nous est permis de rêver. J'implore Przemys\l aw Prusinkiewicz de m'aider dans ma quête majestueuse.
+\begin{lstlisting}
+var p = [];
+
+for (var i = 0; i < 3300; i++) {
+    var t = i/50;
+    var x = sin(t) * cos(t * 2) * 560 * (i / 1050);
+    var y = pow(cos(t),11) * 760;
+    var v = createVector(x, y);
+    p.push(v);
+}
+\end{lstlisting}

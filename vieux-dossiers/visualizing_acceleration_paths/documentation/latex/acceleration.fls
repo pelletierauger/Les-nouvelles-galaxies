@@ -1,0 +1,7 @@
+PWD /Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/visualizing_acceleration_paths/documentation/latex
+INPUT /usr/local/texlive/2015basic/texmf.cnf
+INPUT /usr/local/texlive/2015basic/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2015basic/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT acceleration.tex
+OUTPUT acceleration.log
+INPUT /usr/local/texlive/2015basic/texmf-dist/fonts/tfm/public/cm/cmti10.tfm

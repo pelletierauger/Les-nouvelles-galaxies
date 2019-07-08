@@ -1,0 +1,21 @@
+%!TEX root = structure.tex
+
+\section{Introduction}
+Ce film d'animation va utiliser mon programme \textit{Visualizing Acceleration Paths}.
+
+\section{Utilisation nouvelle des x-sheets}
+
+\subsection{X-sheets comme enveloppes d'automatisation}
+Une idée vient de m'arriver : Je vais contrôler les paramètres de mon film d'animation à l'aide d'une x-sheet, comme je le fais dans \textit{La nuit géométrique}, mais au lieu d'avoir une seule x-sheet qui contrôle tous les paramètres de mon animation, je vais créer une x-sheet différente pour chacun des paramètres. De cette façon, essentiellement, une x-sheet devient une \textit{enveloppe d'automatisation}, précisément analogue à une telle enveloppe dans un logiciel de montage sonore.
+
+Mes x-sheets seront donc séparées en \textit{scènes} distinctes (définies par des valeurs différentes dans mon objet littéral x-sheets), et chacune de ces scènes sera pré-programmée pour affecter une valeur \textit{dans une seule direction}, c'est-à-dire qu'une scène peut soit diminueur ou augmenter une valeur, mais ne peut pas faire les deux. Ainsi, c'est essentiellement comme si chaque première image d'une scène était un point d'ancrage de mon enveloppe d'automatisation. Je vais lisser chaque point d'encrage, en utilisant des courbes pour faire varier mes valeurs au lieu de les faire varier de façon linéaire. Les courbes pourraient être définies par une fonction qui utiliserait la fonction cosinus, comme ma fonction \textit{cosinefade()} dans \textit{La nuit géométrique}. Chaque scène \textit{connaît} son propre nombre de frames, et fait varier la valeur sur laquelle opère la x-sheet en la \textit{mappant} sur le cosinus de 0 à 1.
+
+Également, je pourrais même concevoir une fonction plus complexe qui prendrait en compte la durée d'une scène et la durée de la scène suivante pour lisser davantage l'enveloppe d'automatisation, un peu comme une courbe de Bézier.
+
+\subsection{Visualisation des enveloppes d'automatisation}
+Je pourrais même créer un système qui me permettrait de visualiser mes enveloppes dans mon interface, comme dans un logiciel de montage sonore. Je pourrais même créer un système qui permettrait \textit{d'éditer ces enveloppes} pendant je regarde le film. Mais là, ça s'en vient très avancé et il me faudrait apprendre beaucoup de nouvelles choses. La question la plus importante est : me serait-ce d'un grand service que de pouvoir visualiser et même modifier mes enveloppes d'automatisations pendant que je regarde le film ?
+
+Je crois que poser la question c'est y répondre. Non seulement un tel système pourrait me servir grandement à construire ce film, il pourrait également me servir pour de nombreux autres projets.
+
+\subsection{Loops}
+Avec une simple fonction qui donnerait 0 à la valeur drawCount une fois qu'elle excède le nombre de frames mentionnés dans la x-sheet, je pourrais me créer des loops. Je pourrais avoir des loops de différentes longueurs pour chaque enveloppe.

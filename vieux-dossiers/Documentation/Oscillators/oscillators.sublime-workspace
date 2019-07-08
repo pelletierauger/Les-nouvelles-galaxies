@@ -1,0 +1,1046 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"font-s",
+				"font-size"
+			],
+			[
+				"can",
+				"canvasContainer"
+			],
+			[
+				"te",
+				"text-align"
+			],
+			[
+				"chunk",
+				"chunkArray"
+			],
+			[
+				"chu",
+				"chunkArray"
+			],
+			[
+				"mash",
+				"mashIndexDone"
+			],
+			[
+				"cr",
+				"createVector"
+			],
+			[
+				"re",
+				"recursiveTree"
+			],
+			[
+				"cu",
+				"currentMash"
+			],
+			[
+				"tex",
+				"textSplit"
+			],
+			[
+				"fi",
+				"fileSelect"
+			],
+			[
+				"text",
+				"textOut"
+			],
+			[
+				"fon",
+				"font-weight"
+			],
+			[
+				"bord",
+				"border-width"
+			],
+			[
+				"border",
+				"border-color"
+			],
+			[
+				"siz",
+				"font-size"
+			],
+			[
+				"t",
+				"textInput"
+			],
+			[
+				"loop",
+				"looping"
+			],
+			[
+				"ver",
+				"vertex"
+			],
+			[
+				"wid",
+				"wideLemonade2"
+			],
+			[
+				"w",
+				"wideLemonade2"
+			],
+			[
+				"wide",
+				"wideLemon"
+			],
+			[
+				"run",
+				"runFormula"
+			],
+			[
+				"ru",
+				"runFormula"
+			],
+			[
+				"r",
+				"runFormula"
+			],
+			[
+				"th",
+				"theOriginalSize"
+			],
+			[
+				"lerp",
+				"lerpIteration"
+			],
+			[
+				"ve",
+				"vertexShader"
+			],
+			[
+				"v",
+				"vertexShader"
+			],
+			[
+				"sha",
+				"shaderProgram"
+			],
+			[
+				"us",
+				"userControlledSpiral"
+			],
+			[
+				"l",
+				"lerpValue"
+			],
+			[
+				"proto",
+				"prototype"
+			],
+			[
+				"user",
+				"userControlledSpiral"
+			],
+			[
+				"diff",
+				"differentSpiral"
+			],
+			[
+				"gradien",
+				"gradientArray"
+			],
+			[
+				"gradi",
+				"gradientArray"
+			],
+			[
+				"le",
+				"lerpOffset"
+			],
+			[
+				"colo",
+				"colorGraph"
+			],
+			[
+				"mix",
+				"mixedColorGraph"
+			],
+			[
+				"p",
+				"privateValues"
+			],
+			[
+				"lep",
+				"lerpValue"
+			],
+			[
+				"color",
+				"colorGraph"
+			],
+			[
+				"draw",
+				"drawCount"
+			],
+			[
+				"sh",
+				"sheetSlider"
+			],
+			[
+				"dra",
+				"drawCount"
+			],
+			[
+				"show",
+				"showYellow"
+			],
+			[
+				"y",
+				"yellowGraph"
+			],
+			[
+				"pos",
+				"posGraph"
+			],
+			[
+				"loc",
+				"localValues"
+			],
+			[
+				"globa",
+				"globalValues"
+			],
+			[
+				"noise",
+				"noiseScalar"
+			],
+			[
+				"Di",
+				"Divider"
+			],
+			[
+				"di",
+				"displayLines"
+			],
+			[
+				"b",
+				"breakpoints"
+			],
+			[
+				"bre",
+				"breakpoints"
+			],
+			[
+				"c",
+				"createVector"
+			],
+			[
+				"impl",
+				"implosion6"
+			],
+			[
+				"padding",
+				"padding-top"
+			],
+			[
+				"create",
+				"createCanvas"
+			],
+			[
+				"frame",
+				"frameCount"
+			],
+			[
+				"max",
+				"maxVal"
+			],
+			[
+				"s",
+				"sentence"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"selM",
+				"selMagEvent"
+			],
+			[
+				"acc",
+				"accMult"
+			],
+			[
+				"co",
+				"coFade"
+			],
+			[
+				"x",
+				"xsheet"
+			],
+			[
+				"ler",
+				"lerpY"
+			],
+			[
+				"h",
+				"href	Attr"
+			],
+			[
+				"createV",
+				"createCanvas"
+			],
+			[
+				"rotate",
+				"rotateCount"
+			],
+			[
+				"Parti",
+				"ParticleArray"
+			],
+			[
+				"dist",
+				"distanceMapped"
+			],
+			[
+				"BLE",
+				"blendMode"
+			],
+			[
+				"Par",
+				"ParticleArray"
+			],
+			[
+				"gY",
+				"gYModifier"
+			],
+			[
+				"size",
+				"sizeSlider"
+			],
+			[
+				"sca",
+				"scaleSlider"
+			],
+			[
+				"g",
+				"gModifierModifier"
+			],
+			[
+				"window",
+				"windowWidth"
+			],
+			[
+				"ma",
+				"maxG"
+			],
+			[
+				"gm",
+				"gModifierSpeed"
+			],
+			[
+				"theta",
+				"thetaModifier"
+			],
+			[
+				"n",
+				"nModifier"
+			],
+			[
+				"wi",
+				"windowHeight"
+			],
+			[
+				"win",
+				"windowWidth"
+			],
+			[
+				"ge",
+				"geometry"
+			],
+			[
+				"pro",
+				"prototype"
+			],
+			[
+				"stroke",
+				"strokeWeight"
+			],
+			[
+				"vle",
+				"velocityTransition"
+			],
+			[
+				"Li",
+				"LinearFunction"
+			],
+			[
+				"spee",
+				"speedSlider"
+			],
+			[
+				"his",
+				"historyIndex"
+			],
+			[
+				"hi",
+				"historyHistory"
+			],
+			[
+				"hist",
+				"history"
+			],
+			[
+				"bo",
+				"box_y"
+			],
+			[
+				"box",
+				"box_x"
+			],
+			[
+				"rect",
+				"rectBlue"
+			],
+			[
+				"history",
+				"historyHistory"
+			],
+			[
+				"histor",
+				"historyHistory"
+			],
+			[
+				"velocity",
+				"velocitySwitch"
+			],
+			[
+				"dim",
+				"dim_y"
+			],
+			[
+				"blend",
+				"blend_enable"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Documentation/Presentation-ONF/structure.tex",
+			"settings":
+			{
+				"buffer_size": 2867,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Documentation/Presentation-ONF/synopsis.tex",
+			"settings":
+			{
+				"buffer_size": 4889,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "oscillators.sublime-project",
+			"settings":
+			{
+				"buffer_size": 268,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Processing/Build Systems/Processing.sublime-build",
+					""
+				],
+				[
+					"Packages/Processing/Build Systems/Processing.sublime-build",
+					"Re-run sketch"
+				],
+				[
+					"Packages/Processing/Build Systems/Processing.sublime-build",
+					"Run sketch (Processing 3 only)"
+				],
+				[
+					"Packages/Processing/Build Systems/Processing.sublime-build",
+					"Run sketch fullscreen"
+				],
+				[
+					"Packages/Processing/Build Systems/Processing.sublime-build",
+					"Export sketch as application"
+				],
+				[
+					"Packages/Processing/Build Systems/Processing.sublime-build",
+					"Kill running sketches"
+				]
+			],
+			[
+				"Packages/Processing/Build Systems/Processing.sublime-build",
+				"Run sketch (Processing 3 only)"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"last_filter": "Package Control: ",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: instal",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"evernote",
+				"Evernote: Send to Evernote as new note"
+			]
+		],
+		"width": 435.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/Oscillators",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/Oscillators/Documentation",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/Oscillators/Documentation/Journal",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/Oscillators/Documentation/Presentation-ONF"
+	],
+	"file_history":
+	[
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/Oscillators/.gitignore",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/Oscillators/oscillators.sublime-project",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/Apprentissage de JavaScript/WebGL/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Web/Portfolio/_src/kerouac.txt",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Web/Portfolio/_src/style.css",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Web/Portfolio/_header.ejs",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Web/Portfolio/_harp/kerouac.txt",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Web/Portfolio/index.ejs",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Web/Portfolio/notes.txt",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Web/Portfolio/index.html",
+		"/Users/guillaumepelletier/Library/Application Support/Sublime Text 3/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
+		"/Users/guillaumepelletier/Library/Application Support/Sublime Text 3/Packages/User/JavascriptBeautify.sublime-settings",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/A2Z-F16/With-Kerouac/sketch3b.js",
+		"/Users/guillaumepelletier/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/A2Z-F16/With-Kerouac/jack-kerouac-sounds-in-the-woods.txt",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/A2Z-F16/With-Kerouac/sounds-in-the-woods.txt",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/A2Z-F16/With-Kerouac/style.css",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/A2Z-F16/With-Kerouac/jack-kerouac-sounds-in-the-woods.tx",
+		"/Users/guillaumepelletier/Desktop/Dropbox/pelletier-auger.com/style.css",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/A2Z-F16/With-Kerouac/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/A2Z-F16/With-Kerouac/choruses.txt",
+		"/Users/guillaumepelletier/Library/Application Support/Sublime Text 3/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/Oscillators - juillet 2016/postprocessors.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/dots/ink-dots/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/noise-hills/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/noise-hills/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/Courbes de Lissajous/Courbes de Pelletier.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/Algorithme2 sur un graphe 001 - Reprise/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec WebGL/reaction-diffusion-webgl.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/Algorithme2 sur un graphe 001 - Reprise/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/Minimum Spanning Tree - Recursive - Avril/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec GLSL/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec GLSL/sketch.js",
+		"/Users/guillaumepelletier/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/joy-and-confusion-0.03/acceleration-paths-2.01/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Avec p5/joy-and-confusion-0.03/acceleration-paths-2.01/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art-Numérique/Art avec p5/Various-Spirals/README.md",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.03/acceleration-paths-2.01/scene-prototype.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.03/acceleration-paths-2.01/scenes.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.03/documentation/latex/notes.tex",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.03/documentation/latex/structure.tex",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.03/acceleration-paths-2.01/notes.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.03/documentation/latex/joy-and-confusion.tex",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/object-get-index/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.02/acceleration-paths-2.01/user-interface.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.02/acceleration-paths-2.01/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.02/acceleration-paths-2.01/particle.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.02/acceleration-paths-2.01/notes.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.02/acceleration-paths-2.01/palettes.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.02/acceleration-paths-2.01/curves.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.02/acceleration-paths-2.01/xsheet.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.02/documentation/latex/joy-and-confusion.tex",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.02/acceleration-paths-2.01/userinterface.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/joy-and-confusion-0.01/radial-gradient/sketch4.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/la_grande_spirale_multicolore/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/radial-gradient/sketch2.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/visualizing_acceleration_paths/Physics Engine, friction et lerp/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/visualizing_acceleration_paths/acceleration-paths-2.0/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/visualizing_acceleration_paths/acceleration-paths-2.0/palettes.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/visualizing_acceleration_paths/acceleration-paths-2.0/palettes.json",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/visualizing_acceleration_paths/acceleration-paths-2.0/functions.js",
+		"/private/var/folders/x0/dyf_w9x56439vx_v8f3q8zgh0000gn/T/3f429f60-7af0-4b21-b380-d5b7062b6d14/public_html/wp-config.php",
+		"/private/var/folders/x0/dyf_w9x56439vx_v8f3q8zgh0000gn/T/3f429f60-7af0-4b21-b380-d5b7062b6d14/public_html/wp-content/themes/twentysixteen/style.css",
+		"/private/var/folders/x0/dyf_w9x56439vx_v8f3q8zgh0000gn/T/3f429f60-7af0-4b21-b380-d5b7062b6d14/public_html/wp-content/themes/twentysixteen/template-parts/content-single.php",
+		"/private/var/folders/x0/dyf_w9x56439vx_v8f3q8zgh0000gn/T/3f429f60-7af0-4b21-b380-d5b7062b6d14/public_html/wp-content/themes/twentysixteen/footer.php",
+		"/private/var/folders/x0/dyf_w9x56439vx_v8f3q8zgh0000gn/T/3f429f60-7af0-4b21-b380-d5b7062b6d14/public_html/wp-content/themes/twentysixteen/single.php",
+		"/private/var/folders/x0/dyf_w9x56439vx_v8f3q8zgh0000gn/T/3f429f60-7af0-4b21-b380-d5b7062b6d14/public_html/wp-content/themes/twentysixteen/page.php",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/equations_minuscules02/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/Courbes de Lissajous - courbes de Pelletier-Auger/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/automation-envelope/envelope.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/automation-envelope/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/automation-envelope/documentation/structure.tex",
+		"/private/var/folders/x0/dyf_w9x56439vx_v8f3q8zgh0000gn/T/3821d964-b09d-479c-b34d-bb944ad08dab/public_html/wp-content/themes/write/style.css",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/equations_minuscules02/sketch5.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/equations_minuscules02/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/Oscillators - juillet 2016/documentation/latex/introduction.tex",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/Oscillators - 9 juin 2016/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/la_grande_spirale_multicolore/palettes.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/la_grande_spirale_multicolore/geometry.js",
+		"/private/var/folders/x0/dyf_w9x56439vx_v8f3q8zgh0000gn/T/27baeb58-ff79-470f-b0e5-a7577335cc11/public_html/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Avec p5/couronnes_en_arbres_trigonometriques/couronnes_random/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Arts avec p5/Oscillators - 9 juin 2016/oscillator_prototype.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Arts avec p5/Oscillators - 9 juin 2016/oscillators.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Arts avec p5/Oscillators - 9 juin 2016/basic_oscillators.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Arts avec p5/Oscillators - 9 juin 2016/xsheets.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Arts avec p5/Oscillators - 9 juin 2016/postprocessors.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Arts avec p5/Oscillators - 9 juin 2016/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Arts avec p5/Oscillators - 9 juin 2016/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/mandelbrot2/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/traces_de_particules_juillet2016/geometry.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/iterative_function/sketch11_couleur.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/iterative_function/sketch9.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/iterative_function/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Bobinoirs/contenuweb/étrange.xml",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Bobinoirs/contenuweb/code_modifications3.xml",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Public/bobinoirs/bobinoirs.css",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Bobinoirs/contenuweb/code_modifications.xml",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Bobinoirs/gpelletier.com.xml",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Bobinoirs/code_modifications2.xml",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Bobinoirs/sitedebase.xml",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Bobinoirs/code_modifications.xml",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Bobinoirs/contenuweb/bobinoirs.css",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/iterative_function/sketch8goya.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/iterative_function/sketch6.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/iterative_function/sketch0b.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/iterative_function/sketch8-ordinaire.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/iterative_function/sketch3.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/iterative_function/sketch5.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/iterative_function/sketch4.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/iterative_function/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/iterative_function/sketch2.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/equations_minuscules02/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/equations_minuscules02/untitled",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/couronnes_en_arbres_trigonometriques/couronnes_random/sketch3.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/couronnes_en_arbres_trigonometriques/couronnes_random/sketch4.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/couronnes_en_arbres_trigonometriques/couronnes_random/sketch2.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/couronnes_en_arbres_trigonometriques/couronnes_random/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/couronnes_en_arbres_trigonometriques/couronnes_random/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/gradients_experiences/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/myAngleBetween_nouveauTest2/index.html",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/myAngleBetween_nouveauTest/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/Gradients/sketch.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Public/journaldebord/pelletierauger.css",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/Mandelbrot Set/sketch2.js",
+		"/Users/guillaumepelletier/Desktop/forEach",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/reaction_diffusion/sketch.js",
+		"/Users/guillaumepelletier/Downloads/session2/02_gravitational_attraction/attractor.js",
+		"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Art avec p5/Théorie JavaScript/sketch.js"
+	],
+	"find":
+	{
+		"height": 40.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"<current file>",
+			"<open files>",
+			"/Users/guillaumepelletier/Desktop/Dropbox/Art numérique/Documentation/latex",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"\\b[A-z]*ood\\b",
+			"\\b[A-z]+en\\b",
+			"\\b[A-z]+ow\\b",
+			"\\b[A-z]+ound\\b",
+			"\\d\\d\\d",
+			"font-size",
+			"mash",
+			"leftColumn",
+			"parentTree",
+			"media scr",
+			"width",
+			"zoom",
+			"shape",
+			"al",
+			"bg",
+			"gradient",
+			"user",
+			"rr",
+			"rideaux",
+			"tapis",
+			"dimensi",
+			"tan",
+			"champ",
+			"site-footer",
+			"footer",
+			"img",
+			"byline",
+			"vcard",
+			"author",
+			"auth",
+			"meta",
+			"introduction",
+			"@media screen",
+			"background",
+			"introduction",
+			"@media screen",
+			"page",
+			"site-inner",
+			"@media screen",
+			"box-shadow",
+			"@media screen",
+			"pow(cos(t * (m * 10))",
+			"line-height",
+			"navigation",
+			"menu",
+			"site-header-menu",
+			"site-header-m",
+			"sc",
+			"code",
+			"uppercase",
+			"nav",
+			"family",
+			"700",
+			"3",
+			"};\n",
+			"size",
+			"var sablier2 = new Oscillator(function(i, sum) {\n    var m = sin((drawCount - sum) / 1000) / 25;\n    t = i / 10;\n    return {\n        x: pow(tan(t + m), 1) * pow(sin(t * m), 1) * 450,\n        y: pow(tan(t + m), 1) * cos(t) * sin(t * m * 3) * 450\n    };\n});",
+			"main.padding",
+			"padding",
+			"strong",
+			"bold",
+			"fourni",
+			"date.header.font",
+			"body.rule.color",
+			"tabs.selected.text.color)",
+			"tabs.bevel.border.width",
+			"tabs.border.width",
+			"tabs.font",
+			"tabs.border.color",
+			"header.text.color",
+			"header.font",
+			"header.background.color",
+			".region-inner",
+			"page.width",
+			"$(content.shadow.spread)",
+			"key",
+			"head",
+			"script",
+			"css",
+			"mobile",
+			"comment",
+			"sidebar",
+			"blogger",
+			"{\n",
+			"Math.",
+			"cur",
+			"tree",
+			"branches",
+			"    stroke(255, g, blue, alpha);\n",
+			"7",
+			"divider",
+			"heigth",
+			"drawingGeometry",
+			"times",
+			"getsum",
+			"lstsansserif",
+			"red!20!darkorange",
+			"violet",
+			"grey",
+			"TWO_PI",
+			"look",
+			"5",
+			"Modifier",
+			"geo.",
+			"le",
+			"posté",
+			"TWO_PI",
+			"3",
+			"frame",
+			"iframe",
+			"map",
+			"text",
+			" = 0",
+			"potentiometer",
+			"maxblue",
+			"instantiatePalette",
+			"canvasvariation",
+			"iteration",
+			"dim_x",
+			"dir_y",
+			"dir_x",
+			"displayiter",
+			"sketchiteration",
+			"Walker",
+			"erase",
+			"toggle",
+			"line",
+			"Walker"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"cutup",
+			"canvasContainer",
+			"sliders",
+			"s",
+			"40px",
+			"",
+			"currentBranch",
+			"branch",
+			"wreath",
+			"showPanel",
+			"amounts",
+			"normalfont",
+			"darkorange",
+			"Scalar",
+			"",
+			"knob",
+			"Particle",
+			"Hill",
+			"green2",
+			"blue2",
+			"red2",
+			"solid"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": false,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Documentation/Presentation-ONF/structure.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2867,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2748,
+								2748
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1491.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Documentation/Presentation-ONF/synopsis.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4889,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3000,
+								3000
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "oscillators.sublime-project",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 268,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 30.0
+	},
+	"input":
+	{
+		"height": 40.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 34.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.latextools":
+	{
+		"height": 144.0
+	},
+	"pinned_build_system": "",
+	"project": "oscillators.sublime-project",
+	"replace":
+	{
+		"height": 56.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Desktop/Dropbox/Art numérique/Max et Jitter/bellevue0001.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 73.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 378.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 200.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

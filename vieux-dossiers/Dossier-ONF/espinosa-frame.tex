@@ -1,0 +1,100 @@
+% !TEX TS-program = XeLaTeX
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass[12pt]{article}
+% Page layout
+\usepackage[top=1in, bottom=1in, left=1.5in, right=1.5in]{geometry}
+\usepackage{titlesec}
+\usepackage{titling}
+
+% \posttitle{\par\end{center}}
+\setlength{\droptitle}{-80pt}
+% Basic fontspec setup
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{Espinosa Nova}
+
+\newfontfamily\headingfont[]{Kabel LT Std Heavy}
+\newfontfamily\authorfont[]{Kabel LT Std}
+\titleformat*{\section}{\LARGE\headingfont}
+\titleformat*{\subsection}{\Large\headingfont}
+\titleformat*{\subsubsection}{\large\headingfont}
+\renewcommand{\maketitlehooka}{\headingfont}
+
+\usepackage{graphicx}
+\usepackage{polyglossia}
+\usepackage{amsmath}
+\setmainlanguage{french}
+
+% Font size and leading (defaults: http://en.wikibooks.org/wiki/LaTeX/Fonts#Sizing_text)
+% \renewcommand\tiny{\fontsize{7}{10}\selectfont}
+% \renewcommand\scriptsize{\fontsize{8}{11}\selectfont}
+% \renewcommand\footnotesize{\fontsize{9}{12}\selectfont}
+% \renewcommand\small{\fontsize{10}{13}\selectfont}
+% \renewcommand\normalsize{\fontsize{11}{13.6}\selectfont}% 11pt base size
+% \renewcommand\large{\fontsize{12}{14}\selectfont}
+\renewcommand\Large{\fontsize{17}{17}\selectfont}
+\renewcommand\LARGE{\fontsize{22}{24}\selectfont}
+% \renewcommand\huge{\fontsize{24}{26}\selectfont}
+\renewcommand\Huge{\fontsize{30}{32}\selectfont}
+
+% \renewcommand\thesection{}
+
+% \setlength\parindent{0pt}
+\setlength\parskip{0pt}
+% \pagestyle{empty}
+
+% the picture package allows use of dimens in the arguments of picture commands
+\usepackage{picture}
+
+\author{\Large \authorfont Guillaume Pelletier-Auger}
+\title{\Huge Les nouvelles constellations\protect\\Description du projet}
+\predate{}
+\postdate{}
+\date{}
+
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+\makeatletter
+\def\@seccntformat#1{\csname #1ignore\expandafter\endcsname\csname the#1\endcsname\quad}
+\let\sectionignore\@gobbletwo
+\let\latex@numberline\numberline
+\def\numberline#1{\if\relax#1\relax\else\latex@numberline{#1}\fi}
+\makeatother
+
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+\noindent Ce projet se veut un laboratoire d'apprentissage et d'expérimentation voué à explorer les nouvelles possibilités offertes par le cinéma algorithmique, c'est-à-dire un cinéma d'animation abstrait réalisé par l'écriture de code informatique qui génère des images et du mouvement.
+
+Tout au long d’une année, j'acquerrai de nouvelles aptitudes par le biais de cours offerts gratuitement sur Internet, et je solidifierai mon apprentissage et m'approprierai cette nouvelle culture numérique en réalisant de courtes animations expérimentales. Je tiendrai un journal de travail partagé en ligne pour diffuser mes recherches et apprendre à mieux communiquer mon travail avec le public et mes pairs.
+
+Ce projet sera aussi un espace de réflexion sur le logiciel libre et ses implications artistiques et culturelles. Je créerai avec des logiciels libres, et mon journal et mes animations seront instantanément distribués en code source libre, ce qui permettra à quiconque de modifier mon travail et de l'amener ailleurs. Mes animations seront également documentées : j'en expliquerai le fonctionnement et les concepts sous-jacents, en français et en anglais, afin de contribuer à l'accessibilité et à l'inclusivité de ce nouveau cinéma.
+
+À noter : aucun des cours que je suivrai n'offre de crédits universitaires. Ce projet n'a ainsi aucun cadre académique.
+
+\section{Origine et objectifs du projet}
+\noindent Après avoir reçu une formation classique en animation et en arts graphiques, et réalisé plusieurs courts métrages animés narratifs, j'ai récemment découvert l'art algorithmique grâce à des ressources offertes gratuitement sur Internet par des artistes et des enseignants. Ces rencontres ont grandement marqué ma pratique artistique, et les valeurs véhiculées par ce nouvel art m'ont beaucoup fait réfléchir. C'est un art d'abord imaginé par des utopistes qui rêvaient de technologies libres et ouvertes que les artistes pourraient pleinement s'approprier et qui inviteraient à dialoguer ensemble les peintres, les scientifiques, les poètes, les architectes, etc. Les outils pour créer cet art sont gratuits et distribués en code source libre, et les \oe{}uvres sont souvent partagées avec la même ouverture.
+
+Après mes premiers pas dans ce monde foisonnant, j'ai réalisé \textit{Les joies confuses}, un court métrage d'animation algorithmique présenté aux Sommets du cinéma d'animation à la Cinémathèque québécoise en novembre 2017. J'ai également réalisé de nombreuses courtes animations qui peuvent être considérées comme des prototypes des nouvelles expériences à venir. Un montage de ces animations, intitulé \textit{Premiers algorithmes}, ainsi que Les joies confuses sont inclus dans le matériel d'appui au présent projet.
+
+Je souhaite ainsi, par ce projet d'exploration et de déploiement, plonger profondément dans ce domaine qui m'est encore nouveau. Je compte acquérir des connaissances techniques, gagner de l'aisance dans la communication de mon art, réfléchir sur cette nouvelle culture numérique et ses impacts sur le fond et la forme des \oe{}uvres, et trouver une mine de matériel pour de futurs films d'animation.
+
+\section{Plan de travail détaillé}
+\noindent Ce projet occupera une année complète, à temps plein, du 1\textsuperscript{er} avril 2018 au 31 mars 2019. Il est divisé en 2 parties de 17 semaines et une partie de 18 semaines, pour un total de 52 semaines. Lors de chacune de ces parties, je suivrai 2 cours et lirai quelques livres qui y sont reliés. Chacun des cours nécessite en moyenne 5 heures de travail par semaine, ce qui me laisse 30 heures par semaine pour l'écriture de mon journal de travail, l'élaboration de mes animations expérimentales et mes lectures.
+
+Mon journal de travail sera hébergé sur mon site Web personnel, en français et en anglais, et j'en publiciserai les nouveaux messages dans les médias sociaux. Il contiendra une présentation de mes animations, des explications sur ce travail et des réflexions sur l'art algorithmique. Ce journal et ces animations seront développés avec la plateforme GitHub, qui me permettra de publier mon code informatique en ligne, le rendant accessible à quiconque. Mes animations seront programmées avec p5.js, un logiciel libre dédié aux arts numériques, qui est construit avec le langage JavaScript et donc conçu expressément pour le déploiement Web.
+
+\section{Première partie : du 1\textsuperscript{er} avril au 28 juillet 2018}
+\noindent Cours : \textit{Introduction à la complexité} de Melanie Mitchell, \textit{Introduction à la modélisation à base d’agents} de William Rand.
+
+Je me lancerai tout d'abord dans l'étude de la complexité et de la modélisation. Ces disciplines permettent de réfléchir aux phénomènes qui nous entourent et de développer des modèles qui les visualisent. De tels modèles, qui appartiennent historiquement au monde des sciences, peuvent avoir une grande expressivité en cinéma expérimental. Par exemple, ils permettent de visualiser les forces qui animent une volée d'oiseaux, la croissance d'un arbre ou l'étalement dévastateur d'un feu de forêt. Ils créent ainsi des ponts entre l'abstraction visuelle et des phénomènes qui influencent nos vies et qui sont chargés de sens.
+
+Ces outils scientifiques appliqués à des fins artistiques forment, comme \mbox{Ellen} Lupton l'écrit dans son livre sur le Bauhaus, << un langage graphique qui évite les conventions du réalisme perçu mais qui est néanmoins lié objectivement au fait matériel >>.
+
+Lectures : \textit{Complexité, un tour guidé} de Melanie Mitchell, \textit{Une poésie de l’informatique} de Taeyoon Choi, \textit{Logiciel libre, société libre} de Richard Stallman.
+
+\end{document}  

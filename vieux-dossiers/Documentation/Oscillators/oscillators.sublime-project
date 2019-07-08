@@ -1,0 +1,16 @@
+{
+    "folders":
+    [
+        {
+            "path": ".",
+            "file_exclude_patterns":[
+            "*.aux",
+            "*.log",
+            "*.fls",
+            "*.pdf",
+            "*.fdb_latexmk",
+            "*.synctex.gz"
+            ]
+        }
+    ]
+}
