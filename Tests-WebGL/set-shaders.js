@@ -134,61 +134,7 @@ void main() {
 // setBGShaders();
 
 
-
-
-function setBothShaders(fragCode) {
-    // vertex shader source code
-    var vertCode = `
-        // our vertex data
-        attribute vec3 aPosition;
-        // our texcoordinates
-        attribute vec2 aTexCoord;
-        // this is a variable that will be shared with the fragment shader
-        // we will assign the attribute texcoords to the varying texcoords to move them from the vert shader to the frag shader
-        // it can be called whatever you want but often people prefiv it with 'v' to indicate that it is a varying
-        varying vec2 vTexCoord;
-        void main() {
-        // copy the texture coordinates
-        vTexCoord = aTexCoord;
-        // copy the position data into a vec4, using 1.0 as the w component
-        vec4 positionVec4 = vec4(aPosition, 1.0);
-        positionVec4.xy = positionVec4.xy * 2.0 - 1.0;
-        // send the vertex information on to the fragment shader
-        gl_Position = positionVec4;
-        }
-    `;
-    // Create a vertex shader object
-    var vertShader = gl.createShader(gl.VERTEX_SHADER);
-    // Attach vertex shader source code
-    gl.shaderSource(vertShader, vertCode);
-    // Compile the vertex shader
-    gl.compileShader(vertShader);
-    // Create fragment shader object
-    var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
-    // Attach fragment shader source code
-    gl.shaderSource(fragShader, fragCode);
-    // Compile the fragmentt shader
-    gl.compileShader(fragShader);
-    // Create a shader program object to
-    // store the combined shader program
-    shaderProgram = gl.createProgram();
-    // Attach a vertex shader
-    gl.attachShader(shaderProgram, vertShader);
-    // Attach a fragment shader
-    gl.attachShader(shaderProgram, fragShader);
-    // Link both the programs
-    gl.linkProgram(shaderProgram);
-    // Use the combined shader program object
-    gl.useProgram(shaderProgram);
-    time = gl.getUniformLocation(shaderProgram, "time");
-}
-
-
 function setDotsShaders() {
-
-    /*=========================Shaders========================*/
-
-    // vertex shader source code
     var vertCode = `
     attribute vec3 coordinates;
     varying vec2 myposition;
@@ -200,16 +146,12 @@ function setDotsShaders() {
         myposition = vec2(gl_Position.x, gl_Position.y);
         gl_PointSize = 50.0;
     }`;
-
     // Create a vertex shader object
     var vertShader = gl.createShader(gl.VERTEX_SHADER);
-
     // Attach vertex shader source code
     gl.shaderSource(vertShader, vertCode);
-
     // Compile the vertex shader
     gl.compileShader(vertShader);
-
     // fragment shader source code
     var fragCode = `
     precision mediump float;
@@ -243,47 +185,31 @@ function setDotsShaders() {
         gl_FragColor = vec4(1.0, 1.0 - dist_squared * 1.0, 0.0, 0.35 - dist_squared - (rando * 0.2));
         // gl_FragColor = vec4(d * 0.001, uv.x, 0.0, 0.25);
     }`;
-
     // vec2 uv = gl_FragCoord.xy / vec2(1600, 1600);
-
     // Create fragment shader object
     var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
-
     // Attach fragment shader source code
     gl.shaderSource(fragShader, fragCode);
-
     // Compile the fragmentt shader
     gl.compileShader(fragShader);
-
     // Create a shader program object to store
     // the combined shader program
     shaderProgram = gl.createProgram();
-
     // Attach a vertex shader
     gl.attachShader(shaderProgram, vertShader);
-
     // Attach a fragment shader
     gl.attachShader(shaderProgram, fragShader);
-
     // Link both programs
     gl.linkProgram(shaderProgram);
-
     // Use the combined shader program object
     gl.useProgram(shaderProgram);
-
-
-
     /*======== Associating shaders to buffer objects ========*/
-
     // Bind vertex buffer object
     gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
-
     // Get the attribute location
     var coord = gl.getAttribLocation(shaderProgram, "coordinates");
-
     // Point an attribute to the currently bound VBO
     gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
-
     // Enable the attribute
     gl.enableVertexAttribArray(coord);
 }
