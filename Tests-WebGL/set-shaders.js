@@ -71,10 +71,13 @@ void main() {
     vec2 uvf = uv * 10.;
 //     uv.x += 0.25;
     uv.y -= 0.74;
+    
     uv *= 0.25;
     float d = length(uv);
     float t = time * 0.125 * 0.06125 * 0.5;
     t *= 2.;
+//     uv.x += sin(t * 10000.) * 0.0025;
+//     uv.y += sin(t * 15000.) * 0.0025;
 //     t = time * 0.125;
     float c = d;
 //     if (d < 0.3) c = 1.; else c = 0.;

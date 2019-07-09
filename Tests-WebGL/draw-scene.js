@@ -28,9 +28,9 @@ drawDots = function() {
     let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
     for (let i = 0; i < 10000; i += 1) {
-        let x = cos(i * (frameCount + 3000) * 0.00001) * i * 0.001125 * (9 / 14);
+        let x = tan(i * (frameCount + 3000) * 0.0000003) * i * sin(i * 0.05) * 0.0001125 * (9 / 14);
         x += (Math.random() - 0.5) * 0.005;
-        let y = sin(i * (frameCount + 3000) * 0.00001) * i * 0.001125;
+        let y = tan(i * (frameCount + 3000) * 0.0000003) * i * 0.0001125;
         y += (Math.random() - 0.5) * 0.005;
         x += xOffset;
         y += yOffset;
