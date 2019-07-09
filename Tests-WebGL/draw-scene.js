@@ -23,14 +23,14 @@ function drawBG() {
     gl.drawArrays(gl.TRIANGLES, 0, numItems);
 }
 
-function drawDots() {
+drawDots = function() {
     vertices = [];
-    for (let i = 0; i < 1000; i += 1) {
-        let x = cos(i * (frameCount + 3000) * 0.0001) * cos(i * 0.01) * i * 0.001125 * (9 / 14);
-        x += (Math.random() - 0.5) * 0.01;
-        let y = sin(i * (frameCount + 3000) * 0.0001) * i * 0.001125;
-        y += (Math.random() - 0.5) * 0.01;
-        vertices.push(x, y, 0.0);
+    for (let i = 0; i < 10000; i += 1) {
+        let x = cos(i * (frameCount + 3000) * 0.000001) * i * 0.001125 * (9 / 14);
+        x += (Math.random() - 0.5) * 0.001;
+        let y = sin(i * (frameCount + 3000) * 0.000001) * i * 0.001125;
+        y += (Math.random() - 0.5) * 0.001;
+        vertices.push(x * 0.15, y * 0.15, 0.0);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
@@ -55,5 +55,5 @@ function drawDots() {
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
-    gl.drawArrays(gl.POINTS, 0, 1000);
+    gl.drawArrays(gl.POINTS, 0, 10000);
 }
