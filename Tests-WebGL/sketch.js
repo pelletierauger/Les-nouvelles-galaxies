@@ -1,4 +1,6 @@
 let looping = true;
+let keysActive = true;
+let socket, cnvs, ctx, canvasDOM;
 
 // a shader variable
 let gl;
@@ -11,9 +13,10 @@ let vertices;
 // }
 
 function setup() {
+    socket = io.connect('http://localhost:8080');
     // shaders require WEBGL mode to work
     pixelDensity(1);
-    createCanvas(windowWidth, windowHeight, WEBGL);
+    cnvs = createCanvas(windowWidth, windowHeight, WEBGL);
     gl = canvas.getContext('webgl');
 
     // gl.cbf = gl.getExtension('WEBGL_color_buffer_float') || gl.getExtension('EXT_color_buffer_float');
@@ -245,19 +248,21 @@ function draw() {
 // }
 
 function keyPressed() {
-    if (keyCode === 32) {
-        if (looping) {
-            noLoop();
-            looping = false;
-        } else {
-            loop();
-            looping = true;
+    if (keysActive) {
+        if (keyCode === 32) {
+            if (looping) {
+                noLoop();
+                looping = false;
+            } else {
+                loop();
+                looping = true;
+            }
         }
-    }
-    if (key == 'r' || key == 'R') {
-        window.location.reload();
-    }
-    if (key == 'm' || key == 'M') {
-        redraw();
+        if (key == 'r' || key == 'R') {
+            window.location.reload();
+        }
+        if (key == 'm' || key == 'M') {
+            redraw();
+        }
     }
 }
