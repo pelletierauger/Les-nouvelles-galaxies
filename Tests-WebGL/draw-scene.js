@@ -25,11 +25,15 @@ function drawBG() {
 
 drawDots = function() {
     vertices = [];
+    let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
+    let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
     for (let i = 0; i < 10000; i += 1) {
-        let x = cos(i * (frameCount + 3000) * 0.000001) * i * 0.001125 * (9 / 14);
-        x += (Math.random() - 0.5) * 0.001;
-        let y = sin(i * (frameCount + 3000) * 0.000001) * i * 0.001125;
-        y += (Math.random() - 0.5) * 0.001;
+        let x = cos(i * (frameCount + 3000) * 0.00001) * i * 0.001125 * (9 / 14);
+        x += (Math.random() - 0.5) * 0.005;
+        let y = sin(i * (frameCount + 3000) * 0.00001) * i * 0.001125;
+        y += (Math.random() - 0.5) * 0.005;
+        x += xOffset;
+        y += yOffset;
         vertices.push(x * 0.15, y * 0.15, 0.0);
     }
     // Create an empty buffer object to store the vertex buffer

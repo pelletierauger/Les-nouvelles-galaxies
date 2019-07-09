@@ -102,7 +102,7 @@ void main() {
 //     col = max(col, 0.);
 //col += CircleRGB(uv, p2, 0.5, 0.1, vec3(0.2, 0.0, 0.8));
     col += CircleRGB(uv, p2, 0.4, 0.2, vec3(0.0, 0.4, 1.0));
-            col += CircleRGB(uv, p2, 0.5, 0.2, vec3(0.5, 0.7, 0.0) * 0.75);
+//             col += CircleRGB(uv, p2, 0.5, 0.2, vec3(0.5, 0.7, 0.0) * 0.75);
 //             col += CircleRGB(uv, p2, 0.5, 0.2, vec3(0.5, 0.7, 0.0));
 //     col -= InvCircleRGB(uv, p2, 0.6, 0.2, vec3(1.5, 1.7, 1.0));
     float rando = rand(uvf) * 0.075;
@@ -145,7 +145,7 @@ setDotsShaders = function() {
         center = vec2(gl_Position.x, gl_Position.y);
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
-        gl_PointSize = 50.0;
+        gl_PointSize = 50.0 + cos((coordinates.x + coordinates.y) * 1000000.0) * 2.;
     }
     // endGLSL
     `;
@@ -218,4 +218,116 @@ setDotsShaders = function() {
     gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
     // Enable the attribute
     gl.enableVertexAttribArray(coord);
+}
+
+
+
+setOverlayShaders = function() {
+    /*======================= Shaders =======================*/
+    // vertex shader source code
+    var vertCode = `
+        // beginGLSL
+        // our vertex data
+        attribute vec3 aPosition;
+        // our texcoordinates
+        attribute vec2 aTexCoord;
+        // this is a variable that will be shared with the fragment shader
+        // we will assign the attribute texcoords to the varying texcoords to move them from the vert shader to the frag shader
+        // it can be called whatever you want but often people prefiv it with 'v' to indicate that it is a varying
+        varying vec2 vTexCoord;
+        void main() {
+        // copy the texture coordinates
+        vTexCoord = aTexCoord;
+        // copy the position data into a vec4, using 1.0 as the w component
+        vec4 positionVec4 = vec4(aPosition, 1.0);
+        positionVec4.xy = positionVec4.xy * 2.0 - 1.0;
+        // send the vertex information on to the fragment shader
+        gl_Position = positionVec4;
+        }
+        // endGLSL
+    `;
+    // Create a vertex shader object
+    var vertShader = gl.createShader(gl.VERTEX_SHADER);
+    // Attach vertex shader source code
+    gl.shaderSource(vertShader, vertCode);
+    // Compile the vertex shader
+    gl.compileShader(vertShader);
+    // fragment shader source code
+    var fragCode = `
+// beginGLSL
+precision mediump float;
+varying vec2 vTexCoord;
+uniform float time;
+float plot(vec2 s, float p) {
+  float largeur = abs(sin(time * 0.01)) * 0.1 + 0.1;
+  return smoothstep(p - largeur, p, s.y) - smoothstep(p, p + largeur, s.y);
+}
+float circ(float size, float vx, float vy, vec2 center) {
+//   float x = center.x * (1.0 + sin(time * 20.) * 0.5);
+//   float y = center.y * (1.0 + cos(time * 20.) * 0.5);
+  vec2 v = center - vec2(vx, vy);
+  float d = 1.0 / length(v * size);
+  return d;
+}
+float Circle(vec2 uv, vec2 p, float r, float blur) {
+    float d = length(uv - p); 
+    float c = smoothstep(r, r - blur, d); 
+    return c;
+}
+vec4 CircleRGB(vec2 uv, vec2 p, float r, float blur, vec4 col) {
+    float d = length(uv - p); 
+    float c = smoothstep(r, r - blur, d); 
+    return vec4(col.r, col.g, col.b, col.a * c);
+}
+vec4 InvCircleRGB(vec2 uv, vec2 p, float r, float blur, vec4 col) {
+    float d = length(p - uv); 
+    float c = smoothstep(r - blur, r, d); 
+    return vec4(col.r, col.g, col.b, col.a * c);
+}
+float rand(vec2 co){
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(time)));
+}
+void main() {
+    vec2 uv = gl_FragCoord.xy / vec2(1280, 800);
+    uv -= vec2(0.5, 0.5);
+    uv.x *= 1280.0/800.0;
+//      uv *= 1.2;
+    vec2 uvf = uv * 10.;
+//     uv.x += 0.25;
+//     uv.y -= 0.74;
+//     uv.x *= 2.;
+    float d = length(uv);
+    float t = time * 0.125 * 0.06125 * 0.5;
+    t *= 2.;
+    float c = d;
+    float r = 0.3;
+    vec2 p = vec2(0.5, 0.0);
+//     c = Circle(uv, p, 0.3, 0.1);
+    vec2 p2 = vec2(fract(uv.x * 10. * sin(uv.x * sin(uv.x * 10.)) * tan(t * 1000.)) - 0.5, uv.y);
+//     vec4 col = CircleRGB(uv, p2, 0.15, 0.5, vec4(0.7, 1.0, 1.0, 1.0));
+    vec4 col = CircleRGB(uv, p, 0.15, 0.019, vec4(0.75, 0.0, 1.0, 1.0));
+    float rando = rand(uvf) * 0.075;
+//     gl_FragColor = vec4(col - rando, col.r);
+    gl_FragColor = vec4(col - rando);
+}
+// endGLSL
+    `;
+    // Create fragment shader object
+    var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+    // Attach fragment shader source code
+    gl.shaderSource(fragShader, fragCode);
+    // Compile the fragmentt shader
+    gl.compileShader(fragShader);
+    // Create a shader program object to
+    // store the combined shader program
+    shaderProgram = gl.createProgram();
+    // Attach a vertex shader
+    gl.attachShader(shaderProgram, vertShader);
+    // Attach a fragment shader
+    gl.attachShader(shaderProgram, fragShader);
+    // Link both the programs
+    gl.linkProgram(shaderProgram);
+    // Use the combined shader program object
+    gl.useProgram(shaderProgram);
+    time = gl.getUniformLocation(shaderProgram, "time");
 }
