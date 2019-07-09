@@ -6,6 +6,10 @@ let socket, cnvs, ctx, canvasDOM;
 let gl;
 let shaderProgram;
 let vertices;
+let drawCount = 0;
+let drawIncrement = 0.00125;
+let time;
+let vertex_buffer;
 
 // function preload() {
 //     // load the shader
@@ -39,7 +43,7 @@ function setup() {
     }
 
     // Create an empty buffer object to store the vertex buffer
-    var vertex_buffer = gl.createBuffer();
+    vertex_buffer = gl.createBuffer();
 
     //Bind appropriate array buffer to it
     gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
@@ -190,57 +194,20 @@ function setup() {
     gl.drawArrays(gl.POINTS, 0, 1000);
 }
 
-function draw() {
+draw = function() {
+
     // shader() sets the active shader with our shader
     // shader(shaderProgram);
     // texcoordShader.setUniform('time', frameCount);
     // rect gives us some geometry on the screen
     // rect(0, 0, width, height);
     // console.log("Drawing!");
-    vertices = [];
-    for (let i = 0; i < 1000; i += 1) {
-        let x = cos(i * (frameCount + 3000) * 0.0001) * cos(i * 0.01) * i * 0.001125 * (9 / 14);
-        x += (Math.random() - 0.5) * 0.01;
-        let y = sin(i * (frameCount + 3000) * 0.0001) * i * 0.001125;
-        y += (Math.random() - 0.5) * 0.01;
-        vertices.push(x, y, 0.0);
-    }
-
-    // Create an empty buffer object to store the vertex buffer
-    var vertex_buffer = gl.createBuffer();
-
-    //Bind appropriate array buffer to it
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
-
-    // Pass the vertex data to the buffer
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-
-    // Unbind the buffer
-    gl.bindBuffer(gl.ARRAY_BUFFER, null);
-
-    /*======== Associating shaders to buffer objects ========*/
-
-    // Bind vertex buffer object
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
-
-    // Get the attribute location
-    var coord = gl.getAttribLocation(shaderProgram, "coordinates");
-
-    // Point an attribute to the currently bound VBO
-    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
-
-    // Enable the attribute
-    gl.enableVertexAttribArray(coord);
-
-    /*============= Drawing the primitive ===============*/
-
-    // // Clear the canvas
-    // gl.clearColor(0.5, 0.5, 0.5, 0.9);
-    // Clear the color buffer bit
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    // Draw the triangle
-    gl.drawArrays(gl.POINTS, 0, 1000);
+    setBGShaders();
+    gl.uniform1f(time, drawCount);
+    drawBG();
+    setDotsShaders();
+    drawDots();
+    drawCount += drawIncrement;
 }
 
 // function windowResized() {
