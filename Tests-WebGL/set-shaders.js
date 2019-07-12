@@ -71,7 +71,7 @@ void main() {
     vec2 uvf = uv * 10.;
 //     uv.x += 0.25;
     uv.y += 0.6;
-    uv.x += 1.25;
+    uv.x += 3.5;
     uv *= 0.25;
     float d = length(uv);
     float t = time * 0.125 * 0.06125 * 0.5;
