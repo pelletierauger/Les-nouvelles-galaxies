@@ -31,20 +31,20 @@ drawDots = function() {
     let fx = 1;
     let fy = 1;
     for (let i = 0; i < 10000; i += 1) {
-        let x = cos(i * t * 0.000025) * i * 0.00007;
-        let y = cos(i * t * 0.000025) * i * 0.0001125;
-        x = cos(y + x + x);
-        y = tan(x * y + x + y);
+        let x = sin(i * t * 0.0001) * i * 0.00007;
+        let y = cos(i * t * 0.0001) * i * 0.00007;
+//         x = cos(y + x + x);
+//         y = tan(x * y + x + y);
 //         y = sin(x * y + x + y);
 //         x = pow(x, 0.5);
 //         y = pow(y, x);
-        x = sin(fx) * x;
-        y = sin(fy) * y;
+        x = sin(fx * 2) * x;
+        y = sin(fy * 2) * y;
         x += (Math.random() - 0.5) * 0.0005;
         y += (Math.random() - 0.5) * 0.0005;
         x += xOffset * 0.15;
         y += yOffset * 0.15;
-        vertices.push(x * 1.5, y * 0.27, 0.0);
+        vertices.push(x * 20, y * 20, 0.0);
         fx = x;
         fy = y;
     }
