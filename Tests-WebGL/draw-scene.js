@@ -27,7 +27,7 @@ drawDots = function() {
     vertices = [];
     let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
-    let t = drawCount + 10;
+    let t = drawCount + 140;
     for (let i = 0; i < 10000; i += 1) {
         let x = cos(i * t * 0.00025) * i * 0.00007;
         let y = cos(i * t * 0.00025) * i * tan(i * 0.025 * sin(t * 0.25)) * 0.0001125;
