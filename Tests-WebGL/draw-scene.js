@@ -27,12 +27,12 @@ drawDots = function() {
     vertices = [];
     let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
-    let t = drawCount + 140;
+    let t = drawCount + 10;
     let fx = 1;
     let fy = 1;
     for (let i = 0; i < 10000; i += 1) {
-        let x = sin(i * t * 0.0000025) * i * 0.00007;
-        let y = cos(i * t * 0.0000025) * i * tan(i * 0.25 * sin(t * 0.0025)) * 0.0001125;
+        let x = cos(i * t * 0.000025) * i * 0.00007;
+        let y = cos(i * t * 0.000025) * i * 0.0001125;
         x = cos(y + x + x);
         y = tan(x * y + x + y);
 //         y = sin(x * y + x + y);
@@ -44,7 +44,7 @@ drawDots = function() {
         y += (Math.random() - 0.5) * 0.0005;
         x += xOffset * 0.15;
         y += yOffset * 0.15;
-        vertices.push(x * 1.5, y * 0.17, 0.0);
+        vertices.push(x * 1.5, y * 0.27, 0.0);
         fx = x;
         fy = y;
     }
