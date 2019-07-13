@@ -38,13 +38,14 @@ drawDots = function() {
 //         y = sin(x * y + x + y);
 //         x = pow(x, 0.5);
 //         y = pow(y, x);
-        x = sin(fx * 2) * x;
-        y = sin(fy * 2) * y;
+        x = sin(fx * 3) * sin(x);
+        y = cos(fy * 3) * sin(y);
+//         x = cos(y + x + x);
         x += (Math.random() - 0.5) * 0.0005;
         y += (Math.random() - 0.5) * 0.0005;
         x += xOffset * 0.15;
         y += yOffset * 0.15;
-        vertices.push(x * 20, y * 20, 0.0);
+        vertices.push(x * 20, y * 1, 0.0);
         fx = x;
         fy = y;
     }
