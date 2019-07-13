@@ -70,8 +70,8 @@ void main() {
 //      uv *= 1.2;
     vec2 uvf = uv * 10.;
 //     uv.x += 0.25;
-    uv.y += 0.2;
-    uv.x += 3.5;
+//     uv.y += 0.2;
+//     uv.x += 3.5;
     uv *= 0.5;
     float d = length(uv);
     float t = time * 0.125 * 0.06125 * 0.5;
@@ -104,7 +104,7 @@ void main() {
 //col -=  CircleRGB(uv, p2, 0.2, 0.2, vec3(1.0, 1.0, 1.0));
 //     col = max(col, 0.);
 //col += CircleRGB(uv, p2, 0.5, 0.1, vec3(0.2, 0.0, 0.8));
-    col += CircleRGB(uv, p2, 0.94, 0.2, vec3(0.0, 0.4, 1.0));
+//     col += CircleRGB(uv, p2, 0.94, 0.2, vec3(0.0, 0.4, 1.0));
 //             col += CircleRGB(uv, p2, 0.5, 0.2, vec3(0.5, 0.7, 0.0) * 0.75);
 //             col += CircleRGB(uv, p2, 0.5, 0.2, vec3(0.5, 0.7, 0.0));
 //     col -= InvCircleRGB(uv, p2, 0.6, 0.2, vec3(1.5, 1.7, 1.0));
