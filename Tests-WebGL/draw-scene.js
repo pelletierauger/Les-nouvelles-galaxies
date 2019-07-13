@@ -39,8 +39,8 @@ drawDots = function() {
 //         x = pow(x, 0.5);
 //         y = pow(y, x);
 //         x = sin(fx * 3.56) * sin(x * 2);
-           x += sin(fx);
-           y += sin(fy);
+           x += sin(fx * 1.1);
+           y += sin(fy * 1.1);
 //         x = sin(x);
 //         y = sin(fy * 3.56) * sin(y);
 //         y = cos(fy * 0.0001) * sin(y);
@@ -49,7 +49,7 @@ drawDots = function() {
         y += (Math.random() - 0.5) * 0.0005;
         x += xOffset * 0.15;
         y += yOffset * 0.15;
-        vertices.push(x * 1 + 0, y * 1, 0.0);
+        vertices.push(x * 0.5 + 0, y * 0.7, 0.0);
         fx = x;
         fy = y;
     }
