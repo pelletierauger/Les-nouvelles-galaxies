@@ -31,9 +31,9 @@ drawDots = function() {
     let fx = 1;
     let fy = 1;
     for (let i = 0; i < 10000; i += 1) {
-        let x = sin(i * sin(t * 0.000001) * 1000) * i * 0.00007;
-        let y = cos(i * sin(t * 0.000001) * 1000) * i * 0.00007;
-//         x = cos(y + x);
+        let x = sin(i * sin(t * 0.0000005) * 1500) * i * 0.00007;
+        let y = cos(i * sin(t * 0.0000005) * 1500) * i * 0.00007;
+        x = x * cos(x * 8);
 //         y = tan(x * y + x + y + x + x);
 //         y = sin((y + x) * 2);
 //         x = pow(x, 0.5);
@@ -53,7 +53,7 @@ drawDots = function() {
         y += (Math.random() - 0.5) * 0.00005;
         x += xOffset * 0.15 * 0.0125;
         y += yOffset * 0.15 * 0.0125;
-        vertices.push(x * 10, y * 10, 0.0);
+        vertices.push(x * 10, y * 8, 0.0);
         fx = x;
         fy = y;
     }
