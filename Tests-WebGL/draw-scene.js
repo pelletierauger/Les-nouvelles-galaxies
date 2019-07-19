@@ -30,32 +30,18 @@ drawDots = function() {
     let t = drawCount + 800;
     let fx = 1;
     let fy = 1;
+    let x, y;
     for (let i = 0; i < 10000; i += 1) {
-        let x = sin(i * sin(t * 0.000001) * 1000) * i * 0.00007;
-        let y = cos(i * sin(t * 0.000001) * 1000) * i * 0.00007;
-//         x = cos(y + x);
-//         y = tan(x * y + x + y + x + x);
-//         y = sin((y + x) * 2);
-//         x = pow(x, 0.5);
-//         y = pow(y, x);
-//         x = sin(fx * 3.56) * sin(x * 2);
-//            x += cos(fx * sin(t * 10) * 3);
-//            y += cos(fy * sin(t * 10) * 3);
-           x = sin(x + fx * 10) * 0.10125;
-           y = sin(y + fy * 10) * 0.10125;
-//         x = cos(y + x) * 0.5;
-//            x = sin(x + fx * 2) * 1.8;
-//            y = sin(y + fx * 2) * 1.8;
-//         y = sin(fy * 3.56) * sin(y);
-//         y = cos(fy * 0.0001) * sin(y);
-//         x = cos((y + x + x) * 1);
+        x = sin(fx * fy * 20);
+        y = cos(x * tan(t * 5) * 10);
+        y *= cos(y * 200);
+        fx = x;
+        fy = y;
         x += (Math.random() - 0.5) * 0.00005;
         y += (Math.random() - 0.5) * 0.00005;
         x += xOffset * 0.15 * 0.0125;
         y += yOffset * 0.15 * 0.0125;
-        vertices.push(x * 10, y * 10, 0.0);
-        fx = x;
-        fy = y;
+        vertices.push(x * 0.5, y * 0.5, 0.0);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
