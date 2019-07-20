@@ -51,10 +51,10 @@ draw = function() {
     // rect gives us some geometry on the screen
     // rect(0, 0, width, height);
     // console.log("Drawing!");
-    setBGShaders();
-    gl.uniform1f(time, drawCount);
-    drawBG();
-    setDotsShaders();
+//     setBGShaders();
+//     gl.uniform1f(time, drawCount);
+//     drawBG();
+//     setDotsShaders();
     drawDots();
 //     setOverlayShaders();
 //     gl.uniform1f(time, drawCount);
