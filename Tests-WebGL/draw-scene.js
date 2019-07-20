@@ -34,10 +34,11 @@ drawDots = function() {
     let y = 1;
     for (let i = 0; i < 10000; i += 1) {
         x = sin(sin(i * 0.001) + i * t * 0.001) * i * 0.0001;
-        y = cos(cos(i * 0.001) + i * t * 0.001) * i * 0.00015;
-        x *= cos(x) * sin(x + t * 20);
-        fx = x * 0.2 * sin(fx * 9) * 2;
-        fy = y * 0.2 * sin(fy * 9) * 2;
+        y = cos(tan(i * 0.001) + i * t * 0.001) * i * 0.00015;
+        x *= cos(fx * fy * 0.001) * sin(x + t * 20);
+        y *= cos(fx * fy * 0.001) * cos(x + t * 20);
+        fx = x;
+        fy = y * 2;
         x += (Math.random() - 0.5) * 0.00005;
         y += (Math.random() - 0.5) * 0.00005;
         x += xOffset * 0.15 * 0.0125;
