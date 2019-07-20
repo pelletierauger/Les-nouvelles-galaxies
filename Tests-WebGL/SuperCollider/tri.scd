@@ -27,6 +27,6 @@ var f = ~toFreq.("F3");
 Synth.new(\tri, [\freq, f * 0.5, \lfoFreq, rrand(0.1, 6), \pan, rrand(-0.5, 0.5), \amp, 0.85]);
 Synth.new(\tri, [\freq, f, \lfoFreq, rrand(0.1, 6), \pan, rrand(-0.5, 0.5), \amp, 0.85]);
 Synth.new(\tri, [\freq, f * 7.midiratio, \lfoFreq, rrand(0.1, 6), \pan, rrand(-0.5, 0.5), \amp, 0.85]);
-Synth.new(\tri, [\freq, f * 15.midiratio, \lfoFreq, rrand(0.1, 6), \pan, rrand(-0.5, 0.5), \amp, 0.85]);
-Synth.new(\tri, [\freq, f * 2.midiratio, \lfoFreq, rrand(6, 12), \pan, rrand(-0.5, 0.5), \amp, 0.85]);
+Synth.new(\tri, [\freq, f * 14.midiratio, \lfoFreq, rrand(0.1, 6), \pan, rrand(-0.5, 0.5), \amp, 0.85]);
+Synth.new(\tri, [\freq, f * 4.midiratio, \lfoFreq, rrand(6, 12), \pan, rrand(-0.5, 0.5), \amp, 0.85]);
 )
