@@ -54,7 +54,9 @@ draw = function() {
 //     setBGShaders();
 //     gl.uniform1f(time, drawCount);
 //     drawBG();
-//     setDotsShaders();
+    if (frameCount == 1) {
+        setDotsShaders();
+    }
     drawDots();
 //     setOverlayShaders();
 //     gl.uniform1f(time, drawCount);
