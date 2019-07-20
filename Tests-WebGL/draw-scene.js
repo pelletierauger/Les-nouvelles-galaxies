@@ -27,24 +27,21 @@ drawDots = function() {
     vertices = [];
     let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
-    let t = drawCount * 0.5 + 800;
+    let t = drawCount + 800;
     let fx = 1;
     let fy = 1;
-    let x, y;
+    let x = 1;
+    let y = 1;
     for (let i = 0; i < 10000; i += 1) {
-        x = sin(fx * fy * 100);
-        y = cos(x * sin(t * 200) * 1);
-//         y *= cos(fy * 4);
-//         x *= sin(fy * 4);
-        y += cos(fy * sin(t * 10) * 5) * 1;
-        x += sin(fy * sin(t * 10) * 5) * 1;
-        fx = x;
-        fy = y;
+        x = fx + sin(fx + i * t * 0.01) * i * 0.0001;
+        y = fy + cos(fx + cos(i * 0.01) + i * t * 0.01) * i * 0.00015;
+        fx = x * 0.1 * sin(fx * 95) * 2;
+        fy = y * 0.1 * sin(fy * 95) * 2;
         x += (Math.random() - 0.5) * 0.00005;
         y += (Math.random() - 0.5) * 0.00005;
         x += xOffset * 0.15 * 0.0125;
         y += yOffset * 0.15 * 0.0125;
-        vertices.push(x * 0.4, y * 0.4, 0.0);
+        vertices.push(x * 0.8, y * 0.8, 0.0);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
