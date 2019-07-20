@@ -33,8 +33,8 @@ drawDots = function() {
     let x = 1;
     let y = 1;
     for (let i = 0; i < 30000; i += 1) {
-        x = sin(tan(i * 2 + t) + i * t * 0.000001) * i * 0.00005;
-        y = cos(tan(i * 2 + t) + i * t * 0.000001) * i * 0.00005;
+        x = sin(tan(i * 0.0125 + t) + i * t * 0.000001) * i * 0.00005;
+        y = cos(tan(i * 0.0125 + t) + i * t * 0.000001) * i * 0.00005;
 //         x *= sin(t * 15 * cos(y * 0.25));
 //         x *= cos(fx * fy * 0.001) * sin(x + t * 20);
 //         y *= cos(fx * fy * 0.001) * cos(x + t * 20);
