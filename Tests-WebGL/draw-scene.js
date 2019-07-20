@@ -37,15 +37,15 @@ drawDots = function() {
         y = cos(tan(i * 25 + t) + i * t * 0.000000001) * i * 0.00015;
 //         x *= cos(fx * fy * 0.001) * sin(x + t * 20);
 //         y *= cos(fx * fy * 0.001) * cos(x + t * 20);
-        x += fx * 0.35;
-        y += fy * 0.35;
+        x += sin(fx * 3) * 0.15;
+        y += sin(fy * 3) * 0.15;
         fx = x;
         fy = y;
 //         x += (Math.random() - 0.5) * 0.00005;
 //         y += (Math.random() - 0.5) * 0.00005;
         x += xOffset * 0.25;
         y += yOffset * 0.25;
-        vertices.push(x * 1.5 * 0.5, y * 0.8 * 0.5, 0.0);
+        vertices.push(x * 1.5 * 0.35, y * 0.8 * 0.35, 0.0);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
