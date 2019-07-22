@@ -33,12 +33,12 @@ drawDots = function() {
     let x = 1;
     let y = 1;
     for (let i = 0; i < 30000; i += 1) {
-        x = Math.sin(Math.tan(i * 24.9 + t * 0.5) + i * t * 0.00000001) * i * 0.00003;
-        y = Math.cos(Math.tan(i * 24.9 + t * 0.5) + i * t * 0.00000001) * i * 0.00005;
-        x *= Math.cos(fx * fy * 0.001 * t * 5) * Math.sin(x + t * 10);
-        x *= Math.cos(fx * fy * 0.001 * t * 7) * Math.sin(x + t * 15);
+        x = Math.sin(Math.tan(i * 26.9 + t * 2.95) + i * t * 0.00000001) * i * 0.00003;
+        y = Math.cos(Math.tan(i * 26.9 + t * 2.95) + i * t * 0.00000001) * i * 0.00005;
+//         x *= Math.cos(fx * fy * 0.001 * t * 5) * Math.sin(x + t * 10);
+//         x *= Math.cos(fx * fy * 0.001 * t * 7) * Math.sin(x + t * 15);
 //         y *= cos(fx * fy * 0.001) * cos(x + t + 2 * 10);
-        x -= Math.sin(fx * fx * fy * Math.cos(fy * 400) * 0.018) * 7.5 * 2;
+        x -= Math.sin(fx * fx * fy * Math.cos(fy * 40 * sin(t * 2.5)) * 0.018) * 7.5 * 2;
         y -= Math.sin(fy * fy * 0.018) * 7.5 * 2;
         fx = x;
         fy = y;
