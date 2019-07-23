@@ -32,21 +32,22 @@ drawDots = function() {
     let fy = 1;
     let x = 1;
     let y = 1;
+    let a = 4, b = 2, c = 0.1;
     for (let i = 0; i < 20000; i += 1) {
-        x = fx * 0.16 + Math.sin(Math.tan(i * 24.9 + t * 0.5) + i * t * 0.000001) * i * 0.000022;
-        y = fy * 0.16 + Math.cos(Math.tan(i * 24.9 + t * 0.5) + i * t * 0.000001) * i * 0.00005;
+        x = sin(fx * sin(t * 10) * 2) + cos(i * t * 0.001) * 1;
+        y = cos(fx * sin(t * 10) * 2) + sin(i * t * 0.001) * 2;
 //         x *= Math.cos(fx * fy * 0.001 * t * 5) * Math.sin(x + t * 10);
 //         x *= Math.cos(fx * fy * 0.001 * t * 7) * Math.sin(x + t * 15);
-//         y *= cos(fx * fy * 0.001) * cos(x + t + 2 * 10);
+//         y *= cos(x + y + t * 10 + 2 * 10000);
 //         x -= Math.sin(fx * fx * fy * Math.cos(fy * 400) * 0.018) * 7.5 * 2;
 //         y -= Math.sin(fy * fy * 0.018) * 7.5 * 2;
-        fx = tan(x * 0.15 * sin(t * 2)) * 40;
-        fy = tan(y * 0.15 * sin(t * 2)) * 40;
+        fx = x;
+        fy = y;
 //         x += (Math.random() - 0.5) * 0.00005;
 //         y += (Math.random() - 0.5) * 0.00005;
         x += xOffset * 0.125;
         y += yOffset * 0.125;
-        vertices.push(x * 1.3 * 1.5, y * 0.9 * 1.5 - 0.25, 0.0);
+        vertices.push(x * 0.25, y * 0.25, 0.0);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
