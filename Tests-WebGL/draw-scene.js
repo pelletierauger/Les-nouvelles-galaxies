@@ -32,21 +32,21 @@ drawDots = function() {
     let fy = 1;
     let x = 1;
     let y = 1;
-    for (let i = 0; i < 30000; i += 1) {
-        x = Math.sin(Math.tan(i * 24.9 + t * 0.5) + i * t * 0.00000001) * i * 0.00003;
-        y = Math.cos(Math.tan(i * 24.9 + t * 0.5) + i * t * 0.00000001) * i * 0.00005;
-        x *= Math.cos(fx * fy * 0.001 * t * 5) * Math.sin(x + t * 10);
-        x *= Math.cos(fx * fy * 0.001 * t * 7) * Math.sin(x + t * 15);
+    for (let i = 0; i < 20000; i += 1) {
+        x = Math.sin(Math.tan(fx * 0.4 + i * 24.9 + t * 0.5) + i * t * 0.000001) * i * 0.000022;
+        y = Math.cos(Math.tan(fx * 0.4 + i * 24.9 + t * 0.5) + i * t * 0.000001) * i * 0.00005;
+//         x *= Math.cos(fx * fy * 0.001 * t * 5) * Math.sin(x + t * 10);
+//         x *= Math.cos(fx * fy * 0.001 * t * 7) * Math.sin(x + t * 15);
 //         y *= cos(fx * fy * 0.001) * cos(x + t + 2 * 10);
-        x -= Math.sin(fx * fx * fy * Math.cos(fy * 400) * 0.018) * 7.5 * 2;
-        y -= Math.sin(fy * fy * 0.018) * 7.5 * 2;
+//         x -= Math.sin(fx * fx * fy * Math.cos(fy * 400) * 0.018) * 7.5 * 2;
+//         y -= Math.sin(fy * fy * 0.018) * 7.5 * 2;
         fx = x;
         fy = y;
 //         x += (Math.random() - 0.5) * 0.00005;
 //         y += (Math.random() - 0.5) * 0.00005;
-        x += xOffset * 0.25;
-        y += yOffset * 0.25;
-        vertices.push(x * 1.3, y * 0.9 + 0.1, 0.0);
+        x += xOffset * 0.125;
+        y += yOffset * 0.125;
+        vertices.push(x * 1.3 * 1.5, y * 0.9 * 1.5 + 0.1, 0.0);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
@@ -71,5 +71,5 @@ drawDots = function() {
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
-    gl.drawArrays(gl.POINTS, 0, 30000);
+    gl.drawArrays(gl.POINTS, 0, 20000);
 }
