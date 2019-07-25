@@ -27,7 +27,7 @@ drawDots = function() {
     vertices = [];
     let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
-    let t = drawCount * 1.35 + 87;
+    let t = drawCount * 5.35 + 870;
     let fx = 1;
     let fy = 1;
     let x = 1;
@@ -37,15 +37,15 @@ drawDots = function() {
         y = cos(tan(i * 24.9 + t) + i * t * 0.00000005) * i * 0.00015;
 //         x *= cos(fx * fy * 0.001) * sin(x + t * 40);
 //         y *= cos(fx * fy * 0.001) * cos(x + t * 20);
-        x += cos(fx * 0.18) * 5;
-        y += sin(fy * 0.18) * 5;
+        x += cos(fx * 0.3) * tan(i * 0.0001 * sin(t)) * 3;
+        y += sin(fy * 0.3) * tan(i * 0.0001 * sin(t)) * 3;
         fx = x;
         fy = y;
 //         x += (Math.random() - 0.5) * 0.00005;
 //         y += (Math.random() - 0.5) * 0.00005;
         x += xOffset * 0.25;
         y += yOffset * 0.25;
-        vertices.push(x * 1 - 3.8, y * 0.8 * 0.31 - 0.75, 0.0);
+        vertices.push(x * 0.25 - 0.05, y * 0.8 * 0.31 - 0.15, 0.0);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
