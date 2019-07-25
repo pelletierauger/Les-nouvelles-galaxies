@@ -34,8 +34,8 @@ drawDots = function() {
     let y = 1;
     let t2 = t * 1000;
     for (let i = 0; i < 30000; i += 1) {
-        x = cos(pow(i + fx * 0.4 * (sin(t2) + 1), sin(tan(t * 0.01)))) * i * 0.0005;
-        y = sin(pow(i + fx * 0.4 * (sin(t2) + 1), sin(tan(t * 0.01)))) * i * 0.0005;
+        x = cos(pow(i + i + fy * 0.8 * (sin(t2) + 1), sin(tan(t * 0.01)))) * i * 0.0005;
+        y = sin(pow(i + i + fy * 0.8 * (sin(t2) + 1), sin(tan(t * 0.01)))) * i * 0.0005;
         fx = x;
         fy = y;
 //         x += (Math.random() - 0.5) * 0.00005;
