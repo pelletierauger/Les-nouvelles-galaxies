@@ -27,25 +27,22 @@ drawDots = function() {
     vertices = [];
     let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
-    let t = drawCount * 5.35 + 800;
+    let t = drawCount * 0.0135 + 710;
     let fx = 1;
     let fy = 1;
     let x = 1;
     let y = 1;
+    let t2 = t * 1000;
     for (let i = 0; i < 30000; i += 1) {
-        x = sin(fx * sin(t * 2)) + sin(tan(i * 24.9 + t) + i * t * 0.00000005) * i * 0.00005;
-        y = cos(fx * sin(t * 2)) + cos(tan(i * 24.9 + t) + i * t * 0.00000005) * i * 0.00015;
-//         x *= cos(fx * fy * 0.001) * sin(x + t * 40);
-//         y *= cos(fx * fy * 0.001) * cos(x + t * 20);
-//         x *= sin(fx * 0.01 + i * 0.0001 * sin(t)) * 3;
-//         y += cos(fx * 0.01 + i * 0.0001 * cos(t)) * 3;
+        x = cos(pow(i + fx * 0.4 * (sin(t2) + 1), sin(tan(t * 0.01)))) * i * 0.0005;
+        y = sin(pow(i + fx * 0.4 * (sin(t2) + 1), sin(tan(t * 0.01)))) * i * 0.0005;
         fx = x;
         fy = y;
 //         x += (Math.random() - 0.5) * 0.00005;
 //         y += (Math.random() - 0.5) * 0.00005;
         x += xOffset * 0.25;
         y += yOffset * 0.25;
-        vertices.push(x * 0.42 - 0.05, y * 0.8 * 0.31, 0.0);
+        vertices.push(x * 0.125 * 0.7, y * 0.2 * 0.7, 0.0);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
