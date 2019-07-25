@@ -33,8 +33,8 @@ drawDots = function() {
     let x = 1;
     let y = 1;
     for (let i = 0; i < 30000; i += 1) {
-        x = sin(tan(i * 24.9 + t) + i * t * 0.00000005) * i * 0.00005;
-        y = cos(tan(i * 24.9 + t) + i * t * 0.00000005) * i * 0.00015;
+        x = sin(tan(i * 24.9 + t) + i * t * 0.00000015) * i * 0.00005;
+        y = cos(tan(i * 24.9 + t) + i * t * 0.00000015) * i * 0.00015;
 //         x *= cos(fx * fy * 0.001) * sin(x + t * 10);
 //         y *= cos(fx * fy * 0.001) * cos(x + t * 10);
         x += cos(fx * 0.3 + i * 0.0001) * tan(i * 0.0001 * sin(t)) * 1;
@@ -45,7 +45,7 @@ drawDots = function() {
 //         y += (Math.random() - 0.5) * 0.00005;
         x += xOffset * 0.25;
         y += yOffset * 0.25;
-        vertices.push(x * 0.25 - 0.05, y * 0.8 * 0.31 - 0.15, 0.0);
+        vertices.push(x * 0.25 - 0.05, y * 0.8 * 0.18 - 0.15, 0.0);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
