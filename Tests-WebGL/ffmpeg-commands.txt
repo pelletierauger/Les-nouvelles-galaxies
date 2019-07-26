@@ -1,0 +1,17 @@
+ffmpeg -f image2 -framerate 24 -i ./frames/sketch-%05d.png -c:v libx264 -pix_fmt yuv420p red-dots.mp4
+
+
+-filter:v 
+
+ffmpeg -f image2 -framerate 24 -i ./frames/sketch-%05d.png -c:v libx264 -filter:v "crop=800:800:240:0" -pix_fmt yuv420p red-dots.mp4
+
+ffmpeg -f image2 -framerate 24 -i ./frames/sketch-%05d.png -c:v libx264 -filter:v "crop=800:800:240:0" -pix_fmt yuv420p red-dots.mp4
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/sketch-%05d.png -filter:v "colorlevels=rimax=0.6:gimax=0.6:bimax=0.6, crop=800:800:240:0" -vf palettegen -y ./video-renders/palette.png
+
+ffmpeg -f image2 -framerate 24 -i ./frames/sketch-%05d.png -filter:v "colorlevels=rimax=0.6:gimax=0.6:bimax=0.6, crop=800:800:240:0" -i ./video-renders/palette.png -lavfi paletteuse ./video-renders/red-dots.gif
+
+ffmpeg -f image2 -framerate 24 -i ./frames/sketch-%05d.png -i ./video-renders/palette.png -lavfi paletteuse ./video-renders/red-dots.gif
+
+ffmpeg -f concat -safe 0 -r 8 -i ./ffmpeg-commands/frames-square-little.txt -filter:v "colorlevels=rimax=0.6:gimax=0.6:bimax=0.6, scale=720:-1" -sws_flags lanczos -i ./ffmpeg-commands/palette.png -lavfi paletteuse fractal-square-2pass.gif
