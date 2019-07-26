@@ -36,9 +36,11 @@ drawDots = function() {
     let m, n;
     for (let i = 0; i < 15000; i += 1) {
         m = sin(t2) * 250;
-        n = map(sin(t2), -1, 1, 0.25, 0.5);
-        x = cos(i * 0.01 + fx * n) * i * 0.0005;
-        y = sin(i * 0.01 + m + fy * n) * i * 0.0005;
+        n = map(sin(t2), -1, 1, 0.25, 0.3);
+        x = cos(i * 0.01 + m + fx * n) * i * 0.0005;
+        y = sin(i * 0.01 + m + fx * n) * i * 0.0005;
+        x *= tan(i * 0.0001 + m) + cos(i * 0.05);
+        y *= tan(i * 0.0001 + m) + cos(i * 0.05);
         fx = x;
         fy = y;
 //         x += (Math.random() - 0.5) * 0.00005;
