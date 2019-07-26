@@ -32,7 +32,7 @@ drawDots = function() {
     let fy = 1;
     let x = 1;
     let y = 1;
-    let t2 = t * 800;
+    let t2 = t * 8000;
     let m, n;
     for (let i = 0; i < 15000; i += 1) {
         m = sin(t2) * 750;
@@ -43,7 +43,7 @@ drawDots = function() {
 //         y += cos(y * sin(x) * 0.25);
 //         x *= pow(x, 3);
 //         x = sin(x + y);
-        fx = x * sin(t2 + fx * 0.5);
+        fx = sin(x) * sin(t2 + fx * 0.05 + i * 0.001);
 //         fy = y + fx * (sin(t2 + fx) + 0.003);
 //         x += (Math.random() - 0.5) * 0.00005;
 //         y += (Math.random() - 0.5) * 0.00005;
