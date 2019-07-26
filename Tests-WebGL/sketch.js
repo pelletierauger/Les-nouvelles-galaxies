@@ -2,6 +2,7 @@ let looping = true;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
 let fileName = "./frames/sketch";
+let maxFrames = 100;
 // a shader variable
 let gl;
 let shaderProgram;
@@ -51,17 +52,20 @@ draw = function() {
     // rect gives us some geometry on the screen
     // rect(0, 0, width, height);
     // console.log("Drawing!");
-//     setBGShaders();
-//     gl.uniform1f(time, drawCount);
-//     drawBG();
+    //     setBGShaders();
+    //     gl.uniform1f(time, drawCount);
+    //     drawBG();
     if (frameCount == 1) {
         setDotsShaders();
     }
     drawDots();
-//     setOverlayShaders();
-//     gl.uniform1f(time, drawCount);
-//     drawBG();
+    //     setOverlayShaders();
+    //     gl.uniform1f(time, drawCount);
+    //     drawBG();
     drawCount += drawIncrement;
+    if (exporting && frameCount < maxFrames) {
+        frameExport();
+    }
 }
 
 // function windowResized() {
