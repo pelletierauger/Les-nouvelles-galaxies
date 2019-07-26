@@ -32,22 +32,24 @@ drawDots = function() {
     let fy = 1;
     let x = 1;
     let y = 1;
-    let t2 = t * 15;
+    let t2 = t * 800;
     let m, n;
     for (let i = 0; i < 15000; i += 1) {
-        m = sin(t2) * 250;
-        n = map(sin(t2), -1, 1, 0.25, 0.3);
-        x = cos(i * 0.01 + m + fx * n) * i * 0.0005;
-        y = sin(i * 0.01 + m + fx * n) * i * 0.0005;
-        x *= tan(i * 0.0001 + m) + cos(i * 0.05);
-        y *= tan(i * 0.0001 + m) + cos(i * 0.05);
-        fx = x;
-        fy = y;
+        m = sin(t2) * 750;
+        n = map(sin(t2), -1, 1, 0.5, 0.75);
+        x = cos(i * 2000 + fx * 0.35 + t2) * i * 0.0005;
+        y = sin(i * 2000 + fx * 0.35 + t2) * i * 0.0005;
+//         x += sin(x * sin(x) * 0.25);
+//         y += cos(y * sin(x) * 0.25);
+//         x *= pow(x, 3);
+//         x = sin(x + y);
+        fx = x + fx * (sin(t2) + 0.3);
+        fy = y + fx * (sin(t2) + 0.3);
 //         x += (Math.random() - 0.5) * 0.00005;
 //         y += (Math.random() - 0.5) * 0.00005;
         x += xOffset * 0.25;
         y += yOffset * 0.25;
-        vertices.push(x * 0.125, y * 0.2, 0.0);
+        vertices.push(x * 0.125 * 1, y * 0.2 * 1, 0.0);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
