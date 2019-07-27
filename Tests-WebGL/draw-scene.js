@@ -27,14 +27,14 @@ drawDots = function() {
     vertices = [];
     let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
-    let t = drawCount * 1e-1 + 1010;
+    let t = drawCount * 1e-1 + 100000;
     let fx = 1;
     let fy = 1;
     let x = 1;
     let y = 1;
     for (let i = 0; i < 15000; i += 1) {
-        x = (cos(fx * 2 + fy * 4) * tan(i * 1e-2 * t * 1e4) + 1) * 0.35;
-        y = (sin(fx * 2 + fy * 4) * tan(i * 1e-2 * t * 1e4) + 1) * 0.5;
+        x = (cos(fy * fx * 4 + t * 1e-6 * i) * tan(i * 1e-4 + t * 1e1) + 1) * 0.31;
+        y = (sin(fy * fx * 4 + t * 1e-6 * i) * tan(i * 1e-4 + t * 1e1) + 1) * 0.5;
         fx = x;
         fy = y;
 //         x += (Math.random() - 0.5) * 0.00005;
