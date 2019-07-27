@@ -27,14 +27,14 @@ drawDots = function() {
     vertices = [];
     let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
-    let t = drawCount * 1e-4 + 10010;
+    let t = drawCount * 1e-1 + 1010;
     let fx = 1;
     let fy = 1;
     let x = 1;
     let y = 1;
-    for (let i = 0; i < 30000; i += 1) {
-        x = (cos(fx * fy * 4) * tan(i * 1e-1 * t * 0.01) + 1) * 0.35;
-        y = (sin(fx * fy * 4) * tan(i * 1e-1 * t * 0.01) + 1) * 0.5;
+    for (let i = 0; i < 15000; i += 1) {
+        x = (cos(fx * 2 + fy * 4) * tan(i * 1e-2 * t * 1e4) + 1) * 0.35;
+        y = (sin(fx * 2 + fy * 4) * tan(i * 1e-2 * t * 1e4) + 1) * 0.5;
         fx = x;
         fy = y;
 //         x += (Math.random() - 0.5) * 0.00005;
@@ -66,5 +66,5 @@ drawDots = function() {
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
-    gl.drawArrays(gl.POINTS, 0, 30000);
+    gl.drawArrays(gl.POINTS, 0, 15000);
 }
