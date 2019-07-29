@@ -39,6 +39,7 @@ drawDots = function() {
        y = sin(fx + i * 1e6 + t * 1.5e-2) * i * 1.5e-4;
 //        x += cos(i * 1e-4 + t * 1e-1);
 //         x += sin(t * 1e-1);
+        y *= cos(t * i * 1e-6);
 //         y += fy * 2;
         fx = x;
         fy = y;
