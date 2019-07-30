@@ -10,8 +10,8 @@ SynthDef.new(\tri, {
     lfo = SinOsc.kr(lfoFreq, mul: 0.5, add: 0.5);
     env = EnvGen.ar(Env.new([0.0, 1.0, sus, sus, 0.00001], [atk, dec, sustime * 1, rel * 4], [\linear, \linear, \linear, \exponential]), doneAction: 2);
 //     sig = Pulse.ar([freq, freq+1], width: SinOsc.kr(pMod).range(0.25, 0.75), mul: 1.0, add: 0.0) * 0.11;
-    mod = SinOsc.ar(freq * 1) * 800 * 4;
-    sig = LFTri.ar([freq, freq+1] + mod) * SinOsc.ar(freq * 1) * 0.1;
+    mod = SinOsc.ar(freq * 2) * 800 * 2;
+    sig = LFTri.ar([freq, freq+1] + mod) * SinOsc.ar(freq * 4) * 0.1;
     sig = sig * env;
     sig = (sig * 0.75) + (sig * 0.25);
 // sig = sig * lfo;
@@ -43,7 +43,7 @@ Synth.new(\tri, [\freq, ~toFreq.("F3") * -5.midiratio * 1, \atk, 0.01, \dec, 0.1
     \dur, Pseq([1/5], inf),
     \freq, ~toFreq.("G3") * Pseq([0, Rest(), 4, Rest(), 2].midiratio.stutter(1), inf)
         * Pseq([0, -7].midiratio.stutter(5), inf),
-    \atk, 0.001, 
+    \atk, 0.05, 
     \dec, 0.01,
     \rel, 1, 
     \sustime, 0.01,
@@ -58,9 +58,9 @@ Synth.new(\tri, [\freq, ~toFreq.("F3") * -5.midiratio * 1, \atk, 0.01, \dec, 0.1
 ~mel2 = Pbind(
     \instrument, \tri,
     \dur, Pseq([1/5], inf),
-    \freq, ~toFreq.("B4") * Pseq([0, -2, Rest(), -4, 0].midiratio.stutter(1), inf)
-    * Pseq([0, 5].midiratio.stutter(10), inf),
-    \atk, 0.001, 
+    \freq, ~toFreq.("B4") * Pseq([3, -2, Rest(), -4, Rest(), 0, -2, Rest(), -4, Rest()].midiratio.stutter(1), inf)
+    * Pseq([0, 0].midiratio.stutter(10), inf),
+    \atk, 0.04, 
     \dec, 0.01,
     \rel, 0.1, 
     \sustime, 0.01,
