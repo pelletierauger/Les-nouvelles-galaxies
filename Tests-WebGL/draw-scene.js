@@ -35,11 +35,11 @@ drawDots = function() {
     let numPoints = 15000;
     let inc = TWO_PI / numPoints;
     for (let i = 0; i < numPoints; i += 1) {
-       x = cos(fx + i * 1e6 + t * 1.5e-2) * i * 1.5e-4;
-       y = sin(fx + i * 1e6 + t * 1.5e-2) * i * 1.5e-4;
+       x = cos(i * 1e-2) * i * 1.5e-4;
+       y = sin(i * 1e-2) * i * 1.5e-4;
 //        x += cos(i * 1e-4 + t * 1e-1);
 //         x += sin(t * 1e-1);
-        y *= cos(t * i * 1e-6);
+        y += cos(fy * 1.125 + t * 1e-1);
 //         y += fy * 2;
         fx = x;
         fy = y;
