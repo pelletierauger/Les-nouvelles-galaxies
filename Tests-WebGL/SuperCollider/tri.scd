@@ -10,8 +10,8 @@ SynthDef.new(\tri, {
     lfo = SinOsc.kr(lfoFreq, mul: 0.5, add: 0.5);
     env = EnvGen.ar(Env.new([0.0, 1.0, sus, sus, 0.00001], [atk, dec, sustime * 1, rel * 4], [\linear, \linear, \linear, \exponential]), doneAction: 2);
 //     sig = Pulse.ar([freq, freq+1], width: SinOsc.kr(pMod).range(0.25, 0.75), mul: 1.0, add: 0.0) * 0.11;
-    mod = SinOsc.ar(freq * 2) * 800 * 2;
-    sig = LFTri.ar([freq, freq+1] + mod) * SinOsc.ar(freq * 4) * 0.1;
+    mod = SinOsc.ar(freq * 1) * 800 * 8;
+    sig = LFTri.ar([freq, freq+1] + mod) * SinOsc.ar(freq * 2) * 0.1;
     sig = sig * env;
     sig = (sig * 0.75) + (sig * 0.25);
 // sig = sig * lfo;
@@ -24,13 +24,14 @@ sig = sig * amp;
 )
 s.peakCPU;
 (
-var f = ~toFreq.("F3") * -1.midiratio * 1;
-Synth.new(\tri, [\freq, f * 0.5 * -6.midiratio, \lfoFreq, rrand(0.1, 6), \pan, rrand(-0.5, 0.5), \amp, 0.85 * 1]);
-Synth.new(\tri, [\freq, f * 5.midiratio, \lfoFreq, rrand(0.1, 6), \pan, rrand(-0.5, 0.5), \amp, 0.85 * 8]);
-Synth.new(\tri, [\freq, f * 6.midiratio * 1, \lfoFreq, rrand(0.1, 6), \pan, rrand(-0.5, 0.5), \amp, 0.5 * 8]);
-Synth.new(\tri, [\freq, f * 8.midiratio, \lfoFreq, rrand(0.1, 6), \pan, rrand(-0.5, 0.5), \amp, 0.5 * 8]);
-Synth.new(\tri, [\freq, f * 10.midiratio * 1, \lfoFreq, rrand(6, 12), \pan, rrand(-0.5, 0.5), \amp, 0.5 * 8]);
-Synth.new(\tri, [\freq, f * 15.midiratio * 1, \lfoFreq, rrand(6, 12), \pan, rrand(-0.5, 0.5), \amp, 0.5 * 8]);
+var am = 4;
+var f = ~toFreq.("Db3") * 6.midiratio * 1;
+Synth.new(\tri, [\freq, f * 0.5 * -13.midiratio, \lfoFreq, rrand(0.1, 6), \pan, rrand(-0.5, 0.5), \amp, 0.5 * am]);
+Synth.new(\tri, [\freq, f * 1.midiratio, \lfoFreq, rrand(0.1, 6), \pan, rrand(-0.5, 0.5), \amp, 0.85 * am]);
+Synth.new(\tri, [\freq, f * 6.midiratio * 1, \lfoFreq, rrand(0.1, 6), \pan, rrand(-0.5, 0.5), \amp, 0.5 * am]);
+Synth.new(\tri, [\freq, f * 8.midiratio, \lfoFreq, rrand(0.1, 6), \pan, rrand(-0.5, 0.5), \amp, 0.5 * am]);
+Synth.new(\tri, [\freq, f * 10.midiratio * 1, \lfoFreq, rrand(6, 12), \pan, rrand(-0.5, 0.5), \amp, 0.5 * am]);
+Synth.new(\tri, [\freq, f * 15.midiratio * 1, \lfoFreq, rrand(6, 12), \pan, rrand(-0.5, 0.5), \amp, 0.5 * am]);
 )
 
 
