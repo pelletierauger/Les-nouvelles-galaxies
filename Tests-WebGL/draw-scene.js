@@ -23,31 +23,62 @@ function drawBG() {
     gl.drawArrays(gl.TRIANGLES, 0, numItems);
 }
 
+// Superbe hiver javaScript
+// Aspirateur troublant
+drawCount = 2;
+drawIncrement = 0.00125;
+drawIncrement = 0.000125;
 drawDots = function() {
     vertices = [];
-    let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
-    let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
-    let t = drawCount * 0.35 + 870;
+    let xOffset = (noise(drawCount * 35) - 0.5);
+    let yOffset = (noise((drawCount + 100) * 35) - 0.5);
+    let t = drawCount * 0.000005 + 2;
     let fx = 1;
     let fy = 1;
-    let x = 1;
-    let y = 1;
-    for (let i = 0; i < 30000; i += 1) {
-        x = sin(tan(i * 25 + t) + i * t * 0.0000001) * i * 0.00005;
-        y = cos(tan(i * 25 + t) + i * t * 0.0000001) * cos(t + i * 0.0002) * i * 0.00015;
-//         x *= sin(t * 50 * cos(y * 0.002));
-//         x *= cos(fx * fy * 0.001) * sin(x + t * 20);
-//         y *= cos(fx * fy * 0.001) * cos(x + t * 20);
-        x += sin(fx * 0.12) * 5;
-        y += sin(fy * 0.12) * 5;
-        fx = x;
-        fy = y;
-//         x += (Math.random() - 0.5) * 0.00005;
-//         y += (Math.random() - 0.5) * 0.00005;
-        x += xOffset * 0.25;
-        y += yOffset * 0.25;
-        vertices.push(x * 1.5 * 0.235, y * 0.8 * 0.235 - 0.25, 0.0);
+    let x = 0;
+    let y = 0;
+    let num = 42000;
+
+    function ro(a, l, x, y, h) {
+        return {
+            x: x + cos(h + a + x * 0.00000125) * l,
+            y: y + sin(h + a + y * 0.00000125) * l,
+            h: h + a
+        };
     }
+    let amountRays = 120;
+    let sj = (1 - t) * 10.2;
+    //     sj = 0;
+    let numV = 0;
+    let rayInc = Math.PI * 2 / amountRays;
+    let metaV = [];
+    let indMetaV = 0;
+    for (let j = sj; j < (Math.PI * 2 + sj); j += rayInc) {
+        let p = { x: 0, y: 0, h: j };
+        metaV[indMetaV] = [];
+        for (let i = 0; i < 160; i += 1) {
+            let a = 2;
+            let l = 0.95;
+            let npx = sin(sin(t * 0.00001) + p.x * 0.69) * cos(sin(t * 0.00001) + p.y * 0.69 * 0.25) * i * 0.025;
+            let npy = sin(sin(t * 0.00001) + p.y * 0.69) * cos(sin(t * 0.00001) + p.x * 0.69 * 0.25) * i * 0.025;
+            p = ro(a, l, npx, npy, p.h);
+            p.x += xOffset * 0.75;
+            p.y += yOffset * 0.75;
+            let sc = map(i, 0, 20, 2.5, 1);
+            sc = constrain(sc, 1, 2.5);
+            //             sc = 1;
+            metaV[indMetaV].push(p.x * 0.52 * 1.5 * 0.25 * sc + 0., p.y * 0.8 * 0.25 * sc, 0.0);
+            numV += 1;
+        }
+        indMetaV++;
+    }
+    let flatV = [];
+    for (let j = 0; j < metaV[0].length; j += 3) {
+        for (let i = 0; i < metaV.length; i++) {
+            flatV.push(metaV[i][j], metaV[i][j + 1], metaV[i][j + 2]);
+        }
+    }
+    vertices = flatV;
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
     //Bind appropriate array buffer to it
@@ -71,5 +102,6 @@ drawDots = function() {
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
-    gl.drawArrays(gl.POINTS, 0, 30000);
+    gl.drawArrays(gl.POINTS, 0, numV);
+    drawIncrement += 0.000125 * 1e-2;
 }

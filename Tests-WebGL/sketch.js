@@ -2,6 +2,7 @@ let looping = true;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
 let fileName = "./frames/sketch";
+let maxFrames = 250;
 // a shader variable
 let gl;
 let shaderProgram;
@@ -20,7 +21,7 @@ function setup() {
     socket = io.connect('http://localhost:8080');
     // shaders require WEBGL mode to work
     pixelDensity(1);
-    cnvs = createCanvas(windowWidth, windowHeight, WEBGL);
+    cnvs = createCanvas(windowHeight, windowHeight, WEBGL);
     canvasDOM = document.getElementById('defaultCanvas0');
     gl = canvas.getContext('webgl');
 
@@ -41,6 +42,8 @@ function setup() {
 
     // Set the view port
     gl.viewport(0, 0, canvas.width, canvas.height);
+    // noiseSeed(8);
+    noiseSeed(105);
 }
 
 draw = function() {
@@ -51,17 +54,20 @@ draw = function() {
     // rect gives us some geometry on the screen
     // rect(0, 0, width, height);
     // console.log("Drawing!");
-//     setBGShaders();
-//     gl.uniform1f(time, drawCount);
-//     drawBG();
+    //     setBGShaders();
+    //     gl.uniform1f(time, drawCount);
+    //     drawBG();
     if (frameCount == 1) {
         setDotsShaders();
     }
     drawDots();
-//     setOverlayShaders();
-//     gl.uniform1f(time, drawCount);
-//     drawBG();
+    //     setOverlayShaders();
+    //     gl.uniform1f(time, drawCount);
+    //     drawBG();
     drawCount += drawIncrement;
+    if (exporting && frameCount < maxFrames) {
+        frameExport();
+    }
 }
 
 // function windowResized() {
