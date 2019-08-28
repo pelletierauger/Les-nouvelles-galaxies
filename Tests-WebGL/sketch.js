@@ -21,27 +21,37 @@ function setup() {
     socket = io.connect('http://localhost:8080');
     // shaders require WEBGL mode to work
     pixelDensity(1);
-    cnvs = createCanvas(windowHeight, windowHeight, WEBGL);
+    cnvs = createCanvas(windowWidth, windowHeight, WEBGL);
     canvasDOM = document.getElementById('defaultCanvas0');
     gl = canvas.getContext('webgl');
 
     // gl.cbf = gl.getExtension('WEBGL_color_buffer_float') || gl.getExtension('EXT_color_buffer_float');
     // gl.tf = gl.getExtension('OES_texture_float');
+    // Enable the depth test
+
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+    gl.enable(gl.DEPTH_TEST);
+    gl.depthMask(false);
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
     gl.enable(gl.BLEND);
-    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
     // gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
+
+
     // gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
-    frameRate(20);
-    noStroke();
+
 
     // Create an empty buffer object to store the vertex buffer
     vertex_buffer = gl.createBuffer();
 
     // Set the view port
-    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.viewport(0, 0, cnvs.width, cnvs.height);
+    frameRate(20);
+    noStroke();
     // noiseSeed(8);
     noiseSeed(105);
 }
