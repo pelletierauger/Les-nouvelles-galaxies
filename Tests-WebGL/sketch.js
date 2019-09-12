@@ -1,8 +1,8 @@
 let looping = true;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
-let fileName = "./frames/sketch";
-let maxFrames = 250;
+let fileName = "./frames/2/sketch";
+let maxFrames = 1200;
 // a shader variable
 let gl;
 let shaderProgram;
@@ -43,7 +43,7 @@ function setup() {
     // Set the view port
     gl.viewport(0, 0, canvas.width, canvas.height);
     // noiseSeed(8);
-    noiseSeed(105);
+    noiseSeed(650);
 }
 
 draw = function() {

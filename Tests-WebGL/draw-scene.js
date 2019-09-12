@@ -103,5 +103,5 @@ drawDots = function() {
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
     gl.drawArrays(gl.POINTS, 0, numV);
-    drawIncrement += 0.000125 * 1e-2;
+    drawIncrement += 0.000125 * 2e-2;
 }
