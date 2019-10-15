@@ -38,7 +38,6 @@ drawDots = function() {
     let x = 0;
     let y = 0;
     let num = 42000;
-
     function ro(a, l, x, y, h) {
         return {
             x: x + cos(h + a + x * 0.00000125) * l,
@@ -51,34 +50,21 @@ drawDots = function() {
     //     sj = 0;
     let numV = 0;
     let rayInc = Math.PI * 2 / amountRays;
-    let metaV = [];
-    let indMetaV = 0;
-    for (let j = sj; j < (Math.PI * 2 + sj); j += rayInc) {
-        let p = { x: 0, y: 0, h: j };
-        metaV[indMetaV] = [];
-        for (let i = 0; i < 160; i += 1) {
-            let a = 2;
-            let l = 0.95;
-            let npx = sin(sin(t * 0.00001) + p.x * 0.69) * cos(sin(t * 0.00001) + p.y * 0.69 * 0.25) * i * 0.025;
-            let npy = sin(sin(t * 0.00001) + p.y * 0.69) * cos(sin(t * 0.00001) + p.x * 0.69 * 0.25) * i * 0.025;
-            p = ro(a, l, npx, npy, p.h);
-            p.x += xOffset * 0.75;
-            p.y += yOffset * 0.75;
-            let sc = map(i, 0, 20, 2.5, 1);
-            sc = constrain(sc, 1, 2.5);
-            //             sc = 1;
-            metaV[indMetaV].push(p.x * 0.52 * 1.5 * 0.25 * sc + 0., p.y * 0.8 * 0.25 * sc, 0.0);
-            numV += 1;
+    let px = 1;
+    let py = 1;
+        for (let i = 0; i < 20000; i += 1) {
+            var m = Math.sin((drawCount * 0.19 + 2) * 7) * 2;
+            t = i / 30;
+            // t = sin(i);
+            var z = 20 + Math.sin(m * 1e-2) * 100;
+            // return {
+            x = Math.tan(t + m + i * 1e-4) * Math.tan(t + m * 15) * Math.cos(t + m) * i / z;
+            y = Math.tan(t + m + i * 1e-4) * Math.tan(t + m * 15) * Math.sin(t + m) * i / z;
+            px = sin(x * 0.001);
+            py = sin(y * 0.001);
+            vertices.push(x * 0.0019, y * 0.0019, 0.0);
+            numV++;
         }
-        indMetaV++;
-    }
-    let flatV = [];
-    for (let j = 0; j < metaV[0].length; j += 3) {
-        for (let i = 0; i < metaV.length; i++) {
-            flatV.push(metaV[i][j], metaV[i][j + 1], metaV[i][j + 2]);
-        }
-    }
-    vertices = flatV;
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
     //Bind appropriate array buffer to it
