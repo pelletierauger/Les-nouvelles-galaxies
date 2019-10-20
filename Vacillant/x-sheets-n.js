@@ -1,11 +1,4 @@
-xSheet = {
-    ailleurs00: {
-        d: 6000,
-        f: function(sum) {
-            // var rN = getSum(xSheet, xSheet.grotte);
-            septembre.update();
-        }
-    },
+var xSheet = {
     ailleurs0: {
         d: 300,
         f: function(sum) {
@@ -17,7 +10,10 @@ xSheet = {
         d: 300,
         f: function(sum) {
             var rN = getSum(xSheet, xSheet.ailleurs);
-            implosion6.update(rN);
+            var rN0 = getSum(xSheet, xSheet.ailleurs0);
+            var coFade = cosineFade(sum, 100);
+            // implosion6.update(rN);
+            implosion6.mix(rN, implosion7, rN0, coFade);
         }
     },
     ailleurs2: {
@@ -32,33 +28,23 @@ xSheet = {
         d: 600,
         f: function(sum) {
             var rN = getSum(xSheet, xSheet.ailleurs);
-            var rN0 = getSum(xSheet, xSheet.ailleurs3);
             var coFade = cosineFade(sum, 400);
-//          By tying the equation with rN0 instead of "0",
-//          we are stabilizing the function with itself.
-//          It doesn't rely directly on drawCount.
-//          7200 just happened to be the sum of all frames
-//          at the moment where I wrote this unstabilized function.
-            implosion6.mix(rN0 - 7200, implosion5, rN, coFade);
-//             lo(rN0);
-//             lo("");
+            implosion6.mix(0, implosion5, rN, coFade);
         }
     },
     cavern3: {
         d: 600,
         f: function(sum) {
-            var rN = getSum(xSheet, xSheet.cavern3);
-            nouvelleGrotte.update(rN - 7800);
-//             lo(rN);
+            // var rN = getSum(xSheet, xSheet.grotte);
+            nouvelleGrotte.update();
         }
     },
     cavern2: {
         d: 200,
         f: function(sum) {
-            var rN0 = getSum(xSheet, xSheet.cavern3) - 7800;
             var rN = getSum(xSheet, xSheet.cavern2);
             var coFade = cosineFade(sum, 100);
-            grotte2.mix(rN + 100, nouvelleGrotte, rN0, coFade);
+            grotte2.mix(rN + 100, nouvelleGrotte, 0, coFade);
         }
     },
     // cavern: {

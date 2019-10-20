@@ -12,6 +12,8 @@ let drawIncrement = 1;
 let vertexBuffer;
 let vertices = [];
 var drawingGeometry = true;
+const seed = 10;
+const openSimplex = openSimplexNoise(seed);
 
 function setup() {
     socket = io.connect('http://localhost:8080');
@@ -69,6 +71,23 @@ function setup() {
 draw = function() {
     gl.clear(gl.COLOR_BUFFER_BIT);
     runXSheet(xSheet);
+    for (let i = 0; i < 3000; i++) {
+        let v = Math.random();
+        let s = (v > 0.99) ? 10 : 1;
+        s = (v > 0.9995) ? s * random(1, 4) : 1;
+        vertices.push(Math.random() * 2 - 1, Math.random() * 2 - 1, s +  Math.random() * 0.01 * s);
+    }
+    let n = Math.PI * 1 / 100;
+    let s = Math.random() * Math.PI * 2;
+    let sX = Math.random() * 2 - 1;
+    let sY = Math.random() * 2 - 1;
+    let sC = (Math.random() < 0.9) ? 0.01 : 1;
+    for (let i = s; i < Math.PI + s; i += n) {
+        let osc = Math.sin(drawCount);
+        let x = cos(i) * cos(i * osc) * 0.1 + sX;
+        let y = sin(i) * sin(i * osc) * 0.175 + sY;
+        vertices.push(x, y, random(2, 20) * sC);
+    }
     sheetSlider.value(drawCount);
     // info1.html();
     sliderInfo1.html(queryXSheet(xSheet) + ": " + drawCount);

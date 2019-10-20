@@ -12,11 +12,11 @@ setDotsShaders = function() {
     varying vec2 myposition;
     varying vec2 center;
     void main(void) {
-        gl_Position = vec4(coordinates, 1.0);
+        gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.0);
         center = vec2(gl_Position.x, gl_Position.y);
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
-        gl_PointSize = 15.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 2.;
+        gl_PointSize = coordinates.z;
     }
     // endGLSL
     `;
@@ -56,7 +56,7 @@ setDotsShaders = function() {
         alpha = smoothstep(0.015, 0.000125, dist_squared) * 0.49;
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
-        gl_FragColor = vec4(1.0, 0.2 - dist_squared, 0.0 + alpha * 120., (3. - dist_squared * 12.0 - (rando * 0.1)) * 0.045 + alpha) * 1.25;
+        gl_FragColor = vec4(1.0, 1.0 - dist_squared, 1.0 + alpha * 120., (3. - dist_squared * 12.0 - (rando * 1.1)) * 0.0245 + alpha) * 2.25;
 //         gl_FragColor = vec4(1.0, 1.0 - dist_squared * 1.0, 0.0, 0.35 - dist_squared - (rando * 0.2));
         // gl_FragColor = vec4(d * 0.001, uv.x, 0.0, 0.25);
     }
@@ -140,7 +140,7 @@ drawDots = function() {
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
-    gl.drawArrays(gl.POINTS, 0, 3000);
+    gl.drawArrays(gl.POINTS, 0, 6100);
 }
 
 

@@ -28,14 +28,18 @@ function setupInfoDiv() {
 function createInfoDiv() {
     infoDiv = createDiv('');
     infoDiv.style('position', 'absolute');
-    infoDiv.style('bottom', '30px');
+    infoDiv.style('bottom', '40px');
     infoDiv.style('padding', '10px');
-    infoDiv.style('opacity', '0.5');
+    infoDiv.style('padding-top', '0px');
+    infoDiv.style('margin-left', '10px');
+    infoDiv.style('opacity', '1.0');
     infoDiv.style('z-index', '20');
     // infoDiv.style('background', '#222222');
     infoDiv.style('font-family', 'Inconsolata');
-    infoDiv.style('line-height', '0.9em');
-    infoDiv.style('color', '#cecece');
+    infoDiv.style('line-height', '0.1em');
+    infoDiv.style('font-size', '0.7em');
+    infoDiv.style('color', '#000000');
+    infoDiv.style('background', "#CDCDCD");
     // info5 = createP('this is some text');
     // info5.parent(infoDiv);
     // info4 = createP('this is some text');
@@ -55,8 +59,9 @@ function createInfoDiv() {
     sliders.push(sheetSlider);
 
     for (var i = 0; i <  sliders.length; i++) {
-        sliders[i].style('width', '280px');
-        sliders[i].style('margin-top', '-15px');
+        sliders[i].style('width', '386px');
+        sliders[i].style('margin-top', '-2px');
+        sliders[i].style('margin-bottom', '-5px');
     }
 
     sheetSlider.input(function() {
@@ -69,4 +74,14 @@ function createInfoDiv() {
         sliderInfo1.html("drawCount : " + drawCount + " (" + sheetSlider.value() + ")");
     }
 
+}
+
+function togInf() {
+    if (!drawingGeometry) {
+        infoDiv.style("display", "block");
+        drawingGeometry = true;
+    } else {
+        infoDiv.style("display", "none");
+        drawingGeometry = false;
+    }
 }
