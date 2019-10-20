@@ -4,13 +4,13 @@ let socket, cnvs, ctx, canvasDOM;
 let fileName = "./frames/alligator/alligator";
 fileName = "./frames/pulsar/pulsar";
 // fileName = "./frames/meadow/meadow";
-fileName = "./frames/smoke/smoke";
-fileName = "./frames/swirl/swirl"
+// fileName = "./frames/smoke/smoke";
+// fileName = "./frames/swirl/swirl"
 let maxFrames = 1500;
 maxFrames = 925;
 // maxFrames = 1300;
-maxFrames = 1200;
-maxFrames = 1100;
+// maxFrames = 1200;
+// maxFrames = 1100;
 let gl, shaderProgram;
 let time;
 let positive = true;
