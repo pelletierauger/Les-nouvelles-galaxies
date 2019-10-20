@@ -81,11 +81,13 @@ draw = function() {
     let s = Math.random() * Math.PI * 2;
     let sX = Math.random() * 2 - 1;
     let sY = Math.random() * 2 - 1;
-    let sC = (Math.random() < 0.9) ? 0.01 : 1;
+    let sC = (Math.random() < 0.5) ? 0.01 : 1;
     for (let i = s; i < Math.PI + s; i += n) {
         let osc = Math.sin(drawCount);
-        let x = cos(i) * cos(i * osc) * 0.1 + sX;
-        let y = sin(i) * sin(i * osc) * 0.175 + sY;
+//         let x = cos(i) * cos(i * osc) * 0.1 + sX;
+//         let y = sin(i) * sin(i * osc) * 0.175 + sY;
+        let x = cos(i * 0.1) * tan(osc * 10) * cos(i * osc) * 0.1 + sX;
+        let y = sin(i * 0.1) * tan(osc * 10) * sin(i * osc) * 0.175 + sY;
         vertices.push(x, y, random(2, 20) * sC);
     }
     sheetSlider.value(drawCount);
