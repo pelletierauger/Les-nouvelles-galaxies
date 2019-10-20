@@ -12,6 +12,7 @@ let drawIncrement = 1;
 let vertexBuffer;
 let vertices = [];
 var drawingGeometry = true;
+let shaderPrograms = {};
 const seed = 10;
 const openSimplex = openSimplexNoise(seed);
 
@@ -71,11 +72,19 @@ function setup() {
 draw = function() {
     gl.clear(gl.COLOR_BUFFER_BIT);
     runXSheet(xSheet);
+    if (drawCount == 0) {
+        // setDotsShaders();
+        createWhiteDots();
+        gl.useProgram(shaderPrograms["whiteDots"].shaderProgram);
+    }
+    // gl.useProgram(shaderPrograms["whiteDots"].shaderProgram);
+    // drawDots("whiteDots", 3000);
+    // vertices = [];
     for (let i = 0; i < 3000; i++) {
         let v = Math.random();
-        let s = (v > 0.99) ? 10 : 1;
+        let s = (v >  0.99) ? 10 : 1;
         s = (v > 0.9995) ? s * random(1, 4) : 1;
-        vertices.push(Math.random() * 2 - 1, Math.random() * 2 - 1, s +  Math.random() * 0.01 * s);
+        vertices.push(Math.random() * 2 - 1, Math.random() * 2 - 1, s + Math.random() * 0.01 * s);
     }
     let n = Math.PI * 1 / 100;
     let s = Math.random() * Math.PI * 2;
@@ -84,12 +93,14 @@ draw = function() {
     let sC = (Math.random() < 0.5) ? 0.01 : 1;
     for (let i = s; i < Math.PI + s; i += n) {
         let osc = Math.sin(drawCount);
-//         let x = cos(i) * cos(i * osc) * 0.1 + sX;
-//         let y = sin(i) * sin(i * osc) * 0.175 + sY;
+        //         let x = cos(i) * cos(i * osc) * 0.1 + sX;
+        //         let y = sin(i) * sin(i * osc) * 0.175 + sY;
         let x = cos(i * 0.1) * tan(osc * 10) * cos(i * osc) * 0.1 + sX;
         let y = sin(i * 0.1) * tan(osc * 10) * sin(i * osc) * 0.175 + sY;
         vertices.push(x, y, random(2, 20) * sC);
     }
+    // gl.useProgram(shaderPrograms["redDots"].shaderProgram);
+    drawDots("whiteDots", 6100);
     sheetSlider.value(drawCount);
     // info1.html();
     sliderInfo1.html(queryXSheet(xSheet) + ": " + drawCount);
@@ -102,10 +113,6 @@ draw = function() {
     //     setBGShaders();
     //     gl.uniform1f(time, drawCount);
     //     drawBG();
-    if (drawCount == 0) {
-        setDotsShaders();
-    }
-    drawDots();
     //     setOverlayShaders();
     //     gl.uniform1f(time, drawCount);
     //     drawBG();

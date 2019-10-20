@@ -82,17 +82,17 @@ setDotsShaders = function() {
     gl.useProgram(shaderProgram);
     /*======== Associating shaders to buffer objects ========*/
     // Bind vertex buffer object
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
-    // Get the attribute location
-    var coord = gl.getAttribLocation(shaderProgram, "coordinates");
-    // Point an attribute to the currently bound VBO
-    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
-    // Enable the attribute
-    gl.enableVertexAttribArray(coord);
+    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // // Get the attribute location
+    // var coord = gl.getAttribLocation(shaderProgram, "coordinates");
+    // // Point an attribute to the currently bound VBO
+    // gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
+    // // Enable the attribute
+    // gl.enableVertexAttribArray(coord);
 }
 // setDotsShaders();
 
-drawDots = function() {
+drawDots = function(selectedProgram, dotAmount) {
     // vertices = [];
     // let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     // let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
@@ -129,7 +129,7 @@ drawDots = function() {
     // Bind vertex buffer object
     gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     // Get the attribute location
-    var coord = gl.getAttribLocation(shaderProgram, "coordinates");
+    var coord = gl.getAttribLocation(shaderPrograms[selectedProgram].shaderProgram, "coordinates");
     // Point an attribute to the currently bound VBO
     gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
     // Enable the attribute
@@ -140,7 +140,7 @@ drawDots = function() {
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
-    gl.drawArrays(gl.POINTS, 0, 6100);
+    gl.drawArrays(gl.POINTS, 0, dotAmount);
 }
 
 
@@ -182,4 +182,128 @@ draw = function() {
     //     gl.uniform1f(time, drawCount);
     //     drawBG();
     drawCount += drawIncrement;
+}
+
+function createShaderProgram(name, vert, frag) {
+    var program = { name: name };
+    var vertCode = vert;
+    // Create a vertex shader object
+    var vertShader = gl.createShader(gl.VERTEX_SHADER);
+    // Attach vertex shader source code
+    gl.shaderSource(vertShader, vertCode);
+    // Compile the vertex shader
+    gl.compileShader(vertShader);
+    // fragment shader source code
+    var fragCode = frag;
+    // Create fragment shader object
+    var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+    // Attach fragment shader source code
+    gl.shaderSource(fragShader, fragCode);
+    // Compile the fragmentt shader
+    gl.compileShader(fragShader);
+    // Create a shader program object to store
+    // the combined shader program
+    program.shaderProgram = gl.createProgram();
+    // Attach a vertex shader
+    gl.attachShader(program.shaderProgram, vertShader);
+    // Attach a fragment shader
+    gl.attachShader(program.shaderProgram, fragShader);
+    // Link both programs
+    gl.linkProgram(program.shaderProgram);
+    shaderPrograms[name] = program;
+}
+
+function createWhiteDots() {
+    createShaderProgram("whiteDots",
+        // beginGLSL
+        `attribute vec3 coordinates;
+    varying vec2 myposition;
+    varying vec2 center;
+    void main(void) {
+        gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.0);
+        center = vec2(gl_Position.x, gl_Position.y);
+        center = 512.0 + center * 512.0;
+        myposition = vec2(gl_Position.x, gl_Position.y);
+        gl_PointSize = coordinates.z;
+    }
+    `,
+        `precision mediump float;
+    varying vec2 myposition;
+    varying vec2 center;
+    float rand(vec2 co){
+        return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(co.x)));
+    }
+    void main(void) {
+        // vec2 uv = gl_PointCoord.xy / vec2(1600, 1600);
+        // float d = length(uv - center);
+        // vec2 pos = myposition;
+        vec2 uv = gl_FragCoord.xy / vec2(2560, 1600);
+        // uv.x = uv.x + 1.0;
+        uv = uv * 2.0;
+        uv = uv + 0.5;
+        // uv = uv * 1.0;
+        float ALPHA = 0.75;
+        vec2 pos = gl_PointCoord - vec2(0.5, 0.5);
+        float dist_squared = dot(pos, pos);
+        float alpha;
+        if (dist_squared < 0.25) {
+            alpha = ALPHA;
+        } else {
+            alpha = 0.0;
+        }
+        alpha = smoothstep(0.015, 0.000125, dist_squared) * 0.49;
+        float rando = rand(pos);
+        // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
+        gl_FragColor = vec4(1.0, 1.0 - dist_squared, 1.0 + alpha * 120., (3. - dist_squared * 12.0 - (rando * 1.1)) * 0.0245 + alpha) * 2.25;
+//         gl_FragColor = vec4(1.0, 1.0 - dist_squared * 1.0, 0.0, 0.35 - dist_squared - (rando * 0.2));
+        // gl_FragColor = vec4(d * 0.001, uv.x, 0.0, 0.25);
+    }`
+        // endGLSL
+    );
+    createShaderProgram("redDots",
+        // beginGLSL
+        `attribute vec3 coordinates;
+    varying vec2 myposition;
+    varying vec2 center;
+    void main(void) {
+        gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.0);
+        center = vec2(gl_Position.x, gl_Position.y);
+        center = 512.0 + center * 512.0;
+        myposition = vec2(gl_Position.x, gl_Position.y);
+        gl_PointSize = coordinates.z;
+    }
+    `,
+        `precision mediump float;
+    varying vec2 myposition;
+    varying vec2 center;
+    float rand(vec2 co){
+        return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(co.x)));
+    }
+    void main(void) {
+        // vec2 uv = gl_PointCoord.xy / vec2(1600, 1600);
+        // float d = length(uv - center);
+        // vec2 pos = myposition;
+        vec2 uv = gl_FragCoord.xy / vec2(2560, 1600);
+        // uv.x = uv.x + 1.0;
+        uv = uv * 2.0;
+        uv = uv + 0.5;
+        // uv = uv * 1.0;
+        float ALPHA = 0.75;
+        vec2 pos = gl_PointCoord - vec2(0.5, 0.5);
+        float dist_squared = dot(pos, pos);
+        float alpha;
+        if (dist_squared < 0.25) {
+            alpha = ALPHA;
+        } else {
+            alpha = 0.0;
+        }
+        alpha = smoothstep(0.015, 0.000125, dist_squared) * 0.49;
+        float rando = rand(pos);
+        // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
+        gl_FragColor = vec4(1.0, 0.0 - dist_squared, 0.0 + alpha * 120., (3. - dist_squared * 12.0 - (rando * 1.1)) * 0.0245 + alpha) * 2.25;
+//         gl_FragColor = vec4(1.0, 1.0 - dist_squared * 1.0, 0.0, 0.35 - dist_squared - (rando * 0.2));
+        // gl_FragColor = vec4(d * 0.001, uv.x, 0.0, 0.25);
+    }`
+        // endGLSL
+    );
 }
