@@ -5,9 +5,11 @@ let fileName = "./frames/alligator/alligator";
 fileName = "./frames/pulsar/pulsar";
 // fileName = "./frames/meadow/meadow";
 // fileName = "./frames/smoke/smoke";
-// fileName = "./frames/swirl/swirl"
+fileName = "./frames/swirl/swirl"
+fileName = "./frames/swirl-fadeout/swirl-fadeout"
 let maxFrames = 1500;
-maxFrames = 925;
+// maxFrames = 925;
+maxFrames = 3000;
 // maxFrames = 1300;
 // maxFrames = 1200;
 // maxFrames = 1100;
@@ -132,12 +134,12 @@ draw = function() {
     if (drawCount == 0) {
         // setDotsShaders();
         createWhiteDots();
+        gl.useProgram(shaderPrograms["redDots"].shaderProgram);
     }
-    gl.useProgram(shaderPrograms["redDots"].shaderProgram);
-    drawDots(shaderPrograms["redDots"].shaderProgram, 20000);
+    drawSwirl(shaderPrograms["redDots"].shaderProgram);
 
     if (drawCount % 100 == 0) {
-        mS = random(0.65, 1);
+        mS = random(0.8, 1);
     }
     if (drawCount % 10 == 0) {
         if (Math.random() > 0.97) {
@@ -153,7 +155,7 @@ draw = function() {
     vertices = [];
     for (let i = 0; i < 3000; i++) {
         let v = Math.random();
-        let s = (v >  0.99) ? 10 : 0.1;
+        let s = (v >  0.99) ? 10 : 1;
         s = (v > 0.9995) ? s * random(1, 4) : s;
         s *= mS;
         vertices.push(Math.random() * 2 - 1, Math.random() * 2 - 1, s + Math.random() * 0.5 * s);
@@ -174,8 +176,8 @@ draw = function() {
             vertices.push(x, y, random(2, 20) * sC * mS);
         }
     }
-    gl.useProgram(shaderPrograms["whiteDots"].shaderProgram);
-    drawGenericDots(shaderPrograms["whiteDots"].shaderProgram, 3000 + (amountOfScratches * 100));
+    // gl.useProgram(shaderPrograms["whiteDots"].shaderProgram);
+    drawGenericDots(shaderPrograms["redDots"].shaderProgram, 3000 + (amountOfScratches * 100));
 
     //     setOverlayShaders();
     //     gl.uniform1f(time, drawCount);

@@ -152,7 +152,7 @@ drawDots = function() {
 
 // smoke-like spiral
 
-drawDots = function(selectedProgram, dotAmount) {
+drawSmoke = function(selectedProgram, dotAmount) {
     vertices = [];
     let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
@@ -202,7 +202,7 @@ drawDots = function(selectedProgram, dotAmount) {
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
-    gl.drawArrays(gl.POINTS, 0, dotAmount);
+    gl.drawArrays(gl.POINTS, 0, 20000);
 };
 
 
@@ -377,9 +377,13 @@ drawDots = function(selectedProgram, dotAmount) {
 
 
 // Fluctuating alligator
+// beau drawCount pour alligator = 166146
+// trois tiers : 463264
+// 468542
+// trois tiers, harmoniques : 469932
 
 // // drawCount = 0.5;
-drawDots = function(selectedProgram) {
+drawAlligator = function(selectedProgram) {
     vertices = [];
     // let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     // let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
@@ -446,94 +450,94 @@ drawDots = function(selectedProgram) {
 
 // // pulsar
 // let sceneRun = false;
-// drawDots = function(selectedProgram) {
-//     // if (!sceneRun) {
-//     //     drawCount = 1;
-//     //     sceneRun = true;
-//     // }
-//     vertices = [];
-//     let T = (((drawCount - 100) * 0.00125));
-//     let xOffset = (noise(T * 1e2 * 0.0025) - 0.5) * 0.9;
-//     let yOffset = (noise((T * 1e2 + 100) * 0.0025) - 0.5) * 0.9;
-//     let t = T * 0.0000025 * 0.5 + 0;
-//     let fx = 1;
-//     let fy = 1;
-//     let x = 0;
-//     let y = 0;
-//     let num = 30000;
+drawPulsar = function(selectedProgram) {
+    // if (!sceneRun) {
+    //     drawCount = 1;
+    //     sceneRun = true;
+    // }
+    vertices = [];
+    let T = (((drawCount - 100) * 0.00125));
+    let xOffset = (noise(T * 1e2 * 0.0025) - 0.5) * 0.9;
+    let yOffset = (noise((T * 1e2 + 100) * 0.0025) - 0.5) * 0.9;
+    let t = T * 0.0000025 * 0.5 + 0;
+    let fx = 1;
+    let fy = 1;
+    let x = 0;
+    let y = 0;
+    let num = 30000;
 
-//     function ro(a, l, x, y, h) {
-//         return {
-//             x: x + Math.cos(h + a) * l,
-//             y: y + Math.sin(h + a) * l,
-//             h: h + a
-//         };
-//     }
-//     let amountRays = 120;
-//     let sj = (10 - t) * 1000000;
-//     let rayInc = Math.PI * 2 / amountRays;
-//     let numV = 0;
-//     let metaV = [];
-//     let indMetaV = 0;
-//     let t1 = drawCount * 1e-3 * 0.125;
-//     let t2 = t1 * 1e1;
-//     let xO = openSimplex.noise2D(t2, t2 + 1000) * 1;
-//     let yO = openSimplex.noise2D(t2 - 1000, t2 + 500) * 1;
-//     t2 = (t2 + 5000) * 100;
-//     let xO2 = openSimplex.noise2D(t2, t2 + 1000) * 0.05 + xO;
-//     let yO2 = openSimplex.noise2D(t2 - 1000, t2 + 500) * 0.05 + yO;
-//     for (let j = sj; j < (Math.PI * 2 + sj) - rayInc; j += rayInc) {
-//         let p = { x: 0, y: 0, h: j };
-//         let jj = j - sj;
-//         metaV[indMetaV] = [];
-//         for (let i = 0; i < (num / amountRays); i += 1) {
-//             let a = T * 0.5 + sin(p.h + jj);
-//             let l = 0.5;
-//             let ph = cos(p.x) + sin(p.y);
-//             p = ro(a, l, p.x, p.y, p.h + ph * 0.75 * sin(t * 2e6));
-//             //             p.x += xOffset * 2.95;
-//             //             p.y += yOffset * 2.95;
-//             p.x += cos(t * 2e7) * 0.25;
-//             p.y += sin(t * 2e7) * 0.25;
-//             var sc = 0.01 * (1 / cos(t * 4e5));
-//             sc = 0.25;
-//             metaV[indMetaV].push((p.y + xO2) * 0.35 * 1.5 * sc, (p.x + yO2) * 0.9 * sc, 14);
-//             numV += 1;
-//         }
-//         indMetaV++;
-//     }
-//     let flatV = [];
-//     for (let j = 0; j < metaV[0].length; j += 3) {
-//         for (let i = 0; i < metaV.length; i++) {
-//             flatV.push(metaV[i][j], metaV[i][j + 1], metaV[i][j + 2]);
-//         }
-//     }
-//     vertices = flatV;
-//     // Create an empty buffer object to store the vertex buffer
-//     // var vertex_buffer = gl.createBuffer();
-//     //Bind appropriate array buffer to it
-//     // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
-//     // Pass the vertex data to the buffer
-//     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-//     // Unbind the buffer
-//     gl.bindBuffer(gl.ARRAY_BUFFER, null);
-//     /*======== Associating shaders to buffer objects ========*/
-//     // Bind vertex buffer object
-//     gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
-//     // Get the attribute location
-//     var coord = gl.getAttribLocation(selectedProgram, "coordinates");
-//     // Point an attribute to the currently bound VBO
-//     gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
-//     // Enable the attribute
-//     gl.enableVertexAttribArray(coord);
-//     /*============= Drawing the primitive ===============*/
-//     // // Clear the canvas
-//     // gl.clearColor(0.5, 0.5, 0.5, 0.9);
-//     // Clear the color buffer bit
-//     // gl.clear(gl.COLOR_BUFFER_BIT);
-//     // Draw the triangle
-//     gl.drawArrays(gl.POINTS, 0, num);
-// }
+    function ro(a, l, x, y, h) {
+        return {
+            x: x + Math.cos(h + a) * l,
+            y: y + Math.sin(h + a) * l,
+            h: h + a
+        };
+    }
+    let amountRays = 120;
+    let sj = (10 - t) * 1000000;
+    let rayInc = Math.PI * 2 / amountRays;
+    let numV = 0;
+    let metaV = [];
+    let indMetaV = 0;
+    let t1 = drawCount * 1e-3 * 0.125;
+    let t2 = t1 * 1e1;
+    let xO = openSimplex.noise2D(t2, t2 + 1000) * 1;
+    let yO = openSimplex.noise2D(t2 - 1000, t2 + 500) * 1;
+    t2 = (t2 + 5000) * 100;
+    let xO2 = openSimplex.noise2D(t2, t2 + 1000) * 0.05 + xO;
+    let yO2 = openSimplex.noise2D(t2 - 1000, t2 + 500) * 0.05 + yO;
+    for (let j = sj; j < (Math.PI * 2 + sj) - rayInc; j += rayInc) {
+        let p = { x: 0, y: 0, h: j };
+        let jj = j - sj;
+        metaV[indMetaV] = [];
+        for (let i = 0; i < (num / amountRays); i += 1) {
+            let a = T * 0.5 + sin(p.h + jj);
+            let l = 0.5;
+            let ph = cos(p.x) + sin(p.y);
+            p = ro(a, l, p.x, p.y, p.h + ph * 0.75 * sin(t * 2e6));
+            //             p.x += xOffset * 2.95;
+            //             p.y += yOffset * 2.95;
+            p.x += cos(t * 2e7) * 0.25;
+            p.y += sin(t * 2e7) * 0.25;
+            var sc = 0.01 * (1 / cos(t * 4e5));
+            sc = 0.25;
+            metaV[indMetaV].push((p.y + xO2) * 0.35 * 1.5 * sc, (p.x + yO2) * 0.9 * sc, 14);
+            numV += 1;
+        }
+        indMetaV++;
+    }
+    let flatV = [];
+    for (let j = 0; j < metaV[0].length; j += 3) {
+        for (let i = 0; i < metaV.length; i++) {
+            flatV.push(metaV[i][j], metaV[i][j + 1], metaV[i][j + 2]);
+        }
+    }
+    vertices = flatV;
+    // Create an empty buffer object to store the vertex buffer
+    // var vertex_buffer = gl.createBuffer();
+    //Bind appropriate array buffer to it
+    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // Pass the vertex data to the buffer
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    // Unbind the buffer
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    /*======== Associating shaders to buffer objects ========*/
+    // Bind vertex buffer object
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // Get the attribute location
+    var coord = gl.getAttribLocation(selectedProgram, "coordinates");
+    // Point an attribute to the currently bound VBO
+    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
+    // Enable the attribute
+    gl.enableVertexAttribArray(coord);
+    /*============= Drawing the primitive ===============*/
+    // // Clear the canvas
+    // gl.clearColor(0.5, 0.5, 0.5, 0.9);
+    // Clear the color buffer bit
+    // gl.clear(gl.COLOR_BUFFER_BIT);
+    // Draw the triangle
+    gl.drawArrays(gl.POINTS, 0, num);
+}
 
 
 // drawDots = function() {
@@ -694,91 +698,166 @@ drawDots = function(selectedProgram) {
 
 
 // noisy-meadow with fluctuations
-// drawDots = function(selectedProgram) {
-//     vertices = [];
-//     // let xOffset = (noise(frameCount * 0.0025) - 0.5) * 0.9;
-//     // let yOffset = (noise((frameCount + 100) * 0.0025) - 0.5) * 0.9;
-//     let t = drawCount * 0.00125 * 0.000005 + 2.22;
-//     let t2 = t * 0.25e7;
-//     let xOffset = openSimplex.noise2D(t2, t2 + 1000);
-//     let yOffset = openSimplex.noise2D(t2 - 1000, t2 + 500) * 1.5;
-//     t2 = (t2 + 5000) * 100;
-//     let xOffset2 = openSimplex.noise2D(t2, t2 + 1000);
-//     let yOffset2 = openSimplex.noise2D(t2 - 1000, t2 + 500) * 1.5;
-//     let fx = 1;
-//     let fy = 1;
-//     let x = 0;
-//     let y = 0;
-//     let num = 60000;
+drawMeadow = function(selectedProgram) {
+    vertices = [];
+    // let xOffset = (noise(frameCount * 0.0025) - 0.5) * 0.9;
+    // let yOffset = (noise((frameCount + 100) * 0.0025) - 0.5) * 0.9;
+    let t = drawCount * 0.00125 * 0.000005 + 2.22;
+    let t2 = t * 0.25e7;
+    let xOffset = openSimplex.noise2D(t2, t2 + 1000);
+    let yOffset = openSimplex.noise2D(t2 - 1000, t2 + 500) * 1.5;
+    t2 = (t2 + 5000) * 100;
+    let xOffset2 = openSimplex.noise2D(t2, t2 + 1000);
+    let yOffset2 = openSimplex.noise2D(t2 - 1000, t2 + 500) * 1.5;
+    let fx = 1;
+    let fy = 1;
+    let x = 0;
+    let y = 0;
+    let num = 60000;
 
-//     function ro(a, l, x, y, h) {
-//         return {
-//             x: x + Math.cos(h + a) * l,
-//             y: y + Math.sin(h + a) * l,
-//             h: h + a
-//         };
-//     }
-//     let amountRays = 120;
-//     let sj = (10 - t) * 1000000;
-//     let rayInc = Math.PI * 2 / amountRays;
-//     let numV = 0;
-//     let metaV = [];
-//     let indMetaV = 0;
-//     let vv = map(sin(t * 1e6), -1, 1, -0.9, 2.9);
-//     for (let j = sj; j < (Math.PI * 2 + sj); j += rayInc) {
-//         let p = { x: 0, y: 0, h: j };
-//         let jj = j - sj;
-//         metaV[indMetaV] = [];
-//         let fl = { x: 0, y: 0 };
-//         for (let i = 0; i < num / amountRays; i += 1) {
-//             let a = vv * Math.cos(i * jj * 0.05) * 0.5;
-//             let l = 0.5 + Math.sin(jj * i * 1e3) * 1000;
-//             p = ro(a, l, p.x, p.y, p.h * map(i, 0, num / amountRays, 0, 1));
-//             p.x += cos(t * 2e6) * 0.25;
-//             p.y += -0.4 + sin(t * 2e6) * 0.25;
-//             fl.x = p.x;
-//             fl.y = p.y;
-//             fl.x += xOffset * 0.15 * 2 * 20;
-//             fl.y += yOffset * 0.15 * 3 * 20;
-//             fl.x += xOffset2 * 2 * 1e-3 * 5;
-//             fl.y += yOffset2 * 3 * 1e-3 * 5;
-//             // let xo = openSimplex.noise2D(i, t * 1e4) * 4e-4;
-//             // let yo = openSimplex.noise2D(i, t * 1e4 + 1000) * 4e-4;
-//             // let zo = (openSimplex.noise2D(i, (t + i) * 1e2 + 100)) * 5;
-//             metaV[indMetaV].push(fl.x * 0.35 * 1.5 * 0.01, fl.y * 0.8 * 0.01, 14);
-//             numV += 1;
-//         }
-//         indMetaV++;
-//     }
-//     let flatV = [];
-//     for (let j = 0; j < metaV[0].length; j += 3) {
-//         for (let i = 0; i < metaV.length; i++) {
-//             flatV.push(metaV[i][j], metaV[i][j + 1], metaV[i][j + 2]);
-//         }
-//     }
-//     vertices = flatV;
-//     // Create an empty buffer object to store the vertex buffer
-//     // var vertex_buffer = gl.createBuffer();
-//     //Bind appropriate array buffer to it
-//     // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
-//     // Pass the vertex data to the buffer
-//     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-//     // Unbind the buffer
-//     gl.bindBuffer(gl.ARRAY_BUFFER, null);
-//     /*======== Associating shaders to buffer objects ========*/
-//     // Bind vertex buffer object
-//     gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
-//     // Get the attribute location
-//     var coord = gl.getAttribLocation(selectedProgram, "coordinates");
-//     // Point an attribute to the currently bound VBO
-//     gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
-//     // Enable the attribute
-//     gl.enableVertexAttribArray(coord);
-//     /*============= Drawing the primitive ===============*/
-//     // // Clear the canvas
-//     // gl.clearColor(0.5, 0.5, 0.5, 0.9);
-//     // Clear the color buffer bit
-//     // gl.clear(gl.COLOR_BUFFER_BIT);
-//     // Draw the triangle
-//     gl.drawArrays(gl.POINTS, 0, num);
-// }
+    function ro(a, l, x, y, h) {
+        return {
+            x: x + Math.cos(h + a) * l,
+            y: y + Math.sin(h + a) * l,
+            h: h + a
+        };
+    }
+    let amountRays = 120;
+    let sj = (10 - t) * 1000000;
+    let rayInc = Math.PI * 2 / amountRays;
+    let numV = 0;
+    let metaV = [];
+    let indMetaV = 0;
+    let vv = map(sin(t * 1e6), -1, 1, -0.9, 2.9);
+    for (let j = sj; j < (Math.PI * 2 + sj); j += rayInc) {
+        let p = { x: 0, y: 0, h: j };
+        let jj = j - sj;
+        metaV[indMetaV] = [];
+        let fl = { x: 0, y: 0 };
+        for (let i = 0; i < num / amountRays; i += 1) {
+            let a = vv * Math.cos(i * jj * 0.05) * 0.5;
+            let l = 0.5 + Math.sin(jj * i * 1e3) * 1000;
+            p = ro(a, l, p.x, p.y, p.h * map(i, 0, num / amountRays, 0, 1));
+            p.x += cos(t * 2e6) * 0.25;
+            p.y += -0.4 + sin(t * 2e6) * 0.25;
+            fl.x = p.x;
+            fl.y = p.y;
+            fl.x += xOffset * 0.15 * 2 * 20;
+            fl.y += yOffset * 0.15 * 3 * 20;
+            fl.x += xOffset2 * 2 * 1e-3 * 5;
+            fl.y += yOffset2 * 3 * 1e-3 * 5;
+            // let xo = openSimplex.noise2D(i, t * 1e4) * 4e-4;
+            // let yo = openSimplex.noise2D(i, t * 1e4 + 1000) * 4e-4;
+            // let zo = (openSimplex.noise2D(i, (t + i) * 1e2 + 100)) * 5;
+            metaV[indMetaV].push(fl.x * 0.35 * 1.5 * 0.01, fl.y * 0.8 * 0.01, 14);
+            numV += 1;
+        }
+        indMetaV++;
+    }
+    let flatV = [];
+    for (let j = 0; j < metaV[0].length; j += 3) {
+        for (let i = 0; i < metaV.length; i++) {
+            flatV.push(metaV[i][j], metaV[i][j + 1], metaV[i][j + 2]);
+        }
+    }
+    vertices = flatV;
+    // Create an empty buffer object to store the vertex buffer
+    // var vertex_buffer = gl.createBuffer();
+    //Bind appropriate array buffer to it
+    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // Pass the vertex data to the buffer
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    // Unbind the buffer
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    /*======== Associating shaders to buffer objects ========*/
+    // Bind vertex buffer object
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // Get the attribute location
+    var coord = gl.getAttribLocation(selectedProgram, "coordinates");
+    // Point an attribute to the currently bound VBO
+    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
+    // Enable the attribute
+    gl.enableVertexAttribArray(coord);
+    /*============= Drawing the primitive ===============*/
+    // // Clear the canvas
+    // gl.clearColor(0.5, 0.5, 0.5, 0.9);
+    // Clear the color buffer bit
+    // gl.clear(gl.COLOR_BUFFER_BIT);
+    // Draw the triangle
+    gl.drawArrays(gl.POINTS, 0, num);
+}
+
+
+
+
+// swirl
+drawSwirl = function(selectedProgram) {
+    vertices = [];
+    // let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
+    // let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
+    let t = drawCount * 0.00125 * 0.00005 * 1.5 + 10;
+    let t2 = t * 1e1 * 20000;
+    let xOffset = openSimplex.noise2D(t2, t2 + 1000);
+    let yOffset = openSimplex.noise2D(t2 - 1000, t2 + 500);
+    t2 = (t2 + 5000) * 100;
+    let xOffset2 = openSimplex.noise2D(t2, t2 + 1000);
+    let yOffset2 = openSimplex.noise2D(t2 - 1000, t2 + 500);
+    let fx = 1;
+    let fy = 1;
+    let x = 1;
+    let y = 1;
+    for (let i = 0; i < 60000; i += 1) {
+        let ax = pow(cos(fx * 1e-4 + i * 1e-4), -1);
+        let ay = pow(cos(fx * 1e-4 + i * 1e-4), -1);
+        let aax = 0.5 - ax;
+        let aay = 0.5 - ay;
+        x = sin(tan(i * 24.9 + t * 1e-1) * aax * sin(i * 1e-10 + ax * 0.35) + i * 1e-5 + t * 11e4) * i * 0.00005 * 1.5;
+        y = cos(tan(i * 24.9 + t * 1e-1) * aay * sin(i * 1e-10 + ax * 0.35) + i * 1e-5 + t * 11e4) * i * 0.00015 * 1.5;
+        //         x *= sin(t * 50 * cos(y * 0.002));
+        //         x *= cos(fx * fy * 0.001) * sin(x + t * 20);
+        //         y *= cos(fx * fy * 0.001) * cos(x + t * 20);
+        x *= sin(fx * 0.05) + cos(fy * 0.05);
+        y *= sin(fy * 0.05) + cos(fy * 0.05);
+        fx = x;
+        fy = y;
+        //         x += (Math.random() - 0.5) * 0.00005;
+        //         y += (Math.random() - 0.5) * 0.00005;
+        // x += xOffset * 0.125;
+        // y += yOffset * 0.125;
+        x += cos(t * -1e6 * 0.25) * i * 0.125e-4 * 2;
+        y += sin(t * -1e6 * 0.25) * i * 0.125e-4 * 3;
+        x += xOffset * 0.15 * 2 * 0.2 * 6.5 * 0.5;
+        y += yOffset * 0.15 * 3 * 0.2 * 6.5 * 0.5;
+        x += xOffset2 * 2 * 1e-3 * 0.5 * 6.5 * 0.5;
+        y += yOffset2 * 3 * 1e-3 * 0.5 * 6.5 * 0.5;
+        let xo = openSimplex.noise2D(i, t * 1e4) * 4e-4;
+        let yo = openSimplex.noise2D(i, t * 1e4 + 1000) * 4e-4;
+        let zo = (openSimplex.noise2D(i, (t + i) * 1e2 + 100)) * 5;
+        vertices.push((x + xo * 6.5) * 1.5 * 0.15, (y + yo * 6.5) * 0.8 * 0.15 * 1.1, 14.0 + zo);
+    }
+    // Create an empty buffer object to store the vertex buffer
+    // var vertex_buffer = gl.createBuffer();
+    //Bind appropriate array buffer to it
+    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // Pass the vertex data to the buffer
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    // Unbind the buffer
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    /*======== Associating shaders to buffer objects ========*/
+    // Bind vertex buffer object
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // Get the attribute location
+    var coord = gl.getAttribLocation(selectedProgram, "coordinates");
+    // Point an attribute to the currently bound VBO
+    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
+    // Enable the attribute
+    gl.enableVertexAttribArray(coord);
+    /*============= Drawing the primitive ===============*/
+    // // Clear the canvas
+    // gl.clearColor(0.5, 0.5, 0.5, 0.9);
+    // Clear the color buffer bit
+    // gl.clear(gl.COLOR_BUFFER_BIT);
+    // Draw the triangle
+    let dotsToDraw = Math.floor(map(drawCount, 0, 2400, 60000, 0));
+    gl.drawArrays(gl.POINTS, 0, dotsToDraw);
+}
