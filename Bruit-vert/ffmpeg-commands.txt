@@ -8,3 +8,10 @@ ffmpeg -f image2 -framerate 24 -i ./frames/swirl/swirl-%05d.png -c:v libx264 -pi
 
 ffmpeg -f image2 -framerate 24 -i ./frames/swirl-fadeout/swirl-fadeout-%05d.png -c:v libx264 -pix_fmt yuv420p -shortest ./video-renders/swirl-fadeout.mp4
 
+ffmpeg -f image2 -framerate 24 -i ./frames/swirl-fadeout-flicker/swirl-fadeout-flicker-%05d.png -c:v libx264 -pix_fmt yuv420p -shortest ./video-renders/swirl-fadeout-flicker.mp4
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/alligator-flicker/alligator-flicker-%05d.png -c:v libx264 -pix_fmt yuv420p -shortest ./video-renders/alligator-flicker.mp4
+
+ffmpeg -f image2 -framerate 24 -i ./frames/alligator-flicker2/alligator-flicker2-%05d.png -c:v libx264 -pix_fmt yuv420p -shortest ./video-renders/alligator-flicker2.mp4
+

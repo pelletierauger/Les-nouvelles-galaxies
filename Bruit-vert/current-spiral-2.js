@@ -400,6 +400,8 @@ drawAlligator = function(selectedProgram) {
     let x = 1;
     let y = 1;
     let m = map(sin(t * 0.25e1), -1, 1, 1e-5, 1e-3);
+    let t3 = t * 1e2 * 0.5;
+    let al = map(openSimplex.noise2D(t3, t3 + 1000), -1, 1, 0.1, 1.25);
     for (let i = 0; i < 27000; i += 1) {
         x = sin(tan(i * 0.001) * fx + i * t * 0.001) * i * 0.00005;
         y = cos(tan(i * 0.001) * fx + i * t * 0.001) * i * 0.00015;
@@ -417,8 +419,8 @@ drawAlligator = function(selectedProgram) {
         y += sin(t * -1e2 * 0.25) * i * 1e-5 * 3;
         let xo = openSimplex.noise2D(i, t * 1e4) * 4e-4;
         let yo = openSimplex.noise2D(i, t * 1e4 + 1000) * 4e-4;
-        let zo = (openSimplex.noise2D(i, (t + i) * 1e2 + 100)) * 5;
-        vertices.push((x + xo) * 1.4, (y + yo) * 0.8, 15 + zo);
+        let zo = (openSimplex.noise2D(i, (t + i) * 1e2 + 100)) * 3;
+        vertices.push((x + xo) * 1.4, (y + yo) * 0.8, 15 + zo, al);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
@@ -434,7 +436,7 @@ drawAlligator = function(selectedProgram) {
     // Get the attribute location
     var coord = gl.getAttribLocation(selectedProgram, "coordinates");
     // Point an attribute to the currently bound VBO
-    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(coord, 4, gl.FLOAT, false, 0, 0);
     // Enable the attribute
     gl.enableVertexAttribArray(coord);
     /*============= Drawing the primitive ===============*/
@@ -806,6 +808,9 @@ drawSwirl = function(selectedProgram) {
     let fy = 1;
     let x = 1;
     let y = 1;
+    // let al = map(sin(t * 1e6), -1, 1, 0.1, 1);
+    let t3 = t * 1e6;
+    let al = map(openSimplex.noise2D(t3, t3 + 1000), -1, 1, 0.1, 1);
     for (let i = 0; i < 60000; i += 1) {
         let ax = pow(cos(fx * 1e-4 + i * 1e-4), -1);
         let ay = pow(cos(fx * 1e-4 + i * 1e-4), -1);
@@ -833,7 +838,7 @@ drawSwirl = function(selectedProgram) {
         let xo = openSimplex.noise2D(i, t * 1e4) * 4e-4;
         let yo = openSimplex.noise2D(i, t * 1e4 + 1000) * 4e-4;
         let zo = (openSimplex.noise2D(i, (t + i) * 1e2 + 100)) * 5;
-        vertices.push((x + xo * 6.5) * 1.5 * 0.15, (y + yo * 6.5) * 0.8 * 0.15 * 1.1, 14.0 + zo);
+        vertices.push((x + xo * 6.5) * 1.5 * 0.15, (y + yo * 6.5) * 0.8 * 0.15 * 1.1, 14.0 + zo, al);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
@@ -849,7 +854,7 @@ drawSwirl = function(selectedProgram) {
     // Get the attribute location
     var coord = gl.getAttribLocation(selectedProgram, "coordinates");
     // Point an attribute to the currently bound VBO
-    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(coord, 4, gl.FLOAT, false, 0, 0);
     // Enable the attribute
     gl.enableVertexAttribArray(coord);
     /*============= Drawing the primitive ===============*/
