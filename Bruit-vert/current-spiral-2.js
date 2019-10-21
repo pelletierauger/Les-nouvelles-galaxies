@@ -381,6 +381,9 @@ drawSmoke = function(selectedProgram, dotAmount) {
 // trois tiers : 463264
 // 468542
 // trois tiers, harmoniques : 469932
+// moins de branches : 553133
+// beau 587987
+// grand mystère 590637 - 2000
 
 // // drawCount = 0.5;
 drawAlligator = function(selectedProgram) {
