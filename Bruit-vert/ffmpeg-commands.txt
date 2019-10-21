@@ -6,3 +6,5 @@ ffmpeg -f image2 -framerate 24 -i ./frames/swirl/swirl-%05d.png -c:v libx264 -x2
 ffmpeg -f image2 -framerate 24 -i ./frames/swirl/swirl-%05d.png -c:v libx264 -pix_fmt yuv420p -shortest ./video-renders/swirl.mp4
 
 
+ffmpeg -f image2 -framerate 24 -i ./frames/swirl-fadeout/swirl-fadeout-%05d.png -c:v libx264 -pix_fmt yuv420p -shortest ./video-renders/swirl-fadeout.mp4
+
