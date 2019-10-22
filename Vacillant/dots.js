@@ -131,7 +131,7 @@ drawDots = function(selectedProgram, dotAmount) {
     // Get the attribute location
     var coord = gl.getAttribLocation(shaderPrograms[selectedProgram].shaderProgram, "coordinates");
     // Point an attribute to the currently bound VBO
-    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(coord, 4, gl.FLOAT, false, 0, 0);
     // Enable the attribute
     gl.enableVertexAttribArray(coord);
     /*============= Drawing the primitive ===============*/
@@ -216,20 +216,24 @@ function createShaderProgram(name, vert, frag) {
 function createWhiteDots() {
     createShaderProgram("whiteDots",
         // beginGLSL
-        `attribute vec3 coordinates;
+        `attribute vec4 coordinates;
     varying vec2 myposition;
     varying vec2 center;
+    varying float alph;
     void main(void) {
         gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.0);
         center = vec2(gl_Position.x, gl_Position.y);
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
-        gl_PointSize = coordinates.z;
+        alph = coordinates.w;
+        gl_PointSize = coordinates.z / (((alph - 0.25) / (1.5 - 0.25)) * (1.5 - 0.35) + 0.35);
+        // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * 20.) * 2. + 1.));
     }
     `,
         `precision mediump float;
     varying vec2 myposition;
     varying vec2 center;
+    varying float alph;
     float rand(vec2 co){
         return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(co.x)));
     }
@@ -254,7 +258,7 @@ function createWhiteDots() {
         alpha = smoothstep(0.015, 0.000125, dist_squared) * 0.49;
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
-        gl_FragColor = vec4(1.0, 1.0 - dist_squared, 1.0 + alpha * 120., (3. - dist_squared * 12.0 - (rando * 1.1)) * 0.0245 + alpha) * 2.25;
+        gl_FragColor = vec4(1.0, 1.0 - dist_squared, 1.0 + alpha * 120., ((3. - dist_squared * 12.0 - (rando * 1.1)) * 0.0245 + alpha) * alph) * 2.25;
 //         gl_FragColor = vec4(1.0, 1.0 - dist_squared * 1.0, 0.0, 0.35 - dist_squared - (rando * 0.2));
         // gl_FragColor = vec4(d * 0.001, uv.x, 0.0, 0.25);
     }`

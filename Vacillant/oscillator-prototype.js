@@ -18,11 +18,13 @@ Oscillator.prototype.update = function(sum) {
     t2 = (t2 + 5000) * 100;
     let xO2 = openSimplex.noise2D(t2, t2 + 1000) * 4 + xO;
     let yO2 = openSimplex.noise2D(t2 - 1000, t2 + 500) * 4 + yO;
+    let t3 = t * 1e3;
+    let al = map(openSimplex.noise2D(t3, t3 + 1000), -1, 1, 0.25, 1.5);
     for (var i = 0; i < this.i; i++) {
         this.x = this.eq(i, sumFix).x;
         this.y = this.eq(i, sumFix).y;
         let zo = (openSimplex.noise2D(i, (t + i) * 1e4 + 100)) * 4 + 15;
-        vertices.push((this.x + xO2) * s * 0.822, (this.y + yO2) * s * -1.45, zo);
+        vertices.push((this.x + xO2) * s * 0.822, (this.y + yO2) * s * -1.45, zo, al);
     }
 };
 
@@ -36,10 +38,12 @@ Oscillator.prototype.mix = function(sum, oO, sumO, mR) {
     t2 = (t2 + 5000) * 100;
     let xO2 = openSimplex.noise2D(t2, t2 + 1000) * 4 + xO;
     let yO2 = openSimplex.noise2D(t2 - 1000, t2 + 500) * 4 + yO;
+    let t3 = t * 1e3;
+    let al = map(openSimplex.noise2D(t3, t3 + 1000), -1, 1, 0.25, 1.5);
     for (var i = 0; i < this.i; i++) {
         this.x = lerp(this.eq(i, sum).x, oO.eq(i, sumO).x, mR);
         this.y = lerp(this.eq(i, sum).y, oO.eq(i, sumO).y, mR);
         let zo = (openSimplex.noise2D(i, (t + i) * 1e4 + 100)) * 4 + 15;
-        vertices.push((this.x + xO2) * s * 0.822, (this.y + yO2) * s * -1.45, zo);
+        vertices.push((this.x + xO2) * s * 0.822, (this.y + yO2) * s * -1.45, zo, al);
     }
 }
