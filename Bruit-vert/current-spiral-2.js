@@ -151,17 +151,27 @@ drawDots = function() {
 
 
 // smoke-like spiral
-
+// drawCount = 0;
 drawSmoke = function(selectedProgram, dotAmount) {
     vertices = [];
-    let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
-    let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
+    // let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
+    // let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
     let t = drawCount * 0.00125 * 2 * 2 + 8;
+    let t2 = t * 1e-4 * 20000 * 0.25;
+    let xOffset = openSimplex.noise2D(t2, t2 + 1000);
+    let yOffset = openSimplex.noise2D(t2 - 1000, t2 + 500);
+    t2 = (t2 + 5000) * 10;
+    let xOffset2 = openSimplex.noise2D(t2, t2 + 1000);
+    let yOffset2 = openSimplex.noise2D(t2 - 1000, t2 + 500);
     let fx = 1;
     let fy = 1;
     let x = 1;
     let y = 1;
-    for (let i = 0; i < 20000; i += 1) {
+    let t3 = t * 1e1 * 2;
+    let al = map(openSimplex.noise2D(t3, t3 + 1000), -1, 1, 0.025, 1.25);
+    t *= 0.4;
+    t += 115;
+    for (let i = 0; i < 40000; i += 1) {
         x = fx * 0.16 + Math.sin(Math.tan(i * 24.9 + t * 0.5) + i * t * 0.000001) * i * 0.000022;
         y = fy * 0.16 + Math.cos(Math.tan(i * 24.9 + t * 0.5) + i * t * 0.000001) * i * 0.00005;
         //         x *= Math.cos(fx * fy * 0.001 * t * 5) * Math.sin(x + t * 10);
@@ -175,9 +185,19 @@ drawSmoke = function(selectedProgram, dotAmount) {
         fy = tan(y * 0.15 * (map(sin(t * 2), -1, 1, -0.65, 1))) * 40;
         //         x += (Math.random() - 0.5) * 0.00005;
         //         y += (Math.random() - 0.5) * 0.00005;
-        x += xOffset * 0.125;
-        y += yOffset * 0.125;
-        vertices.push(x * 1.3 * 1.5, y * 0.9 * 1.5 - 0.25, 14.0);
+        // x += xOffset * 0.125;
+        // y += yOffset * 0.125;
+        x += cos(t * -0.5e2 * 0.25) * i * 0.125e-4 * 2 * 0.5;
+        y += sin(t * -0.5e2 * 0.25) * i * 0.125e-4 * 3 * 0.5;
+        x += xOffset * 0.15 * 2 * 0.2 * 6.5 * 0.25;
+        y += yOffset * 0.15 * 3 * 0.2 * 6.5 * 0.25;
+        x += xOffset2 * 2 * 1e-3 * 0.5 * 6.5 * 0.25;
+        y += yOffset2 * 3 * 1e-3 * 0.5 * 6.5 * 0.25;
+        let xo = openSimplex.noise2D(i, t * 1e4) * 1e-3;
+        let yo = openSimplex.noise2D(i, t * 1e4 + 1000) * 1e-3;
+        let zo = (openSimplex.noise2D(i, (t + i) * 1e2 + 100)) * 5;
+        let s = 0.7;
+        vertices.push((x + xo) * 1.3 * 1.5 * s, (y + yo) * 0.9 * 1.5 * s - 0.25, 15.0 + zo, al);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
@@ -193,7 +213,7 @@ drawSmoke = function(selectedProgram, dotAmount) {
     // Get the attribute location
     var coord = gl.getAttribLocation(selectedProgram, "coordinates");
     // Point an attribute to the currently bound VBO
-    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(coord, 4, gl.FLOAT, false, 0, 0);
     // Enable the attribute
     gl.enableVertexAttribArray(coord);
     /*============= Drawing the primitive ===============*/
@@ -202,7 +222,7 @@ drawSmoke = function(selectedProgram, dotAmount) {
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
-    gl.drawArrays(gl.POINTS, 0, 20000);
+    gl.drawArrays(gl.POINTS, 0, 40000);
 };
 
 
@@ -390,8 +410,8 @@ drawAlligator = function(selectedProgram) {
     vertices = [];
     // let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     // let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
-
-    let t = drawCount * 0.00125 + 0.5 + 8000000;
+    let shiftedDrawCount = drawCount + 588637 - 200;
+    let t = shiftedDrawCount * 0.00125 + 0.5 + 8000000;
     let t2 = t * 1e1;
     let xOffset = openSimplex.noise2D(t2, t2 + 1000);
     let yOffset = openSimplex.noise2D(t2 - 1000, t2 + 500);
@@ -491,6 +511,8 @@ drawPulsar = function(selectedProgram) {
     t2 = (t2 + 5000) * 100;
     let xO2 = openSimplex.noise2D(t2, t2 + 1000) * 0.05 + xO;
     let yO2 = openSimplex.noise2D(t2 - 1000, t2 + 500) * 0.05 + yO;
+    let t3 = t * 1e8 * 0.5;
+    let al = map(openSimplex.noise2D(t3, t3 + 1000), -1, 1, 0.3, 1.5);
     for (let j = sj; j < (Math.PI * 2 + sj) - rayInc; j += rayInc) {
         let p = { x: 0, y: 0, h: j };
         let jj = j - sj;
@@ -506,15 +528,19 @@ drawPulsar = function(selectedProgram) {
             p.y += sin(t * 2e7) * 0.25;
             var sc = 0.01 * (1 / cos(t * 4e5));
             sc = 0.25;
-            metaV[indMetaV].push((p.y + xO2) * 0.35 * 1.5 * sc, (p.x + yO2) * 0.9 * sc, 14);
+            sc = map(drawCount, 0, 1000, 0.25, 0.0125);
+            let xo = openSimplex.noise2D(i, t * 1e4) * 4e-4;
+            let yo = openSimplex.noise2D(i, t * 1e4 + 1000) * 4e-4;
+            let zo = (openSimplex.noise2D(i, (t * 1e4 + i) * 1e2 + 100)) * 5;
+            metaV[indMetaV].push((p.y + xO2 + xo) * 0.35 * 1.5 * sc, (p.x + yO2 + yo) * 0.9 * sc * -1, 15 + zo, al);
             numV += 1;
         }
         indMetaV++;
     }
     let flatV = [];
-    for (let j = 0; j < metaV[0].length; j += 3) {
+    for (let j = 0; j < metaV[0].length; j += 4) {
         for (let i = 0; i < metaV.length; i++) {
-            flatV.push(metaV[i][j], metaV[i][j + 1], metaV[i][j + 2]);
+            flatV.push(metaV[i][j], metaV[i][j + 1], metaV[i][j + 2], metaV[i][j + 3]);
         }
     }
     vertices = flatV;
@@ -532,7 +558,7 @@ drawPulsar = function(selectedProgram) {
     // Get the attribute location
     var coord = gl.getAttribLocation(selectedProgram, "coordinates");
     // Point an attribute to the currently bound VBO
-    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(coord, 4, gl.FLOAT, false, 0, 0);
     // Enable the attribute
     gl.enableVertexAttribArray(coord);
     /*============= Drawing the primitive ===============*/
@@ -734,6 +760,8 @@ drawMeadow = function(selectedProgram) {
     let metaV = [];
     let indMetaV = 0;
     let vv = map(sin(t * 1e6), -1, 1, -0.9, 2.9);
+    let t3 = t * 1e7;
+    let al = map(openSimplex.noise2D(t3, t3 + 1000), -1, 1, 0.1, 1.25);
     for (let j = sj; j < (Math.PI * 2 + sj); j += rayInc) {
         let p = { x: 0, y: 0, h: j };
         let jj = j - sj;
@@ -751,18 +779,18 @@ drawMeadow = function(selectedProgram) {
             fl.y += yOffset * 0.15 * 3 * 20;
             fl.x += xOffset2 * 2 * 1e-3 * 5;
             fl.y += yOffset2 * 3 * 1e-3 * 5;
-            // let xo = openSimplex.noise2D(i, t * 1e4) * 4e-4;
-            // let yo = openSimplex.noise2D(i, t * 1e4 + 1000) * 4e-4;
-            // let zo = (openSimplex.noise2D(i, (t + i) * 1e2 + 100)) * 5;
-            metaV[indMetaV].push(fl.x * 0.35 * 1.5 * 0.01, fl.y * 0.8 * 0.01, 14);
+            let xo = openSimplex.noise2D(i * 4000, t * 1e8) * 1e-1;
+            let yo = openSimplex.noise2D(i * 4000, t * 1e7 + 10000000) * 1e-1;
+            let zo = (openSimplex.noise2D(Math.sin(i * 100000), (t * 1e6 + i) * 1e2 + 100)) * 5;
+            metaV[indMetaV].push((fl.x + xo) * 0.35 * 1.5 * 0.01, (fl.y + yo) * 0.8 * 0.01, 15, al);
             numV += 1;
         }
         indMetaV++;
     }
     let flatV = [];
-    for (let j = 0; j < metaV[0].length; j += 3) {
+    for (let j = 0; j < metaV[0].length; j += 4) {
         for (let i = 0; i < metaV.length; i++) {
-            flatV.push(metaV[i][j], metaV[i][j + 1], metaV[i][j + 2]);
+            flatV.push(metaV[i][j], metaV[i][j + 1], metaV[i][j + 2], metaV[i][j + 3]);
         }
     }
     vertices = flatV;
@@ -780,7 +808,7 @@ drawMeadow = function(selectedProgram) {
     // Get the attribute location
     var coord = gl.getAttribLocation(selectedProgram, "coordinates");
     // Point an attribute to the currently bound VBO
-    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(coord, 4, gl.FLOAT, false, 0, 0);
     // Enable the attribute
     gl.enableVertexAttribArray(coord);
     /*============= Drawing the primitive ===============*/
