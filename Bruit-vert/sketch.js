@@ -10,6 +10,7 @@ fileName = "./frames/alligator-flicker2/alligator-flicker2"
 fileName = "./frames/smoke/smoke";
 fileName = "./frames/meadow/meadow";
 fileName = "./frames/alligator-new/alligator-new"
+fileName = "./frames/pulsar-super/pulsar-super";
 let maxFrames = 1500;
 // maxFrames = 925;
 maxFrames = 3000;
