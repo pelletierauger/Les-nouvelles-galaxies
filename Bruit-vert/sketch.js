@@ -137,8 +137,9 @@ draw = function() {
     if (drawCount == 0) {
         // setDotsShaders();
         createWhiteDots();
-        gl.useProgram(shaderPrograms["redDots"].shaderProgram);
+
     }
+    gl.useProgram(shaderPrograms["redDots"].shaderProgram);
     drawPulsar(shaderPrograms["redDots"].shaderProgram);
 
     if (drawCount % 100 == 0) {
@@ -179,8 +180,8 @@ draw = function() {
             vertices.push(x, y, random(2, 20) * sC * mS);
         }
     }
-    // gl.useProgram(shaderPrograms["whiteDots"].shaderProgram);
-    drawGenericDots(shaderPrograms["redDots"].shaderProgram, 3000 + (amountOfScratches * 100));
+    gl.useProgram(shaderPrograms["scratches"].shaderProgram);
+    drawGenericDots(shaderPrograms["scratches"].shaderProgram, 3000 + (amountOfScratches * 100));
 
     //     setOverlayShaders();
     //     gl.uniform1f(time, drawCount);
