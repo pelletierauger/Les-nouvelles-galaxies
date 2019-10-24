@@ -894,6 +894,6 @@ drawSwirl = function(selectedProgram) {
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
-    let dotsToDraw = Math.floor(map(drawCount, 0, 2400, 60000, 0));
+    let dotsToDraw = Math.floor(map(drawCount, 0, 2400 - 672, 60000, 0));
     gl.drawArrays(gl.POINTS, 0, dotsToDraw);
 }
