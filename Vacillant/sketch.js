@@ -17,6 +17,8 @@ const seed = 10;
 const openSimplex = openSimplexNoise(seed);
 let mS = 1;
 let amountOfScratches = 3;
+drawCount = 6000;
+var maxDrawCount = 12500;
 
 function setup() {
     socket = io.connect('http://localhost:8080');
@@ -74,7 +76,7 @@ function setup() {
 draw = function() {
     gl.clear(gl.COLOR_BUFFER_BIT);
     runXSheet(xSheet);
-    if (drawCount == 0) {
+    if (drawCount == 6000) {
         // setDotsShaders();
         createWhiteDots();
         gl.useProgram(shaderPrograms["whiteDots"].shaderProgram);
@@ -137,6 +139,9 @@ draw = function() {
     //     gl.uniform1f(time, drawCount);
     //     drawBG();
     drawCount += drawIncrement;
+    if (exporting && drawCount < maxDrawCount) {
+        frameExport();
+    }
 }
 
 // function windowResized() {

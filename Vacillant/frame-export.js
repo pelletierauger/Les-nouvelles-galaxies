@@ -11,11 +11,12 @@ for (let i = 0; i < query.length; i++) {
 let exporting = (GET["exporting"] && GET["exporting"] == "true") ? true : false;
 
 function frameExport() {
-    var formattedFrameCount = "" + frameCount;
+    var dC = drawCount - 6000;
+    var formattedFrameCount = "" + dC;
     while (formattedFrameCount.length < 5) {
         formattedFrameCount = "0" + formattedFrameCount;
     }
-    var dataUrl = cnvs.toDataURL();
+    var dataUrl = canvasDOM.toDataURL();
     var data = {
         dataUrl: dataUrl,
         name: fileName + "-" + formattedFrameCount

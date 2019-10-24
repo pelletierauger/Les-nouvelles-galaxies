@@ -226,7 +226,8 @@ function createWhiteDots() {
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
         alph = coordinates.w;
-        gl_PointSize = coordinates.z / (((alph - 0.25) / (1.5 - 0.25)) * (1.5 - 0.35) + 0.35);
+        gl_PointSize = coordinates.z / alph;
+        // gl_PointSize = coordinates.z / (((alph - 0.25) / (1.5 - 0.25)) * (1.5 - 0.35) + 0.35);
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * 20.) * 2. + 1.));
     }
     `,
@@ -258,7 +259,7 @@ function createWhiteDots() {
         alpha = smoothstep(0.015, 0.000125, dist_squared) * 0.49;
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
-        gl_FragColor = vec4(1.0, 1.0 - dist_squared, 1.0 + alpha * 120., ((3. - dist_squared * 12.0 - (rando * 1.1)) * 0.0245 + alpha) * alph) * 2.25;
+        gl_FragColor = vec4(1.0, 1.0 - dist_squared, 1.0 + alpha * 120., ((3. - dist_squared * 12.0 - (rando * 3.1)) * 0.0245 + alpha) * alph) * 2.25;
 //         gl_FragColor = vec4(1.0, 1.0 - dist_squared * 1.0, 0.0, 0.35 - dist_squared - (rando * 0.2));
         // gl_FragColor = vec4(d * 0.001, uv.x, 0.0, 0.25);
     }`
