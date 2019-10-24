@@ -11,6 +11,7 @@ fileName = "./frames/smoke/smoke";
 fileName = "./frames/meadow/meadow";
 fileName = "./frames/alligator-new/alligator-new"
 fileName = "./frames/pulsar-super/pulsar-super";
+fileName = "./frames/swirl-fadeout-flicker-02/swirl-fadeout-flicker-02"
 let maxFrames = 1500;
 // maxFrames = 925;
 maxFrames = 3000;
@@ -141,7 +142,7 @@ draw = function() {
 
     }
     gl.useProgram(shaderPrograms["redDots"].shaderProgram);
-    drawPulsar(shaderPrograms["redDots"].shaderProgram);
+    drawSwirl(shaderPrograms["redDots"].shaderProgram);
 
     if (drawCount % 100 == 0) {
         mS = random(0.8, 1);
