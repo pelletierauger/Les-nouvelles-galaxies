@@ -1,0 +1,41 @@
+ffmpeg -f image2 -framerate 24 -i ./frames/sketch/sketch-%05d.png -c:v libx264 -s 1280x720 -pix_fmt yuv420p -shortest ./video-renders/test.mp4
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/sketch/sketch-%05d.png -c:v libx264 -preset slow -crf 22 -pix_fmt yuv420p -shortest ./video-renders/test-22.mp4
+
+ffmpeg -apply_trc iec61966_2_1 -f image2 -framerate 24 -i ./frames/short/sketch-%05d.png -vf format=rgb24 -c:v libx264 -preset slow -crf 15 -pix_fmt yuv420p -shortest ./video-renders/short-15.mp4
+
+
+
+
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/short/sketch-%05d.png -c:v libx264 -preset slow -qp 0 -x264-params "keyint=15:no-deblock=1" -pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int -color_range 1 -colorspace 5 -color_primaries 5 -color_trc 6 ./video-renders/short-15.mp4
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/short/sketch-%05d.png -c:v libx264 -preset placebo -qp 0 -x264-params "keyint=15:no-deblock=1" -pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int -color_range 1 -colorspace 5 -color_primaries 5 -color_trc 6 ./video-renders/short-15.mp4
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/short/sketch-%05d.png -c:v libx264 -preset fast -qp 0 -x264-params "keyint=15:no-deblock=1" -pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int -vf "colorspace=bt709:iall=bt601-6-625:fast=1" -color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 ./video-renders/short-fast.mp4
+
+ffmpeg -f image2 -framerate 24 -i ./frames/short/sketch-%05d.png -c:v libx264 -x264-params "keyint=15:no-deblock=1" -pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int -vf "colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.5" -color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 ./video-renders/short-params.mp4
+
+ffmpeg -f concat -safe 0 -r 24 -i montage.txt -i caprices.mp3 -c:v libx264 -pix_fmt yuv420p -shortest montage.mp4
+
+ffmpeg -f concat -safe 0 -r 24 -i montage.txt -itsoffset 10.5 -i caprices.mp3 -map 0:v -map 1:a -c:v libx264 -pix_fmt yuv420p -shortest montage.mp4
+
+ffmpeg -f concat -safe 0 -r 24 -i montage3.txt -itsoffset 10.5 -i caprices.mp3 -map 0:v -map 1:a -c:v libx264 -pix_fmt yuv420p -shortest montage3.mp4
+
+
+
+ffmpeg -f concat -safe 0 -r 24 -i montage2.txt -itsoffset 20.7 -i caprices.mp3 -map 0:v -map 1:a -c:v libx264 -pix_fmt yuv420p -shortest montage2.mp4
+
+ffmpeg -i montage2.mp4 -itsoffset 20.5 -i caprices.mp3 -map 0:v -map 1:a -c:v copy -shortest montage2b.mp4
+ffmpeg -i montage2.mp4 -itsoffset 20.7 -i caprices.mp3 -map 0:v -map 1:a -c:v copy -shortest montage2b.mp4
+
+
+ffmpeg -i montage3.mp4 -itsoffset 10.5 -i caprices-cut.wav -map 0:v -map 1:a -c:v copy montage3b.mp4
+
+ffmpeg -f concat -safe 0 -r 24 -i montage4.txt -itsoffset 10.5 -i caprices.mp3 -map 0:v -map 1:a -c:v libx264 -pix_fmt yuv420p -shortest montage4.mp4
+
+-i "movie.mp4" 
