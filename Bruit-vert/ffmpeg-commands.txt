@@ -15,3 +15,12 @@ ffmpeg -f image2 -framerate 24 -i ./frames/alligator-flicker/alligator-flicker-%
 
 ffmpeg -f image2 -framerate 24 -i ./frames/alligator-flicker2/alligator-flicker2-%05d.png -c:v libx264 -pix_fmt yuv420p -shortest ./video-renders/alligator-flicker2.mp4
 
+ffmpeg -f image2 -framerate 24 -i ./frames/smoke/smoke-%05d.png -c:v libx264 -pix_fmt yuv420p -shortest ./video-renders/smoke.mp4
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/meadow/meadow-%05d.png -c:v libx264 -pix_fmt yuv420p -shortest ./video-renders/meadow.mp4
+
+ffmpeg -f image2 -framerate 24 -i ./frames/alligator-new/alligator-new-%05d.png -c:v libx264 -pix_fmt yuv420p -shortest ./video-renders/alligator-new.mp4
+
+ffmpeg -f image2 -framerate 24 -i ./frames/pulsar-super/pulsar-super-%05d.png -c:v libx264 -pix_fmt yuv420p -shortest ./video-renders/pulsar-super.mp4
+
