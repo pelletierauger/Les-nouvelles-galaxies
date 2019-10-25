@@ -1,16 +1,16 @@
 xSheet = {
-    ailleurs00: {
-        d: 6000,
-        f: function(sum) {
-            // var rN = getSum(xSheet, xSheet.grotte);
-            septembre.update();
-        }
-    },
+    // ailleurs00: {
+    //     d: 6000,
+    //     f: function(sum) {
+    //         // var rN = getSum(xSheet, xSheet.grotte);
+    //         septembre.update();
+    //     }
+    // },
     ailleurs0: {
         d: 300,
         f: function(sum) {
-            // var rN = getSum(xSheet, xSheet.grotte);
-            implosion7.update();
+            var rN = getSum(xSheet, xSheet.ailleurs0);
+            implosion7.update(rN + 6000);
         }
     },
     ailleurs: {
@@ -34,14 +34,14 @@ xSheet = {
             var rN = getSum(xSheet, xSheet.ailleurs);
             var rN0 = getSum(xSheet, xSheet.ailleurs3);
             var coFade = cosineFade(sum, 400);
-//          By tying the equation with rN0 instead of "0",
-//          we are stabilizing the function with itself.
-//          It doesn't rely directly on drawCount.
-//          7200 just happened to be the sum of all frames
-//          at the moment where I wrote this unstabilized function.
+            //          By tying the equation with rN0 instead of "0",
+            //          we are stabilizing the function with itself.
+            //          It doesn't rely directly on drawCount.
+            //          7200 just happened to be the sum of all frames
+            //          at the moment where I wrote this unstabilized function.
             implosion6.mix(rN0 - 7200, implosion5, rN, coFade);
-//             lo(rN0);
-//             lo("");
+            //             lo(rN0);
+            //             lo("");
         }
     },
     cavern3: {
@@ -49,7 +49,7 @@ xSheet = {
         f: function(sum) {
             var rN = getSum(xSheet, xSheet.cavern3);
             nouvelleGrotte.update(rN - 7800);
-//             lo(rN);
+            //             lo(rN);
         }
     },
     cavern2: {
@@ -88,46 +88,52 @@ xSheet = {
     lemRi4: {
         d: 300,
         f: function(sum) {
+            var rN = getSum(xSheet, xSheet.lemRi4);
             var rN2 = getSum(xSheet, xSheet.lemRib);
             var coFade = cosineFade(sum, 100);
-            lemonRibbon4.mix(0, selfDigestingCircle, rN2 + 200, coFade);
+            lemonRibbon4.mix(rN - 9300, selfDigestingCircle, rN2 + 200, coFade);
         }
     },
     lemRi1: {
         d: 300,
         f: function(sum) {
+            var rN = getSum(xSheet, xSheet.lemRi4);
             var coFade = cosineFade(sum, 200);
-            lemonRibbon.mix(0, lemonRibbon4, 0, coFade);
+            lemonRibbon.mix(rN - 9300, lemonRibbon4, rN - 9300, coFade);
         }
     },
     tanFie: {
         d: 200,
         f: function(sum) {
+            var rN = getSum(xSheet, xSheet.lemRi4);
             var coFade = cosineFade(sum, 200);
-            tangentField.mix(0, lemonRibbon, 0, coFade);
+            tangentField.mix(rN - 9300, lemonRibbon, rN - 9300, coFade);
         }
     },
     liquef: {
         d: 300,
         f: function(sum) {
+            var rN = getSum(xSheet, xSheet.lemRi4);
             var coFade = cosineFade(sum, 200);
-            liquefieur.mix(0, tangentField, 0, coFade);
+            liquefieur.mix(rN - 9300, tangentField, rN - 9300, coFade);
         }
     },
     pasMal1: {
         d: 100,
         f: function(sum) {
+            var rN = getSum(xSheet, xSheet.lemRi4);
             var coFade = cosineFade(sum, 80);
-            pasMalCool.mix(0, liquefieur, 0, coFade);
+            pasMalCool.mix(rN - 9300, liquefieur, rN - 9300, coFade);
         }
     },
     spiToE2: {
         d: 100,
         f: function(sum) {
+            var rN = getSum(xSheet, xSheet.lemRi4);
             // info2.html(coFade);
             // info3.html("spiraToupEntre.x : " + spiraToupEntre.x);
             var coFade = cosineFade(sum, 80);
-            spiraToupEntre.mix(0, pasMalCool, 0, coFade);
+            spiraToupEntre.mix(rN - 9300, pasMalCool, rN - 9300, coFade);
         }
     },
     // spiToE: {
@@ -143,31 +149,35 @@ xSheet = {
     intere: {
         d: 300,
         f: function(sum) {
+            var rN = getSum(xSheet, xSheet.lemRi4);
             // var rS = getSum(xSheet,xSheet.spiToE);
             var coFade = cosineFade(sum, 200);
             // info3.html("interessant.x : " + interessant.x);
-            interessant.mix(0, spiraToupEntre, 0, coFade);
+            interessant.mix(rN - 9300, spiraToupEntre, rN - 9300, coFade);
         }
     },
     jusDeb: {
         d: 200,
         f: function(sum) {
+            var rN = getSum(xSheet, xSheet.lemRi4);
             var coFade = cosineFade(sum, 100);
-            justeDebile.mix(0, interessant, 0, coFade);
+            justeDebile.mix(rN - 9300, interessant, rN - 9300, coFade);
         }
     },
     spiExt: {
         d: 100,
         f: function(sum) {
+            var rN = getSum(xSheet, xSheet.lemRi4);
             var coFade = cosineFade(sum, 100);
-            spiraleExtraMagique2.mix(0, justeDebile, 0, coFade);
+            spiraleExtraMagique2.mix(rN - 9300, justeDebile, rN - 9300, coFade);
         }
     },
     spiTou: {
         d: 200,
         f: function(sum) {
+            var rN = getSum(xSheet, xSheet.lemRi4);
             var coFade = cosineFade(sum, 100);
-            spiraleToupie.mix(0, spiraleExtraMagique2, 0, coFade);
+            spiraleToupie.mix(rN - 9300, spiraleExtraMagique2, rN - 9300, coFade);
         }
     },
     // forMag: {
@@ -180,9 +190,10 @@ xSheet = {
     newDim: {
         d: 200,
         f: function(sum) {
-            var coFade = cosineFade(sum, 50);
             var rN = getSum(xSheet, xSheet.newDim);
-            nouvelleDimension.mix(rN, spiraleToupie, 0, coFade);
+            var rN2 = getSum(xSheet, xSheet.lemRi4);
+            var coFade = cosineFade(sum, 50);
+            nouvelleDimension.mix(rN, spiraleToupie, rN2 - 9300, coFade);
         }
     },
     spiEt: {
@@ -197,16 +208,18 @@ xSheet = {
     newDim2: {
         d: 400,
         f: function(sum) {
+            var rN = getSum(xSheet, xSheet.newDim2);
             var rS = getSum(xSheet, xSheet.spiEt);
             var coFade = cosineFade(sum, 30);
-            nouvelleDimension2.mix(0, spiraleEtrange, rS + 20, coFade);
+            nouvelleDimension2.mix(rN - 11750, spiraleEtrange, rS + 20, coFade);
         }
     },
     modDim: {
         d: 2050,
         f: function(sum) {
+            var rN = getSum(xSheet, xSheet.newDim2);
             var coFade = cosineFade(sum, 50);
-            modulatedDimension.mix(0, nouvelleDimension2, 0, coFade);
+            modulatedDimension.mix(rN - 11750, nouvelleDimension2, rN - 11750, coFade);
         }
     },
     key: function(n) {
