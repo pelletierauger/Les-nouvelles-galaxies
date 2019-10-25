@@ -17,7 +17,7 @@ const seed = 10;
 const openSimplex = openSimplexNoise(seed);
 let mS = 1;
 let amountOfScratches = 3;
-drawCount = 6000;
+// drawCount = 6000;
 var maxDrawCount = 12500;
 
 function setup() {
@@ -76,7 +76,7 @@ function setup() {
 draw = function() {
     gl.clear(gl.COLOR_BUFFER_BIT);
     runXSheet(xSheet);
-    if (drawCount == 6000) {
+    if (drawCount == 0) {
         // setDotsShaders();
         createWhiteDots();
         gl.useProgram(shaderPrograms["whiteDots"].shaderProgram);
