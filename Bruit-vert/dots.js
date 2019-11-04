@@ -210,8 +210,10 @@ function createShaderProgram(name, vert, frag) {
     gl.attachShader(program.shaderProgram, fragShader);
     // Link both programs
     gl.linkProgram(program.shaderProgram);
-    shaderPrograms[name] = program;
+    namedPrograms[name] = program;
 }
+
+
 
 function createWhiteDots() {
     createShaderProgram("whiteDots",

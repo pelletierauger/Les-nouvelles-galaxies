@@ -18,7 +18,7 @@ maxFrames = 3000;
 // maxFrames = 1300;
 // maxFrames = 1200;
 // maxFrames = 1100;
-let gl, shaderProgram;
+let gl;
 let time;
 let positive = true;
 let intensity;
@@ -28,10 +28,10 @@ let vertexBuffer;
 let vertices = [];
 const seed = 10;
 const openSimplex = openSimplexNoise(seed);
-let shaderPrograms = {};
 let mS = 1;
 let amountOfScratches = 3;
 let fluctuation = 1;
+let namedPrograms = {};
 
 // a shader variable
 let texcoordShader;
@@ -80,11 +80,13 @@ function setup() {
     // background(0);
     // fill(255, 50);
     noStroke();
-
     vertex_buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     if (!looping) {
         noLoop();
     }
+    initializeShaders();
+    createWhiteDots();
 }
 
 // draw = function() {
@@ -136,54 +138,58 @@ draw = function() {
     //     setDotsShaders();
     // }
     // console.log("Bloink!");
-    if (drawCount == 0) {
-        // setDotsShaders();
-        createWhiteDots();
+    // if (drawCount == 0) {
+    //     // setDotsShaders();
+    //     createWhiteDots();
 
-    }
-    gl.useProgram(shaderPrograms["redDots"].shaderProgram);
-    drawSwirl(shaderPrograms["redDots"].shaderProgram);
+    // }
+    let currentProgram = getProgram("faster-dots");
+    // currentProgram = namedPrograms["redDots"].shaderProgram;
+    // currentProgram = getProgram("redDots");
+    // console.log(currentProgram);
+    gl.useProgram(currentProgram);
+    drawSwirl(currentProgram);
 
-    if (drawCount % 100 == 0) {
-        mS = random(0.8, 1);
-    }
-    if (drawCount % 10 == 0) {
-        if (Math.random() > 0.97) {
-            amountOfScratches = random(160, 60);
-            // fluctuation = 4;
-        } else {
-            amountOfScratches = 3;
-            // fluctuation = 1;
-        }
-        // amountOfScratches = (Math.random() > 0.95) ? random(160, 60) : 3;
-        // fluctuation = (Math.random() > 0.95) ? 4 : 1;
-    }
-    vertices = [];
-    for (let i = 0; i < 3000; i++) {
-        let v = Math.random();
-        let s = (v >  0.99) ? 10 : 1;
-        s = (v > 0.9995) ? s * random(1, 4) : s;
-        s *= mS;
-        vertices.push(Math.random() * 2 - 1, Math.random() * 2 - 1, s + Math.random() * 0.5 * s);
-    }
-    let n = Math.PI * 1 / 100;
+    // if (drawCount % 100 == 0) {
+    //     mS = random(0.8, 1);
+    // }
+    // if (drawCount % 10 == 0) {
+    //     if (Math.random() > 0.97) {
+    //         amountOfScratches = random(160, 60);
+    //         // fluctuation = 4;
+    //     } else {
+    //         amountOfScratches = 3;
+    //         // fluctuation = 1;
+    //     }
+    //     // amountOfScratches = (Math.random() > 0.95) ? random(160, 60) : 3;
+    //     // fluctuation = (Math.random() > 0.95) ? 4 : 1;
+    // }
+    // vertices = [];
+    // for (let i = 0; i < 3000; i++) {
+    //     let v = Math.random();
+    //     let s = (v >  0.99) ? 10 : 1;
+    //     s = (v > 0.9995) ? s * random(1, 4) : s;
+    //     s *= mS;
+    //     vertices.push(Math.random() * 2 - 1, Math.random() * 2 - 1, s + Math.random() * 0.5 * s);
+    // }
+    // let n = Math.PI * 1 / 100;
 
-    for (let m = 0; m < amountOfScratches; m++) {
-        let s = Math.random() * Math.PI * 2;
-        let sX = Math.random() * 2 - 1;
-        let sY = Math.random() * 2 - 1;
-        let sC = (Math.random() < 0.5) ? 0.01 : 1;
-        let osc = Math.sin(drawCount * m);
-        for (let i = s; i < Math.PI + s; i += n) {
-            //         let x = cos(i) * cos(i * osc) * 0.1 + sX;
-            //         let y = sin(i) * sin(i * osc) * 0.175 + sY;
-            let x = cos(i * 0.1) * tan(osc * 10) * cos(i * osc) * 0.1 + sX;
-            let y = sin(i * 0.1) * tan(osc * 10) * sin(i * osc) * 0.175 + sY;
-            vertices.push(x, y, random(2, 20) * sC * mS);
-        }
-    }
-    gl.useProgram(shaderPrograms["scratches"].shaderProgram);
-    drawGenericDots(shaderPrograms["scratches"].shaderProgram, 3000 + (amountOfScratches * 100));
+    // for (let m = 0; m < amountOfScratches; m++) {
+    //     let s = Math.random() * Math.PI * 2;
+    //     let sX = Math.random() * 2 - 1;
+    //     let sY = Math.random() * 2 - 1;
+    //     let sC = (Math.random() < 0.5) ? 0.01 : 1;
+    //     let osc = Math.sin(drawCount * m);
+    //     for (let i = s; i < Math.PI + s; i += n) {
+    //         //         let x = cos(i) * cos(i * osc) * 0.1 + sX;
+    //         //         let y = sin(i) * sin(i * osc) * 0.175 + sY;
+    //         let x = cos(i * 0.1) * tan(osc * 10) * cos(i * osc) * 0.1 + sX;
+    //         let y = sin(i * 0.1) * tan(osc * 10) * sin(i * osc) * 0.175 + sY;
+    //         vertices.push(x, y, random(2, 20) * sC * mS);
+    //     }
+    // }
+    // gl.useProgram(shaderPrograms["scratches"].shaderProgram);
+    // drawGenericDots(shaderPrograms["scratches"].shaderProgram, 3000 + (amountOfScratches * 100));
 
     //     setOverlayShaders();
     //     gl.uniform1f(time, drawCount);
