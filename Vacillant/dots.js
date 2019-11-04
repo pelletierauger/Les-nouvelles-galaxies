@@ -140,7 +140,7 @@ drawDots = function(selectedProgram, dotAmount) {
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
-    gl.drawArrays(gl.POINTS, 0, dotAmount);
+    gl.drawArrays(gl.POINTS, 0, vertices.length * 0.25);
 }
 
 
@@ -229,6 +229,8 @@ function createWhiteDots() {
         gl_PointSize = coordinates.z / alph;
         // gl_PointSize = coordinates.z / (((alph - 0.25) / (1.5 - 0.25)) * (1.5 - 0.35) + 0.35);
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * 20.) * 2. + 1.));
+        // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y) * 3. + 0.5));
+        // gl_PointSize = 10.0 + coordinates.z / alph * abs(myposition.y * 10.);
     }
     `,
         `precision mediump float;

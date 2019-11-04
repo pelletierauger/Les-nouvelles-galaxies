@@ -2146,7 +2146,7 @@ var implosion5 = new Oscillator(function(i, sum) {
     };
 });
 var implosion6 = new Oscillator(function(i, sum) {
-    var m = sin((drawCount - sum) / 70) * 2;
+    var m = (drawCount - sum) * 0.025;
     t = i / 1;
     return {
         x: pow(sin(sin(t + m)), 1) * tan(t + m) * 0.1 * t,
@@ -2154,7 +2154,7 @@ var implosion6 = new Oscillator(function(i, sum) {
     };
 });
 var implosion7 = new Oscillator(function(i, sum) {
-    var m = sin((drawCount - sum) / 70) * 2;
+    var m = (drawCount - sum) * -0.025;
     t = i / 1;
     return {
         x: pow(sin(sin(t + m)), 1) * tan(t + m) * 0.1 * t,
@@ -2178,11 +2178,11 @@ var implosion9 = new Oscillator(function(i, sum) {
     };
 });
 var implosion10 = new Oscillator(function(i, sum) {
-    var m = sin((drawCount - sum) / 70) * 2;
+    var m = (drawCount - sum) * 0.025;
     t = i / 1;
     return {
-        x: pow(sin(sin(t)), 1) * tan(t) * 0.1 * t,
-        y: pow(cos(cos(t)), 0.5) * tan(t + m) * 120
+        x: pow(sin(sin(t)), 1) * tan(t) * 0.2 * t,
+        y: pow(cos(cos(t)), 1) * tan(t + m) * 120
     };
 });
 var implosion11 = new Oscillator(function(i, sum) {
