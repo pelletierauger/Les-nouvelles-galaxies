@@ -35,6 +35,7 @@ let namedPrograms = {};
 
 // a shader variable
 let texcoordShader;
+let dotsVBuf, bgVBuf;
 
 function setup() {
     socket = io.connect('http://localhost:8080');
@@ -81,12 +82,15 @@ function setup() {
     // fill(255, 50);
     noStroke();
     vertex_buffer = gl.createBuffer();
+    dotsVBuf = gl.createBuffer();
+    bgVBuf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     if (!looping) {
         noLoop();
     }
     initializeShaders();
     createWhiteDots();
+    time = gl.getUniformLocation(getProgram("fog"), "time");
 }
 
 // draw = function() {
@@ -143,10 +147,16 @@ draw = function() {
     //     createWhiteDots();
 
     // }
-    let currentProgram = getProgram("faster-dots");
+
+    let currentProgram = getProgram("fog");
+    gl.useProgram(currentProgram);
+    drawBG(currentProgram);
+    // oldSetBGShaders();
+    // oldDrawBG();
     // currentProgram = namedPrograms["redDots"].shaderProgram;
-    // currentProgram = getProgram("redDots");
+    // currentProgram = getProgram("white-flickering-dots");
     // console.log(currentProgram);
+    currentProgram = getProgram("faster-dots");
     gl.useProgram(currentProgram);
     drawSwirl(currentProgram);
 

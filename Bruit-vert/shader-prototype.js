@@ -48,3 +48,25 @@ function getProgram(name) {
         }
     }
 }
+
+function drawBG(sh) {
+    let aspect = cnvs.width / cnvs.height;
+    let vertices = new Float32Array([-1, 1, 1, 1, 1, -1, // Triangle 1
+        -1, 1, 1, -1, -1, 1 // Triangle 2
+    ]);
+    gl.uniform1f(time, drawCount * 0.00025);
+    // let vbuffer = gl.createBuffer();
+    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // gl.bindBuffer(gl.ARRAY_BUFFER, null);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    gl.bindBuffer(gl.ARRAY_BUFFER, bgVBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+    let itemSize = 2;
+    let numItems = vertices.length / itemSize;
+    sh.aVertexPosition = gl.getAttribLocation(sh, "aPosition");
+    gl.vertexAttribPointer(sh.aVertexPosition, itemSize, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(sh.aVertexPosition);
+    gl.drawArrays(gl.TRIANGLES, 0, numItems);
+    // console.log("Yrup");
+}
