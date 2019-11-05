@@ -455,7 +455,8 @@ drawAlligator = function(selectedProgram) {
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     /*======== Associating shaders to buffer objects ========*/
     // Bind vertex buffer object
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    gl.bindBuffer(gl.ARRAY_BUFFER, dotsVBuf);
     // Get the attribute location
     var coord = gl.getAttribLocation(selectedProgram, "coordinates");
     // Point an attribute to the currently bound VBO
