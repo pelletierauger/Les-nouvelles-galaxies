@@ -14,6 +14,7 @@ fileName = "./frames/pulsar-super/pulsar-super";
 fileName = "./frames/swirl-fadeout-flicker-02/swirl-fadeout-flicker-02"
 fileName = "./frames/purple-swirl/purple-swirl"
 fileName = "./frames/foggy-swirl/foggy-swirl"
+fileName = "./frames/purple-swirl-flicker/purple-swirl-flicker"
 let maxFrames = 1500;
 // maxFrames = 925;
 maxFrames = 3000;
@@ -92,7 +93,7 @@ function setup() {
     }
     initializeShaders();
     createWhiteDots();
-    time = gl.getUniformLocation(getProgram("grey-fog"), "time");
+    time = gl.getUniformLocation(getProgram("fog"), "time");
 }
 
 // draw = function() {
@@ -150,14 +151,14 @@ draw = function() {
 
     // }
 
-    let currentProgram = getProgram("grey-fog");
+    let currentProgram = getProgram("fog");
     gl.useProgram(currentProgram);
     drawBG(currentProgram);
     // oldSetBGShaders();
     // oldDrawBG();
     // currentProgram = namedPrograms["redDots"].shaderProgram;
     currentProgram = getProgram("white-flickering-dots");
-    // currentProgram = getProgram("new-flickering-dots");
+    currentProgram = getProgram("new-flickering-dots");
     // console.log(currentProgram);
 
     // currentProgram = getProgram("faster-dots");
