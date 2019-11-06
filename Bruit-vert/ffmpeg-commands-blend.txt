@@ -1,0 +1,64 @@
+
+
+ffmpeg -ss 00:00:18.300 -i music.mp3 -loop 1 -i bg.mp4 -i ac%d.png -i dust.mp4 \
+-filter_complex "[1:0]scale=1600:ih*1200/iw, crop=1600:900[a]; \
+[a][2:0] overlay=0:0[b]; \
+[3:0] scale=1600:ih*1600/iw, crop=1600:900,setsar=1[c]; \
+[b][c] blend=all_mode='overlay':all_opacity=0.2" -shortest -y output.mp4
+
+ffmpeg -f image2 -framerate 24 -i ./frames/purple-swirl-flicker/purple-swirl-flicker-%05d.png \
+-i ./frames/purple-swirl-flicker/purple-swirl-flicker-%05d.png \
+-c:v libx264 -pix_fmt yuv420p \
+-filter_complex "[0:0]avgblur=sizeX=15" \
+./video-renders/purple-tests.mp4
+
+ffmpeg -f image2 -framerate 24 -i ./frames/purple-swirl-flicker/purple-swirl-flicker-%05d.png \
+-i ./frames/purple-swirl-flicker/purple-swirl-flicker-%05d.png \
+-c:v libx264 -pix_fmt yuv420p \
+-filter_complex "[0:0]gblur=sigma=4:steps=1[a]; \
+[a][1:0] blend=all_mode='overlay':all_opacity=0.2" \
+./video-renders/purple-tests.mp4
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/purple-swirl-flicker/purple-swirl-flicker-%05d.png \
+-i ./frames/purple-swirl-flicker/purple-swirl-flicker-%05d.png \
+-c:v libx264 -preset slow -crf 19 -pix_fmt yuv420p \
+-filter_complex "[0:0]avgblur=sizeX=15" \
+./video-renders/purple-tests.mp4
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/purple-swirl-flicker/purple-swirl-flicker-00001.png \
+-i ./frames/purple-swirl-flicker/purple-swirl-flicker-00001.png \
+-filter_complex "[0:0]gblur=sigma=40:steps=1" \
+./video-renders/purple-tests.png
+
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/purple-swirl-flicker/purple-swirl-flicker-00001.png \
+-filter_complex "[0:0]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25" \
+./video-renders/purple-tests.png
+y
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/purple-swirl-flicker/purple-swirl-flicker-%05d.png \
+-filter_complex "[0:0]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25" \
+./frames/purple-swirl-flicker-smear/purple-smear-%05d.png
+y
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/purple-swirl-flicker-smear/purple-smear-%05d.png -c:v libx264 -x264-params "keyint=15:no-deblock=1" -pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int -vf "colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" -color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest ./video-renders/purple-swirl-flicker-smear-bh125.mp4
+
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/purple-swirl-flicker/purple-swirl-flicker-00001.png \
+-filter_complex "[0:0]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a];
+[0:0]hue=h=90:s=-5, gblur=sigma=10:steps=1[b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25[c]; \
+[c][b] blend=all_mode='screen':all_opacity=0.2" \
+./video-renders/purple-tests.png
+y
