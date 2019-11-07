@@ -16,6 +16,7 @@ fileName = "./frames/purple-swirl/purple-swirl";
 fileName = "./frames/foggy-swirl/foggy-swirl";
 fileName = "./frames/purple-swirl-flicker/purple-swirl-flicker";
 fileName = "./frames/alligator-foggy/alligator-foggy";
+fileName = "./frames/purple-pulsar/purple-pulsar";
 let maxFrames = 1500;
 // maxFrames = 925;
 maxFrames = 3000;
@@ -94,7 +95,7 @@ function setup() {
     }
     initializeShaders();
     createWhiteDots();
-    time = gl.getUniformLocation(getProgram("fog"), "time");
+    time = gl.getUniformLocation(getProgram("pulsar-fog"), "time");
 }
 
 // draw = function() {
@@ -152,19 +153,20 @@ draw = function() {
 
     // }
 
-    let currentProgram = getProgram("fog");
+    let currentProgram = getProgram("pulsar-fog");
     gl.useProgram(currentProgram);
     drawBG(currentProgram);
     // oldSetBGShaders();
     // oldDrawBG();
     // currentProgram = namedPrograms["redDots"].shaderProgram;
-    currentProgram = getProgram("white-flickering-dots");
-    currentProgram = getProgram("new-flickering-dots");
+    // currentProgram = getProgram("white-flickering-dots");
+    // currentProgram = getProgram("new-flickering-dots");
+    currentProgram = getProgram("white-pulsar-dots");
     // console.log(currentProgram);
 
     // currentProgram = getProgram("faster-dots");
     gl.useProgram(currentProgram);
-    drawAlligator(currentProgram);
+    drawPulsar(currentProgram);
 
     // if (drawCount % 100 == 0) {
     //     mS = random(0.8, 1);
