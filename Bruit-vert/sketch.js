@@ -17,6 +17,7 @@ fileName = "./frames/foggy-swirl/foggy-swirl";
 fileName = "./frames/purple-swirl-flicker/purple-swirl-flicker";
 fileName = "./frames/alligator-foggy/alligator-foggy";
 fileName = "./frames/purple-pulsar/purple-pulsar";
+fileName = "./frames/brume/brume";
 let maxFrames = 1500;
 // maxFrames = 925;
 maxFrames = 3000;
@@ -161,6 +162,7 @@ draw = function() {
     // currentProgram = namedPrograms["redDots"].shaderProgram;
     // currentProgram = getProgram("white-flickering-dots");
     // currentProgram = getProgram("new-flickering-dots");
+    // currentProgram = getProgram("pulsar-dots");
     currentProgram = getProgram("white-pulsar-dots");
     // console.log(currentProgram);
 
