@@ -91,3 +91,72 @@ colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
 [0:0][a] blend=all_mode='hardlight':all_opacity=0.25[b]; \
 [b] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
 -color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest ./video-renders/alligator-foggy-smear-onepass.mp4
+
+
+//----------------------------------------------------------------------------------------//
+// Pulsar, foggy and purple
+//----------------------------------------------------------------------------------------//
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/purple-pulsar/purple-pulsar-00001.png \
+-filter_complex "[0:0]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25" \
+./video-renders/purple-pulsar-00001.png
+
+ffmpeg -f image2 -framerate 24 -i ./frames/purple-pulsar/purple-pulsar-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25[b]; \
+[b] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest ./video-renders/purple-pulsar-onepass.mp4
+
+//----------------------------------------------------------------------------------------//
+// Générique d'ouverture
+//----------------------------------------------------------------------------------------//
+
+ffmpeg -f image2 -framerate 24 -i ./video-renders/title.png \
+-filter_complex "[0:0]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25" \
+./video-renders/title-smear.png
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/sheet/sketch-%05d.png -i brume-3.png \
+-filter_complex "[0:v][1:v] overlay=0:0:enable='between(t,20,38)'[a]; \
+[a]gblur=sigma=10:steps=1,
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[b];" \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25" \
+-pix_fmt yuv420p -c:a copy \
+./video-renders/sheet-overlay-c.mp4
+
+
+ffmpeg -f image2 -framerate 24 \
+-i ../../Foggy-Hills/frames/sheet/sketch-%05d.png \
+-i ../../Foggy-Hills/novacarton-a-half.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:v][1:v]overlay=0:0:enable='between(t,20,38)'[a]; \
+[0:v][1:v]overlay=0:0:enable='between(t,20,38)'[d]; \
+[a]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[b]; \
+[d][b] blend=all_mode='hardlight':all_opacity=0.25[c]; \
+[c] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest ./video-renders/carton-smear.mp4
+
+
+
+ffmpeg -f image2 -framerate 24 \
+-i ./frames/brume/brume-%05d.png \
+-i ../../Foggy-Hills/tortues.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:v][1:v]overlay=0:0:enable='between(t,0,28)'[a]; \
+[0:v][1:v]overlay=0:0:enable='between(t,0,28)'[d]; \
+[a]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[b]; \
+[d][b] blend=all_mode='hardlight':all_opacity=0.25[c]; \
+[c] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest ./video-renders/carton-tortues.mp4
