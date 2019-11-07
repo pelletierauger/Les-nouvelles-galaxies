@@ -4,17 +4,18 @@ let socket, cnvs, ctx, canvasDOM;
 let fileName = "./frames/alligator/alligator";
 fileName = "./frames/pulsar/pulsar";
 // fileName = "./frames/smoke/smoke";
-fileName = "./frames/swirl/swirl"
-fileName = "./frames/swirl-fadeout-flicker/swirl-fadeout-flicker"
-fileName = "./frames/alligator-flicker2/alligator-flicker2"
+fileName = "./frames/swirl/swirl";
+fileName = "./frames/swirl-fadeout-flicker/swirl-fadeout-flicker";
+fileName = "./frames/alligator-flicker2/alligator-flicker2";
 fileName = "./frames/smoke/smoke";
 fileName = "./frames/meadow/meadow";
-fileName = "./frames/alligator-new/alligator-new"
+fileName = "./frames/alligator-new/alligator-new";
 fileName = "./frames/pulsar-super/pulsar-super";
-fileName = "./frames/swirl-fadeout-flicker-02/swirl-fadeout-flicker-02"
-fileName = "./frames/purple-swirl/purple-swirl"
-fileName = "./frames/foggy-swirl/foggy-swirl"
-fileName = "./frames/purple-swirl-flicker/purple-swirl-flicker"
+fileName = "./frames/swirl-fadeout-flicker-02/swirl-fadeout-flicker-02";
+fileName = "./frames/purple-swirl/purple-swirl";
+fileName = "./frames/foggy-swirl/foggy-swirl";
+fileName = "./frames/purple-swirl-flicker/purple-swirl-flicker";
+fileName = "./frames/alligator-foggy/alligator-foggy";
 let maxFrames = 1500;
 // maxFrames = 925;
 maxFrames = 3000;
@@ -163,7 +164,7 @@ draw = function() {
 
     // currentProgram = getProgram("faster-dots");
     gl.useProgram(currentProgram);
-    drawSwirl(currentProgram);
+    drawAlligator(currentProgram);
 
     // if (drawCount % 100 == 0) {
     //     mS = random(0.8, 1);
