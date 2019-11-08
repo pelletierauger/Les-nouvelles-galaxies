@@ -162,8 +162,8 @@ draw = function() {
     // currentProgram = namedPrograms["redDots"].shaderProgram;
     // currentProgram = getProgram("white-flickering-dots");
     // currentProgram = getProgram("new-flickering-dots");
-    // currentProgram = getProgram("pulsar-dots");
-    currentProgram = getProgram("white-pulsar-dots");
+    currentProgram = getProgram("pulsar-dots");
+    // currentProgram = getProgram("white-pulsar-dots");
     // console.log(currentProgram);
 
     // currentProgram = getProgram("faster-dots");

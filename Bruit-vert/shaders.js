@@ -553,9 +553,9 @@ let whitePulsarDots = new ShaderProgram({
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
         alph = coordinates.w;
-        // gl_PointSize = 9. + coordinates.z / ((6.0 + alph) * 0.25);
+        gl_PointSize = 20. + coordinates.z / ((6.0 + alph) * 0.25);
         // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
-        gl_PointSize = max(25.0, coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5)));
+        // gl_PointSize = max(25.0, coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5)));
     }
     // endGLSL
     `,

@@ -474,6 +474,7 @@ drawAlligator = function(selectedProgram) {
 
 // // pulsar
 // let sceneRun = false;
+// drawCount = 0;
 drawPulsar = function(selectedProgram) {
     // if (!sceneRun) {
     //     drawCount = 1;
@@ -489,7 +490,6 @@ drawPulsar = function(selectedProgram) {
     let x = 0;
     let y = 0;
     let num = 30000;
-
     function ro(a, l, x, y, h) {
         return {
             x: x + Math.cos(h + a) * l,
@@ -503,7 +503,7 @@ drawPulsar = function(selectedProgram) {
     let numV = 0;
     let metaV = [];
     let indMetaV = 0;
-    let t1 = drawCount * 1e-3 * 0.125;
+    let t1 = drawCount * 1e-3 * 0.125 * 0.5;
     let t2 = t1 * 1e1;
     let xO = openSimplex.noise2D(t2, t2 + 1000) * 1;
     let yO = openSimplex.noise2D(t2 - 1000, t2 + 500) * 1;
@@ -516,20 +516,24 @@ drawPulsar = function(selectedProgram) {
         let p = { x: 0, y: 0, h: j };
         let jj = j - sj;
         metaV[indMetaV] = [];
+        var sc = 0.01 * (1 / cos(t * 4e5));
+        sc = 0.25;
+        sc = map(drawCount, 0, 2000, 0.25, 0.0125);
+        let scOsc = map(drawCount, 0, 1100, 0.5, 4.5)
+        let ssc = map(drawCount, 0, 1200, 1e7, 1e6);
         for (let i = 0; i < (num / amountRays); i += 1) {
-            let a = T * 0.5 + sin(p.h + jj);
+            let a = T * -0.125 + Math.sin(p.h + jj);
             let l = 0.5;
-            let ph = cos(p.x) + sin(p.y);
-            p = ro(a, l, p.x, p.y, p.h + ph * 0.75 * sin(t * 2e6));
+            let ph = Math.cos(p.x) + Math.sin(p.y);
+            p = ro(a, l, p.x, p.y, p.h + ph * 0.75 * Math.sin(t * ssc) * scOsc * sc);
             //             p.x += xOffset * 2.95;
             //             p.y += yOffset * 2.95;
-            p.x += cos(t * 2e7) * 0.25;
-            p.y += sin(t * 2e7) * 0.25;
-            var sc = 0.01 * (1 / cos(t * 4e5));
-            sc = 0.25;
-            sc = map(drawCount, 0, 1000, 0.25, 0.0125);
-            let xo = openSimplex.noise2D(i, t * 1e4) * 4e-4;
-            let yo = openSimplex.noise2D(i, t * 1e4 + 1000) * 4e-4;
+            p.x += Math.cos(t * 1e7) * 0.25;
+            p.y += Math.sin(t * 1e7) * 0.25;
+//             let xo = openSimplex.noise2D(i, t * 1e4) * 4e-4;
+//             let yo = openSimplex.noise2D(i, t * 1e4 + 1000) * 4e-4;
+             let xo = 0;
+            let yo = 0;
             let zo = (openSimplex.noise2D(i, (t * 1e4 + i) * 1e2 + 100)) * 5;
             metaV[indMetaV].push((p.y + xO2 + xo) * 0.35 * 1.5 * sc, (p.x + yO2 + yo) * 0.9 * sc * -1, 15 + zo, al);
             numV += 1;
