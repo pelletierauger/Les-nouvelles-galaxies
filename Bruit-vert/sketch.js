@@ -210,7 +210,7 @@ draw = function() {
     //     gl.uniform1f(time, drawCount);
     //     drawBG();
     drawCount += drawIncrement;
-    if (exporting && frameCount < maxFrames) {
+    if (exporting && frameCount < maxFrames && frameCount > 419) {
         frameExport();
     }
 }
