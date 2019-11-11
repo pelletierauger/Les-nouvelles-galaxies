@@ -18,6 +18,7 @@ fileName = "./frames/purple-swirl-flicker/purple-swirl-flicker";
 fileName = "./frames/alligator-foggy/alligator-foggy";
 fileName = "./frames/purple-pulsar/purple-pulsar";
 fileName = "./frames/brume/brume";
+fileName = "./frames/pink-pulsar/pink-pulsar";
 let maxFrames = 1500;
 // maxFrames = 925;
 maxFrames = 3000;

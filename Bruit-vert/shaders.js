@@ -532,6 +532,7 @@ let pulsarDots = new ShaderProgram({
         // gl_FragColor = gl_FragColor.gbra;
         // gl_FragColor.rgb *= 3.5;
         // gl_FragColor.b += 0.25;
+        // gl_FragColor.a *= 1.5;
         // endGLSL
     }`
 });
