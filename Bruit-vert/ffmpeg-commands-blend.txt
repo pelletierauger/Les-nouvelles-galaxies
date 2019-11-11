@@ -160,3 +160,126 @@ colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[b]; \
 [d][b] blend=all_mode='hardlight':all_opacity=0.25[c]; \
 [c] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
 -color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest ./video-renders/carton-tortues.mp4
+
+
+
+ffmpeg -f image2 -framerate 24 \
+-i ../../Foggy-Hills/frames/sheet/sketch-%05d.png \
+-i ../../Foggy-Hills/brume-3.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:v][1:v]overlay=0:0:enable='between(t,20,38)'[a]; \
+[0:v][1:v]overlay=0:0:enable='between(t,20,38)'[d]; \
+[a]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[b]; \
+[d][b] blend=all_mode='hardlight':all_opacity=0.25[c]; \
+[c] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest ./video-renders/carton-brume-3.mp4
+
+
+ffmpeg -f image2 -framerate 24 \
+-i ../../Foggy-Hills/frames/blue-fog/sketch-%05d.png \
+-i ../../Foggy-Hills/neptune.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:v][1:v]overlay=0:0:enable='between(t,0,38)'[a]; \
+[0:v][1:v]overlay=0:0:enable='between(t,0,38)'[d]; \
+[a]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[b]; \
+[d][b] blend=all_mode='hardlight':all_opacity=0.25[c]; \
+[c] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest ./video-renders/neptune.mp4
+
+ffmpeg -f image2 -framerate 24 \
+-i ../../Foggy-Hills/frames/blue-fog/sketch-%05d.png \
+-i ../../Foggy-Hills/geometric.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:v][1:v]overlay=0:0:enable='between(t,0,38)'[a]; \
+[0:v][1:v]overlay=0:0:enable='between(t,0,38)'[d]; \
+[a]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[b]; \
+[d][b] blend=all_mode='hardlight':all_opacity=0.25[c]; \
+[c] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest ./video-renders/geometric.mp4
+
+ffmpeg -f image2 -framerate 24 \
+-i ../../Foggy-Hills/frames/pastel-hills/sketch-%05d.png \
+-i ../../Foggy-Hills/lueurs-credits.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:v][1:v]overlay=0:0:enable='between(t,0,38)'[a]; \
+[0:v][1:v]overlay=0:0:enable='between(t,0,38)'[d]; \
+[a]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[b]; \
+[d][b] blend=all_mode='hardlight':all_opacity=0.25[c]; \
+[c] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-s 2560x1440 -shortest \
+./video-renders/pastel-hills.mp4
+
+
+ffmpeg -f image2 -framerate 24 \
+-i ../../Foggy-Hills/frames/pastel-hills/sketch-%05d.png \
+-i ../../Foggy-Hills/lueurs-credits.png \
+-c:v libx264 -preset slow -crf 19 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:v][1:v]overlay=0:0:enable='between(t,0,38)'[a]; \
+[0:v][1:v]overlay=0:0:enable='between(t,0,38)'[d]; \
+[a]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[b]; \
+[d][b] blend=all_mode='hardlight':all_opacity=0.25[c]; \
+[c] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-s 2560x1440 -shortest \
+./video-renders/pastel-hills-crf-19.mp4
+
+
+ffmpeg -f image2 -framerate 24 \
+-i ../../Foggy-Hills/frames/pastel-hills-half/sketch-%05d.png \
+-i ../../Foggy-Hills/lueurs-credits.png \
+-c:v libx264 -preset slow -crf 19 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:v]scale=2560x1440[a]; \
+[a][1:v]overlay=0:0:enable='between(t,0,38)'[b]; \
+[b]split[c][d]; \
+[c]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[c]; \
+[d][c] blend=all_mode='hardlight':all_opacity=0.25[e]; \
+[e] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-s 2560x1440 -shortest \
+./video-renders/pastel-hills-half.mp4
+
+
+ffmpeg -f image2 -framerate 24 \
+-i ../../Foggy-Hills/frames/pastel-hills-half/sketch-%05d.png \
+-i ../../Foggy-Hills/lueurs-credits-lessglow.png \
+-c:v libx264 -preset slow -crf 19 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:v] scale=2560x1440 [a]; \
+[a][1:v] overlay=0:0:enable='between(t,15,38)' [b]; \
+[b] split [c][d]; \
+[c] gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [c]; \
+[d][c] blend=all_mode='hardlight':all_opacity=0.25 [e]; \
+[e] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-s 2560x1440 -shortest \
+./video-renders/pastel-hills-half-lessglow.mp4
+
+
+
+//----------------------------------------------------------------------------------------//
+// pink pulsar
+//----------------------------------------------------------------------------------------//
+
+
+ffmpeg -f image2 -framerate 24 -i ./frames/pink-pulsar/pink-pulsar-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25[b]; \
+[b] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest ./video-renders/pink-pulsar.mp4
