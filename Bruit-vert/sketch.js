@@ -19,9 +19,10 @@ fileName = "./frames/alligator-foggy/alligator-foggy";
 fileName = "./frames/purple-pulsar/purple-pulsar";
 fileName = "./frames/brume/brume";
 fileName = "./frames/pink-pulsar/pink-pulsar";
-let maxFrames = 1500;
+fileName = "/Volumes/Volumina/frames/lueurs/pink-pulsar/pink-pulsar"
+let maxFrames = 15000;
 // maxFrames = 925;
-maxFrames = 3000;
+// maxFrames = 3000;
 // maxFrames = 1300;
 // maxFrames = 1200;
 // maxFrames = 1100;
@@ -29,7 +30,7 @@ let gl;
 let time;
 let positive = true;
 let intensity;
-let drawCount = 0;
+let drawCount = 1110;
 let drawIncrement = 1;
 let vertexBuffer;
 let vertices = [];
@@ -216,7 +217,7 @@ draw = function() {
     //     gl.uniform1f(time, drawCount);
     //     drawBG();
     drawCount += drawIncrement;
-    if (exporting && frameCount < maxFrames) {
+    if (exporting && frameCount < maxFrames && drawCount > 1113) {
         frameExport();
     }
 }
