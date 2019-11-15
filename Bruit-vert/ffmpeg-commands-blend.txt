@@ -271,15 +271,159 @@ colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [c]; \
 
 
 //----------------------------------------------------------------------------------------//
-// pink pulsar
+// purple swirl
 //----------------------------------------------------------------------------------------//
 
 
-ffmpeg -f image2 -framerate 24 -i ./frames/pink-pulsar/pink-pulsar-%05d.png \
+ffmpeg -f image2 -framerate 24 -i ./frames/purple-swirl-flicker/purple-swirl-flicker-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0] gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [b]; \
+[b] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-s 2560x1440 -shortest \
+./video-renders/purple-swirl-flicker.mp4
+
+
+
+
+
+
+
+ffmpeg -f image2 -framerate 24 -i /Volumes/Volumina/frames/lueurs/pink-pulsar/pink-pulsar-%05d.png \
 -c:v libx264 -x264-params "keyint=15:no-deblock=1" \
 -pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
 -filter_complex "[0:0]gblur=sigma=10:steps=1, \
 colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
 [0:0][a] blend=all_mode='hardlight':all_opacity=0.25[b]; \
 [b] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
--color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest ./video-renders/pink-pulsar.mp4
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest /Volumes/Volumina/video-renders/lueurs/pink-pulsar-longer.mp4
+
+
+
+Swirl
+
+
+// basic smear
+
+[0:0] gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [b]; \
+[b] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125
+
+[0:0]gblur=sigma=5:steps=1, \
+colorlevels=rimax=0.7:gimax=0.5:bimax=0.5[a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.65[b]; \
+[b] colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125 [c]; \
+[c] hue=h=0:s=0.7, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8
+
+
+// big shine
+
+[0:0]gblur=sigma=7:steps=1, \
+colorlevels=rimax=0.7:gimax=0.5:bimax=0.5[blur1]; \
+[0:0]gblur=sigma=50:steps=1, \
+colorlevels=rimax=0.7:gimax=0.5:bimax=0.5[blur2]; \
+[0:0][blur1] blend=all_mode='hardlight':all_opacity=0.5[comp1]; \
+[comp1][blur2] blend=all_mode='hardlight':all_opacity=0.25[comp2]; \
+[comp2] colorspace=bt709:iall=bt601-6-625:fast=1, \
+colorbalance=bs=.0:bm=.0:bh=.125 [comp3]; \
+[comp3] hue=h=0:s=0.65, colorlevels=rimax=0.7:gimax=0.7:bimax=0.7
+
+[0:0]gblur=sigma=7:steps=1, \
+colorlevels=rimax=0.7:gimax=0.5:bimax=0.5[blur1]; \
+[0:0]gblur=sigma=50:steps=1, \
+colorlevels=rimax=0.7:gimax=0.5:bimax=0.5[blur2]; \
+[0:0][blur1] blend=all_mode='hardlight':all_opacity=0.35[comp1]; \
+[comp1][blur2] blend=all_mode='hardlight':all_opacity=0.25[comp2]; \
+[comp2] colorspace=bt709:iall=bt601-6-625:fast=1, \
+colorbalance=bs=0.0:bm=-0.0:bh=1:rm=-0.1:rs=-0.0 [comp3]; \
+[comp3] hue=h=0:s=0.65, colorlevels=rimax=0.7:gimax=0.7:bimax=0.7
+
+
+
+[0:0]gblur=sigma=7:steps=1, \
+colorlevels=rimax=0.9:gimax=0.9:bimax=0.9[blur1]; \
+[0:0]gblur=sigma=50:steps=1, \
+colorlevels=rimax=0.7:gimax=0.4:bimax=0.2[blur2]; \
+[0:0][blur1] blend=all_mode='hardlight':all_opacity=0.45[comp1]; \
+[comp1][blur2] blend=all_mode='hardlight':all_opacity=0.25[comp2]; \
+[comp2] colorspace=bt709:iall=bt601-6-625:fast=1, \
+colorbalance=bs=0.0:bm=-0.0:bh=1:rm=-0.1:rs=-0.0 [comp3]; \
+[comp3] hue=h=10:s=0.65, colorlevels=rimax=0.6:gimax=0.6:bimax=0.6
+
+
+
+[0:0]gblur=sigma=17:steps=1, \
+colorlevels=rimax=0.9:gimax=0.6:bimax=0.6[blur1]; \
+[0:0]gblur=sigma=50:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[blur2]; \
+[0:0][blur1] blend=all_mode='hardlight':all_opacity=0.25[comp1]; \
+[comp1][blur2] blend=all_mode='hardlight':all_opacity=0.25[comp2]; \
+[comp2] colorspace=bt709:iall=bt601-6-625:fast=1, \
+colorbalance=bs=0.0:bm=-0.0:bh=1:rm=-0.1:rs=-0.0 [comp3]; \
+[comp3] hue=h=0:s=0.9, colorlevels=rimax=0.9:gimax=0.9:bimax=0.9
+
+
+
+ffmpeg -f image2 -framerate 24 -i /Volumes/Volumina/frames/lueurs/purple-swirl-flicker/purple-swirl-flicker-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0]gblur=sigma=7:steps=1, \
+colorlevels=rimax=0.7:gimax=0.5:bimax=0.5[blur1]; \
+[0:0]gblur=sigma=50:steps=1, \
+colorlevels=rimax=0.7:gimax=0.5:bimax=0.5[blur2]; \
+[0:0][blur1] blend=all_mode='hardlight':all_opacity=0.5[comp1]; \
+[comp1][blur2] blend=all_mode='hardlight':all_opacity=0.25[comp2]; \
+[comp2] colorspace=bt709:iall=bt601-6-625:fast=1, \
+colorbalance=bs=.0:bm=.0:bh=.125 [comp3]; \
+[comp3] hue=h=0:s=0.65, colorlevels=rimax=0.7:gimax=0.7:bimax=0.7" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest /Volumes/Volumina/video-renders/lueurs/purple-swirl-flicker-big-shine.mp4
+
+
+[0:0]gblur=sigma=7:steps=1, \
+colorlevels=rimax=0.7:gimax=0.5:bimax=0.5[blur1]; \
+[0:0]gblur=sigma=50:steps=1, \
+colorlevels=rimax=0.7:gimax=0.5:bimax=0.5[blur2]; \
+[0:0][blur1] blend=all_mode='hardlight':all_opacity=0.5[comp1]; \
+[comp1][blur2] blend=all_mode='hardlight':all_opacity=0.25[comp2]; \
+[comp2] colorspace=bt709:iall=bt601-6-625:fast=1, \
+colorbalance=bs=.0:bm=.0:bh=.125 [comp3]; \
+[comp3] hue=h=5:s=0.65, colorlevels=rimax=0.6:gimax=0.6:bimax=0.6
+
+
+
+
+[0:0]gblur=sigma=7:steps=1, \
+colorlevels=rimax=0.7:gimax=0.5:bimax=0.5[blur1]; \
+[0:0]gblur=sigma=50:steps=1, \
+colorlevels=rimax=0.7:gimax=0.5:bimax=0.5[blur2]; \
+[0:0][blur1] blend=all_mode='hardlight':all_opacity=0.5[comp1]; \
+[comp1][blur2] blend=all_mode='hardlight':all_opacity=0.25[comp2]; \
+[comp2] colorspace=bt709:iall=bt601-6-625:fast=1, \
+colorbalance=bs=.0:bm=.0:bh=.125 [comp3]; \
+[comp3] hue=h=0:s=0.65, colorlevels=rimax=0.7:gimax=0.7:bimax=0.7, \
+noise=alls=30:allf=t+u
+
+
+[0:0] gblur=sigma=7:steps=1, colorlevels=rimax=0.9:gimax=0.5:bimax=0.5 [blur1]; \
+[0:0] gblur=sigma=50:steps=1, colorlevels=rimax=0.9:gimax=0.5:bimax=0.5 [blur2]; \
+[0:0][blur1] blend=all_mode='hardlight':all_opacity=0.5 [comp1]; \
+[comp1][blur2] blend=all_mode='hardlight':all_opacity=0.25 [comp2]; \
+[comp2] colorspace=bt709:iall=bt601-6-625:fast=1, \
+colorbalance=bs=.0:bm=.0:bh=.125 [comp3]; \
+[comp3] hue=h=0:s=0.69, colorlevels=rimax=0.7:gimax=0.7:bimax=0.7, \
+noise=alls=30:allf=t+u
+
+
+
+
+[0:0] gblur=sigma=7:steps=1, colorlevels=rimax=0.9:gimax=0.5:bimax=0.5 [blur1]; \
+[0:0] gblur=sigma=50:steps=1, colorlevels=rimax=0.9:gimax=0.5:bimax=0.5 [blur2]; \
+[0:0][blur1] blend=all_mode='hardlight':all_opacity=0.5 [comp1]; \
+[comp1][blur2] blend=all_mode='hardlight':all_opacity=0.25 [comp2]; \
+[comp2] hue=h=0:s=0.69, colorlevels=rimax=0.7:gimax=0.7:bimax=0.7, \
+noise=alls=30:allf=t+u, colorbalance=bs=.0:bm=.0:bh=.125, \
+colorspace=bt709:iall=bt601-6-625:fast=1
