@@ -31,6 +31,7 @@ let time;
 let positive = true;
 let intensity;
 let drawCount = 1110;
+drawCount = 0;
 let drawIncrement = 1;
 let vertexBuffer;
 let vertices = [];
@@ -96,6 +97,7 @@ function setup() {
     if (!looping) {
         noLoop();
     }
+    shadersReadyToInitiate = true;
     initializeShaders();
     createWhiteDots();
     time = gl.getUniformLocation(getProgram("pulsar-fog"), "time");
@@ -163,14 +165,15 @@ draw = function() {
     // oldDrawBG();
     // currentProgram = namedPrograms["redDots"].shaderProgram;
     // currentProgram = getProgram("white-flickering-dots");
-    // currentProgram = getProgram("new-flickering-dots");
-    currentProgram = getProgram("pulsar-dots");
+    currentProgram = getProgram("new-flickering-dots");
+    // currentProgram = getProgram("pulsar-dots");
     // currentProgram = getProgram("white-pulsar-dots");
     // console.log(currentProgram);
 
     // currentProgram = getProgram("faster-dots");
     gl.useProgram(currentProgram);
-    drawPulsar(currentProgram);
+    // drawPulsar(currentProgram);
+    drawSwirl(currentProgram);
 
     // if (drawCount % 100 == 0) {
     //     mS = random(0.8, 1);

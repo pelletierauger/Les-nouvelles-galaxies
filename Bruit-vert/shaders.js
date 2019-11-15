@@ -1,6 +1,6 @@
-let fasterDots = new ShaderProgram({
-    name: "faster-dots",
-    vert: `
+let fasterDots = new ShaderProgram("faster-dots");
+
+fasterDots.vertText = `
     // beginGLSL
     attribute vec4 coordinates;
     varying vec2 myposition;
@@ -16,8 +16,8 @@ let fasterDots = new ShaderProgram({
         // gl_PointSize = coordinates.z;
     }
     // endGLSL
-    `,
-    frag: `
+    `;
+fasterDots.fragText = `
     // beginGLSL
     precision mediump float;
     varying vec2 myposition;
@@ -51,14 +51,14 @@ let fasterDots = new ShaderProgram({
         // gl_FragColor = vec4(1.0, 1.0 - dist_squared * 1.0, 0.0, 0.35 - dist_squared - (rando * 0.2));
         // gl_FragColor = vec4(d * 0.001, uv.x, 0.0, 0.25);
     }
-    // endGLSL`
-});
+    // endGLSL
+`;
+fasterDots.init();
 
 
+let redDots = new ShaderProgram("white-flickering-dots");
 
-let redDots = new ShaderProgram({
-    name: "white-flickering-dots",
-    vert: `
+redDots.vertText = `
     // beginGLSL
     attribute vec4 coordinates;
     varying vec2 myposition;
@@ -75,8 +75,8 @@ let redDots = new ShaderProgram({
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
     }
     // endGLSL
-    `,
-    frag: `
+`;
+redDots.fragText = `
     // beginGLSL
     precision mediump float;
     varying vec2 myposition;
@@ -111,13 +111,11 @@ let redDots = new ShaderProgram({
 //         gl_FragColor = vec4(1.0, 1.0 - dist_squared * 1.0, 0.0, 0.35 - dist_squared - (rando * 0.2));
         // gl_FragColor = vec4(d * 0.001, uv.x, 0.0, 0.25);
         // endGLSL
-    }`
-});
+    }`;
+redDots.init();
 
-
-let fog = new ShaderProgram({
-    name: "fog",
-    vert: `
+let fog = new ShaderProgram("fog");
+fog.vertText = `
     // beginGLSL
     // our vertex data
     attribute vec3 aPosition;
@@ -136,8 +134,10 @@ let fog = new ShaderProgram({
     // send the vertex information on to the fragment shader
     gl_Position = positionVec4;
     }
-    // endGLSL`,
-    frag: `
+    // endGLSL
+`;
+fog.fragText = `
+    // beginGLSL
     precision lowp float;
 varying vec2 vTexCoord;
 uniform float time;
@@ -260,15 +260,15 @@ void main() {
         gl_FragColor = gl_FragColor.brga;
         // gl_FragColor.r *= 3.;
 }
-// endGLSL`
-});
+// endGLSL
+`;
+fog.init();
 
 
 
+let newFlickering = new ShaderProgram("new-flickering-dots");
 
-let newFlickering = new ShaderProgram({
-    name: "new-flickering-dots",
-    vert: `
+newFlickering.vertText = `
     // beginGLSL
     attribute vec4 coordinates;
     varying vec2 myposition;
@@ -285,8 +285,8 @@ let newFlickering = new ShaderProgram({
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
     }
     // endGLSL
-    `,
-    frag: `
+`;
+newFlickering.fragText = `
     // beginGLSL
     precision mediump float;
     varying vec2 myposition;
@@ -318,14 +318,14 @@ let newFlickering = new ShaderProgram({
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.2 - dist_squared, 0.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 1.25;
         
-        // endGLSL
-    }`
-});
+        
+    }
+    // endGLSL
+`;
+newFlickering.init();
 
-
-let greyFog = new ShaderProgram({
-    name: "grey-fog",
-    vert: `
+let greyFog = new ShaderProgram("grey-fog");
+greyFog.vertText = `
     // beginGLSL
     // our vertex data
     attribute vec3 aPosition;
@@ -344,9 +344,11 @@ let greyFog = new ShaderProgram({
     // send the vertex information on to the fragment shader
     gl_Position = positionVec4;
     }
-    // endGLSL`,
-    frag: `
-    precision lowp float;
+    // endGLSL
+`;
+greyFog.fragText = `
+// beginGLSL
+precision lowp float;
 varying vec2 vTexCoord;
 uniform float time;
 const float TURBULENCE = 0.009;
@@ -471,15 +473,12 @@ void main() {
         // gl_FragColor = gl_FragColor.brga;
         // gl_FragColor.r *= 3.;
 }
-// endGLSL`
-});
+// endGLSL
+`;
+greyFog.init();
 
-
-
-
-let pulsarDots = new ShaderProgram({
-    name: "pulsar-dots",
-    vert: `
+let pulsarDots = new ShaderProgram("pulsar-dots");
+pulsarDots.vertText = `
     // beginGLSL
     attribute vec4 coordinates;
     varying vec2 myposition;
@@ -496,8 +495,8 @@ let pulsarDots = new ShaderProgram({
         gl_PointSize = max(25.0, coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5)));
     }
     // endGLSL
-    `,
-    frag: `
+    `;
+pulsarDots.fragText = `
     // beginGLSL
     precision mediump float;
     varying vec2 myposition;
@@ -533,16 +532,16 @@ let pulsarDots = new ShaderProgram({
         // gl_FragColor.rgb *= 3.5;
         // gl_FragColor.b += 0.25;
         // gl_FragColor.a *= 1.5;
-        // endGLSL
-    }`
-});
+        
+    }
+    // endGLSL
+`;
+pulsarDots.init();
 
 
+let whitePulsarDots = new ShaderProgram("white-pulsar-dots");
 
-
-let whitePulsarDots = new ShaderProgram({
-    name: "white-pulsar-dots",
-    vert: `
+whitePulsarDots.vertText = `
     // beginGLSL
     attribute vec4 coordinates;
     varying vec2 myposition;
@@ -559,8 +558,8 @@ let whitePulsarDots = new ShaderProgram({
         // gl_PointSize = max(25.0, coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5)));
     }
     // endGLSL
-    `,
-    frag: `
+`;
+whitePulsarDots.fragText = `
     // beginGLSL
     precision mediump float;
     varying vec2 myposition;
@@ -600,16 +599,15 @@ let whitePulsarDots = new ShaderProgram({
         // gl_FragColor = gl_FragColor.gbra;
         // gl_FragColor.rgb *= 3.5;
         // gl_FragColor.b += 0.25;
-        // endGLSL
-    }`
-});
+        
+    }
+    // endGLSL
+`;
+whitePulsarDots.init();
 
+let pulsarFog = new ShaderProgram("pulsar-fog");
 
-
-
-let pulsarFog = new ShaderProgram({
-    name: "pulsar-fog",
-    vert: `
+pulsarFog.vertText = `
     // beginGLSL
     // our vertex data
     attribute vec3 aPosition;
@@ -628,9 +626,11 @@ let pulsarFog = new ShaderProgram({
     // send the vertex information on to the fragment shader
     gl_Position = positionVec4;
     }
-    // endGLSL`,
-    frag: `
-    precision lowp float;
+    // endGLSL
+`;
+pulsarFog.fragText = `
+// beginGLSL
+precision lowp float;
 varying vec2 vTexCoord;
 uniform float time;
 const float TURBULENCE = 0.009;
@@ -753,5 +753,6 @@ void main() {
         // gl_FragColor.r *= 3.;
         // gl_FragColor = gl_FragColor.grra;
 }
-// endGLSL`
-});
+// endGLSL
+`;
+pulsarFog.init();
