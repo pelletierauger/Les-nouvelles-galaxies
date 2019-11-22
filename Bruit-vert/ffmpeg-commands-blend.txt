@@ -427,3 +427,57 @@ noise=alls=30:allf=t+u
 [comp2] hue=h=0:s=0.69, colorlevels=rimax=0.7:gimax=0.7:bimax=0.7, \
 noise=alls=30:allf=t+u, colorbalance=bs=.0:bm=.0:bh=.125, \
 colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+night-cally
+[0:0] gblur=sigma=5:steps=1, \
+colorlevels=rimax=0.99:gimax=0.3:bimax=0.4 [blur0]; \
+[0:0][blur0] blend=all_mode='hardlight':all_opacity=0.95 [comp0]; \
+[comp0] hue=h=-40:s=0.9, colorlevels=rimax=0.9:gimax=0.9:bimax=0.9, \
+noise=alls=20:allf=t+u, \
+colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125
+
+ffmpeg -f image2 -framerate 24 -i /Volumes/Volumina/frames/lueurs/purple-swirl-flicker/purple-swirl-flicker-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0] gblur=sigma=5:steps=1, \
+colorlevels=rimax=0.99:gimax=0.3:bimax=0.4 [blur0]; \
+[0:0][blur0] blend=all_mode='hardlight':all_opacity=0.95 [comp0]; \
+[comp0] hue=h=-40:s=0.9, colorlevels=rimax=0.9:gimax=0.9:bimax=0.9, \
+noise=alls=20:allf=t+u, \
+colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest /Volumes/Volumina/video-renders/lueurs/purple-swirl-flicker-night-cally.mp4
+
+
+
+
+
+
+ffmpeg -f image2 -framerate 24 -i /Volumes/Volumina/frames/lueurs/swirl-shorter/purple-swirl-flicker-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0] gblur=sigma=5:steps=1, \
+colorlevels=rimax=0.99:gimax=0.3:bimax=0.4 [blur0]; \
+[0:0][blur0] blend=all_mode='hardlight':all_opacity=0.95 [comp0]; \
+[comp0] hue=h=-100:s=0.9, colorlevels=rimax=0.9:gimax=0.9:bimax=0.9, \
+noise=alls=20:allf=t+u, \
+colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest /Volumes/Volumina/video-renders/lueurs/purple-swirl-flicker-night-blue.mp4
+
+
+
+
+[0:0] gblur=sigma=5:steps=1, \
+colorlevels=rimax=0.99:gimax=0.3:bimax=0.4 [blur0]; \
+[0:0][blur0] blend=all_mode='hardlight':all_opacity=0.95 [comp0]; \
+[comp0] hue=h=0:s=0.9, colorlevels=rimax=0.9:gimax=0.9:bimax=0.9, \
+noise=alls=20:allf=t+u, \
+colorspace=bt709:iall=bt601-6-625:fast=1, colorbalance=bs=.0:bm=.0:bh=.125
+
+
+
+night cally introy
+[0:0] gblur=sigma=50:steps=1, \
+colorlevels=rimax=0.9:gimax=0.4:bimax=0.4 [a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [b]; \
+[b] colorspace=bt709:iall=bt601-6-625:fast=1
