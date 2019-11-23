@@ -52,16 +52,15 @@ function getProgram(name) {
     }
 }
 
-function drawBG(sh) {
+drawBG = function(sh) {
     let aspect = cnvs.width / cnvs.height;
     let vertices = new Float32Array([-1, 1, 1, 1, 1, -1, // Triangle 1
         -1, 1, 1, -1, -1, 1 // Triangle 2
     ]);
-    gl.uniform1f(time, 200 + drawCount * 0.00025);
+    gl.uniform1f(time, 600 + drawCount * 0.00025);
     // let vbuffer = gl.createBuffer();
     // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     // gl.bindBuffer(gl.ARRAY_BUFFER, null);
-
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     gl.bindBuffer(gl.ARRAY_BUFFER, bgVBuf);
     gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
