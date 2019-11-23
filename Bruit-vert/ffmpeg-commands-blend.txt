@@ -481,3 +481,17 @@ night cally introy
 colorlevels=rimax=0.9:gimax=0.4:bimax=0.4 [a]; \
 [0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [b]; \
 [b] colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+
+
+ffmpeg -f image2 -framerate 24 -i /Volumes/Volumina/frames/lueurs/swirl-quiet/swirl-quiet-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75, colorspace=bt709:iall=bt601-6-625:fast=1" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-s 2560x1440 -shortest /Volumes/Volumina/video-renders/lueurs/swirl-quiet.mp4
