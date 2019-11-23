@@ -20,6 +20,7 @@ fileName = "./frames/purple-pulsar/purple-pulsar";
 fileName = "./frames/brume/brume";
 fileName = "./frames/pink-pulsar/pink-pulsar";
 fileName = "/Volumes/Volumina/frames/lueurs/pink-pulsar/pink-pulsar"
+fileName = "/Volumes/Volumina/frames/lueurs/swirl-quiet/swirl-quiet"
 let maxFrames = 15000;
 // maxFrames = 925;
 // maxFrames = 3000;
@@ -155,9 +156,7 @@ draw = function() {
     // if (drawCount == 0) {
     //     // setDotsShaders();
     //     createWhiteDots();
-
     // }
-
     let currentProgram = getProgram("pulsar-fog");
     gl.useProgram(currentProgram);
     drawBG(currentProgram);
@@ -166,15 +165,14 @@ draw = function() {
     // currentProgram = namedPrograms["redDots"].shaderProgram;
     // currentProgram = getProgram("white-flickering-dots");
     currentProgram = getProgram("new-flickering-dots");
+    // currentProgram = getProgram("gold");
     // currentProgram = getProgram("pulsar-dots");
     // currentProgram = getProgram("white-pulsar-dots");
     // console.log(currentProgram);
-
     // currentProgram = getProgram("faster-dots");
     gl.useProgram(currentProgram);
     // drawPulsar(currentProgram);
     drawSwirl(currentProgram);
-
     // if (drawCount % 100 == 0) {
     //     mS = random(0.8, 1);
     // }
@@ -198,7 +196,6 @@ draw = function() {
     //     vertices.push(Math.random() * 2 - 1, Math.random() * 2 - 1, s + Math.random() * 0.5 * s);
     // }
     // let n = Math.PI * 1 / 100;
-
     // for (let m = 0; m < amountOfScratches; m++) {
     //     let s = Math.random() * Math.PI * 2;
     //     let sX = Math.random() * 2 - 1;
@@ -215,12 +212,12 @@ draw = function() {
     // }
     // gl.useProgram(shaderPrograms["scratches"].shaderProgram);
     // drawGenericDots(shaderPrograms["scratches"].shaderProgram, 3000 + (amountOfScratches * 100));
-
     //     setOverlayShaders();
     //     gl.uniform1f(time, drawCount);
     //     drawBG();
     drawCount += drawIncrement;
-    if (exporting && frameCount < maxFrames && drawCount > 1113) {
+    // if (exporting && frameCount < maxFrames && drawCount > 1113) {
+    if (exporting && frameCount < maxFrames && drawCount > 556) {
         frameExport();
     }
 }
