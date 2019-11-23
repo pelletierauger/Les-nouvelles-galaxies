@@ -495,3 +495,26 @@ ffmpeg -f image2 -framerate 24 -i /Volumes/Volumina/frames/lueurs/swirl-quiet/sw
 colorbalance=bs=.0:bm=.0:bh=0.75, colorspace=bt709:iall=bt601-6-625:fast=1" \
 -color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
 -s 2560x1440 -shortest /Volumes/Volumina/video-renders/lueurs/swirl-quiet.mp4
+
+
+for pulsar, very bright
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [a]; \
+[0:0][a] blend=all_mode='lighten':all_opacity=0.85, \
+colorlevels=rimax=0.9:gimax=0.9:bimax=0.9, noise=alls=20:allf=t+u, \
+colorspace=bt709:iall=bt601-6-625:fast=1
+
+very very bright
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [a]; \
+[0:0] gblur=sigma=140:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [b]; \
+[0:0][a] blend=all_mode='lighten':all_opacity=0.85 [c]; \
+[c][b] blend=all_mode='lighten':all_opacity=0.95, \
+colorlevels=rimax=0.9:gimax=0.9:bimax=0.9, noise=alls=20:allf=t+u, \
+hue=h=0:s=1.0, colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [a]; \
+[0:0] gblur=sigma=140:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [b]; \
+[0:0][a] blend=all_mode='lighten':all_opacity=0.85 [c]; \
+[c][b] blend=all_mode='lighten':all_opacity=0.95, \
+colorlevels=rimax=0.9:gimax=0.9:bimax=0.9, noise=alls=20:allf=t+u, \
+hue=h=0:s=1.0, colorspace=bt709:iall=bt601-6-625:fast=1
