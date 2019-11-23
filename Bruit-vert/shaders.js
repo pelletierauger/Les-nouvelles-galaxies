@@ -752,11 +752,15 @@ void main() {
         gl_FragColor = gl_FragColor.brga;
         gl_FragColor.r *= 0.5;
         gl_FragColor.b *= 1.25;
+    gl_FragColor.rgb *= 0.5;
         // gl_FragColor = gl_FragColor.grra;
 }
 // endGLSL
 `;
 pulsarFog.init();
+if (pulsarFog.initialized) {
+    time = gl.getUniformLocation(getProgram("pulsar-fog"), "time");
+}
 
 
 
