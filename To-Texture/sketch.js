@@ -23,6 +23,7 @@ let namedPrograms = {};
 let texcoordShader;
 let dotsVBuf, bgVBuf;
 let texture, texture2, framebuf, framebuf2;
+let vb;
 
 function setup() {
     socket = io.connect('http://localhost:8080');
@@ -97,10 +98,11 @@ draw = function() {
     drawBG(currentProgram);
     currentProgram = getProgram("new-flickering-dots");
     gl.useProgram(currentProgram);
-    drawAlligatorQuiet(currentProgram);
+    // drawAlligatorQuiet(currentProgram);
     // drawSwirl(currentProgram);
+    drawPulsar(currentProgram);
 
-    let vb = map(cos(frameCount * 0.1), -1, 1, 0, 1);
+    vb = map(cos(frameCount * 0.01), -1, 1, 0, 4);
 
     // Here, the original image should be redrawned
     // from "texture" to "texture2"
@@ -235,7 +237,11 @@ draw = function() {
     // gl.drawArrays(gl.TRIANGLES, 0, 6);
 
 
-
+    currentProgram = getProgram("new-flickering-dots");
+    gl.useProgram(currentProgram);
+    // drawAlligatorQuiet(currentProgram);
+    // drawSwirl(currentProgram);
+    drawPulsar(currentProgram);
 
 
     // unbind the buffer and draw the resulting texture....

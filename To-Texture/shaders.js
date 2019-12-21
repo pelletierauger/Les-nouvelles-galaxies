@@ -919,19 +919,19 @@ vec4 blur9(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
 
 void main() {
    vec2 uv = vec2(gl_FragCoord.xy);
-   vec2 onePixel = vec2(1.0, 1.0) / u_textureSize;
-   vec4 colorSum =
-       texture2D(u_texture, v_texcoord + onePixel * vec2(-1, -1)) * u_kernel[0] +
-       texture2D(u_texture, v_texcoord + onePixel * vec2( 0, -1)) * u_kernel[1] +
-       texture2D(u_texture, v_texcoord + onePixel * vec2( 1, -1)) * u_kernel[2] +
-       texture2D(u_texture, v_texcoord + onePixel * vec2(-1,  0)) * u_kernel[3] +
-       texture2D(u_texture, v_texcoord + onePixel * vec2( 0,  0)) * u_kernel[4] +
-       texture2D(u_texture, v_texcoord + onePixel * vec2( 1,  0)) * u_kernel[5] +
-       texture2D(u_texture, v_texcoord + onePixel * vec2(-1,  1)) * u_kernel[6] +
-       texture2D(u_texture, v_texcoord + onePixel * vec2( 0,  1)) * u_kernel[7] +
-       texture2D(u_texture, v_texcoord + onePixel * vec2( 1,  1)) * u_kernel[8] ;
+   // vec2 onePixel = vec2(1.0, 1.0) / u_textureSize;
+   // vec4 colorSum =
+   //     texture2D(u_texture, v_texcoord + onePixel * vec2(-1, -1)) * u_kernel[0] +
+   //     texture2D(u_texture, v_texcoord + onePixel * vec2( 0, -1)) * u_kernel[1] +
+   //     texture2D(u_texture, v_texcoord + onePixel * vec2( 1, -1)) * u_kernel[2] +
+   //     texture2D(u_texture, v_texcoord + onePixel * vec2(-1,  0)) * u_kernel[3] +
+   //     texture2D(u_texture, v_texcoord + onePixel * vec2( 0,  0)) * u_kernel[4] +
+   //     texture2D(u_texture, v_texcoord + onePixel * vec2( 1,  0)) * u_kernel[5] +
+   //     texture2D(u_texture, v_texcoord + onePixel * vec2(-1,  1)) * u_kernel[6] +
+   //     texture2D(u_texture, v_texcoord + onePixel * vec2( 0,  1)) * u_kernel[7] +
+   //     texture2D(u_texture, v_texcoord + onePixel * vec2( 1,  1)) * u_kernel[8] ;
 
-   gl_FragColor = vec4((colorSum / u_kernelWeight).rgb, 1);
+   // gl_FragColor = vec4((colorSum / u_kernelWeight).rgb, 1);
 
    gl_FragColor = blur9(u_texture, v_texcoord, u_textureSize, direction);
    // vec4 pass1 = blur9(u_texture, v_texcoord, u_textureSize, vec2(0.0, 1.5));

@@ -537,7 +537,7 @@ drawPulsar = function(selectedProgram) {
             let xo = 0;
             let yo = 0;
             let zo = (openSimplex.noise2D(i, (t * 1e4 + i) * 1e2 + 100)) * 5;
-            metaV[indMetaV].push((p.y + xO2 + xo) * 0.35 * 1.5 * sc, (p.x + yO2 + yo) * 0.9 * sc * -1, 15 + zo, al);
+            metaV[indMetaV].push((p.y + xO2 + xo) * 0.35 * 1.5 * sc, (p.x + yO2 + yo) * 0.9 * sc * -1, 15 + zo * vb * 20, al);
             numV += 1;
         }
         indMetaV++;
