@@ -22,7 +22,7 @@ let namedPrograms = {};
 // a shader variable
 let texcoordShader;
 let dotsVBuf, bgVBuf;
-let texture, framebuf;
+let texture, texture2, framebuf, framebuf2;
 
 function setup() {
     socket = io.connect('http://localhost:8080');
@@ -81,49 +81,16 @@ function setup() {
     time = gl.getUniformLocation(getProgram("pulsar-fog"), "time");
     texture = createTexture();
     framebuf = createFrameBuffer(texture);
+    texture2 = createTexture();
+    framebuf2 = createFrameBuffer(texture2);
 }
 
-// draw = function() {
-//     if (frameCount == 1) {
-//         setShaders();
-//     }
-//     // gl.uniform1fv(time, frameCount);
-//     // sendSuperCollider();
-//     gl.uniform1f(time, drawCount);
-//     // shader() sets the active shader with our shader
-//     // shader(texcoordShader);
-//     // shaderProgram.setUniform('time', frameCount);
-//     // rect gives us some geometry on the screen
-//     // rect(0, 0, width, height);
-//     let aspect = cnvs.width / cnvs.height;
-//     let vertices = new Float32Array([-1, 1, 1, 1, 1, -1, // Triangle 1
-//         -1, 1, 1, -1, -1, 1 // Triangle 2
-//     ]);
-//     let vbuffer = gl.createBuffer();
-//     gl.bindBuffer(gl.ARRAY_BUFFER, vbuffer);
-//     gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-//     let itemSize = 2;
-//     let numItems = vertices.length / itemSize;
-//     // gl.useProgram(shaderProgram);
-//     // program.uColor = gl.getUniformLocation(program, "uColor");
-//     // gl.uniform4fv(program.uColor, [0.0, 0.3, 0.0, 1.0]);
-//     shaderProgram.aVertexPosition = gl.getAttribLocation(shaderProgram, "aPosition");
-//     gl.enableVertexAttribArray(shaderProgram.aVertexPosition);
-//     gl.vertexAttribPointer(shaderProgram.aVertexPosition, itemSize, gl.FLOAT, false, 0, 0);
-//     gl.drawArrays(gl.TRIANGLES, 0, numItems);
-//     drawCount += drawIncrement;
-// }
-
-// function windowResized() {
-//     resizeCanvas(windowWidth, windowHeight);
-// }
 draw = function() {
     gl.clear(gl.COLOR_BUFFER_BIT);
     // We bind the framebuffer...
     bindFrameBuffer(texture, framebuf);
     gl.viewport(0, 0, 1280, 720);
 
-    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     // draw the scene, presumably on a framebuffer
     let currentProgram = getProgram("pulsar-fog");
     gl.useProgram(currentProgram);
@@ -132,18 +99,17 @@ draw = function() {
     gl.useProgram(currentProgram);
     drawAlligatorQuiet(currentProgram);
 
-    // unbind the buffer and draw the resulting texture....
-    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-    gl.viewport(0, 0, 1280, 720);
 
-    gl.bindTexture(gl.TEXTURE_2D, texture);
 
-    gl.clearColor(0.5, 0.5, 0.5, 1); // clear to white
 
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    // Here, the original image should be redrawned
+    // from "texture" to "texture2"
 
-    var textureShader = getProgram("textu");
-    gl.useProgram(textureShader);
+    let processProgram = getProgram("process");
+    // console.log(processProgram);
+    gl.useProgram(processProgram);
+
+
 
     let aspect = cnvs.width / cnvs.height;
     let vertices = new Float32Array([-1, 1, 1, 1, 1, -1, // Triangle 1
@@ -154,6 +120,127 @@ draw = function() {
     gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
     let itemSize = 2;
     let numItems = vertices.length / itemSize;
+    processProgram.aVertexPosition = gl.getAttribLocation(processProgram, "a_position");
+    gl.enableVertexAttribArray(processProgram.aVertexPosition);
+    gl.vertexAttribPointer(processProgram.aVertexPosition, itemSize, gl.FLOAT, false, 0, 0);
+
+
+
+
+    var resolutionLocation = gl.getUniformLocation(processProgram, "u_resolution");
+    var textureSizeLocation = gl.getUniformLocation(processProgram, "u_textureSize");
+    var kernelLocation = gl.getUniformLocation(processProgram, "u_kernel[0]");
+    var kernelWeightLocation = gl.getUniformLocation(processProgram, "u_kernelWeight");
+    var flipYLocation = gl.getUniformLocation(processProgram, "u_flipY");
+
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    bindFrameBuffer(texture2, framebuf2);
+    gl.viewport(0, 0, 1280, 720);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+
+    let name = "myBlur";
+    gl.uniform2f(resolutionLocation, 1280, 720);
+    gl.uniform2f(textureSizeLocation, 1280, 720);
+    gl.uniform1f(flipYLocation, 1);
+    gl.uniform1fv(kernelLocation, kernels[name]);
+    gl.uniform1f(kernelWeightLocation, computeKernelWeight(kernels[name]));
+
+
+
+
+
+
+
+    var textureLocation = gl.getUniformLocation(processProgram, "u_texture");
+    gl.uniform1i(textureLocation, 0);
+    var texcoordLocation = gl.getAttribLocation(processProgram, "a_texcoord");
+    gl.enableVertexAttribArray(texcoordLocation);
+
+    // Tell the position attribute how to get data out of positionBuffer (ARRAY_BUFFER)
+    var size = 2; // 2 components per iteration
+    var type = gl.FLOAT; // the data is 32bit floats
+    var normalize = false; // don't normalize the data
+    var stride = 0; // 0 = move forward size * sizeof(type) each iteration to get the next position
+    var offset = 0; // start at the beginning of the buffer
+    gl.vertexAttribPointer(texcoordLocation, size, type, normalize, stride, offset);
+
+
+
+
+    // Draw the rectangle.
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+
+
+    bindFrameBuffer(texture, framebuf);
+    gl.bindTexture(gl.TEXTURE_2D, texture2);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+    bindFrameBuffer(texture2, framebuf2);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+    bindFrameBuffer(texture, framebuf);
+    gl.bindTexture(gl.TEXTURE_2D, texture2);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+    bindFrameBuffer(texture2, framebuf2);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+
+    bindFrameBuffer(texture, framebuf);
+    gl.bindTexture(gl.TEXTURE_2D, texture2);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+    bindFrameBuffer(texture2, framebuf2);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+
+    bindFrameBuffer(texture, framebuf);
+    gl.bindTexture(gl.TEXTURE_2D, texture2);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+    bindFrameBuffer(texture2, framebuf2);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+
+    bindFrameBuffer(texture, framebuf);
+    gl.bindTexture(gl.TEXTURE_2D, texture2);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+    bindFrameBuffer(texture2, framebuf2);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+
+
+
+
+    // unbind the buffer and draw the resulting texture....
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.viewport(0, 0, 1280, 720);
+
+    gl.bindTexture(gl.TEXTURE_2D, texture2);
+
+    gl.clearColor(0.5, 0.5, 0.5, 1); // clear to white
+
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    var textureShader = getProgram("textu");
+    gl.useProgram(textureShader);
+
+    aspect = cnvs.width / cnvs.height;
+    vertices = new Float32Array([-1, 1, 1, 1, 1, -1, // Triangle 1
+        -1, 1, 1, -1, -1, -1 // Triangle 2
+    ]);
+    vbuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vbuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+    itemSize = 2;
+    numItems = vertices.length / itemSize;
     textureShader.aVertexPosition = gl.getAttribLocation(textureShader, "a_position");
     gl.enableVertexAttribArray(textureShader.aVertexPosition);
     gl.vertexAttribPointer(textureShader.aVertexPosition, itemSize, gl.FLOAT, false, 0, 0);

@@ -859,3 +859,74 @@ void main() {
    // gl_FragColor.r = gl_FragColor.r * 0.5;
 }
 `;
+
+
+let processorShader = new ShaderProgram("process");
+
+processorShader.vertText = `
+attribute vec3 a_position;
+attribute vec2 a_texcoord;
+
+// uniform vec2 u_resolution;
+// uniform float u_flipY;
+
+varying vec2 v_texcoord;
+
+void main() {
+  // Multiply the position by the matrix.
+  vec4 positionVec4 = vec4(a_position, 1.0);
+  // gl_Position = a_position;
+  positionVec4.xy = positionVec4.xy * 2.0 - 1.0;
+  gl_Position = positionVec4;
+
+  // Pass the texcoord to the fragment shader.
+  v_texcoord = a_texcoord;
+}
+`;
+
+processorShader.fragText = `
+precision mediump float;
+
+// our texture
+uniform sampler2D u_texture;
+uniform vec2 u_textureSize;
+uniform float u_kernel[9];
+uniform float u_kernelWeight;
+
+// the texCoords passed in from the vertex shader.
+varying vec2 v_texcoord;
+
+vec4 blur9(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
+  vec4 color = vec4(0.0);
+  vec2 off1 = vec2(1.3846153846) * direction;
+  vec2 off2 = vec2(3.2307692308) * direction;
+  color += texture2D(image, uv) * 0.2270270270;
+  color += texture2D(image, uv + (off1 / resolution)) * 0.3162162162;
+  color += texture2D(image, uv - (off1 / resolution)) * 0.3162162162;
+  color += texture2D(image, uv + (off2 / resolution)) * 0.0702702703;
+  color += texture2D(image, uv - (off2 / resolution)) * 0.0702702703;
+  return color;
+}
+
+void main() {
+   vec2 uv = vec2(gl_FragCoord.xy);
+   vec2 onePixel = vec2(1.0, 1.0) / u_textureSize;
+   vec4 colorSum =
+       texture2D(u_texture, v_texcoord + onePixel * vec2(-1, -1)) * u_kernel[0] +
+       texture2D(u_texture, v_texcoord + onePixel * vec2( 0, -1)) * u_kernel[1] +
+       texture2D(u_texture, v_texcoord + onePixel * vec2( 1, -1)) * u_kernel[2] +
+       texture2D(u_texture, v_texcoord + onePixel * vec2(-1,  0)) * u_kernel[3] +
+       texture2D(u_texture, v_texcoord + onePixel * vec2( 0,  0)) * u_kernel[4] +
+       texture2D(u_texture, v_texcoord + onePixel * vec2( 1,  0)) * u_kernel[5] +
+       texture2D(u_texture, v_texcoord + onePixel * vec2(-1,  1)) * u_kernel[6] +
+       texture2D(u_texture, v_texcoord + onePixel * vec2( 0,  1)) * u_kernel[7] +
+       texture2D(u_texture, v_texcoord + onePixel * vec2( 1,  1)) * u_kernel[8] ;
+
+   gl_FragColor = vec4((colorSum / u_kernelWeight).rgb, 1);
+
+   // vec4 pass0 = blur9(u_texture, v_texcoord, u_textureSize, vec2(1.5, 0.0));
+   // vec4 pass1 = blur9(u_texture, v_texcoord, u_textureSize, vec2(0.0, 1.5));
+   // gl_FragColor = (pass0 + pass1) / 2.0;
+   // gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
+}
+`;
