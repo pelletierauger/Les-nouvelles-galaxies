@@ -848,15 +848,23 @@ textureShader.fragText = `
 precision mediump float;
 
 // Passed in from the vertex shader.
+uniform float time;
 varying vec2 v_texcoord;
 
 // The texture.
 uniform sampler2D u_texture;
 
+float rand(vec2 co){
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(time)));
+}
+
 void main() {
+    vec2 uv = vec2(gl_FragCoord.xy) / vec2(1600, 1600);
+   float rando = rand(vec2(uv.x, uv.y));
    gl_FragColor = texture2D(u_texture, v_texcoord);
    // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
    // gl_FragColor.r = gl_FragColor.r * 0.5;
+   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.025)) * 1.5;
 }
 `;
 
@@ -892,6 +900,7 @@ uniform sampler2D u_texture;
 uniform vec2 u_textureSize;
 uniform float u_kernel[9];
 uniform float u_kernelWeight;
+uniform vec2 direction;
 
 // the texCoords passed in from the vertex shader.
 varying vec2 v_texcoord;
@@ -924,7 +933,7 @@ void main() {
 
    gl_FragColor = vec4((colorSum / u_kernelWeight).rgb, 1);
 
-   // vec4 pass0 = blur9(u_texture, v_texcoord, u_textureSize, vec2(1.5, 0.0));
+   gl_FragColor = blur9(u_texture, v_texcoord, u_textureSize, direction);
    // vec4 pass1 = blur9(u_texture, v_texcoord, u_textureSize, vec2(0.0, 1.5));
    // gl_FragColor = (pass0 + pass1) / 2.0;
    // gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);

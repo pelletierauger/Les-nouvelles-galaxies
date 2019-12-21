@@ -98,9 +98,9 @@ draw = function() {
     currentProgram = getProgram("new-flickering-dots");
     gl.useProgram(currentProgram);
     drawAlligatorQuiet(currentProgram);
+    // drawSwirl(currentProgram);
 
-
-
+    let vb = map(cos(frameCount * 0.1), -1, 1, 0, 1);
 
     // Here, the original image should be redrawned
     // from "texture" to "texture2"
@@ -133,6 +133,8 @@ draw = function() {
     var kernelWeightLocation = gl.getUniformLocation(processProgram, "u_kernelWeight");
     var flipYLocation = gl.getUniformLocation(processProgram, "u_flipY");
 
+    var directionLocation = gl.getUniformLocation(processProgram, "direction");
+
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     bindFrameBuffer(texture2, framebuf2);
     gl.viewport(0, 0, 1280, 720);
@@ -141,13 +143,14 @@ draw = function() {
     let name = "myBlur";
     gl.uniform2f(resolutionLocation, 1280, 720);
     gl.uniform2f(textureSizeLocation, 1280, 720);
+    gl.uniform2f(directionLocation, 8 * vb, 0);
     gl.uniform1f(flipYLocation, 1);
     gl.uniform1fv(kernelLocation, kernels[name]);
     gl.uniform1f(kernelWeightLocation, computeKernelWeight(kernels[name]));
 
 
 
-
+    // shader.uniforms.direction = i % 2 === 0 ? [radius, 0] : [0, radius]
 
 
 
@@ -172,48 +175,64 @@ draw = function() {
 
 
 
-    bindFrameBuffer(texture, framebuf);
-    gl.bindTexture(gl.TEXTURE_2D, texture2);
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
-
-    bindFrameBuffer(texture2, framebuf2);
-    gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    gl.uniform2f(directionLocation, 0, 7 * vb);
 
     bindFrameBuffer(texture, framebuf);
     gl.bindTexture(gl.TEXTURE_2D, texture2);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 
-    bindFrameBuffer(texture2, framebuf2);
-    gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
 
-
-    bindFrameBuffer(texture, framebuf);
-    gl.bindTexture(gl.TEXTURE_2D, texture2);
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    gl.uniform2f(directionLocation, 6 * vb, 0);
 
     bindFrameBuffer(texture2, framebuf2);
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 
 
+    gl.uniform2f(directionLocation, 0, 5 * vb);
     bindFrameBuffer(texture, framebuf);
     gl.bindTexture(gl.TEXTURE_2D, texture2);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+
+    gl.uniform2f(directionLocation, 4 * vb, 0);
+    bindFrameBuffer(texture2, framebuf2);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+    gl.uniform2f(directionLocation, 0, 3 * vb);
+
+    bindFrameBuffer(texture, framebuf);
+    gl.bindTexture(gl.TEXTURE_2D, texture2);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+
+    gl.uniform2f(directionLocation, 2 * vb, 0);
+
+    bindFrameBuffer(texture2, framebuf2);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+    gl.uniform2f(directionLocation, 0, 1 * vb);
+
+    bindFrameBuffer(texture, framebuf);
+    gl.bindTexture(gl.TEXTURE_2D, texture2);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+    gl.uniform2f(directionLocation, 1 * vb, 0);
 
     bindFrameBuffer(texture2, framebuf2);
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 
 
-    bindFrameBuffer(texture, framebuf);
-    gl.bindTexture(gl.TEXTURE_2D, texture2);
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    // bindFrameBuffer(texture, framebuf);
+    // gl.bindTexture(gl.TEXTURE_2D, texture2);
+    // gl.drawArrays(gl.TRIANGLES, 0, 6);
 
-    bindFrameBuffer(texture2, framebuf2);
-    gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    // bindFrameBuffer(texture2, framebuf2);
+    // gl.bindTexture(gl.TEXTURE_2D, texture);
+    // gl.drawArrays(gl.TRIANGLES, 0, 6);
 
 
 
@@ -247,6 +266,9 @@ draw = function() {
 
     var textureLocation = gl.getUniformLocation(textureShader, "u_texture");
     gl.uniform1i(textureLocation, 0);
+    var timeLocation = gl.getUniformLocation(textureShader, "time");
+    gl.uniform1f(timeLocation, frameCount * 0.01);
+
     var texcoordLocation = gl.getAttribLocation(textureShader, "a_texcoord");
     gl.enableVertexAttribArray(texcoordLocation);
 
