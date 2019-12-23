@@ -518,3 +518,422 @@ hue=h=0:s=1.0, colorspace=bt709:iall=bt601-6-625:fast=1
 [c][b] blend=all_mode='lighten':all_opacity=0.95, \
 colorlevels=rimax=0.9:gimax=0.9:bimax=0.9, noise=alls=20:allf=t+u, \
 hue=h=0:s=1.0, colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+
+ffmpeg -f image2 -framerate 24 -i /Volumes/Volumina/frames/lueurs/alligator-quiet/alligator-quiet-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75, colorspace=bt709:iall=bt601-6-625:fast=1" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-s 2560x1440 -shortest /Volumes/Volumina/video-renders/lueurs/alligator-quiet.mp4
+
+
+
+ffmpeg -f image2 -framerate 24 -i /Volumes/Volumina/frames/lueurs/pink-pulsar/pink-pulsar-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [a]; \
+[0:0] gblur=sigma=140:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [b]; \
+[0:0][a] blend=all_mode='lighten':all_opacity=0.85 [c]; \
+[c][b] blend=all_mode='lighten':all_opacity=0.95, \
+colorlevels=rimax=0.9:gimax=0.9:bimax=0.9, noise=alls=20:allf=t+u, \
+hue=h=0:s=1.0, colorspace=bt709:iall=bt601-6-625:fast=1" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 -s 2560x1440 -shortest /Volumes/Volumina/video-renders/lueurs/pink-pulsar-longer-brighter.mp4
+
+
+
+pulsar bleu
+
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [a]; \
+[0:0] gblur=sigma=140:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [b]; \
+[0:0][a] blend=all_mode='lighten':all_opacity=0.285 [c]; \
+[c][b] blend=all_mode='lighten':all_opacity=0.295, \
+colorlevels=rimax=0.9:gimax=0.9:bimax=0.9, noise=alls=15:allf=t+u, \
+hue=h=240:s=1.0, colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+
+
+
+
+
+ffmpeg -f image2 -framerate 24 \
+-i /Volumes/Volumina/frames/lueurs/alligator-quiet/alligator-quiet-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [a]; \
+[0:0] gblur=sigma=140:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [b]; \
+[0:0][a] blend=all_mode='lighten':all_opacity=0.85 [c]; \
+[c][b] blend=all_mode='lighten':all_opacity=0.25, \
+colorlevels=rimax=0.9:gimax=0.9:bimax=0.9, noise=alls=20:allf=t+u, \
+hue=h=0:s=1.0, colorspace=bt709:iall=bt601-6-625:fast=1" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-s 2560x1440 -shortest /Volumes/Volumina/video-renders/lueurs/alligator-quiet-bright.mp4
+
+
+
+Entre les deux
+
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05 [d];
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [e]; \
+[0:0] gblur=sigma=140:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [f]; \
+[0:0][e] blend=all_mode='lighten':all_opacity=0.85 [g]; \
+[g][f] blend=all_mode='lighten':all_opacity=0.25 [h]; \
+[d][h] blend=all_mode='normal':all_opacity=0.5, \
+colorlevels=rimax=0.9:gimax=0.9:bimax=0.9, noise=alls=20:allf=t+u, \
+hue=h=0:s=1.0, colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+
+
+[1:0] setsar=sar=1/1 [e]; \
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75 [d]; \
+[d][e] blend=all_mode='overlay':all_opacity=0.4, \
+colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+
+[0:0] geq='r=0:g=255:b=255'[e]; \
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75 [d]; \
+[d][e] blend=all_mode='overlay':all_opacity=0.5, \
+colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+
+[0:0] geq='r=0:g=255:b=255'[e]; \
+[e] split [e1][e2]; \
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75 [d]; \
+[d][e1] blend=all_mode='overlay':all_opacity=0.5 [f]; \
+[f][e2] blend=all_mode='softlight':all_opacity=0.12, \
+colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+// With a subtle blue background, hints of turquoise and sea green
+[0:0] geq='r=0:g=253:b=255:a=255', split [cyan1][cyan2]; \
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75 [d]; \
+[d][cyan1] blend=all_mode='addition':all_opacity=0.13 [f]; \
+[f][cyan2] blend=all_mode='overlay':all_opacity=0.3, \
+colorlevels=rimin=0.05:gimin=0.05:bimin=0.05:rimax=0.9:gimax=0.9:bimax=0.9, \
+colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+
+// With a subtle blue background, hints of turquoise and sea green
+[0:0] geq='r=0:g=253:b=255:a=255', split [cyan1][cyan2]; \
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75 [d]; \
+[d][cyan1] blend=all_mode='addition':all_opacity=0.13 [f]; \
+[f][cyan2] blend=all_mode='overlay':all_opacity=0.3, \
+colorlevels=rimin=0.05:gimin=0.05:bimin=0.05:rimax=0.9:gimax=0.9:bimax=0.9, \
+colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+[0:0] geq='r=0:g=253:b=255:a=255', split [cyan1][cyan2]; \
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75 [d]; \
+[d][cyan1] blend=all_mode='addition':all_opacity=0.15 [f]; \
+[f][cyan2] blend=all_mode='overlay':all_opacity=0.3, \
+colorlevels=rimin=0.09:gimin=0.09:bimin=0.09:rimax=0.9:gimax=0.9:bimax=0.9, \
+colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+
+
+
+
+ffmpeg -f image2 -framerate 24 -i /Volumes/Volumina/frames/lueurs/swirl-quiet/swirl-quiet-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0] geq='r=0:g=253:b=255:a=255', split [cyan1][cyan2]; \
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75 [d]; \
+[d][cyan1] blend=all_mode='addition':all_opacity=0.13 [f]; \
+[f][cyan2] blend=all_mode='overlay':all_opacity=0.5, \
+colorlevels=rimin=0.09:gimin=0.09:bimin=0.09:rimax=0.9:gimax=0.9:bimax=0.9, \
+colorspace=bt709:iall=bt601-6-625:fast=1" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-s 2560x1440 -shortest /Volumes/Volumina/video-renders/lueurs/swirl-quiet-turquoise.mp4
+
+
+
+Beautiful swirl with turquoise background
+
+[0:0] geq='r=0:g=253:b=255:a=255', split [cyan1][cyan2]; \
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75 [d]; \
+[d][cyan1] blend=all_mode='addition':all_opacity=0.13 [f]; \
+[f][cyan2] blend=all_mode='overlay':all_opacity=0.5, \
+colorlevels=rimin=0.09:gimin=0.09:bimin=0.09:rimax=0.9:gimax=0.9:bimax=0.9, \
+colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+
+
+
+ffmpeg -f image2 -framerate 24 \
+-i /Volumes/Volumina/frames/lueurs/swirl-quiet-2k/swirl-quiet-2k-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0] geq='r=0:g=253:b=255:a=255', split [cyan1][cyan2]; \
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75 [d]; \
+[d][cyan1] blend=all_mode='addition':all_opacity=0.13 [f]; \
+[f][cyan2] blend=all_mode='overlay':all_opacity=0.5, \
+colorlevels=rimin=0.09:gimin=0.09:bimin=0.09:rimax=0.9:gimax=0.9:bimax=0.9, \
+colorspace=bt709:iall=bt601-6-625:fast=1" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-s 2560x1440 -shortest /Volumes/Volumina/video-renders/lueurs/swirl-quiet-turquoise-2k.mp4
+
+
+
+[0:0] geq='r=0:g=253:b=255:a=255', split [cyan1][cyan2]; \
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75 [d]; \
+[d][cyan1] blend=all_mode='addition':all_opacity=0.13 [f]; \
+[f][cyan2] blend=all_mode='overlay':all_opacity=0.5, \
+colorlevels=rimin=0.09:gimin=0.09:bimin=0.09:rimax=0.9:gimax=0.9:bimax=0.9, \
+hue=h=0:s=0, \
+colorspace=bt709:iall=bt601-6-625:fast=1
+
+
+
+[1:v] scale=1400:1400 [a]; \
+[0:v][a] overlay=0:0, crop=1400:1400
+
+
+[1:v] scale=1400:1400, split=3 [a1][a2][a3]; \
+[a2] alphaextract [alf]; \
+[a3] geq='r=255:g=255:b=255:a=255' [a4]; \
+[a4][alf] alphamerge [a5]; \
+[0:v] crop=1400:1400:1000:0 [b]; \
+[b][a1] overlay=0:0 [c]; \
+[a5][c] overlay=0:0 
+
+
+
+[1:v] scale=1400:1400, split=3 [a1][a2]; \
+[2:v] scale=1400:1400, split [mask]; \
+[0:v] crop=1400:1400:1000:0 [backCropped]; \
+[backCropped][mask] overlay=0:0
+
+
+
+
+ffmpeg -f image2 -framerate 24 \
+-i /Volumes/Volumina/frames/lueurs/swirl-quiet-2k/swirl-quiet-2k-00224.png \
+-i /Users/guillaumepelletier/Desktop/flottante.png \
+-i /Users/guillaumepelletier/Desktop/flottante-alpha.png \
+-filter_complex "[0:0] geq='r=0:g=253:b=255:a=255', split [cyan1][cyan2]; \
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75 [d]; \
+[d][cyan1] blend=all_mode='addition':all_opacity=0.13 [f]; \
+[f][cyan2] blend=all_mode='overlay':all_opacity=0.5, \
+colorlevels=rimin=0.09:gimin=0.09:bimin=0.09:rimax=0.9:gimax=0.9:bimax=0.9, \
+hue=h=0:s=1, crop=1400:1400:1000:0 [background]; \
+[1:v] scale=1400:1400 [b]; \
+[background][b] overlay=0:0" flemme.png
+
+
+ffmpeg -f image2 -framerate 24 \
+-i /Volumes/Volumina/frames/lueurs/swirl-quiet-2k/swirl-quiet-2k-%05d.png \
+-i /Users/guillaumepelletier/Desktop/flottante.png \
+-i /Users/guillaumepelletier/Desktop/flottante-alpha.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0] geq='r=0:g=253:b=255:a=255', split [cyan1][cyan2]; \
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75 [d]; \
+[d][cyan1] blend=all_mode='addition':all_opacity=0.13 [f]; \
+[f][cyan2] blend=all_mode='overlay':all_opacity=0.5, \
+colorlevels=rimin=0.09:gimin=0.09:bimin=0.09:rimax=0.9:gimax=0.9:bimax=0.9, \
+hue=h=0:s=1, crop=1400:1400:1000:0 [background]; \
+[1:v] scale=1400:1400 [b]; \
+[background][b] overlay=0:0" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+flemme.mp4
+
+
+
+
+
+
+
+//This works.
+ffmpeg -i flemme.mp4 -vf "fps=24,scale=320:-1:flags=lanczos, palettegen" -y palette.png
+
+ffmpeg -r 24 -i flemme.mp4 -sws_flags lanczos -i palette.png -lavfi paletteuse -s 720x720 flemme.gif
+
+ffmpeg -r 24 -i flemme.mp4 -sws_flags lanczos -i palette.png -lavfi paletteuse -s 500x500 flemme-500x500.gif
+ffmpeg -r 24 -i flemme.mp4 -sws_flags lanczos -i palette.png -lavfi paletteuse -s 450x450 flemme-450x450.gif
+
+gifsicle -O3 --lossy=200 -o flemme-500x500-lossy200.gif flemme-500x500.gif
+gifsicle -O3 --lossy=300 -o flemme-500x500-lossy300.gif flemme-500x500.gif
+gifsicle -O3 --lossy=400 -o flemme-500x500-lossy400.gif flemme-500x500.gif
+gifsicle -O3 --lossy=400 -o flemme-450x450-lossy400.gif flemme-450x450.gif
+gifsicle -O3 --lossy=300 -o flemme-450x450-lossy300.gif flemme-450x450.gif
+gifsicle -O3 --lossy=500 -o flemme-500x500-lossy500.gif flemme-500x500.gif
+
+gifsicle -O3 --lossy=200 -o flemme-lossy200.gif flemme.gif
+
+
+
+
+
+
+
+ffmpeg -f image2 -framerate 24 \
+-i /Volumes/Volumina/frames/lueurs/swirl-quiet-2k/swirl-quiet-2k-%05d.png \
+-filter_complex "[0:0] geq='r=0:g=253:b=255:a=255', split [cyan1][cyan2]; \
+[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75 [d]; \
+[d][cyan1] blend=all_mode='addition':all_opacity=0.13 [f]; \
+[f][cyan2] blend=all_mode='overlay':all_opacity=0.5, \
+colorlevels=rimin=0.09:gimin=0.09:bimin=0.09:rimax=0.9:gimax=0.9:bimax=0.9" \
+/Volumes/Volumina/frames/lueurs/swirl-quiet-2k-smear/swirl-quiet-2k-smear-%05d.png
+
+
+
+ffmpeg -f image2 -framerate 24 \
+-i /Volumes/Volumina/frames/lueurs/pink-pulsar/pink-pulsar-%05d.png \
+-filter_complex "[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [a]; \
+[0:0] gblur=sigma=140:steps=1, colorlevels=rimax=0.8:gimax=0.8:bimax=0.8 [b]; \
+[0:0][a] blend=all_mode='lighten':all_opacity=0.85 [c]; \
+[c][b] blend=all_mode='lighten':all_opacity=0.95, \
+colorlevels=rimax=0.9:gimax=0.9:bimax=0.9, noise=alls=20:allf=t+u" \
+/Volumes/Volumina/frames/lueurs/pink-pulsar-brighter/pink-pulsar-brighter-%05d.png
+
+
+ffmpeg -f image2 -framerate 24 \
+-i /Volumes/Volumina/frames/lueurs/pastel-hills-half/sketch-%05d.png \
+-i /Volumes/Volumina/frames/lueurs/credits/lueurs-credits-lessglow.png \
+-filter_complex "[0:v] scale=2560x1440 [a]; \
+[a][1:v] overlay=0:0:enable='between(t,15,38)' [b]; \
+[b] split [c][d]; \
+[c] gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [c]; \
+[d][c] blend=all_mode='hardlight':all_opacity=0.25, \
+colorbalance=bs=.0:bm=.0:bh=.125" \
+/Volumes/Volumina/frames/lueurs/pastel-hills-half-smear/pastel-hills-half-smear-%05d.png
+
+
+ffmpeg -f image2 -framerate 24 \
+-i /Volumes/Volumina/frames/lueurs/alligator-quiet/alligator-quiet-%05d.png \
+-filter_complex "[0:0] gblur=sigma=5:steps=1, colorlevels=rimax=0.8:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25 [c]; \
+[c][b] blend=all_mode='hardlight':all_opacity=0.05, noise=alls=20:allf=t+u, \
+colorbalance=bs=.0:bm=.0:bh=0.75" \
+/Volumes/Volumina/frames/lueurs/alligator-quiet-smear/alligator-quiet-smear-%05d.png
+
+ffmpeg -f concat -safe 0 -r 24 -i lueurs.txt \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0] colorspace=bt709:iall=bt601-6-625:fast=1" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+/Volumes/Volumina/video-renders/lueurs/lueurs-demo.mp4
+
+
+ffmpeg -i /Volumes/Volumina/video-renders/lueurs/lueurs-demo.mp4 -i /Volumes/Volumina/video-renders/lueurs/SC_191203_132203.wav -c copy /Volumes/Volumina/video-renders/lueurs/lueurs-demo-son.mp4
+
+
+ffmpeg -i /Volumes/Volumina/video-renders/lueurs/SC_191203_132203.wav /Volumes/Volumina/video-renders/lueurs/SC_191203_132203.aiff
+
+
+ffmpeg -i /Volumes/Volumina/video-renders/lueurs/lueurs-demo.mp4 -i /Volumes/Volumina/video-renders/lueurs/SC_191203_132203.aiff -c:v copy -c:a alac /Volumes/Volumina/video-renders/lueurs/lueurs-demo-son.mov
+
+ffmpeg -i /Volumes/Volumina/video-renders/lueurs/lueurs-demo.mp4 -i /Volumes/Volumina/video-renders/lueurs/lueurs-son-debut.aiff -c:v copy -c:a alac /Volumes/Volumina/video-renders/lueurs/lueurs-demo-son-test.mov
+
+
+
+[0] format=rgba, geq= \
+r='if(between(r(X,Y), 0, 15) * between(g(X,Y),25, 45) * \
+between(b(X,Y), 30, 55), 0, 255)': \
+b='if(between(r(X,Y), 0, 15) * between(g(X,Y),25, 45) * \
+between(b(X,Y), 30, 55), 0, 255)': \
+g='if(between(r(X,Y), 0, 15) * between(g(X,Y),25, 45) * \
+between(b(X,Y), 30, 55), 0, 255)': \
+a=255, gblur=sigma=55:steps=1, \ colorlevels=romin=0.3:gomin=0.3:bomin=0.3:rimax=0.2:gimax=0.5:bimax=0.5, \
+gblur=sigma=8:steps=1 [mask]; \
+[mask][0] blend=all_mode='multiply':all_opacity=1.0
+
+
+
+
+ffmpeg -f image2 -framerate 24 \
+-i /Volumes/Volumina/frames/lueurs/swirl-quiet-2k-smear/swirl-quiet-2k-smear-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0] format=rgba, geq= \
+r='if(between(r(X,Y), 0, 15) * between(g(X,Y),25, 45) * \
+between(b(X,Y), 30, 55), 0, 255)': \
+b='if(between(r(X,Y), 0, 15) * between(g(X,Y),25, 45) * \
+between(b(X,Y), 30, 55), 0, 255)': \
+g='if(between(r(X,Y), 0, 15) * between(g(X,Y),25, 45) * \
+between(b(X,Y), 30, 55), 0, 255)': \
+a=255, gblur=sigma=55:steps=1, \
+colorlevels=romin=0.3:gomin=0.3:bomin=0.3:rimax=0.2:gimax=0.5:bimax=0.5, \
+gblur=sigma=8:steps=1 [mask]; \
+[mask][0] blend=all_mode='multiply':all_opacity=1.0, \
+colorspace=bt709:iall=bt601-6-625:fast=1" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-s 2560x1440 -shortest /Volumes/Volumina/video-renders/lueurs/swirl-quiet-2k-smear-toblack.mp4
+
+
+
+
+ffmpeg -f image2 -framerate 24 -i /Volumes/Volumina/frames/lueurs/swirl-quiet-2k-smear-to-black/swirl-quiet-2k-smear-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" \
+-pix_fmt yuv420p -sws_flags spline+accurate_rnd+full_chroma_int \
+-filter_complex "[0:0] colorspace=bt709:iall=bt601-6-625:fast=1" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 /Volumes/Volumina/video-renders/lueurs/swirl-quiet-2k-smear-to-black.mp4

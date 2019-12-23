@@ -1,0 +1,14 @@
+ffmpeg -i "./video-renders/purple-swirl-flicker-smear-bh125.mp4" -i "./video-renders/purple-swirl-flicker-smear-bh125.mp4" -filter_complex " \
+        color=black:d=3006.57:s=2560x1440:r=24000/1001, \
+          geq=lum_expr=random(1)*256:cb=128:cr=128, \
+          deflate=threshold0=15, \
+          dilation=threshold0=10, \
+          eq=contrast=3, \
+          scale=2560x1440 [n]; \
+    [0] eq=saturation=0,geq=lum='0.15*(182-abs(75-lum(X,Y)))':cb=128:cr=128 [o]; \
+ [n][o] blend=c0_mode=multiply,negate [a]; \
+        color=c=black:d=3006.57:s=2560x1440:r=24000/1001 [b]; \
+ [1][a] alphamerge [c]; \
+ [b][c] overlay" \
+       -c:a copy -c:v libx264 -tune grain -preset veryslow -crf 12 \
+       -y ./video-renders/purple-swirl-flicker-smear-bh125-filmgrain.mp4

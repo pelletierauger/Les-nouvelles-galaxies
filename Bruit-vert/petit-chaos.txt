@@ -1,0 +1,47 @@
+ffmpeg -f image2 -framerate 24 -i /Users/guillaumepelletier/Desktop/chaos-02-crop.png \
+-filter_complex "[0:0]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.45" \
+/Users/guillaumepelletier/Desktop/chaos-02-smear.png
+
+
+ffmpeg -f image2 -framerate 24 -i /Users/guillaumepelletier/Desktop/chaos-02-crop.png \
+-filter_complex "[0:0]gblur=sigma=20:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.45" \
+/Users/guillaumepelletier/Desktop/chaos-02-smear-sig20.png
+
+
+ffmpeg -f image2 -framerate 24 -i /Users/guillaumepelletier/Desktop/chaos-00-crop.png \
+-filter_complex "[0:0]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.45" \
+/Users/guillaumepelletier/Desktop/chaos-00-smear.png
+
+ffmpeg -f image2 -framerate 24 -i /Users/guillaumepelletier/Desktop/chaos-00-crop.png \
+-filter_complex "[0:0]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.15" \
+/Users/guillaumepelletier/Desktop/chaos-00-smear-0.25.png
+
+ffmpeg -f image2 -framerate 24 -i /Users/guillaumepelletier/Desktop/chaos-03-crop.png \
+-filter_complex "[0:0]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.45" \
+/Users/guillaumepelletier/Desktop/chaos-03-smear.png
+
+ffmpeg -f image2 -framerate 24 -i /Users/guillaumepelletier/Desktop/chaos-03-crop.png \
+-filter_complex " \
+[0:0] gblur=sigma=10:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [a]; \
+[0:0] gblur=sigma=20:steps=1, colorlevels=rimax=0.4:gimax=0.4:bimax=0.4 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.45 [c]; \
+[c][b] blend=all_mode='softlight':all_opacity=0.45" \
+/Users/guillaumepelletier/Desktop/chaos-03-smear-wilder.png
+
+
+ffmpeg -f image2 -framerate 24 -i \
+/Users/guillaumepelletier/Desktop/Petit-chaos/chaos-01-crop.png \
+-filter_complex "[0:0]gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.4:gimax=0.4:bimax=0.4[a]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.25" \
+/Users/guillaumepelletier/Desktop/Petit-chaos/chaos-01-smear.png

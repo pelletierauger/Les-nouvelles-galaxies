@@ -280,7 +280,7 @@ newFlickering.vertText = `
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
         alph = coordinates.w;
-        gl_PointSize = 9. + coordinates.z / ((6.0 + alph) * 0.25);
+        gl_PointSize = (9. + coordinates.z / ((6.0 + alph) * 0.25)) * 1.0;
         // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
     }
@@ -716,7 +716,7 @@ void main() {
     vec2 p = gl_FragCoord.xy/1000.0;
     p -= 0.5;
 //     p.x *= 2.0;
-    p *= 2.0;
+    p *= 1.0;
     p.y += 0.35;
 //     p.x *= iResolution.x / iResolution.y;
     vec3 col = vec3(0.0);
@@ -752,7 +752,7 @@ void main() {
         gl_FragColor = gl_FragColor.brga;
         gl_FragColor.r *= 0.5;
         gl_FragColor.b *= 1.25;
-    gl_FragColor.rgb *= 0.5;
+    gl_FragColor.rgb *= 0.75;
         // gl_FragColor = gl_FragColor.grra;
 }
 // endGLSL

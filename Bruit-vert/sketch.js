@@ -21,6 +21,8 @@ fileName = "./frames/brume/brume";
 fileName = "./frames/pink-pulsar/pink-pulsar";
 fileName = "/Volumes/Volumina/frames/lueurs/pink-pulsar/pink-pulsar"
 fileName = "/Volumes/Volumina/frames/lueurs/swirl-quiet/swirl-quiet"
+fileName = "/Volumes/Volumina/frames/lueurs/alligator-quiet/alligator-quiet"
+fileName = "/Volumes/Volumina/frames/lueurs/swirl-quiet-2k/swirl-quiet-2k"
 let maxFrames = 15000;
 // maxFrames = 925;
 // maxFrames = 3000;
@@ -86,7 +88,7 @@ function setup() {
     // gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
     // gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
     // Set the view port
-    gl.viewport(0, 0, cnvs.width, cnvs.height);
+    gl.viewport(0, 0, cnvs.width * 1, cnvs.height * 1);
     frameRate(20);
     // background(0);
     // fill(255, 50);
@@ -172,7 +174,8 @@ draw = function() {
     // currentProgram = getProgram("faster-dots");
     gl.useProgram(currentProgram);
     // drawPulsar(currentProgram);
-    drawSwirl(currentProgram);
+    drawAlligatorQuiet(currentProgram);
+    // drawSwirl(currentProgram);
     // if (drawCount % 100 == 0) {
     //     mS = random(0.8, 1);
     // }
@@ -217,7 +220,7 @@ draw = function() {
     //     drawBG();
     drawCount += drawIncrement;
     // if (exporting && frameCount < maxFrames && drawCount > 1113) {
-    if (exporting && frameCount < maxFrames && drawCount > 556) {
+    if (exporting && frameCount < maxFrames && drawCount > 1449) {
         frameExport();
     }
 }
