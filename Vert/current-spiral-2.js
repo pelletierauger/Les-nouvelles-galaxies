@@ -976,62 +976,59 @@ drawAlligatorQuiet = function(selectedProgram) {
 
 
 drawAlligatorQuietVert = function(selectedProgram) {
-    vertices = [];
-    // let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
-    // let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
-    let shiftedDrawCount = drawCount + 588637 - 200;
-    let t = shiftedDrawCount * 0.000125 + 0.5 + 8000000;
-    let t2 = t * 1e-1;
-    let xOffset = openSimplex.noise2D(t2, t2 + 1000);
-    let yOffset = openSimplex.noise2D(t2 - 1000, t2 + 500);
-    t2 = (t2 + 5000) * 100;
-    let xOffset2 = openSimplex.noise2D(t2, t2 + 1000);
-    let yOffset2 = openSimplex.noise2D(t2 - 1000, t2 + 500);
-    let fx = 1;
-    let fy = 1;
-    let x = 1;
-    let y = 1;
-    let m = map(sin(t * 0.25e1), -1, 1, 1e-5, 1e-3);
-    let t3 = t * 1e1 * 0.5;
-    let al = map(openSimplex.noise2D(t3, t3 + 1000), -1, 1, 0.1, 1.25);
-    al = 0.3;
-    for (let i = 0; i < 27000; i += 1) {
-        // al = map(i, 0, 27000, 15, 80);
-        x = sin(tan(i * 0.001) * fx + i * t * 0.001) * i * 0.00005;
-        y = cos(tan(i * 0.001) * fx + i * t * 0.001) * i * 0.00015;
-        //         x *= cos(fx * fy * 0.001) * sin(x + t * 20);
-        //         y *= cos(fx * fy * 0.001) * cos(x + t * 20);
-        fx = sin(i * m);
-        fy = y * 5;
-        x += (Math.random() - 0.5) * 0.00005;
-        y += (Math.random() - 0.5) * 0.00005;
-        x += xOffset * 0.15 * 2 * 0.2;
-        y += yOffset * 0.15 * 3 * 0.2;
-        x += xOffset2 * 2 * 1e-3 * 0.5;
-        y += yOffset2 * 3 * 1e-3 * 0.5;
-        x += cos(t * -1e2 * 0.25) * i * 1e-5 * 2;
-        y += sin(t * -1e2 * 0.25) * i * 1e-5 * 3;
-        // let xo = openSimplex.noise2D(i, t * 1e4) * 4e-4;
-        let xo = 0;
-        // let yo = openSimplex.noise2D(i, t * 1e4 + 1000) * 4e-4;
-        let yo = 0;
-        let zo = (openSimplex.noise2D(i, (t + i) * 1e2 + 100)) * 3;
-        vertices.push((x + xo) * 1.4, (y + yo) * 0.8, 15 + zo, al);
-    }
+    // vertices = [];
+    // // let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
+    // // let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
+    // let shiftedDrawCount = drawCount + 588637 - 200;
+    // let t = shiftedDrawCount * 0.000125 + 0.5 + 8000000;
+    // let t2 = t * 1e-1;
+    // let xOffset = openSimplex.noise2D(t2, t2 + 1000);
+    // let yOffset = openSimplex.noise2D(t2 - 1000, t2 + 500);
+    // t2 = (t2 + 5000) * 100;
+    // let xOffset2 = openSimplex.noise2D(t2, t2 + 1000);
+    // let yOffset2 = openSimplex.noise2D(t2 - 1000, t2 + 500);
+    // let fx = 1;
+    // let fy = 1;
+    // let x = 1;
+    // let y = 1;
+    // let m = map(sin(t * 0.25e1), -1, 1, 1e-5, 1e-3);
+    // let t3 = t * 1e1 * 0.5;
+    // let al = map(openSimplex.noise2D(t3, t3 + 1000), -1, 1, 0.1, 1.25);
+    // al = 0.3;
+    // for (let i = 0; i < 27000; i += 1) {
+    //     // al = map(i, 0, 27000, 15, 80);
+    //     x = sin(tan(i * 0.001) * fx + i * t * 0.001) * i * 0.00005;
+    //     y = cos(tan(i * 0.001) * fx + i * t * 0.001) * i * 0.00015;
+    //     //         x *= cos(fx * fy * 0.001) * sin(x + t * 20);
+    //     //         y *= cos(fx * fy * 0.001) * cos(x + t * 20);
+    //     fx = sin(i * m);
+    //     fy = y * 5;
+    //     x += (Math.random() - 0.5) * 0.00005;
+    //     y += (Math.random() - 0.5) * 0.00005;
+    //     x += xOffset * 0.15 * 2 * 0.2;
+    //     y += yOffset * 0.15 * 3 * 0.2;
+    //     x += xOffset2 * 2 * 1e-3 * 0.5;
+    //     y += yOffset2 * 3 * 1e-3 * 0.5;
+    //     x += cos(t * -1e2 * 0.25) * i * 1e-5 * 2;
+    //     y += sin(t * -1e2 * 0.25) * i * 1e-5 * 3;
+    //     // let xo = openSimplex.noise2D(i, t * 1e4) * 4e-4;
+    //     let xo = 0;
+    //     // let yo = openSimplex.noise2D(i, t * 1e4 + 1000) * 4e-4;
+    //     let yo = 0;
+    //     let zo = (openSimplex.noise2D(i, (t + i) * 1e2 + 100)) * 3;
+    //     vertices.push((x + xo) * 1.4, (y + yo) * 0.8, 15 + zo, al);
+    // }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
     //Bind appropriate array buffer to it
     // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     // Pass the vertex data to the buffer
-    vertices = [];
-    for (let i = 0; i < 27000; i++) {
-        vertices.push(i);
-    }
+
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     /*======== Associating shaders to buffer objects ========*/
     // Bind vertex buffer object
     gl.bindBuffer(gl.ARRAY_BUFFER, dotsVBuf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
     // Get the attribute location
     var coord = gl.getAttribLocation(selectedProgram, "vertexID");
     // Point an attribute to the currently bound VBO
@@ -1051,5 +1048,5 @@ drawAlligatorQuietVert = function(selectedProgram) {
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
-    gl.drawArrays(gl.POINTS, 0, 27000);
+    gl.drawArrays(gl.POINTS, 0, 1000000);
 }

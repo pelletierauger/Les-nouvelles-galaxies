@@ -24,6 +24,11 @@ let texcoordShader;
 let dotsVBuf, bgVBuf;
 let texture, texture2, framebuf, framebuf2;
 let vb;
+vertices = [];
+for (let i = 0; i < 1000000; i++) {
+    vertices.push(i);
+}
+vertices = new Float32Array(vertices);
 
 function setup() {
     socket = io.connect('http://localhost:8080');
@@ -258,7 +263,7 @@ draw = function() {
     gl.useProgram(textureShader);
 
     aspect = cnvs.width / cnvs.height;
-    vertices = new Float32Array([-1, 1, 1, 1, 1, -1, // Triangle 1
+    let vertices = new Float32Array([-1, 1, 1, 1, 1, -1, // Triangle 1
         -1, 1, 1, -1, -1, -1 // Triangle 2
     ]);
     vbuffer = gl.createBuffer();

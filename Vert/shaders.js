@@ -948,20 +948,22 @@ newFlickeringVert.vertText = `
     // attribute vec4 coordinates;
     attribute float vertexID;
     uniform float time;
-    varying vec2 myposition;
-    varying vec2 center;
+//     varying vec2 myposition;
+//     varying vec2 center;
     varying float alph;
     void main(void) {
-        float i = vertexID;
-        float t = time;
-        float x = cos(i * t) * 50. * i * 0.000001;
-        float y = sin(i * t) * 50. * i * 0.000001;
+        float i = vertexID * 0.0015;
+        float t = time * 1e-2;
+        float x = cos(i * 1.5 + t * 5e-1) * tan(i * 1.2 + t * 1e-2) * i * 1e-4;
+        float y = sin(i * 1.5 + t * 5e-1) * tan(i * 1.2 + t * 1e-2) * i * 1e-4;
+//         float x = cos(i) * i * 1e-5 * 2.;
+//         float y = sin(i) * i * 1e-5 * 2.;
         gl_Position = vec4(x * 0.6, y, 0.0, 1.0);
-        center = vec2(gl_Position.x, gl_Position.y);
-        center = 512.0 + center * 512.0;
-        myposition = vec2(gl_Position.x, gl_Position.y);
-        alph = 1.0;
-        gl_PointSize = 20.0;
+//         center = vec2(gl_Position.x, gl_Position.y);
+//         center = 512.0 + center * 512.0;
+//         myposition = vec2(gl_Position.x, gl_Position.y);
+        alph = 0.125;
+        gl_PointSize = 5.0;
         // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
     }
@@ -970,8 +972,8 @@ newFlickeringVert.vertText = `
 newFlickeringVert.fragText = `
     // beginGLSL
     precision mediump float;
-    varying vec2 myposition;
-    varying vec2 center;
+//     varying vec2 myposition;
+//     varying vec2 center;
     varying float alph;
     float rand(vec2 co){
         return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(co.x)));
@@ -994,7 +996,7 @@ newFlickeringVert.fragText = `
         } else {
             alpha = 0.0;
         }
-        alpha = smoothstep(0.015 / (0.9 + alph), 0.000125, dist_squared) * 0.49;
+        alpha = smoothstep(0.05 / (0.9 + alph), 0.000125, dist_squared) * 0.49;
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.2 - dist_squared, 0.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 1.25;
