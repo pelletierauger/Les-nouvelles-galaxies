@@ -959,10 +959,10 @@ float map(float value, float min1, float max1, float min2, float max2) {
 // 
     void main(void) {
         float t = time * 1e-2;
-        float osc = map(sin(t * 4e-5), -1., 1., 0.0025, 0.005);
+        float osc = map(sin(t * 2e-4), -1., 1., 0.0025, 0.005);
         float i = vertexID * osc;
-        float x = cos(i * 1.5 + t * 5e-1) * tan(i * 1.2) * i * 16e-5;
-        float y = sin(i * 1.5 + t * 5e-1) * tan(i * 1.2) * i * 16e-5;
+        float x = cos(i * 1.5 + t * -5e-1) * tan(i * 1.2) * i * 16e-5;
+        float y = sin(i * 1.5 + t * -5e-1) * tan(i * 1.2) * i * 16e-5;
 //         float x = cos(i) * i * 1e-5 * 2.;
 //         float y = sin(i) * i * 1e-5 * 2.;
         gl_Position = vec4(x * 0.6, y, 0.0, 1.0);
