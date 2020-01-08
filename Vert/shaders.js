@@ -963,10 +963,12 @@ float map(float value, float min1, float max1, float min2, float max2) {
         float i = vertexID;
         float x = cos(i * 0.5e-4 * t * -2e-3 + tan(i * 0.125) * 0.25) * i * 16e-6;
         float y = sin(i * 0.5e-4 * t * -2e-3 + tan(i * 0.125) * 0.25) * i * 16e-6;
-        x = tan(x * 0.25) + x * 0.095;
-        y = tan(y * 0.25) + y * 0.095;
+        x = tan(x * 0.25) + x * 0.195;
+        y = tan(y * 0.25) + y * 0.195;
         x *= 0.25 * 2.;
         y *= 0.25 * 2.;
+        x += cos(t * 16e-1) * i * 0.000004;
+        y += sin(t * 16e-1) * i * 0.000004;
 //         float x = cos(i) * i * 1e-5 * 2.;
 //         float y = sin(i) * i * 1e-5 * 2.;
         gl_Position = vec4(x * 0.6, y, 0.0, 1.0);
