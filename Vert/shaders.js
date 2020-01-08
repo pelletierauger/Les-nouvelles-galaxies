@@ -951,18 +951,25 @@ newFlickeringVert.vertText = `
 //     varying vec2 myposition;
 //     varying vec2 center;
     varying float alph;
+// 
+float map(float value, float min1, float max1, float min2, float max2) {
+    float perc = (value - min1) / (max1 - min1);
+    return perc * (max2 - min2) + min2;
+}
+// 
     void main(void) {
-        float i = vertexID * 0.0015;
         float t = time * 1e-2;
-        float x = cos(i * 1.5 + t * 5e-1) * tan(i * 1.2 + t * 1e-2) * i * 1e-4;
-        float y = sin(i * 1.5 + t * 5e-1) * tan(i * 1.2 + t * 1e-2) * i * 1e-4;
+        float osc = map(sin(t * 4e-5), -1., 1., 0.0025, 0.005);
+        float i = vertexID * osc;
+        float x = cos(i * 1.5 + t * 5e-1) * tan(i * 1.2) * i * 8e-5;
+        float y = sin(i * 1.5 + t * 5e-1) * tan(i * 1.2) * i * 8e-5;
 //         float x = cos(i) * i * 1e-5 * 2.;
 //         float y = sin(i) * i * 1e-5 * 2.;
         gl_Position = vec4(x * 0.6, y, 0.0, 1.0);
 //         center = vec2(gl_Position.x, gl_Position.y);
 //         center = 512.0 + center * 512.0;
 //         myposition = vec2(gl_Position.x, gl_Position.y);
-        alph = 0.125;
+        alph = 0.125 * 0.5;
         gl_PointSize = 5.0;
         // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
