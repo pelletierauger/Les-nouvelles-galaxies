@@ -964,7 +964,7 @@ float map(float value, float min1, float max1, float min2, float max2) {
         float x = cos(i * 1e-5 * t * 1e-2 + tan(i * 1e-2) * tan(i * 5.) * 0.125) * i * 16e-6;
         float y = sin(i * 1e-5 * t * 1e-2 + tan(i * 1e-2) * tan(i * 5.) * 0.125) * i * 16e-6;
         x = tan(x * 0.25 + sin(x * 0.5)) + x * 0.125;
-        y = tan(y * 0.25 + sin(x * 0.5)) + y * 0.125;
+        y = tan(y * 0.125 + sin(x * 0.5)) + y * 0.125;
         x *= 0.25 * 2.;
         y *= 0.25 * 2.;
         x += cos(t * 16e-1) * i * 0.000003;
