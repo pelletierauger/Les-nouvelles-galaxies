@@ -34,7 +34,8 @@ function setup() {
     socket = io.connect('http://localhost:8080');
     // socket.on('receiveOSC', receiveOSC);
     pixelDensity(1);
-    cnvs = createCanvas(windowWidth, windowWidth * 9 / 16, WEBGL);
+    // cnvs = createCanvas(windowWidth, windowWidth * 9 / 16, WEBGL);
+    cnvs = createCanvas(1280, 720, WEBGL);
     canvasDOM = document.getElementById('defaultCanvas0');
     // noCanvas();
     // cnvs = document.getElementById('my_Canvas');
@@ -43,7 +44,8 @@ function setup() {
     // canvasDOM = document.getElementById('defaultCanvas0');
     // gl = canvasDOM.getContext('webgl');
     // gl = cnvs.drawingContext;
-
+    canvasDOM.style.width = windowWidth + "px";
+    canvasDOM.style.height = windowWidth * 9 / 16 + "px";
     // gl = canvasDOM.getContext('webgl', { premultipliedAlpha: false });
 
 
@@ -298,6 +300,11 @@ draw = function() {
     if (exporting && frameCount < maxFrames && drawCount > 1449) {
         frameExport();
     }
+}
+
+function windowResized() {
+    canvasDOM.style.width = windowWidth + "px";
+    canvasDOM.style.height = windowWidth * 9 / 16 + "px";
 }
 
 function keyPressed() {
