@@ -961,8 +961,8 @@ float map(float value, float min1, float max1, float min2, float max2) {
         float t = time * 2e-3;
         float osc = map(sin(t * 16e-1), -1., 1., 0.01, 10.005);
         float i = vertexID;
-        float x = cos(tan(tan(i * 4e-5) * 1e36) + cos(i) * 5e-2) * i * 16e-6;
-        float y = sin(tan(tan(i * 4e-5) * 1e36) + sin(i) * 5e-2) * i * 16e-6;
+        float x = cos(tan(tan(i * 4e-5) * 1e36) + cos(i + t * 1e2) * 5e-2) * i * 16e-6;
+        float y = sin(tan(tan(i * 4e-5) * 1e36) + sin(i + t * 1e2) * 5e-2) * i * 16e-6;
 //         x = tan(x * 0.225) + x * 0.2;
 //         y = tan(y * 0.225) + y * 0.2;
         x *= 0.25 * 2.;
@@ -977,7 +977,7 @@ float map(float value, float min1, float max1, float min2, float max2) {
 //         center = vec2(gl_Position.x, gl_Position.y);
 //         center = 512.0 + center * 512.0;
 //         myposition = vec2(gl_Position.x, gl_Position.y);
-        alph = 0.25 * 0.5;
+        alph = 0.25 * 0.5 / ((abs(y) + abs(x)) + 0.025);
         gl_PointSize = 7.0;
         // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
@@ -1015,8 +1015,8 @@ newFlickeringVert.fragText = `
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.2 - dist_squared, 0.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 1.25;
-//         gl_FragColor = gl_FragColor.grba;
-//         gl_FragColor.g *= 0.5;
+        gl_FragColor = gl_FragColor.grba;
+        gl_FragColor.g *= 0.5;
 //         gl_FragColor.r *= 1.5;
         
     }
