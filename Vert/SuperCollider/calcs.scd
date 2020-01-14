@@ -71,14 +71,21 @@ SynthDef(\sampler, {
 )
 s.record;
 s.stopRecording;
+{LFTri.ar(440 * [1, 1.001] * -12.midiratio) * Env.new([0, 1, 0], [1, 8]).kr * 0.2}.play;
+
+{SinOsc.ar(440 * [1, 1.001] * -12.midiratio) * Env.new([0, 1, 0], [1, 8]).kr * 0.2}.play;
+{Pulse.ar(440 * [1, 1.001] * -12.midiratio) * Env.new([0, 1, 0], [1, 8]).kr * 0.2}.play;
+
+
+Synth(\sampler, [\rate, 9.midiratio, \amp, 1, \atk, 0.001, \rel, 0.05]);
 (
-Synth(\sampler, [\rate, -10.midiratio, \amp, 2, \atk, 1]);
+Synth(\sampler, [\rate, -6.midiratio, \amp, 2, \atk, 1]);
 Synth(\sampler, [\rate, -15.midiratio, \amp, 2, \atk, 1]);
 Synth(\sampler, [\rate, -22.midiratio, \amp, 4, \atk, 1]);
 Synth(\sampler, [\rate, 4.midiratio, \amp, 1, \atk, 1]);
 )
 (
-Synth(\sampler, [\rate, -12.midiratio, \amp, 2, \atk, 1]);
+Synth(\sampler, [\rate, -5.midiratio, \amp, 2, \atk, 1]);
 Synth(\sampler, [\rate, -15.midiratio, \amp, 2, \atk, 1]);
 Synth(\sampler, [\rate, -24.midiratio, \amp, 4, \atk, 1]);
 Synth(\sampler, [\rate, 2.midiratio, \amp, 1, \atk, 1]);
@@ -90,6 +97,13 @@ Synth(\sampler, [\rate, (-19 - 12).midiratio, \amp, 8, \atk, 1]);
 Synth(\sampler, [\rate, 0.midiratio, \amp, 1, \atk, 1]);
 )
 
+
+(
+Synth(\sampler, [\rate, -7.midiratio, \amp, 2, \atk, 1]);
+Synth(\sampler, [\rate, -13.midiratio, \amp, 2, \atk, 1]);
+Synth(\sampler, [\rate, -22.midiratio, \amp, 4, \atk, 1]);
+Synth(\sampler, [\rate, 4.midiratio, \amp, 1, \atk, 1]);
+)
 
 // bonheur
 (
@@ -136,17 +150,19 @@ Synth(\sampler, [\rate, -5.midiratio, \amp, 1, \atk, 1]);
 // ailleurs
 (
 Synth(\sampler, [\rate, -8.midiratio, \amp, 2, \atk, 1]);
-Synth(\sampler, [\rate, -17.midiratio, \amp, 2, \atk, 1]);
-Synth(\sampler, [\rate, -1.midiratio, \amp, 1, \atk, 1]);
+Synth(\sampler, [\rate, -12.midiratio, \amp, 2, \atk, 1]);
+Synth(\sampler, [\rate, -3.midiratio, \amp, 1, \atk, 1]);
 )
 (
 Synth(\sampler, [\rate, -8.midiratio, \amp, 2, \atk, 1]);
-Synth(\sampler, [\rate, -15.midiratio, \amp, 2, \atk, 1]);
-Synth(\sampler, [\rate, 2.midiratio, \amp, 1, \atk, 1]);
+Synth(\sampler, [\rate, -13.midiratio, \amp, 2, \atk, 1]);
+Synth(\sampler, [\rate, -5.midiratio, \amp, 1, \atk, 1]);
 )
 (
-Synth(\sampler, [\rate, -11.midiratio, \amp, 2, \atk, 1]);
-Synth(\sampler, [\rate, -15.midiratio, \amp, 2, \atk, 1]);
-Synth(\sampler, [\rate, -3.midiratio, \amp, 1, \atk, 1]);
-Synth(\sampler, [\rate, -8.midiratio, \amp, 1, \atk, 1]);
+Synth(\sampler, [\rate, (-11 - 2).midiratio, \amp, 2, \atk, 1]);
+Synth(\sampler, [\rate, (-27 - 2).midiratio, \amp, 4, \atk, 1]);
+Synth(\sampler, [\rate, (-3 - 2).midiratio, \amp, 1, \atk, 1]);
+Synth(\sampler, [\rate, (-8 - 2).midiratio, \amp, 1, \atk, 1]);
 )
+
+Synth(\sampler, [\rate, 6.midiratio, \amp, 1, \atk, 0.001, \rel, 0.05]);
