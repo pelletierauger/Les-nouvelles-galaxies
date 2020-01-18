@@ -961,8 +961,8 @@ float map(float value, float min1, float max1, float min2, float max2) {
         float t = time * 1e-2;
         float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
         float i = vertexID;
-        float x = cos(i * tan(i * i * 1e-5) * 4e-6 * sin(i * 1e1)) * i * 16e-6;
-        float y = sin(i * tan(i * i * 1e-5) * 4e-6 * sin(i * 1e1)) * i * 16e-6;
+        float x = cos(i * tan(i * i * 1e-5) * 4e-6 * sin(i * 1e-4)) * i * 16e-6;
+        float y = sin(i * tan(i * i * 1e-5) * 4e-6 * sin(i * 1e-4)) * i * 16e-6;
         x = tan(x * 0.25) + x * 0.15;
         y = tan(y * 0.25) + y * 0.15;
         x *= 0.25 * 2.;
