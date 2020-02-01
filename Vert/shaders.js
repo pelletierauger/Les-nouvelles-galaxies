@@ -961,8 +961,8 @@ float map(float value, float min1, float max1, float min2, float max2) {
         float t = time * 2e-3;
         float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
         float i = vertexID * 1e-1;
-        float x = cos(tan(i) * sin(i * 1e-3) * 0.1) * i * 2e-3 + cos(tan(i + i * 4e1) * 1e3) * i * 16e-3;
-        float y = sin(tan(i) * sin(i * 1e-3) * 0.1) * i * 2e-3 + sin(tan(i + i * 4e1) * 1e3) * i * 16e-3;
+        float x = cos(tan(i * 1e-3 + t * 2e1) * sin(i * 1e-3) * 0.1) * i * 2e-3 + cos(tan(i + i * 4e1) * 1e3) * i * 16e-3;
+        float y = sin(tan(i * 1e-3 + t * 2e1) * sin(i * 1e-3) * 0.1) * i * 2e-3 + sin(tan(i + i * 4e1) * 1e3) * i * 16e-3;
 //         x += cos(x * 1e-1) + cos(i * 6900. * tan(i * 2e-4)) * 0.5;
 //         y += sin(y * 1e-1) + sin(i * 6900. * tan(i * 2e-4)) * 0.5;
 //         x *= 0.25 * 44.5;
@@ -970,8 +970,8 @@ float map(float value, float min1, float max1, float min2, float max2) {
         x += cos(t * 0.75e1) * i * 0.005;
         y += sin(t * 0.75e1) * i * 0.005;
                 x -= 1.;
-        x *= 16.25e-3;
-        y *= 16.25e-3;
+        x *= 8.25e-3;
+        y *= 8.25e-3;
 //         float x = cos(i) * i * 1e-5 * 2.;
 //         float y = sin(i) * i * 1e-5 * 2.;
         gl_Position = vec4(x * 0.6, y, 0.0, 1.0);
