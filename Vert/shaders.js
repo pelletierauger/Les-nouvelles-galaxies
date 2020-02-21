@@ -958,13 +958,13 @@ float map(float value, float min1, float max1, float min2, float max2) {
 }
 // 
     void main(void) {
-        float t = time * 2e-3;
+        float t = time * 2e-4;
         float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
         float i = vertexID * 1e-1;
         float x = cos(tan(i * 1.5e-7) * 5e1 * i) * i * 16e-3;
         float y = sin(tan(i * 1.5e-7) * 5e1 * i) * i * 16e-3;
-        x += tan(cos(i * 69. * tan(i * 1e-2)) * 1e8 * sin(t * 2e-6)) * 1000.5;
-        y += tan(sin(i * 69. * tan(i * 1e-2)) * 1e8 * sin(t * 2e-6)) * 1000.5;
+        x += tan(cos(i * 69. * tan(i * 1e3)) * 1e8 * sin(t * 2e-6)) * 1000.5;
+        y += tan(sin(i * 69. * tan(i * 1e3)) * 1e8 * sin(t * 2e-6)) * 1000.5;
 //         x *= 0.25 * 44.5;
 //         y *= 0.25 * 44.5;
         x += cos(t * 2.75e1) * i * 0.015;
@@ -1017,9 +1017,11 @@ newFlickeringVert.fragText = `
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.4 - dist_squared, 0.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 1.25;
-//         gl_FragColor = gl_FragColor.grba;
+//         gl_FragColor = gl_FragColor.gbga;
+        gl_FragColor.rgb = vec3(1.0) - gl_FragColor.rgb;
+             gl_FragColor = gl_FragColor.grba;
 //         gl_FragColor.g *= 0.525;
-//         gl_FragColor.b *= 0.0125;
+        gl_FragColor.b *= 0.5;
         
     }
     // endGLSL
