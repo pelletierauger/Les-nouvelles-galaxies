@@ -961,18 +961,18 @@ float map(float value, float min1, float max1, float min2, float max2) {
         float t = time * 2e-4;
         float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
         float i = vertexID * 1e-1;
-        float x = cos(2e-1 * i) * i * 16e-3;
-        float y = sin(2e-1 * i) * i * 16e-3;
-        x += sin(cos(i * 169. * tan(i * 3e-5) * sin(i * 0.5) + cos(i * 0.5) * 1e7) * 1e4 * sin(t * 0.5e-2)) * 5000.5;
-        y += sin(sin(i * 169. * tan(i * 3e-5) * sin(i * 0.5) + cos(i * 0.5) * 1e7) * 1e4 * sin(t * 0.5e-2)) * 5000.5;
+        float x = cos(tan(i * 1.5e-7) * 5e1 * i) * i * 16e-3;
+        float y = sin(tan(i * 1.5e-7) * 5e1 * i) * i * 16e-3;
+        x += tan(cos(i * 69. * sin(i * 1e3)) * 1e17 * tan(2e9)) * 1000.5;
+        y += tan(sin(i * 69. * sin(i * 1e3)) * 1e17 * tan(2e9)) * 1000.5;
 //         x *= 0.25 * 44.5;
 //         y *= 0.25 * 44.5;
-//         x += cos(t * 2.75e2) * i * 0.015;
-//         y += sin(t * 2.75e2) * i * 0.015;
-//         x += 1000. * cos(t * 4e1) * 1.5;
-//         y += 1000. * sin(t * 4e1) * 1.5;
-        x *= 3.5e-3;
-        y *= 3.5e-3;
+        x += cos(t * 0.75e2) * i * 0.125;
+        y += sin(t * 0.75e2) * i * 0.125;
+//         x += 1000. * cos(t * 2.) * 5.;
+//         y += 1000. * sin(t * 2.) * 5.;
+        x *= 2.25e-3;
+        y *= 2.25e-3;
 //         float x = cos(i) * i * 1e-5 * 2.;
 //         float y = sin(i) * i * 1e-5 * 2.;
         gl_Position = vec4(x * 0.6 * 1e-1, y * 1e-1, 0.0, 1.0);
@@ -1020,7 +1020,7 @@ newFlickeringVert.fragText = `
 //         gl_FragColor = gl_FragColor.gbga;
         gl_FragColor.rgb = vec3(1.0) - gl_FragColor.rgb;
              gl_FragColor = gl_FragColor.grba;
-//         gl_FragColor.g += sin(uv.x * 1e2);
+//         gl_FragColor.g *= 0.525;
         gl_FragColor.b *= 0.5;
         
     }
