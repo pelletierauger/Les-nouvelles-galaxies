@@ -958,13 +958,13 @@ float map(float value, float min1, float max1, float min2, float max2) {
 }
 // 
     void main(void) {
-        float t = time * 2e-3;
+        float t = time * 1e-3 + 0.;
         float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
         float i = vertexID * 1e-1;
-        float x = cos((i * 1e1 + t * 2e1) * sin(i * 1e-12) * 1.1) * i * 1e-3 + cos(tan(i * 1e-1) * 1e5) * i * 16e-3;
-        float y = sin((i * 1e1 + t * 2e1) * sin(i * 1e-12) * 1.1) * i * 1e-3 + sin(tan(i * 1e-1) * 1e5) * i * 16e-3;
-        x += cos(x * 1e-1) + cos(i * 6900. * tan(i * 2e-4)) * 1000.5;
-        y += sin(y * 1e-1) + sin(i * 6900. * tan(i * 2e-4)) * 1000.5;
+        float x = cos(tan(i * 1.5e-7) * 5e3 * i) * i * 16e-3;
+        float y = sin(tan(i * 1.5e-7) * 5e3 * i) * i * 16e-3;
+        x += cos(x * 1e-1) + cos(i * 690. * tan(i * 2e-4)) * 1000.5;
+        y += sin(y * 1e-1) + sin(i * 690. * tan(i * 2e-4)) * 1000.5;
 //         x *= 0.25 * 44.5;
 //         y *= 0.25 * 44.5;
         x += cos(t * 0.75e1) * i * 0.005;
@@ -980,7 +980,7 @@ float map(float value, float min1, float max1, float min2, float max2) {
 //         center = 512.0 + center * 512.0;
 //         myposition = vec2(gl_Position.x, gl_Position.y);
         alph = 0.25 * 0.5;
-        gl_PointSize = 7.0;
+        gl_PointSize = 14.0;
         // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
     }

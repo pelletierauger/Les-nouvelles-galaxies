@@ -1,14 +1,14 @@
-let looping = true;
+let looping = false;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
-let fileName = "./frames/alligator/alligator";
+let fileName = "/Volumes/Volumina/frames/vortex/travelling-oak-3-slow/sketch";
 let maxFrames = 15000;
 let gl;
 let time;
 let positive = true;
 let intensity;
 let drawCount = 1110;
-drawCount = 125000;
+drawCount = 1;
 let drawIncrement = 1;
 let vertexBuffer;
 let vertices = [];
@@ -34,11 +34,20 @@ function setup() {
     socket = io.connect('http://localhost:8080');
     // socket.on('receiveOSC', receiveOSC);
     pixelDensity(1);
-    cnvs = createCanvas(windowWidth, windowWidth * 9 / 16, WEBGL);
+    // cnvs = createCanvas(windowWidth, windowWidth * 9 / 16, WEBGL);
+    noCanvas();
+    cnvs = document.createElement('canvas');
+
+    cnvs.id = "defaultCanvas0";
+    cnvs.width = 2560;
+    cnvs.height = 1440;
+    var body = document.getElementsByTagName("body")[0];
+    body.appendChild(cnvs);
+
     canvasDOM = document.getElementById('defaultCanvas0');
     // noCanvas();
     // cnvs = document.getElementById('my_Canvas');
-    gl = canvas.getContext('webgl');
+    gl = cnvs.getContext('webgl');
     // canvasDOM = document.getElementById('my_Canvas');
     // canvasDOM = document.getElementById('defaultCanvas0');
     // gl = canvasDOM.getContext('webgl');
@@ -69,7 +78,7 @@ function setup() {
     // gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
     // gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
     // Set the view port
-    gl.viewport(0, 0, cnvs.width * 1, cnvs.height * 1);
+    gl.viewport(0, 0, cnvs.width, cnvs.height);
     frameRate(20);
     // background(0);
     // fill(255, 50);
@@ -89,13 +98,24 @@ function setup() {
     framebuf = createFrameBuffer(texture);
     texture2 = createTexture();
     framebuf2 = createFrameBuffer(texture2);
+    if (batchExport) {
+        drawCount = parseInt(batchMin, 10);
+        exporting = true;
+        redraw();
+        // songPlay = false;
+    }
+    socket.on('getNextImage', function(data) {
+        if (drawCount <= batchMax) {
+            redraw();
+        }
+    });
 }
 
 draw = function() {
     gl.clear(gl.COLOR_BUFFER_BIT);
     // We bind the framebuffer...
     bindFrameBuffer(texture, framebuf);
-    gl.viewport(0, 0, 1280, 720);
+    gl.viewport(0, 0, cnvs.width, cnvs.height);
 
     // draw the scene, presumably on a framebuffer
     let currentProgram = getProgram("pulsar-fog");
@@ -251,7 +271,7 @@ draw = function() {
 
     // unbind the buffer and draw the resulting texture....
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-    gl.viewport(0, 0, 1280, 720);
+    gl.viewport(0, 0, cnvs.width, cnvs.height);
 
     gl.bindTexture(gl.TEXTURE_2D, texture);
 
@@ -293,11 +313,11 @@ draw = function() {
 
     gl.drawArrays(gl.TRIANGLES, 0, numItems);
 
-    drawCount += drawIncrement;
     // if (exporting && frameCount < maxFrames && drawCount > 1113) {
-    if (exporting && frameCount < maxFrames && drawCount > 1449) {
+    if (exporting) {
         frameExport();
     }
+    drawCount += drawIncrement;
 }
 
 function keyPressed() {
