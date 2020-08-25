@@ -673,7 +673,7 @@ vec3 smokeEffect(vec2 uv) {
     vec2 scale = uv * 0.5;
     vec2 turbulence = TURBULENCE * vec2(noise(vec2(uv.x * 3.5, uv.y * 3.2) * 1.), noise(vec2(uv.x * 2.2, uv.y * 1.5)));
     scale += turbulence;
-    float n1 = fbm(vec2(scale.x - abs(sin(time * v * 1000.0)), scale.y - 50.0 * abs(sin(time * v * 410.0))));
+    float n1 = fbm(vec2(scale.x - abs(sin(310. * v * 1000.0)), scale.y - 50.0 * abs(sin(310. * v * 410.0))));
     col = mix(col, smoke, smoothstep(0.35, 0.9, n1));
     //float y = fragCoord.y/iResolution.y;
     //float fade = exp(-(y*y));
@@ -687,7 +687,7 @@ float circle(vec2 p, float r) {
     return smoothstep(r + 0.02, r, c);
 }
 float sinwave(vec2 p, float scale, float amp) {
-    float wave = cos(p.x * scale + 1.5 + time * 20.) + 0.25 * cos(p.x * scale * scale + time * 20.);
+    float wave = cos(p.x * scale + 1.5 + 310. * 20.) + 0.25 * cos(p.x * scale * scale + 310. * 20.);
     float s = smoothstep(amp + 0.07, amp, amp * wave * 0.5 - p.y * 0.5);
     return s;
 }
@@ -698,7 +698,7 @@ float plot(vec2 s, float p) {
 float circ(float speed, float size, float vx, float vy, float dist) {
   // float x = cos(time * speed) * dist * 0.012 - 0.425;
   // float y = sin(time * speed) * dist * 0.012 - 0.25;
-  float t = time;
+  float t = 620.;
   float x = cos(t * speed * 1000.0) * dist * (sin(t)) * 0.12 - 0.425;
   float y = sin(t * speed * 1000.0) * dist * (sin(t)) * 0.12 - 0.25;
   // float x = cos(time * speed) * dist * abs(sin(time * 0.01) * 1.0) - 0.425;
@@ -958,8 +958,8 @@ float map(float value, float min1, float max1, float min2, float max2) {
 }
 // 
     void main(void) {
-        float t = time * 1e-3 + 0.;
-        float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
+        float t = time;
+        // float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
         float i = vertexID * 1e-1;
         float x = cos(tan(i * 1.5e-7) * 5e3 * i) * i * 16e-3;
         float y = sin(tan(i * 1.5e-7) * 5e3 * i) * i * 16e-3;
@@ -967,10 +967,10 @@ float map(float value, float min1, float max1, float min2, float max2) {
         y += sin(y * 1e-1) + sin(i * 690. * tan(i * 2e-4)) * 1000.5;
 //         x *= 0.25 * 44.5;
 //         y *= 0.25 * 44.5;
-        x += cos(t * 0.75e1) * i * 0.005;
-        y += sin(t * 0.75e1) * i * 0.005;
-        x += 1000. * cos(t * 2.);
-        y += 1000. * sin(t * 2.);
+        x += cos(t * 4.) * i * 0.005;
+        y += sin(t * 4.) * i * 0.005;
+        x += 1000. * cos(t);
+        y += 1000. * sin(t);
         x *= 2.25e-3;
         y *= 2.25e-3;
 //         float x = cos(i) * i * 1e-5 * 2.;

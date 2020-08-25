@@ -17,3 +17,36 @@ ffmpeg -f image2 -framerate 24 \
 -crf 19 -preset slow \
 -threads 1 \
 /Volumes/Volumina/video-renders/vortex/travelling-oak-3-slow-crf-19-slow.mp4
+
+ffmpeg -f concat -safe 0 -r 24 \
+-i /Users/guillaumepelletier/Desktop/Dropbox/Art/p5/Les-nouvelles-galaxies/Vert/vert-montage.txt \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" -pix_fmt yuv420p \
+-sws_flags spline+accurate_rnd+full_chroma_int \
+-vf "colorspace=bt709:iall=bt601-6-625:fast=1" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-crf 21 -preset medium \
+-threads 1 \
+/Volumes/Volumina/video-renders/vortex/travelling-oak-3-slow-crf-21-montage.mp4
+
+ffmpeg -f concat -safe 0 -r 24 \
+-i /Users/guillaumepelletier/Desktop/Dropbox/Art/p5/Les-nouvelles-galaxies/Vert/vert-montage-b.txt \
+-c:v libx264 -pix_fmt yuv420p \
+-crf 29 -preset faster -s 1280x720 \
+-threads 1 \
+/Volumes/Volumina/video-renders/vortex/travelling-oak-3-slow-crf-29-montage-b.mp4
+
+
+ffmpeg -i /Volumes/Volumina/video-renders/vortex/travelling-oak-3-slow-crf-29-montage-b.mp4 \
+-i /Volumes/Volumina/frames/vortex/vortex.wav \
+-c:v copy \
+/Volumes/Volumina/video-renders/vortex/travelling-oak-3-slow-crf-29-montage-b-sound.mp4
+
+ffmpeg -f image2 -framerate 24 \
+-i /Volumes/Volumina/frames/vortex/travelling-oak-3-slow/sketch-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" -pix_fmt yuv420p \
+-sws_flags spline+accurate_rnd+full_chroma_int \
+-vf "colorspace=bt709:iall=bt601-6-625:fast=1" \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-crf 19 -preset slow \
+-threads 1 \
+/Volumes/Volumina/video-renders/vortex/travelling-oak-3-slow-crf-19-slow.mp4

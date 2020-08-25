@@ -1039,7 +1039,7 @@ drawAlligatorQuietVert = function(selectedProgram) {
     var time = gl.getUniformLocation(selectedProgram, "time");
     // Point an attribute to the currently bound VBO
     // gl.vertexAttribPointer(coord, 1, gl.FLOAT, false, 0, 0);
-    gl.uniform1f(time, drawCount);
+    gl.uniform1f(time, floatCount);
     // Enable the attribute
     // gl.enableVertexAttribArray(coord);
     /*============= Drawing the primitive ===============*/

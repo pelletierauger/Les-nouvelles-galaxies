@@ -19,6 +19,9 @@ let amountOfScratches = 3;
 let fluctuation = 1;
 let namedPrograms = {};
 
+let loopLength = 3360;
+let floatCount = 0;
+let floatIncrement = Math.PI * 2 / loopLength;
 // a shader variable
 let texcoordShader;
 let dotsVBuf, bgVBuf;
@@ -39,8 +42,8 @@ function setup() {
     cnvs = document.createElement('canvas');
 
     cnvs.id = "defaultCanvas0";
-    cnvs.width = 2560;
-    cnvs.height = 1440;
+    cnvs.width = 2560 * 1;
+    cnvs.height = 1440 * 1;
     var body = document.getElementsByTagName("body")[0];
     body.appendChild(cnvs);
 
@@ -100,6 +103,7 @@ function setup() {
     framebuf2 = createFrameBuffer(texture2);
     if (batchExport) {
         drawCount = parseInt(batchMin, 10);
+        floatCount = floatIncrement * drawCount;
         exporting = true;
         redraw();
         // songPlay = false;
@@ -318,6 +322,10 @@ draw = function() {
         frameExport();
     }
     drawCount += drawIncrement;
+    floatCount += floatIncrement;
+    if ((drawCount - 1) == loopLength) {
+        floatCount = 0;
+    }
 }
 
 function keyPressed() {
