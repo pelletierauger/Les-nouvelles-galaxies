@@ -1,7 +1,7 @@
 let looping = false;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
-let fileName = "/Volumes/Volumina/frames/vortex/travelling-oak-3-slow/sketch";
+let fileName = "/Volumes/Volumina\ 1/frames/vortex/travelling-oak-3-slow-greener/sketch";
 let maxFrames = 15000;
 let gl;
 let time;
