@@ -973,6 +973,11 @@ float map(float value, float min1, float max1, float min2, float max2) {
         // y += 1. * sin(t * 5.);
         x *= 2.5;
         y *= 2.5;
+        float xx = x * pow(cos(x * cos(x * 100. * y) * sin(y * 10.)), 40.) * 1.5;
+        x = mix(x, xx, map(sin(t * 40.), -1., 1., 0., 1.));
+        // x *= map(sin(t * 40.), -1., 1., 1., 2.5);
+        // y *= map(sin(t * 40.), -1., 1., 1., 2.5);
+        
         // x += cos(t * 1e18) * 1.;
         // y += sin(t * 1e18) * 1.;
 //         float x = cos(i) * i * 1e-5 * 2.;
