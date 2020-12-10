@@ -979,8 +979,8 @@ float map(float value, float min1, float max1, float min2, float max2) {
         float xx = x + cos(y * 1. * sin((100000. + y) * 1e2)) * 2.;
                 // x = mix(x, xx, map(sin(t * 1. * sin(t * 2.)), -1., 1., 0., 1.));
         float yy = y + cos(x * 10. * sin((100000. + x) * 1e1)) * 2.;
-        x = mix(x, xx, 0.2);
-        // y = mix(y, yy, 0.2);
+        // x = mix(x, xx, 0.2);
+        y = mix(y, yy, 0.2);
         // y *= map(sin(t * 40.), -1., 1., 1., 2.5);
         vec2 v = vec2(x, y) * vec2(2.0, 1.25);
         // x += cos(t * 1e18) * 1.;
