@@ -976,16 +976,18 @@ float map(float value, float min1, float max1, float min2, float max2) {
         // float xx = x + pow(cos(x * cos(x. * y) * sin(y * 10.)), 1.);
         // x = mix(x, xx, map(sin(t * 40.), * 100 -1., 1., 0., 1.));
         // x *= map(sin(t * 40.), -1., 1., 1., 2.5);
-        float xx = x + cos(y * 10. * sin((1000000. + y) * 1e1)) * 2.;
+        float xx = x + cos(y * 1. * sin((100000. + y) * 1e2)) * 2.;
                 // x = mix(x, xx, map(sin(t * 1. * sin(t * 2.)), -1., 1., 0., 1.));
-        // x = mix(x, xx, 0.2);
+        float yy = y + cos(x * 10. * sin((100000. + x) * 1e1)) * 2.;
+        x = mix(x, xx, 0.2);
+        // y = mix(y, yy, 0.2);
         // y *= map(sin(t * 40.), -1., 1., 1., 2.5);
-        
+        vec2 v = vec2(x, y) * vec2(2.0, 1.25);
         // x += cos(t * 1e18) * 1.;
         // y += sin(t * 1e18) * 1.;
 //         float x = cos(i) * i * 1e-5 * 2.;
 //         float y = sin(i) * i * 1e-5 * 2.;
-        gl_Position = vec4(x * 0.55, y, 0.0, 1.0);
+        gl_Position = vec4(v.x * 0.55, v.y, 0.0, 1.0);
 //         center = vec2(gl_Position.x, gl_Position.y);
 //         center = 512.0 + center * 512.0;
 //         myposition = vec2(gl_Position.x, gl_Position.y);
