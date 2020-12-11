@@ -958,36 +958,23 @@ float map(float value, float min1, float max1, float min2, float max2) {
 }
 // 
     void main(void) {
-        float t = time * 2e-3;
+        float t = time * 1e-2;
         float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
         float i = vertexID * 1e-1;
-        float x = cos(i + sin(i * 1e-4 + i * 1e-4)) * i * 1e-5;
-        float y = sin(i + sin(i * 1e-4 + i * 1e-4)) * i * 1e-5;
-        x += sin(x * 0.25 * sin(t * 1e1) * sin(i * 3. + x * 0.5e2) * sin(x * 1e2)) * 0.75;
-        y += sin(y * 0.25 * sin(t * 1e1) * sin(i * 3. + x * 0.5e2) * sin(x * 1e2)) * 0.75;
+        float x = cos(i * 0.5e1 * 0.01) * pow(i, 4.) * 8e-16;
+        float y = sin(i * 0.5e1 * 0.01) * pow(i, 4.) * 8e-16;
+        x += cos(x * 1e-2) + cos(i * 269. * tan(i * 4e-4)) * 3.;
+        y += sin(y * 1e-2) + sin(i * 269. * tan(i * 4e-4)) * 3.;
 //         x *= 0.25 * 44.5;
 //         y *= 0.25 * 44.5;
-        x += cos(t * 10.75) * i * 0.000005;
-        y += sin(t * 10.75) * i * 0.000005;
-        // x += 1. * cos(t * 5.);
-        // y += 1. * sin(t * 5.);
-        x *= 2.5;
-        y *= 2.5;
-        // float xx = x + pow(cos(x * cos(x. * y) * sin(y * 10.)), 1.);
-        // x = mix(x, xx, map(sin(t * 40.), * 100 -1., 1., 0., 1.));
-        // x *= map(sin(t * 40.), -1., 1., 1., 2.5);
-        float xx = x + cos(y * 1. * sin((100000. + y) * 1e2)) * 2.;
-                // x = mix(x, xx, map(sin(t * 1. * sin(t * 2.)), -1., 1., 0., 1.));
-        float yy = y + cos(x * 10. * sin((100000. + x) * 1e1)) * 2.;
-        // x = mix(x, xx, 0.2);
-        y = mix(y, yy, 0.2);
-        // y *= map(sin(t * 40.), -1., 1., 1., 2.5);
-        vec2 v = vec2(x, y) * vec2(2.0, 1.25);
-        // x += cos(t * 1e18) * 1.;
-        // y += sin(t * 1e18) * 1.;
+        x += cos(t * 0.25e1) * i * 0.0005;
+        y += sin(t * 0.25e1) * i * 0.0005;
+                x -= 1.;
+        x *= 0.0625 * map(sin(t), -1., 1., 0.0625 * 0.5sa, 4.);
+        y *= 0.0625 * map(sin(t), -1., 1., 0.0625 * 0.5sa, 4.);
 //         float x = cos(i) * i * 1e-5 * 2.;
 //         float y = sin(i) * i * 1e-5 * 2.;
-        gl_Position = vec4(v.x * 0.55, v.y, 0.0, 1.0);
+        gl_Position = vec4(x * 0.58, y, 0.0, 1.0);
 //         center = vec2(gl_Position.x, gl_Position.y);
 //         center = 512.0 + center * 512.0;
 //         myposition = vec2(gl_Position.x, gl_Position.y);
@@ -1000,7 +987,6 @@ float map(float value, float min1, float max1, float min2, float max2) {
 `;
 newFlickeringVert.fragText = `
     // beginGLSL
-   // beginGLSL
     precision mediump float;
 //     varying vec2 myposition;
 //     varying vec2 center;
@@ -1029,13 +1015,10 @@ newFlickeringVert.fragText = `
         alpha = smoothstep(0.05 / (0.9 + alph), 0.000125, dist_squared) * 0.49;
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
-        gl_FragColor = vec4(1.0, 0.4 - dist_squared, 0.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 1.25;
-//         gl_FragColor = gl_FragColor.gbga;
-        gl_FragColor.rgb = vec3(1.0) - gl_FragColor.rgb;
-             gl_FragColor = gl_FragColor.grba;
+        gl_FragColor = vec4(0.0, 0.6 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 0.65;
+        // gl_FragColor = gl_FragColor.brba;
 //         gl_FragColor.g *= 0.525;
-        gl_FragColor.b *= 0.5;
-        // gl_FragColor.g += 0.4;
+//         gl_FragColor.b *= 0.0125;
         
     }
     // endGLSL
