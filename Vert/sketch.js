@@ -34,7 +34,7 @@ function setup() {
     socket = io.connect('http://localhost:8080');
     // socket.on('receiveOSC', receiveOSC);
     pixelDensity(1);
-    cnvs = createCanvas(windowWidth, windowWidth * 9 / 16, WEBGL);
+    cnvs = createCanvas(windowWidth, windowHeight, WEBGL);
     canvasDOM = document.getElementById('defaultCanvas0');
     // noCanvas();
     // cnvs = document.getElementById('my_Canvas');
@@ -95,8 +95,8 @@ draw = function() {
     gl.clear(gl.COLOR_BUFFER_BIT);
     // We bind the framebuffer...
     bindFrameBuffer(texture, framebuf);
-    gl.viewport(0, 0, 1280, 720);
-
+    gl.viewport(0, 0, cnvs.width * 1, cnvs.height * 1);
+    // gl.viewport(0, 0, 1280, 720);
     // draw the scene, presumably on a framebuffer
     let currentProgram = getProgram("pulsar-fog");
     gl.useProgram(currentProgram);
@@ -251,7 +251,8 @@ draw = function() {
 
     // unbind the buffer and draw the resulting texture....
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-    gl.viewport(0, 0, 1280, 720);
+    // gl.viewport(0, 0, 1280, 720);
+    gl.viewport(0, 0, cnvs.width * 1, cnvs.height * 1);
 
     gl.bindTexture(gl.TEXTURE_2D, texture);
 
