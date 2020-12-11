@@ -963,12 +963,14 @@ float map(float value, float min1, float max1, float min2, float max2) {
         float i = vertexID * 1e-1;
         float mT = map(sin(t * 0.25), -1., 1., 1.0, 2.);
         float invI = (1.0 - (i * 1e-4));
-        float x = tan(cos(i * 0.00001 * mT) * 5. * 0.01 * i) * pow(i, 4.5) * 8e-16;
-        float y = tan(sin(i * 0.00001 * mT) * 5. * 0.01 * i) * pow(i, 4.5) * 8e-16;
+        float x = tan(cos(i * 0.00001 * mT) * 5. * 0.01 * i) * pow(i, 4.) * 8e-16;
+        float y = tan(sin(i * 0.00001 * mT) * 5. * 0.01 * i) * pow(i, 4.) * 8e-16;
         x += cos(i * 2069. * tan(i * 4e-8)) * invI * 25.;
         y += sin(i * 2069. * tan(i * 4e-8)) * invI * 25.;
 //         x *= 0.25 * 44.5;
 //         y *= 0.25 * 44.5;
+        // x += -100. * cos(t * 1.85);
+        // y += -100. * cos(t * 1.85);
         x += cos(t * 1.85) * i * 0.008;
         y += sin(t * 1.85) * i * 0.008;
                 x -= 1.;
