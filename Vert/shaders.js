@@ -970,8 +970,8 @@ float map(float value, float min1, float max1, float min2, float max2) {
         x += cos(t * 0.25e1) * i * 0.0005;
         y += sin(t * 0.25e1) * i * 0.0005;
                 x -= 1.;
-        x *= 0.0625 * map(sin(t), -1., 1., 0.0625 * 0.5sa, 4.);
-        y *= 0.0625 * map(sin(t), -1., 1., 0.0625 * 0.5sa, 4.);
+        x *= 0.0625 * map(sin(t), -1., 1., 0.0625 * 0.5, 4.);
+        y *= 0.0625 * map(sin(t), -1., 1., 0.0625 * 0.5, 4.);
 //         float x = cos(i) * i * 1e-5 * 2.;
 //         float y = sin(i) * i * 1e-5 * 2.;
         gl_Position = vec4(x * 0.58, y, 0.0, 1.0);
