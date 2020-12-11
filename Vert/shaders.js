@@ -962,11 +962,14 @@ float map(float value, float min1, float max1, float min2, float max2) {
         float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
         float i = vertexID * 1e-1;
         float mT = map(sin(t * 0.25), -1., 1., 1.0, 2.);
+        float mT2 = map(sin(t * 10.), -1., 1., 0., 0.1);
         float invI = (1.0 - (i * 1e-4));
-        float x = tan(cos(i * 0.00001 * mT) * 5. * 0.01 * i) * pow(i, 4.) * 8e-16;
-        float y = tan(sin(i * 0.00001 * mT) * 5. * 0.01 * i) * pow(i, 4.) * 8e-16;
+        float x = tan(cos(i * 0.00001 * mT) * 5. * 0.01 * i) * pow(i, 4.2) * 8e-16;
+        float y = tan(sin(i * 0.00001 * mT) * 5. * 0.01 * i) * pow(i, 4.2) * 8e-16;
         x += cos(i * 2069. * tan(i * 4e-8)) * invI * 25.;
         y += sin(i * 2069. * tan(i * 4e-8)) * invI * 25.;
+        x = mix(x, x + cos(i * 2e6 * tan(i * 4e-8) + sin(t) * 1e3) * 250., mT2);
+        y = mix(y, y + sin(i * 2e6 * tan(i * 4e-8) + sin(t) * 1e3) * 250., mT2);
 //         x *= 0.25 * 44.5;
 //         y *= 0.25 * 44.5;
         // x += -100. * cos(t * 1.85);
@@ -1011,11 +1014,11 @@ newFlickeringVert.fragText = `
         vec2 pos = gl_PointCoord - vec2(0.5, 0.5);
                 float dist_squared = dot(pos, pos);
         float alpha;
-        if (dist_squared < 0.25) {
-            alpha = ALPHA;
-        } else {
-            alpha = 0.0;
-        }
+        // if (dist_squared < 0.25) {
+        //     alpha = ALPHA;
+        // } else {
+        //     alpha = 0.0;
+        // }
         alpha = smoothstep(0.05 / (0.9 + alph), 0.000125, dist_squared) * 0.49;
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
