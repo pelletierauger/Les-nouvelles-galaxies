@@ -959,29 +959,22 @@ float map(float value, float min1, float max1, float min2, float max2) {
 // 
     void main(void) {
         float t = time * 1e-2;
-        float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
+        float osc = map(sin(t * 4e-1), -1., 1., 3.9, 4.5);
         float i = vertexID * 1e-1;
-        float mT = map(sin(t * 0.25), -1., 1., 1.0, 2.);
-        float mT2 = map(sin(t * 10.), -1., 1., 0., 0.1);
-        float invI = (1.0 - (i * 1e-4));
-        float x = tan(cos(i * 0.00001 * mT) * 5. * 0.01 * i) * pow(i, 4.2) * 8e-16;
-        float y = tan(sin(i * 0.00001 * mT) * 5. * 0.01 * i) * pow(i, 4.2) * 8e-16;
-        x += cos(i * 2069. * tan(i * 4e-8)) * invI * 25.;
-        y += sin(i * 2069. * tan(i * 4e-8)) * invI * 25.;
-        x = mix(x, x + cos(i * 2e6 * tan(i * 4e-8) + sin(t) * 1e3) * 250., mT2);
-        y = mix(y, y + sin(i * 2e6 * tan(i * 4e-8) + sin(t) * 1e3) * 250., mT2);
+        float x = cos(i * 0.5e-1 * i) * pow(i, osc) * 8e-16;
+        float y = sin(i * 0.5e-1 * i) * pow(i, osc) * 8e-16;
+        x += cos(i * 4e-1) * (1.0 - (i * 1e-4)) * 25.;
+        y += sin(i * 4e-1) * (1.0 - (i * 1e-4)) * 25.;
 //         x *= 0.25 * 44.5;
 //         y *= 0.25 * 44.5;
-        // x += -100. * cos(t * 1.85);
-        // y += -100. * cos(t * 1.85);
-        x += cos(t * 1.85) * i * 0.008;
-        y += sin(t * 1.85) * i * 0.008;
+        x += cos(t * 0.5) * i * 0.0018;
+        y += sin(t * 0.5) * i * 0.0018;
                 x -= 1.;
-        x *= 0.0625 * 0.75 * map(sin(t), -1., 1., 0.65, 0.5) * 0.5;
-        y *= 0.0625 * 0.75 * map(sin(t), -1., 1., 0.65, 0.5) * 0.5;
+        x *= 0.0625 * 0.75 * map(sin(t), -1., 1., 0.125 * 1.95, 0.5);
+        y *= 0.0625 * 0.75 * map(sin(t), -1., 1., 0.125 * 1.95, 0.5);
 //         float x = cos(i) * i * 1e-5 * 2.;
 //         float y = sin(i) * i * 1e-5 * 2.;
-        gl_Position = vec4(x * 0.65, y, 0.0, 1.0);
+        gl_Position = vec4(x * 0.58, y, 0.0, 1.0);
 //         center = vec2(gl_Position.x, gl_Position.y);
 //         center = 512.0 + center * 512.0;
 //         myposition = vec2(gl_Position.x, gl_Position.y);
@@ -1014,11 +1007,11 @@ newFlickeringVert.fragText = `
         vec2 pos = gl_PointCoord - vec2(0.5, 0.5);
                 float dist_squared = dot(pos, pos);
         float alpha;
-        // if (dist_squared < 0.25) {
-        //     alpha = ALPHA;
-        // } else {
-        //     alpha = 0.0;
-        // }
+        if (dist_squared < 0.25) {
+            alpha = ALPHA;
+        } else {
+            alpha = 0.0;
+        }
         alpha = smoothstep(0.05 / (0.9 + alph), 0.000125, dist_squared) * 0.49;
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
