@@ -749,7 +749,7 @@ void main() {
 //     gl_FragColor.r = gl_FragColor.r - rando * 0.1;
     // gl_FragColor = gl_FragColor.grba;
     gl_FragColor.rgb *= 1.;
-        gl_FragColor = gl_FragColor.brga;
+        gl_FragColor = gl_FragColor.rgba;
         gl_FragColor.r *= 0.5;
         gl_FragColor.b *= 1.25;
     gl_FragColor.rgb *= 0.75;
@@ -980,7 +980,7 @@ float map(float value, float min1, float max1, float min2, float max2) {
                 // x = mix(x, xx, map(sin(t * 1. * sin(t * 2.)), -1., 1., 0., 1.));
         float yy = y + cos(x * 10. * sin((100000. + x) * 1e1)) * 2.;
         // x = mix(x, xx, 0.2);
-        y = mix(y, yy, 0.2);
+        // y = mix(y, yy, 0.2);
         // y *= map(sin(t * 40.), -1., 1., 1., 2.5);
         vec2 v = vec2(x, y) * vec2(2.0, 1.25);
         // x += cos(t * 1e18) * 1.;
@@ -1019,7 +1019,7 @@ newFlickeringVert.fragText = `
         // uv = uv * 1.0;
         float ALPHA = 0.75;
         vec2 pos = gl_PointCoord - vec2(0.5, 0.5);
-                float dist_squared = dot(pos, pos);
+                float dist_squared = dot(pos, pos) * 4.;
         float alpha;
         if (dist_squared < 0.25) {
             alpha = ALPHA;
@@ -1028,13 +1028,14 @@ newFlickeringVert.fragText = `
         }
         alpha = smoothstep(0.05 / (0.9 + alph), 0.000125, dist_squared) * 0.49;
         float rando = rand(pos);
+        float ds = dist_squared;
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
-        gl_FragColor = vec4(1.0, 0.4 - dist_squared, 0.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 1.25;
+        gl_FragColor = vec4(0.6, 0.05 + ds, 0.1, ((0.25 - dist_squared - (rando * 0.1)))) * 1.25;
 //         gl_FragColor = gl_FragColor.gbga;
-        gl_FragColor.rgb = vec3(1.0) - gl_FragColor.rgb;
-             gl_FragColor = gl_FragColor.grba;
+        // gl_FragColor.rgb = vec3(1.0) - gl_FragColor.rgb;
+             // gl_FragColor = gl_FragColor.grba;
 //         gl_FragColor.g *= 0.525;
-        gl_FragColor.b *= 0.5;
+        // gl_FragColor.b *= 0.5;
         // gl_FragColor.g += 0.4;
         
     }
