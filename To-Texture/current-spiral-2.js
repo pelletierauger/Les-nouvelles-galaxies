@@ -489,7 +489,7 @@ drawPulsar = function(selectedProgram) {
     let fy = 1;
     let x = 0;
     let y = 0;
-    let num = 30000;
+    let num = 10000;
 
     function ro(a, l, x, y, h) {
         return {

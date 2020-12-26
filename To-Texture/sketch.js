@@ -22,7 +22,7 @@ let namedPrograms = {};
 // a shader variable
 let texcoordShader;
 let dotsVBuf, bgVBuf;
-let texture, texture2, framebuf, framebuf2;
+let texture, texture2, framebuf, framebuf2, vbuffer;
 let vb;
 
 function setup() {
@@ -65,7 +65,7 @@ function setup() {
     // gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
     // Set the view port
     gl.viewport(0, 0, cnvs.width * 1, cnvs.height * 1);
-    frameRate(20);
+    frameRate(30);
     // background(0);
     // fill(255, 50);
     noStroke();
@@ -84,6 +84,7 @@ function setup() {
     framebuf = createFrameBuffer(texture);
     texture2 = createTexture();
     framebuf2 = createFrameBuffer(texture2);
+    vbuffer = gl.createBuffer();
 }
 
 draw = function() {
@@ -117,7 +118,7 @@ draw = function() {
     let vertices = new Float32Array([-1, 1, 1, 1, 1, -1, // Triangle 1
         -1, 1, 1, -1, -1, -1 // Triangle 2
     ]);
-    let vbuffer = gl.createBuffer();
+    
     gl.bindBuffer(gl.ARRAY_BUFFER, vbuffer);
     gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
     let itemSize = 2;
@@ -237,11 +238,11 @@ draw = function() {
     // gl.drawArrays(gl.TRIANGLES, 0, 6);
 
 
-    currentProgram = getProgram("new-flickering-dots");
-    gl.useProgram(currentProgram);
+    // currentProgram = getProgram("new-flickering-dots");
+    // gl.useProgram(currentProgram);
     // drawAlligatorQuiet(currentProgram);
     // drawSwirl(currentProgram);
-    drawPulsar(currentProgram);
+    // drawPulsar(currentProgram);
 
 
     // unbind the buffer and draw the resulting texture....
@@ -261,7 +262,7 @@ draw = function() {
     vertices = new Float32Array([-1, 1, 1, 1, 1, -1, // Triangle 1
         -1, 1, 1, -1, -1, -1 // Triangle 2
     ]);
-    vbuffer = gl.createBuffer();
+    // vbuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vbuffer);
     gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
     itemSize = 2;
