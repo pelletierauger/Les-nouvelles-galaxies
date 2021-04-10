@@ -958,19 +958,19 @@ float map(float value, float min1, float max1, float min2, float max2) {
 }
 // 
     void main(void) {
-        float t = time * 0.5e-3;
+        float t = time * 2e-4;
         float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
         float i = vertexID * 1e-1;
-        float x = tan(cos(i * 1.5e2) + tan(i + i * osc) * 1e2 * i) * i * 16e-3;
-        float y = tan(sin(i * 1.5e2) + tan(i + i * osc) * 1e2 * i) * i * 16e-3;
-        // x += sin(tan(tan(i * 1e-4)) * 1e-1 * sin(t * 2e6)) * 1.5;
-        // y += cos(tan(tan(i * 1e-4)) * 1e-1 * sin(t * 2e6)) * 1.5;
+        float x = cos(tan(i * 1.5e-7) * 1e2 * i) * i * 16e-3;
+        float y = sin(tan(i * 1.5e-7) * 1e2 * i) * i * 16e-3;
+        x += tan(cos(i * 1e2 * sin(i * 1e3)) * 1e2) * 1000.5;
+        y += tan(sin(i * 1e2 * sin(i * 1e3)) * 1e2) * 1000.5;
 //         x *= 0.25 * 44.5;
 //         y *= 0.25 * 44.5;
-        x += cos(t * 2.75e1) * i * 0.25;
-        y += sin(t * 2.75e1) * i * 0.25;
-        // x += 1000. * cos(t * 2.) * 5.;
-        // y += 1000. * sin(t * 2.) * 5.;
+        x += cos(t * 0.75e2) * i * 0.0625;
+        y += sin(t * 0.75e2) * i * 0.0625;
+        // x += 1000. * cos(t * 2e1) * 1.;
+        // y += 1000. * sin(t * 2e1) * 1.;
         x *= 1.25e-3;
         y *= 1.25e-3;
 //         float x = cos(i) * i * 1e-5 * 2.;
@@ -1017,9 +1017,11 @@ newFlickeringVert.fragText = `
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.4 - dist_squared, 0.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 1.25;
-        gl_FragColor = gl_FragColor.grba;
+//         gl_FragColor = gl_FragColor.gbga;
+        gl_FragColor.rgb = vec3(1.0) - gl_FragColor.rgb;
+             gl_FragColor = gl_FragColor.grba;
 //         gl_FragColor.g *= 0.525;
-//         gl_FragColor.b *= 0.0125;
+        gl_FragColor.b *= 0.5;
         
     }
     // endGLSL
