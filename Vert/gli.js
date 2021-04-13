@@ -20,7 +20,7 @@ void main() {
    // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
    // gl_FragColor.r = gl_FragColor.r * 0.5;
    gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.025)) * 1.5;
-    gl_FragColor.rgb = gl_FragColor.rrr;
+    gl_FragColor.rgb = gl_FragColor.ggg;
 }
 // endGLSL
 `;
@@ -105,7 +105,7 @@ void main() {
    // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
    // gl_FragColor.r = gl_FragColor.r * 0.5;
    gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.025)) * 1.5;
-                gl_FragColor.rgb = gl_FragColor.rrr * 1.;
+                gl_FragColor.rgb = gl_FragColor.ggg * 1.;
 }
 // endGLSL
 `;
@@ -135,11 +135,13 @@ void main() {
     // vec2 fuzz = v_texcoord + (pow(cos(uv.y * uv.x * 1e18), 0.0125) + sin(uv.x * 1e-2 + tan(uv.y * t * 10.))) * 1. * floor(sin(uv.y * 1e-3 * ((floor(sin(t * 1e4 * sin(t * 1e4))))))) + sin(uv.y * 1e12 + uv.y * 1e-2 * sin(20. * 1e-10) + tan(t * 1e-10)) * 0.0625 * 1e-5;
     // vec2 pos = mix(v_texcoord, fuzz, sin(cos(t * uv.y * 1e2) * t * 1e4));
     gl_FragColor = texture2D(u_texture, v_texcoord);
+        // gl_FragColor = texture2D(u_texture, v_texcoord + (pow(cos(uv.y * uv.x * 1e18), 0.0125) + sin(uv.x * 1e-2 + tan(uv.y * t * 1e10))) * 2e-2 * floor(sin(uv.y * 1e2 * sin(t * 1. * (floor(sin(t * 1e4 * sin(t * 1e3))))))) * 1. + sin(uv.y * 1e4 + uv.y * 1e6 * sin(t * 1e-10) + tan(t * 1e-10)) * 0.0625 * 1e-5);
        // gl_FragColor = texture2D(u_texture, v_texcoord + (pow(cos(uv.y * uv.x * 1e18), 0.0125) + sin(uv.x * 1e-2 + tan(uv.y * t * 1.))) * 2. * floor(sin(uv.y * 1e-3 * ((floor(sin(t * 1e4 * sin(t * 1e5))))))) + sin(uv.y * 1e12 + uv.y * 1e-2 * sin(20. * 1e-10) + tan(t * 1e-10)) * 0.0625 * 1e-5);
    // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
    // gl_FragColor.r = gl_FragColor.r * 0.5;
-   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.05)) * 1.75;
+   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.05)) * 1.5;
     gl_FragColor.r += 0.3;
+    gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.ggg, 0.25);
                 // gl_FragColor.rgb += gl_FragColor.rgb * gl_FragColor.rrr * 0.125;
 }
 // endGLSL
