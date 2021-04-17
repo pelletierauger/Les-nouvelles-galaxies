@@ -976,7 +976,7 @@ float map(float value, float min1, float max1, float min2, float max2) {
         y *= 2.5e-3;
 //         float x = cos(i) * i * 1e-5 * 2.;
 //         float y = sin(i) * i * 1e-5 * 2.;
-        gl_Position = vec4(y * 0.35e-1 * 1.5, x * 0.58 * 1e-1 * 1.5 - 0.3, 0.0, 1.0);
+        gl_Position = vec4(y * 0.35e-1 * 1.42, x * 0.58 * 1e-1 * 1.5 - 0.3, 0.0, 1.0);
 //         center = vec2(gl_Position.x, gl_Position.y);
 //         center = 512.0 + center * 512.0;
 //         myposition = vec2(gl_Position.x, gl_Position.y);
