@@ -963,9 +963,9 @@ float map(float value, float min1, float max1, float min2, float max2) {
         float i = vertexID * 1e-1;
         float x = cos(2e-1 * i) * i * 5e-2;
         float y = sin(2e-1 * i) * i * 5e-2;
-        i = i + 1e4 * sin(x * y * 1e-5);
-        x += sin(cos(i * 6900. * tan(i * 0.5e-3)) * 1e4 * sin(t * 0.5e-2)) * 5000.5;
-        y += sin(sin(i * 6900. * tan(i * 0.5e-3)) * 1e4 * sin(t * 0.5e-2)) * 5000.5;
+        i = i + 1e4 * sin(i * x * 1e-7);
+        x += sin(cos(i * 1690. * tan(i * 0.5e-3)) * 1e4 * sin(t * 0.5e-2)) * 5000.5;
+        y += sin(sin(i * 1690. * tan(i * 0.5e-3)) * 1e4 * sin(t * 0.5e-2)) * 5000.5;
 //         x *= 0.25 * 44.5;
 //         y *= 0.25 * 44.5;
         x += cos(t * 2.75e2) * i * 0.015;
