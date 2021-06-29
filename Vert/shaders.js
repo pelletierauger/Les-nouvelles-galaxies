@@ -969,10 +969,12 @@ float map(float value, float min1, float max1, float min2, float max2) {
         float y = sin(pow(i, sin(i * 2e5) * 1.0) * 20e1) * i * 2e-2;
         x += tan(pow(x, -1.) / 4e-3 * sin(cos(x * 1e4))) * 1500.5;
         y += tan(pow(x, -1.) / 4e-3 * sin(cos(x * 1e4))) * 1500.5;
+        x = tan(t * 1e2 + cos(tan(x * 1e10 * t) * 1e2)) * 0.25e4;
+        y = tan(t * 1e2 + sin(tan(y * 1e10 * t) * 1e2)) * 0.25e4;
 //         x *= 0.25 * 44.5;
 //         y *= 0.25 * 44.5;
-        x += cos(t * 1.25e2) * i * 0.15;
-        y += sin(t * 1.25e2) * i * 0.15;
+        x += cos(t * 2.25e2) * i * 0.05;
+        y += sin(t * 2.25e2) * i * 0.05;
         // x += 4000. * cos(t * 16.);
         // y += 4000. * sin(t * 16.);
         x *= 2.5e-4;
