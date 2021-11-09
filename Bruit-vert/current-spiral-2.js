@@ -875,7 +875,7 @@ drawSwirl = function(selectedProgram) {
         let xo = 0;
         let yo = 0;
         //         let zo = (openSimplex.noise2D(i, (t + i) * 1e2 + 100)) * 5;
-        vertices.push((x + xo * 6.5) * 1.5 * 0.15, (y + yo * 6.5) * 0.8 * 0.15 * 1.1, 14.0, al);
+        vertices.push((x + xo * 6.5) * 1.5 * 0.15, (y + yo * 6.5) * 0.8 * 0.15 * 1.1, 14.0 * 3, al);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();

@@ -1,4 +1,4 @@
-let looping = true;
+let looping = false;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
 let fileName = "./frames/alligator/alligator";
@@ -22,8 +22,8 @@ fileName = "./frames/pink-pulsar/pink-pulsar";
 fileName = "/Volumes/Volumina/frames/lueurs/pink-pulsar/pink-pulsar"
 fileName = "/Volumes/Volumina/frames/lueurs/swirl-quiet/swirl-quiet"
 fileName = "/Volumes/Volumina/frames/lueurs/alligator-quiet/alligator-quiet"
-fileName = "/Volumes/Volumina/frames/lueurs/swirl-quiet-2k/swirl-quiet-2k"
-let maxFrames = 15000;
+fileName = "/Volumes/Volumina/frames/phase-2/swirl-quiet-2k/swirl-quiet-2k"
+let maxFrames = 1740;
 // maxFrames = 925;
 // maxFrames = 3000;
 // maxFrames = 1300;
@@ -33,8 +33,7 @@ let gl;
 let time;
 let positive = true;
 let intensity;
-let drawCount = 1110;
-drawCount = 0;
+let drawCount = 0;
 let drawIncrement = 1;
 let vertexBuffer;
 let vertices = [];
@@ -52,7 +51,7 @@ let dotsVBuf, bgVBuf;
 function setup() {
     socket = io.connect('http://localhost:8080');
     // socket.on('receiveOSC', receiveOSC);
-    pixelDensity(1);
+    pixelDensity(2);
     cnvs = createCanvas(windowWidth, windowWidth * 9 / 16, WEBGL);
     canvasDOM = document.getElementById('defaultCanvas0');
     // noCanvas();
@@ -88,8 +87,8 @@ function setup() {
     // gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
     // gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
     // Set the view port
-    gl.viewport(0, 0, cnvs.width * 1, cnvs.height * 1);
-    frameRate(20);
+    gl.viewport(0, 0, cnvs.width * 2, cnvs.height * 2);
+    frameRate(2);
     // background(0);
     // fill(255, 50);
     noStroke();
@@ -104,6 +103,21 @@ function setup() {
     initializeShaders();
     createWhiteDots();
     time = gl.getUniformLocation(getProgram("pulsar-fog"), "time");
+
+    if (batchExport) {
+        drawCount = batchMin;
+        exporting = true;
+        redraw();
+        songPlay = false;
+    }
+    socket.on('getNextImage', function(data) {
+        if (drawCount <= batchMax) {
+            // redraw();
+            window.setTimeout(function() {
+                redraw();
+            }, 250);
+        }
+    });
 }
 
 // draw = function() {
@@ -174,8 +188,8 @@ draw = function() {
     // currentProgram = getProgram("faster-dots");
     gl.useProgram(currentProgram);
     // drawPulsar(currentProgram);
-    drawAlligatorQuiet(currentProgram);
-    // drawSwirl(currentProgram);
+    // drawAlligatorQuiet(currentProgram);
+    drawSwirl(currentProgram);
     // if (drawCount % 100 == 0) {
     //     mS = random(0.8, 1);
     // }
@@ -220,7 +234,7 @@ draw = function() {
     //     drawBG();
     drawCount += drawIncrement;
     // if (exporting && frameCount < maxFrames && drawCount > 1113) {
-    if (exporting && frameCount < maxFrames && drawCount > 1449) {
+    if (exporting) {
         frameExport();
     }
 }
