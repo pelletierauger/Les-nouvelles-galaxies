@@ -831,42 +831,37 @@ textureShader.vertText = `
 attribute vec3 a_position;
 attribute vec2 a_texcoord;
 varying vec2 v_texcoord;
-
 void main() {
   // Multiply the position by the matrix.
   vec4 positionVec4 = vec4(a_position, 1.0);
   // gl_Position = a_position;
   positionVec4.xy = positionVec4.xy * 2.0 - 1.0;
   gl_Position = positionVec4;
-
   // Pass the texcoord to the fragment shader.
   v_texcoord = a_texcoord;
 }
 `;
-
 textureShader.fragText = `
+// 
 precision mediump float;
-
 // Passed in from the vertex shader.
 uniform float time;
 varying vec2 v_texcoord;
-
 // The texture.
 uniform sampler2D u_texture;
-
 float rand(vec2 co){
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(time)));
 }
-
 void main() {
     vec2 uv = vec2(gl_FragCoord.xy) / vec2(1600, 1600);
    float rando = rand(vec2(uv.x, uv.y));
    gl_FragColor = texture2D(u_texture, v_texcoord);
    // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
    // gl_FragColor.r = gl_FragColor.r * 0.5;
-   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.025)) * 1.5;
+   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.15)) * 1.5;
 }
 `;
+textureShader.init();
 
 
 let processorShader = new ShaderProgram("process");
@@ -961,17 +956,17 @@ float map(float value, float min1, float max1, float min2, float max2) {
         float t = time * 1e-2;
         float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
         float i = vertexID * 1e-1;
-        float x = cos(i * 0.5e1 * sin(t * 0.001) * 0.6) * pow(i, 5.) * 8e-16;
-        float y = sin(i * 0.5e1 * sin(t * 0.001) * 0.6) * pow(i, 5.) * 8e-16;
-        x += cos(x * 1e-3) + cos(i * 9. * tan(i * 4e-4)) * 250.6;
-        y += sin(y * 1e-3) + sin(i * 9. * tan(i * 4e-4)) * 250.6;
+        float x =cos((i * 0.5e1 * sin(t * 0.0002) * 0.2)) * pow(i, 5.0) * 1e-16;
+        float y =sin((i * 0.5e1 * sin(t * 0.0002) * 0.2)) * pow(i, 5.0) * 1e-16;
+        x += cos(tan(i * 1. * tan(i * 4e5))) * 250.6;
+        y += cos(tan(i * 1. * tan(i * 4e5))) * 250.6;
 //         x *= 0.25 * 44.5;
 //         y *= 0.25 * 44.5;
         x += cos(t * 0.25e1) * i * 0.0005;
         y += sin(t * 0.25e1) * i * 0.0005;
                 x -= 1.;
-        x *= 0.00125;
-        y *= 0.00125;
+        x *= 0.0025;
+        y *= 0.0025;
 //         float x = cos(i) * i * 1e-5 * 2.;
 //         float y = sin(i) * i * 1e-5 * 2.;
         gl_Position = vec4(x * 0.57, y, 0.0, 1.0);
@@ -979,7 +974,8 @@ float map(float value, float min1, float max1, float min2, float max2) {
 //         center = 512.0 + center * 512.0;
 //         myposition = vec2(gl_Position.x, gl_Position.y);
         alph = 0.25 * 0.5;
-        gl_PointSize = 1.5 + (sqrt(pow(x, 2.) + pow(y, 2.)) * 2e1);
+        gl_PointSize = 1.5 + (sqrt(pow(x, 2.) + pow(y, 2.)) * 3e1);
+        // gl_PointSize = 10.;
         // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
     }
@@ -1012,7 +1008,7 @@ newFlickeringVert.fragText = `
         } else {
             alpha = 0.0;
         }
-        alpha = smoothstep(0.05 / (0.9 + alph), 0.000125, dist_squared) * 0.49;
+        alpha = smoothstep(0.05 / (0.9 + alph), 0.000125, dist_squared) * 0.1249;
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 0.35;
