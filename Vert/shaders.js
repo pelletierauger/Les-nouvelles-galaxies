@@ -953,13 +953,13 @@ float map(float value, float min1, float max1, float min2, float max2) {
 }
 // 
     void main(void) {
-        float t = time * 1e-2;
+        float t = time * 0.5e-2;
         float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
         float i = vertexID * 1e-1;
         float x =cos((i * 0.5e1 * sin(t * 0.0002) * 0.2)) * pow(i, 5.0) * 1e-16;
         float y =sin((i * 0.5e1 * sin(t * 0.0002) * 0.2)) * pow(i, 5.0) * 1e-16;
-        x += cos(tan(i * 1. * tan(i * 500e5))) * 250.6;
-        y += cos(tan(i * 1. * tan(i * 500e5))) * 250.6;
+        x += cos(tan(i * 1. * tan(i * 500e5 * i * i))) * 250.6;
+        y += cos(tan(i * 1. * tan(i * 500e5 * i * i))) * 250.6;
 //         x *= 0.25 * 44.5;
 //         y *= 0.25 * 44.5;
         x += cos(t * 0.25e1) * i * 0.0005;
@@ -969,18 +969,18 @@ float map(float value, float min1, float max1, float min2, float max2) {
         y *= 0.0025;
         float distance = sqrt(pow(x, 2.) + pow(y, 2.));
         // x *= sin(distance * sin(t * 2.));
-        x *= cos(cos(t * 0.5e1) + cos(distance * 0.1) * 2e1);
-        y *= sin(sin(t * 0.5e1) + cos(distance * 0.1) * 2e1);
+        x *= cos(cos(t * 0.5e1) + cos(distance * 0.01) * 2e1);
+        y *= sin(sin(t * 0.5e1) + cos(distance * 0.01) * 2e1);
         x += cos(t * 0.25e1) * i * 0.00025;
         y += sin(t * 0.25e1) * i * 0.00025;
         //         float x = cos(i) * i * 1e-5 * 2.;
 //         float y = sin(i) * i * 1e-5 * 2.;
-        gl_Position = vec4(x * 0.57 * 0.25, y * 0.25, 0.0, 1.0);
+        gl_Position = vec4(x * 0.57 * 0.25 - 0.5, y * 0.25 - 0.5, 0.0, 1.0);
 //         center = vec2(gl_Position.x, gl_Position.y);
 //         center = 512.0 + center * 512.0;
 //         myposition = vec2(gl_Position.x, gl_Position.y);
         alph = 0.25 * 0.5;
-        gl_PointSize = 1.5 + (distance * 0.2e1);
+        gl_PointSize = (1.5 + (distance * 0.2e1)) * 2.;
         // gl_PointSize = 12.;
         // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
@@ -1017,7 +1017,7 @@ newFlickeringVert.fragText = `
         alpha = smoothstep(0.05 / (0.9 + alph), 0.000125, dist_squared) * 0.1249;
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
-        gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 0.35;
+        gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 0.25;
         // gl_FragColor = gl_FragColor.brba;
 //         gl_FragColor.g *= 0.525;
         gl_FragColor.rgb = gl_FragColor.bbb;

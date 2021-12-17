@@ -33,7 +33,7 @@ vertices = new Float32Array(vertices);
 function setup() {
     socket = io.connect('http://localhost:8080');
     // socket.on('receiveOSC', receiveOSC);
-    pixelDensity(1);
+    // pixelDensity(1);
     cnvs = createCanvas(windowWidth, windowWidth * 9 / 16, WEBGL);
     canvasDOM = document.getElementById('defaultCanvas0');
     // noCanvas();
@@ -95,7 +95,7 @@ draw = function() {
     gl.clear(gl.COLOR_BUFFER_BIT);
     // We bind the framebuffer...
     bindFrameBuffer(texture, framebuf);
-    gl.viewport(0, 0, 1280, 720);
+    gl.viewport(0, 0, 1280 * 2, 720 * 2);
 
     // draw the scene, presumably on a framebuffer
     let currentProgram = getProgram("pulsar-fog");
@@ -251,7 +251,7 @@ draw = function() {
 
     // unbind the buffer and draw the resulting texture....
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-    gl.viewport(0, 0, 1280, 720);
+    gl.viewport(0, 0, 1280 * 2, 720 * 2);
 
     gl.bindTexture(gl.TEXTURE_2D, texture);
 
