@@ -971,8 +971,8 @@ float map(float value, float min1, float max1, float min2, float max2) {
         // x *= sin(distance * sin(t * 2.));
         x *= cos(sin(distance * 1e-2) * 0.125 + cos(distance * 0.1) * 0.1e1);
         y *= sin(sin(distance * 1e-2) * 0.125 + cos(distance * 0.1) * 0.1e1);
-        x += tan(cos(152. * 0.5e1 * i) + distance * i * t* 3e7) * i * 0.25;
-        y += tan(sin(152. * 0.5e1 * i) + distance * i * t* 3e7) * i * 0.25;
+        x += tan(cos(152. * 0.5e1 * i) + distance * i * 4. * 3e7) * i * 0.25;
+        y += tan(sin(152. * 0.5e1 * i) + distance * i * 4. * 3e7) * i * 0.25;
         x += cos(152. * 0.5e-1 * t) * i * 0.25;
         y += sin(152. * 0.5e-1 * t) * i * 0.25;
         //         float x = cos(i) * i * 1e-5 * 2.;
