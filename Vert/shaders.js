@@ -971,11 +971,11 @@ float map(float value, float min1, float max1, float min2, float max2) {
         // x *= sin(distance * sin(t * 2.));
         x *= cos(sin(distance * 1e-2) * 0.125 + cos(distance * 0.1) * 2e1);
         y *= sin(sin(distance * 1e-2) * 0.125 + cos(distance * 0.1) * 2e1);
-        x += cos(t * 0.5e1) * i * 0.005;
-        y += sin(t * 0.5e1) * i * 0.005;
+        x += cos(t * 0.5e1 * i ) * i * 0.25;
+        y += sin(t * 0.5e1 * i ) * i * 0.25;
         //         float x = cos(i) * i * 1e-5 * 2.;
 //         float y = sin(i) * i * 1e-5 * 2.;
-        gl_Position = vec4(x * 0.87 * 0.0625 * 2e-3 - 0.49, y * 0.21 * 2e-3 - 0.5, 0.0, 1.0);
+        gl_Position = vec4(x * 1.67 * 0.0625 * 0.5e-3 - 0.49, y * 0.21 * 0.5e-3 - 0.5, 0.0, 1.0);
 //         center = vec2(gl_Position.x, gl_Position.y);
 //         center = 512.0 + center * 512.0;
 //         myposition = vec2(gl_Position.x, gl_Position.y);
