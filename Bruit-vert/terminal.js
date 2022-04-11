@@ -4,7 +4,7 @@ drawSwirl = function(selectedProgram) {
     for (let i = 0; i < num; i++) {
         let x = Math.cos(i) * i * 1e-2;
         let y = Math.sin(i) * i * 1e-2;
-        vertices.push(x * (9 / 16), y, 54.0, 1);
+        vertices.push(x * (9 / 16), y, 120.0, 1);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
@@ -12,6 +12,7 @@ drawSwirl = function(selectedProgram) {
     // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     // Pass the vertex data to the buffer
     // Unbind the buffer
+    gl.uniform1f(time, drawCount);
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     /*======== Associating shaders to buffer objects ========*/
     // Bind vertex buffer object
@@ -59,6 +60,7 @@ roundedSquare.vertText = `
 roundedSquare.fragText = `
     // beginGLSL
     precision mediump float;
+    uniform float time;
     varying vec2 myposition;
     varying vec2 center;
     varying float alph;
@@ -68,7 +70,7 @@ roundedSquare.fragText = `
     }
     float roundedRectangleFlicker (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
         // vec2 uv = gl_PointCoord.xy;
-        float time = 0.0;
+        // float time = 0.0;
         float w = 0.15 + (sin(time * 1e-2 * tan(time * 2e-2)) + 1.0) * 0.25;
         float d = length(max(abs(uv - pos), size * 0.5) - size * 0.5) * w - radius * 0.01;
         return smoothstep(1.99 + ((sin(time * 10. * tan(time * 1e1)) + 1.0) * 0.5), 0.11, d * 10. / thickness * 5.0 * 0.125);
@@ -82,8 +84,8 @@ roundedSquare.fragText = `
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;
-        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(1.0), 1.0, 0.5);
-        float rando = rand(uv) * 0.2;
+        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(1.0), 1.0, 0.125);
+        float rando = rand(uv * time) * 0.1;
         gl_FragColor = vec4(vec3(1.0), color - rando);
     }
     // endGLSL
