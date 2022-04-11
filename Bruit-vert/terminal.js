@@ -4,7 +4,7 @@ drawSwirl = function(selectedProgram) {
     for (let i = 0; i < num; i++) {
         let x = Math.cos(i) * i * 1e-2;
         let y = Math.sin(i) * i * 1e-2;
-        vertices.push(x * (9 / 16), y, 524.0, 1);
+        vertices.push(x * (9 / 16), y, 54.0, 1);
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
@@ -82,9 +82,9 @@ roundedSquare.fragText = `
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;
-        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(1.0), 1.0, 0.1);
-        float rando = rand(uv);
-        gl_FragColor = vec4(vec3(color), 1.0);
+        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(1.0), 1.0, 0.5);
+        float rando = rand(uv) * 0.2;
+        gl_FragColor = vec4(vec3(1.0), color - rando);
     }
     // endGLSL
 `;
