@@ -902,6 +902,7 @@ drawSwirl = function(selectedProgram) {
     // Draw the triangle
     let dotsToDraw = Math.floor(map(drawCount, 0, 2400 - 672, 60000, 0));
     gl.drawArrays(gl.POINTS, 0, dotsToDraw);
+    // console.log("aaa");
 }
 
 

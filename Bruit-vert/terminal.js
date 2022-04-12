@@ -1,4 +1,4 @@
-drawSwirl = function(selectedProgram) {
+drawTerminal = function(selectedProgram) {
     vertices = [];
     let num = 150;
     for (let i = 0; i < num; i++) {
@@ -8,17 +8,16 @@ drawSwirl = function(selectedProgram) {
     }
     num = 0;
     
-    for (let x = 0; x < vString[0].length; x++) {
+    for (let x = 0; x < vt.stringArray[0].length; x++) {
+        let sel = (x > 5 * 7 && x < 10 * 7) ? "0" : "1";
         for (let y = 0; y < 9; y++) {
-            if (vString[y][x] == "1") {
+            let caret = (vt.caretPosition - 0) * 7 + 6;
+            if (vt.stringArray[y][x] == sel || x == caret) {
             // if (Math.sin(x * y) > 0.5) {
-            vertices.push(x * (9 / 16) * 0.02, -y * 0.03, 40.0, 1);
+            vertices.push(x * (9 / 16) * 0.02 - 0.9, -y * 0.03 - 0.6, 40.0, 1);
             num++;
             }
         }
-        // let x = i * 0.15;
-        // let y = i * 0.15;
-        
     }
     let colors = [];
     for (let i = 0; i < num; i++) {
@@ -38,7 +37,7 @@ drawSwirl = function(selectedProgram) {
     /*======== Associating shaders to buffer objects ========*/
     // Bind vertex buffer object
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
-    gl.bindBuffer(gl.ARRAY_BUFFER, dotsVBuf);
+    gl.bindBuffer(gl.ARRAY_BUFFER, termVBuf);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
     // Get the attribute location
     var coord = gl.getAttribLocation(selectedProgram, "coordinates");
@@ -107,6 +106,7 @@ roundedSquare.fragText = `
     float roundedRectangleFlicker (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
         // vec2 uv = gl_PointCoord.xy;
         float t = time * 0.05;
+        t = 100. + (t * 1e-4);
         float w = 0.15 + (sin(t * 1e-2 * tan(t * 2e-2)) + 1.0) * 0.25;
         float d = length(max(abs(uv - pos), size * 0.5) - size * 0.5) * w - radius * 0.01;
         return smoothstep(1.99 + ((sin(t * 10. * tan(t * 1e1)) + 1.0) * 0.5), 0.11, d * 10. / thickness * 5.0 * 0.125 * 1.5);
@@ -122,28 +122,15 @@ roundedSquare.fragText = `
         uv = uv * 2. - 1.;
         float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 0.5, 0.1, 0.5);
         float rando = rand(uv * time) * 0.1;
-        gl_FragColor = vec4(vec3(0.3, 0.9, 1.0), color - rando);
+        gl_FragColor = vec4(vec3(1.0), color - rando);
     }
     // endGLSL
 `;
 roundedSquare.init();
 
-vString = [];
-makeTerminalString = function(s) {
-    let a = new Array(9);
-    for (let y = 0; y < 9; y++) {
-        a[y] = "";
-        for (let i = 0; i < s.length; i++) {
-            if (s[i] == "a") {
-                a[y] = a[y] + glyphs[0][y];
-            } else if (s[i] == "b"){
-                a[y] = a[y] + glyphs[1][y];
-            }
-        }
-    }
-    vString = a;
-}
-makeTerminalString("abab");
+// vString = [];
+
+// makeTerminalString("acacacacab");
 
 glyphs = [
     // a
@@ -170,8 +157,90 @@ glyphs = [
     "0000000",
     "0000000",
     ],
+        // c
+        [
+    "0000000",
+    "0000000",
+    "0011100",
+    "0100010",
+    "0100000",
+    "0100010",
+    "0011100",
+    "0000000",
+    "0000000",
+    ],
 ];
 
 
 
 
+
+
+
+let VirtualTerminal = function() {
+    this.text = "";
+    this.caretPosition = 0;
+    this.selectionBounds = [0, 0];
+    this.history = [];
+};
+
+VirtualTerminal.prototype.logState = function(frame) {
+    this.history.push({
+        frame: frame,
+        text: this.text,
+        caretPosition: this.caretPosition,
+        selectionBounds: this.selectionBounds
+    });
+};
+
+VirtualTerminal.prototype.makeTerminalString = function() {
+    let s = this.text;
+    let a = new Array(9);
+    for (let y = 0; y < 9; y++) {
+        a[y] = "";
+        for (let i = 0; i < s.length; i++) {
+            let ch = 0;
+            switch (s[i]) {
+                case "a":
+                ch = 0;
+                break;
+                case "b":
+                ch = 1;
+                break;
+                case "c":
+                ch = 2;
+                break;
+            }
+             a[y] = a[y] + glyphs[ch][y];
+        }
+    }
+    this.stringArray = a;
+}
+
+VirtualTerminal.prototype.update = function(s) {
+    let c = this.caretPosition + 1;
+    if (s == "delete") {
+        this.text = this.text.slice(0, -1);
+        this.caretPosition--;
+    } else if (s == "ArrowLeft") {
+        this.caretPosition--;
+    } else if ((s == "ArrowRight") && (c < this.text.length)) {
+        this.caretPosition++;
+    } else if (s.length == "1") {
+        this.text = this.text.slice(0, c) + s + this.text.slice(c);
+        // this.text += s;
+        this.caretPosition++;
+    }
+    this.makeTerminalString();
+};
+
+VirtualTerminal.prototype.clear = function(s) {
+    this.caretPosition = 0;
+    this.text = "";
+    this.makeTerminalString();
+};
+
+
+
+let vt = new VirtualTerminal();
+vt.stringArray = [];

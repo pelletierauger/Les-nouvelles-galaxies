@@ -47,7 +47,7 @@ let namedPrograms = {};
 
 // a shader variable
 let texcoordShader;
-let dotsVBuf, dotsCBuf, bgVBuf;
+let dotsVBuf, termVBuf, dotsCBuf, bgVBuf;
 
 function setup() {
     socket = io.connect('http://localhost:8080');
@@ -97,6 +97,7 @@ function setup() {
     dotsVBuf = gl.createBuffer();
     dotsCBuf = gl.createBuffer();
     bgVBuf = gl.createBuffer();
+    termVBuf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     if (!looping) {
         noLoop();
@@ -169,7 +170,7 @@ draw = function() {
     // currentProgram = namedPrograms["redDots"].shaderProgram;
     // currentProgram = getProgram("white-flickering-dots");
     currentProgram = getProgram("new-flickering-dots");
-    currentProgram = getProgram("rounded-square");
+    // currentProgram = getProgram("rounded-square");
     time = gl.getUniformLocation(currentProgram, "time"); 
     // currentProgram = getProgram("gold");
     // currentProgram = getProgram("pulsar-dots");
@@ -180,6 +181,10 @@ draw = function() {
     // drawPulsar(currentProgram);
     // drawAlligatorQuiet(currentProgram);
     drawSwirl(currentProgram);
+    currentProgram = getProgram("rounded-square");
+    time = gl.getUniformLocation(currentProgram, "time"); 
+    gl.useProgram(currentProgram);
+    drawTerminal(currentProgram);
     // if (drawCount % 100 == 0) {
     //     mS = random(0.8, 1);
     // }
@@ -229,7 +234,7 @@ draw = function() {
     }
 }
 
-function keyPressed() {
+keyPressed = function() {
     if (keysActive) {
         if (keyCode === 32) {
             if (looping) {
@@ -245,6 +250,22 @@ function keyPressed() {
         }
         if (key == 'm' || key == 'M') {
             redraw();
+        }
+        if (key == 'a' || key == 'A') {
+            logJavaScriptConsole("yur!");
+        }
+        // logJavaScriptConsole(key);
+    if (vtActive) {
+         if (keyCode === 8) {
+            vt.update("delete");
+             logJavaScriptConsole(event.key);
+        }  else {
+            vt.update(event.key);
+        }
+        // if (key == 'a' || key == 'A') {
+            // vt.update("a");
+            // logJavaScriptConsole(event.key);
+        // }
         }
     }
 }
