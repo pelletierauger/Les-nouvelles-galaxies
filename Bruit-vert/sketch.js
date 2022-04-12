@@ -47,7 +47,7 @@ let namedPrograms = {};
 
 // a shader variable
 let texcoordShader;
-let dotsVBuf, bgVBuf;
+let dotsVBuf, dotsCBuf, bgVBuf;
 
 function setup() {
     socket = io.connect('http://localhost:8080');
@@ -95,6 +95,7 @@ function setup() {
     noStroke();
     vertex_buffer = gl.createBuffer();
     dotsVBuf = gl.createBuffer();
+    dotsCBuf = gl.createBuffer();
     bgVBuf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     if (!looping) {
@@ -161,12 +162,15 @@ draw = function() {
     // }
     let currentProgram = getProgram("pulsar-fog");
     gl.useProgram(currentProgram);
+        time = gl.getUniformLocation(currentProgram, "time"); 
     drawBG(currentProgram);
     // oldSetBGShaders();
     // oldDrawBG();
     // currentProgram = namedPrograms["redDots"].shaderProgram;
     // currentProgram = getProgram("white-flickering-dots");
     currentProgram = getProgram("new-flickering-dots");
+    currentProgram = getProgram("rounded-square");
+    time = gl.getUniformLocation(currentProgram, "time"); 
     // currentProgram = getProgram("gold");
     // currentProgram = getProgram("pulsar-dots");
     // currentProgram = getProgram("white-pulsar-dots");
@@ -174,8 +178,8 @@ draw = function() {
     // currentProgram = getProgram("faster-dots");
     gl.useProgram(currentProgram);
     // drawPulsar(currentProgram);
-    drawAlligatorQuiet(currentProgram);
-    // drawSwirl(currentProgram);
+    // drawAlligatorQuiet(currentProgram);
+    drawSwirl(currentProgram);
     // if (drawCount % 100 == 0) {
     //     mS = random(0.8, 1);
     // }
