@@ -237,21 +237,21 @@ draw = function() {
 
 keyPressed = function() {
     if (keysActive) {
-        if (keyCode === 32) {
-            if (looping) {
-                noLoop();
-                looping = false;
-            } else {
-                loop();
-                looping = true;
-            }
-        }
-        if (key == 'r' || key == 'R') {
-            window.location.reload();
-        }
-        if (key == 'm' || key == 'M') {
-            redraw();
-        }
+        // if (keyCode === 32) {
+        //     if (looping) {
+        //         noLoop();
+        //         looping = false;
+        //     } else {
+        //         loop();
+        //         looping = true;
+        //     }
+        // }
+        // if (key == 'r' || key == 'R') {
+        //     window.location.reload();
+        // }
+        // if (key == 'm' || key == 'M') {
+        //     redraw();
+        // }
         // if (key == 'a' || key == 'A') {
         //     logJavaScriptConsole("yur!");
         // }
@@ -273,3 +273,14 @@ keyPressed = function() {
         }
     }
 }
+
+
+tl = function() {
+                if (looping) {
+                noLoop();
+                looping = false;
+            } else {
+                loop();
+                looping = true;
+            }
+};
