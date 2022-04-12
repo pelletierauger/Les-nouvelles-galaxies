@@ -252,18 +252,20 @@ keyPressed = function() {
         if (key == 'm' || key == 'M') {
             redraw();
         }
-        if (key == 'a' || key == 'A') {
-            logJavaScriptConsole("yur!");
-        }
+        // if (key == 'a' || key == 'A') {
+        //     logJavaScriptConsole("yur!");
+        // }
         // logJavaScriptConsole(key);
     if (vtActive) {
-         if (keyCode === 8) {
-            vt.update("delete");
-             logJavaScriptConsole(event.key);
-        }  else {
-            vt.update(event.key);
-        }
-                     logJavaScriptConsole(event.key);
+                    vt.update(event);
+         // if (keyCode === 8) {
+            // vt.update("delete");
+             // // logJavaScriptConsole(event);
+        // }  else {
+            // vt.update(event);
+        // }
+                     // logJavaScriptConsole(event.key);
+        // logJavaScriptConsole(event.shiftKey);
         // if (key == 'a' || key == 'A') {
             // vt.update("a");
             // logJavaScriptConsole(event.key);

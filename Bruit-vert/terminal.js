@@ -7,9 +7,11 @@ drawTerminal = function(selectedProgram) {
         // vertices.push(x * (9 / 16), y, 40.0, 1);
     }
     num = 0;
+    let sx0 = vt.selectionBounds[0];
+    let sx1 = vt.selectionBounds[1];
     let colors = [];
     for (let x = 0; x <= vt.stringArray[0].length; x++) {
-        let sel = (x > 5 * 7 && x < 10 * 7) ? "0" : "1";
+        let sel = (x > sx0 * 7 && x < sx1 * 7) ? "0" : "1";
         for (let y = 0; y < 9; y++) {
             let caret = (vt.caretPosition - 0) * 7 + 7;
             if (vt.stringArray[y][x] == sel || x == caret) {
@@ -27,7 +29,7 @@ drawTerminal = function(selectedProgram) {
         colors.push(0, 0, 0);
     }
         for (let x = 0; x <= vt.stringArray[0].length; x++) {
-        let sel = (x > 5 * 7 && x < 10 * 7) ? "0" : "1";
+        let sel = (x > sx0 * 7 && x < sx1 * 7) ? "0" : "1";
         for (let y = 0; y < 9; y++) {
             let caret = (vt.caretPosition - 0) * 7 + 7;
             if (vt.stringArray[y][x] == sel || x == caret) {
@@ -279,22 +281,83 @@ VirtualTerminal.prototype.makeTerminalString = function() {
     this.stringArray = a;
 }
 
-VirtualTerminal.prototype.update = function(s) {
+VirtualTerminal.prototype.update = function(e) {
+    let s = e.key;
     let c = this.caretPosition;
-    if (s == "delete") {
-        if (this.text.length && this.caretPosition) {
+    let sel = this.selectionBounds[1] - this.selectionBounds[0] !== 0;
+    if (s == "Backspace") {
+        if (this.text.length && (this.caretPosition || sel)) {
           // this.text = this.text.slice(0, -1);
-          this.text = this.text.slice(0, c - 1) + this.text.slice(c);
-          this.caretPosition--;
+          if (sel) {
+              this.text = this.text.slice(0, this.selectionBounds[0] - 1) + this.text.slice(this.selectionBounds[1] - 1);
+              this.caretPosition = this.selectionBounds[0] - 1;
+              this.selectionBounds = [0, 0];
+          } else {
+              this.text = this.text.slice(0, c - 1) + this.text.slice(c);
+              this.caretPosition--;
+          }
         }
-    } else if (s == "ArrowLeft") {
-        this.caretPosition--;
+    } else if ((s == "ArrowLeft") && (e.shiftKey) && (c > 0)) {
+        if (this.selectionBounds[1] - this.selectionBounds[0] == 0) {
+            this.caretPosition--;
+            this.selectionBounds[0] = this.caretPosition + 1;
+            this.selectionBounds[1] = this.caretPosition + 2;
+            this.selDir = 0;
+        } else if (sel){
+            if (this.selDir == 0) {
+                this.caretPosition--;
+                this.selectionBounds[0] = this.caretPosition + 1;
+            } else {
+                this.caretPosition--;
+                this.selectionBounds[1] = this.caretPosition + 1;
+            }
+        }
+    } else if ((s == "ArrowLeft") && (e.shiftKey) && (c == 0)) {
+        
+    } else if ((s == "ArrowLeft") && (c > 0 || sel)) {
+        if (sel) {
+            this.caretPosition = this.selectionBounds[0] - 1;
+        } else {
+            this.caretPosition--;
+        }
+        this.selectionBounds = [0, 0];
+    } else if ((s == "ArrowRight") && (c < this.text.length) && (e.shiftKey)) {
+        // logJavaScriptConsole(this.selectionBounds[1]);
+        if (this.selectionBounds[1] - this.selectionBounds[0] == 0) {
+            this.caretPosition++;
+            this.selectionBounds[1] = this.caretPosition + 1;
+            this.selectionBounds[0] = this.caretPosition;
+            this.selDir = 1;
+        } else if (sel){
+            if (this.selDir == 1) {
+                this.caretPosition++;
+                this.selectionBounds[1] = this.caretPosition + 1;
+            } else {
+                this.caretPosition++;
+                this.selectionBounds[0] = this.caretPosition + 1;
+            }
+        }
+    } else if ((s == "ArrowRight") && (e.shiftKey) && (c == this.text.length)) {
+        
     } else if ((s == "ArrowRight") && (c < this.text.length)) {
-        this.caretPosition++;
-    } else if (s.length == "1") {
-        this.text = this.text.slice(0, c) + s + this.text.slice(c);
+        if (sel) {
+            this.caretPosition = this.selectionBounds[1] - 1;
+        } else {
+            this.caretPosition++;
+        }
+        this.selectionBounds = [0, 0];
+    } else if ((s == "ArrowRight") && sel) {
+        this.selectionBounds = [0, 0];
+    }else if (s.length == "1") {
+        if (sel) {
+              this.text = this.text.slice(0, this.selectionBounds[0] - 1) + s + this.text.slice(this.selectionBounds[1] - 1);
+              this.caretPosition = this.selectionBounds[0];
+              this.selectionBounds = [0, 0];
+          } else {
+              this.text = this.text.slice(0, c) + s + this.text.slice(c);
         // this.text += s;
-        this.caretPosition++;
+              this.caretPosition++;
+          }
     }
     this.makeTerminalString();
 };
@@ -304,6 +367,7 @@ VirtualTerminal.prototype.clear = function(s) {
     this.text = "";
     this.selectionBounds = [0, 0];
     this.makeTerminalString();
+    this.selDir = 0;
 };
 
 
