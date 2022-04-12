@@ -8,10 +8,10 @@ drawTerminal = function(selectedProgram) {
     }
     num = 0;
     let colors = [];
-    for (let x = 0; x < vt.stringArray[0].length; x++) {
+    for (let x = 0; x <= vt.stringArray[0].length; x++) {
         let sel = (x > 5 * 7 && x < 10 * 7) ? "0" : "1";
         for (let y = 0; y < 9; y++) {
-            let caret = (vt.caretPosition - 0) * 7 + 6;
+            let caret = (vt.caretPosition - 0) * 7 + 7;
             if (vt.stringArray[y][x] == sel || x == caret) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 - 0.9, -y * 0.03 - 0.6, 45.0, 1);
@@ -26,10 +26,10 @@ drawTerminal = function(selectedProgram) {
         let b = Math.random();
         colors.push(0, 0, 0);
     }
-        for (let x = 0; x < vt.stringArray[0].length; x++) {
+        for (let x = 0; x <= vt.stringArray[0].length; x++) {
         let sel = (x > 5 * 7 && x < 10 * 7) ? "0" : "1";
         for (let y = 0; y < 9; y++) {
-            let caret = (vt.caretPosition - 0) * 7 + 6;
+            let caret = (vt.caretPosition - 0) * 7 + 7;
             if (vt.stringArray[y][x] == sel || x == caret) {
             // if (Math.sin(x * y) > 0.5) {
                         vertices.push(x * (9 / 16) * 0.02 - 0.9, -y * 0.03 - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2), 40.0, 1);
@@ -211,6 +211,18 @@ glyphs = [
     "0000000",
     "0000000",
     ],
+                // e
+        [
+    "0100000",
+    "0010000",
+    "0001000",
+    "0000100",
+    "0001000",
+    "0010000",
+    "0100000",
+    "0000000",
+    "0000000",
+    ],
 ];
 
 
@@ -241,6 +253,7 @@ VirtualTerminal.prototype.makeTerminalString = function() {
     let a = new Array(9);
     for (let y = 0; y < 9; y++) {
         a[y] = "";
+        a[y] = a[y] + glyphs[5][y];
         for (let i = 0; i < s.length; i++) {
             let ch = 0;
             switch (s[i]) {
@@ -267,10 +280,13 @@ VirtualTerminal.prototype.makeTerminalString = function() {
 }
 
 VirtualTerminal.prototype.update = function(s) {
-    let c = this.caretPosition + 1;
+    let c = this.caretPosition;
     if (s == "delete") {
-        this.text = this.text.slice(0, -1);
-        this.caretPosition--;
+        if (this.text.length && this.caretPosition) {
+          // this.text = this.text.slice(0, -1);
+          this.text = this.text.slice(0, c - 1) + this.text.slice(c);
+          this.caretPosition--;
+        }
     } else if (s == "ArrowLeft") {
         this.caretPosition--;
     } else if ((s == "ArrowRight") && (c < this.text.length)) {

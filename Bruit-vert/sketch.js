@@ -263,6 +263,7 @@ keyPressed = function() {
         }  else {
             vt.update(event.key);
         }
+                     logJavaScriptConsole(event.key);
         // if (key == 'a' || key == 'A') {
             // vt.update("a");
             // logJavaScriptConsole(event.key);
