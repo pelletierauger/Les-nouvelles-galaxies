@@ -232,7 +232,7 @@ glyphs = [
 
 getGlyph = function(g) {
     let ch;
-    logJavaScriptConsole(g);
+    // logJavaScriptConsole(g);
     switch (g) {
         case "a":
         ch = [
