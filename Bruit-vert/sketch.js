@@ -181,6 +181,7 @@ draw = function() {
     // drawPulsar(currentProgram);
     // drawAlligatorQuiet(currentProgram);
     drawSwirl(currentProgram);
+    // drawSmoke(currentProgram);
     currentProgram = getProgram("rounded-square");
     time = gl.getUniformLocation(currentProgram, "time"); 
     gl.useProgram(currentProgram);

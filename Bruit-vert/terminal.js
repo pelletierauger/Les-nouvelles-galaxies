@@ -182,6 +182,7 @@ let VirtualTerminal = function() {
     this.caretPosition = 0;
     this.selectionBounds = [0, 0];
     this.history = [];
+    this.clear();
 };
 
 VirtualTerminal.prototype.logState = function(frame) {
@@ -215,7 +216,7 @@ VirtualTerminal.prototype.makeTerminalString = function() {
         }
     }
     this.stringArray = a;
-}
+};
 
 VirtualTerminal.prototype.update = function(s) {
     let c = this.caretPosition + 1;
@@ -237,10 +238,11 @@ VirtualTerminal.prototype.update = function(s) {
 VirtualTerminal.prototype.clear = function(s) {
     this.caretPosition = 0;
     this.text = "";
+    this.selectionBounds = [0, 0];
     this.makeTerminalString();
 };
 
 
 
 let vt = new VirtualTerminal();
-vt.stringArray = [];
+let vtActive = true;
