@@ -4,7 +4,19 @@ drawSwirl = function(selectedProgram) {
     for (let i = 0; i < num; i++) {
         let x = Math.cos(i) * i * 1e-2;
         let y = Math.sin(i) * i * 1e-2;
-        vertices.push(x * (9 / 16), y, 120.0, 1);
+        // vertices.push(x * (9 / 16), y, 40.0, 1);
+    }
+    num = 0;
+    for (let x = 0; x < 10; x++) {
+        for (let y = 0; y < 10; y++) {
+            if (Math.sin(x * y) > 0.5) {
+            vertices.push(x * (9 / 16) * 0.025, y * 0.05, 40.0, 1);
+            num++;
+            }
+        }
+        // let x = i * 0.15;
+        // let y = i * 0.15;
+        
     }
     let colors = [];
     for (let i = 0; i < num; i++) {
@@ -92,10 +104,10 @@ roundedSquare.fragText = `
     }
     float roundedRectangleFlicker (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
         // vec2 uv = gl_PointCoord.xy;
-        // float time = 0.0;
-        float w = 0.15 + (sin(time * 1e-2 * tan(time * 2e-2)) + 1.0) * 0.25;
+        float t = time * 0.05;
+        float w = 0.15 + (sin(t * 1e-2 * tan(t * 2e-2)) + 1.0) * 0.25;
         float d = length(max(abs(uv - pos), size * 0.5) - size * 0.5) * w - radius * 0.01;
-        return smoothstep(1.99 + ((sin(time * 10. * tan(time * 1e1)) + 1.0) * 0.5), 0.11, d * 10. / thickness * 5.0 * 0.125);
+        return smoothstep(1.99 + ((sin(t * 10. * tan(t * 1e1)) + 1.0) * 0.5), 0.11, d * 10. / thickness * 5.0 * 0.125 * 1.5);
     }
     float roundedRectangle (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
         float d = length(max(abs(uv - pos), size) - size) - radius;
@@ -106,9 +118,9 @@ roundedSquare.fragText = `
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;
-        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(1.0), 1.0, 0.125);
+        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35), 0.1, 0.5);
         float rando = rand(uv * time) * 0.1;
-        gl_FragColor = vec4(cols, color - rando);
+        gl_FragColor = vec4(vec3(0.3, 0.9, 1.0), color - rando);
     }
     // endGLSL
 `;
