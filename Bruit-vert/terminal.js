@@ -938,7 +938,11 @@ VirtualTerminal.prototype.update = function(e) {
         this.selectionBounds = [0, 0];
     } else if ((s == "ArrowRight") && sel) {
         this.selectionBounds = [0, 0];
-    }else if (s.length == "1") {
+    } else if ((s == "a") && (e.metaKey)) {
+        this.selectionBounds = [1, this.text.length + 1];
+        // logJavaScriptConsole("aaaaert");
+        this.caretPosition = this.text.length;
+    } else if (s.length == "1") {
         if (sel) {
               this.text = this.text.slice(0, this.selectionBounds[0] - 1) + s + this.text.slice(this.selectionBounds[1] - 1);
               this.caretPosition = this.selectionBounds[0];
@@ -949,8 +953,8 @@ VirtualTerminal.prototype.update = function(e) {
               this.caretPosition++;
           }
     } else if (s == "Enter") {
-        eval(this.text);
         this.enter = 5;
+        eval(this.text);
     }
     this.makeTerminalString();
 };
