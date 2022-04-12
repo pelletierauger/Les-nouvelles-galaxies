@@ -7,10 +7,12 @@ drawSwirl = function(selectedProgram) {
         // vertices.push(x * (9 / 16), y, 40.0, 1);
     }
     num = 0;
-    for (let x = 0; x < 10; x++) {
-        for (let y = 0; y < 10; y++) {
-            if (Math.sin(x * y) > 0.5) {
-            vertices.push(x * (9 / 16) * 0.025, y * 0.05, 40.0, 1);
+    
+    for (let x = 0; x < vString[0].length; x++) {
+        for (let y = 0; y < 9; y++) {
+            if (vString[y][x] == "1") {
+            // if (Math.sin(x * y) > 0.5) {
+            vertices.push(x * (9 / 16) * 0.02, -y * 0.03, 40.0, 1);
             num++;
             }
         }
@@ -118,10 +120,58 @@ roundedSquare.fragText = `
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;
-        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35), 0.1, 0.5);
+        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 0.5, 0.1, 0.5);
         float rando = rand(uv * time) * 0.1;
         gl_FragColor = vec4(vec3(0.3, 0.9, 1.0), color - rando);
     }
     // endGLSL
 `;
 roundedSquare.init();
+
+vString = [];
+makeTerminalString = function(s) {
+    let a = new Array(9);
+    for (let y = 0; y < 9; y++) {
+        a[y] = "";
+        for (let i = 0; i < s.length; i++) {
+            if (s[i] == "a") {
+                a[y] = a[y] + glyphs[0][y];
+            } else if (s[i] == "b"){
+                a[y] = a[y] + glyphs[1][y];
+            }
+        }
+    }
+    vString = a;
+}
+makeTerminalString("abab");
+
+glyphs = [
+    // a
+    [
+    "0000000",
+    "0000000",
+    "0011100",
+    "0000010",
+    "0011110",
+    "0100010",
+    "0011101",
+    "0000000",
+    "0000000",
+    ],
+    // b
+        [
+    "0110000",
+    "0010000",
+    "0010000",
+    "0011100",
+    "0010010",
+    "0010010",
+    "0011100",
+    "0000000",
+    "0000000",
+    ],
+];
+
+
+
+
