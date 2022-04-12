@@ -179,8 +179,8 @@ draw = function() {
     // currentProgram = getProgram("faster-dots");
     gl.useProgram(currentProgram);
     // drawPulsar(currentProgram);
-    // drawAlligatorQuiet(currentProgram);
-    drawSwirl(currentProgram);
+    drawAlligatorQuiet(currentProgram);
+    // drawSwirl(currentProgram);
     // drawSmoke(currentProgram);
     currentProgram = getProgram("rounded-square");
     time = gl.getUniformLocation(currentProgram, "time"); 

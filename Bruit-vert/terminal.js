@@ -7,24 +7,42 @@ drawTerminal = function(selectedProgram) {
         // vertices.push(x * (9 / 16), y, 40.0, 1);
     }
     num = 0;
-    
+    let colors = [];
     for (let x = 0; x < vt.stringArray[0].length; x++) {
         let sel = (x > 5 * 7 && x < 10 * 7) ? "0" : "1";
         for (let y = 0; y < 9; y++) {
             let caret = (vt.caretPosition - 0) * 7 + 6;
             if (vt.stringArray[y][x] == sel || x == caret) {
             // if (Math.sin(x * y) > 0.5) {
-            vertices.push(x * (9 / 16) * 0.02 - 0.9, -y * 0.03 - 0.6, 40.0, 1);
-            num++;
+            // vertices.push(x * (9 / 16) * 0.02 - 0.9, -y * 0.03 - 0.6, 45.0, 1);
+               vertices.push(x * (9 / 16) * 0.02 - 0.9, -y * 0.03 - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2), 40.0, 1);
+               num++;
             }
         }
     }
-    let colors = [];
     for (let i = 0; i < num; i++) {
         let r = Math.random();
         let g = Math.random();
         let b = Math.random();
-        colors.push(r, g, b);
+        colors.push(0, 0, 0);
+    }
+        for (let x = 0; x < vt.stringArray[0].length; x++) {
+        let sel = (x > 5 * 7 && x < 10 * 7) ? "0" : "1";
+        for (let y = 0; y < 9; y++) {
+            let caret = (vt.caretPosition - 0) * 7 + 6;
+            if (vt.stringArray[y][x] == sel || x == caret) {
+            // if (Math.sin(x * y) > 0.5) {
+                        vertices.push(x * (9 / 16) * 0.02 - 0.9, -y * 0.03 - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2), 40.0, 1);
+                // vertices.push(x * (9 / 16) * 0.02 - 0.9, -y * 0.03 - 0.6, 40.0, 1);
+            num++;
+            }
+        }
+    }
+    for (let i = 0; i < num; i++) {
+        let r = Math.random();
+        let g = Math.random();
+        let b = Math.random();
+        colors.push(1, 1, 1);
     }
     // logJavaScriptConsole(colors.length);
     // Create an empty buffer object to store the vertex buffer
@@ -122,7 +140,7 @@ roundedSquare.fragText = `
         uv = uv * 2. - 1.;
         float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 0.5, 0.1, 0.5);
         float rando = rand(uv * time) * 0.1;
-        gl_FragColor = vec4(vec3(1.0), color - rando);
+        gl_FragColor = vec4(cols, color - rando);
     }
     // endGLSL
 `;
@@ -169,6 +187,30 @@ glyphs = [
     "0000000",
     "0000000",
     ],
+            // d
+        [
+    "0001100",
+    "0000100",
+    "0000100",
+    "0011100",
+    "0100100",
+    "0100100",
+    "0011010",
+    "0000000",
+    "0000000",
+    ],
+            // e
+        [
+    "0000000",
+    "0000000",
+    "0011100",
+    "0100010",
+    "0111110",
+    "0100000",
+    "0011100",
+    "0000000",
+    "0000000",
+    ],
 ];
 
 
@@ -211,12 +253,18 @@ VirtualTerminal.prototype.makeTerminalString = function() {
                 case "c":
                 ch = 2;
                 break;
+           case "d":
+                ch = 3;
+                break;
+           case "e":
+                ch = 4;
+                break;
             }
              a[y] = a[y] + glyphs[ch][y];
         }
     }
     this.stringArray = a;
-};
+}
 
 VirtualTerminal.prototype.update = function(s) {
     let c = this.caretPosition + 1;
@@ -245,4 +293,5 @@ VirtualTerminal.prototype.clear = function(s) {
 
 
 let vt = new VirtualTerminal();
+// vt.stringArray = [];
 let vtActive = true;
