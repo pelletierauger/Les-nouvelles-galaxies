@@ -15,7 +15,7 @@ drawTerminal = function(selectedProgram) {
         let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
         for (let y = 0; y < 9; y++) {
             let caret = (vt.caretPosition - 0) * 7 + 7;
-            if (vt.stringArray[y][x] == sel || x == caret) {
+            if (vt.stringArray[y][x] == sel || (x == caret && drawCount / 20 % 1 < 0.5)) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 - 0.9, -y * 0.03 - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2), 40.0, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 45.0 * sc, 1);
@@ -34,7 +34,7 @@ drawTerminal = function(selectedProgram) {
         let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
         for (let y = 0; y < 9; y++) {
             let caret = (vt.caretPosition - 0) * 7 + 7;
-            if (vt.stringArray[y][x] == sel || x == caret) {
+            if (vt.stringArray[y][x] == sel || (x == caret && drawCount / 20 % 1 < 0.5)) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 - 0.9, -y * 0.03 - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2), 40.0, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 40.0 * sc, 1);
