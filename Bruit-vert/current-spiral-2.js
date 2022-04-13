@@ -204,12 +204,11 @@ drawSmoke = function(selectedProgram, dotAmount) {
     //Bind appropriate array buffer to it
     // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     // Pass the vertex data to the buffer
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-    // Unbind the buffer
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     /*======== Associating shaders to buffer objects ========*/
     // Bind vertex buffer object
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    gl.bindBuffer(gl.ARRAY_BUFFER, dotsVBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
     // Get the attribute location
     var coord = gl.getAttribLocation(selectedProgram, "coordinates");
     // Point an attribute to the currently bound VBO
@@ -219,10 +218,12 @@ drawSmoke = function(selectedProgram, dotAmount) {
     /*============= Drawing the primitive ===============*/
     // // Clear the canvas
     // gl.clearColor(0.5, 0.5, 0.5, 0.9);
+    // gl.clearColor(0.5, 0.5, 0.5, 0.9);
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
     gl.drawArrays(gl.POINTS, 0, 40000);
+    // ljs(vertices.length);
 };
 
 
