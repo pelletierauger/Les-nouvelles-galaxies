@@ -752,7 +752,7 @@ void main() {
         gl_FragColor = gl_FragColor.brga;
         gl_FragColor.r *= 0.5;
         gl_FragColor.b *= 1.25;
-    gl_FragColor.rgb *= 0.75;
+    gl_FragColor.rgb *= 0.0;
         // gl_FragColor = gl_FragColor.grra;
         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
 }
@@ -945,43 +945,85 @@ let newFlickeringVert = new ShaderProgram("new-flickering-dots-vert");
 
 newFlickeringVert.vertText = `
     // beginGLSL
-    // attribute vec4 coordinates;
     attribute float vertexID;
     uniform float time;
-//     varying vec2 myposition;
-//     varying vec2 center;
     varying float alph;
 // 
-float map(float value, float min1, float max1, float min2, float max2) {
-    float perc = (value - min1) / (max1 - min1);
-    return perc * (max2 - min2) + min2;
-}
+    float map(float value, float min1, float max1, float min2, float max2) {
+        float perc = (value - min1) / (max1 - min1);
+        return perc * (max2 - min2) + min2;
+    }
 // 
+    vec2 rotate(vec2 pos, float angle) {
+        float c = cos(angle);
+        float s = sin(angle);
+        return mat2(c, s, -s, c) * pos;
+    }
+    float plane(vec3 pos) {
+        return pos.y;
+    }
+    float sphere(vec3 pos, float radius) {
+        return length(pos) - radius;
+    }
+    float box(vec3 pos, vec3 size) {
+        return length(max(abs(pos) - size, 0.0));
+    }
+    float roundedBox(vec3 pos, vec3 size, float radius) {
+        return length(max(abs(pos) - size, 0.0)) - radius;
+    }
+    float map(vec3 pos) {
+        float planeDist = plane(pos + vec3(0.0, 10.0, 0.0));
+        // float o = (sin(time * 1e1) + 1.) * 5.;
+        // pos.xy = rotate(pos.xy, pos.z * 0.01 * sin(time * 0.5e2));
+        // pos = mod(pos + 10., 20.) - 10.;
+        // return min(planeDist, roundedBox(pos, vec3(2.0), 1.0));
+        return min(planeDist, roundedBox(pos, vec3(1.5), 2.0));
+    }
+    float rand(vec2 n) { 
+      return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+    }
+    float noise(vec2 p){
+      vec2 ip = floor(p);
+      vec2 u = fract(p);
+      u = u*u*(3.0-2.0*u);
+      float res = mix(
+        mix(rand(ip),rand(ip+vec2(1.0,0.0)),u.x),
+        mix(rand(ip+vec2(0.0,1.0)),rand(ip+vec2(1.0,1.0)),u.x),u.y);
+      return res*res;
+    }
     void main(void) {
         float t = time * 1e-2;
-        float osc = map(sin(t * 16e-1), -1., 1., 0.05, 4.005);
-        float i = vertexID * 1e-1;
-        float x = cos(i * 0.5e1 * sin(t * 0.) * 0.01) * pow(i, 4.) * 8e-16;
-        float y = sin(i * 0.5e1 * sin(t * 0.) * 0.01) * pow(i, 4.) * 8e-16;
-        x += cos(x * 1e-2) + cos(i * 269. * tan(i * 4e-4)) * 3.;
-        y += sin(y * 1e-2) + sin(i * 269. * tan(i * 4e-4)) * 3.;
-//         x *= 0.25 * 44.5;
-//         y *= 0.25 * 44.5;
-        x += cos(t * 0.25e1) * i * 0.0005;
-        y += sin(t * 0.25e1) * i * 0.0005;
-                x -= 1.;
-        x *= 0.25;
-        y *= 0.25;
-//         float x = cos(i) * i * 1e-5 * 2.;
-//         float y = sin(i) * i * 1e-5 * 2.;
-        gl_Position = vec4(x * 0.6, y, 0.0, 1.0);
-//         center = vec2(gl_Position.x, gl_Position.y);
-//         center = 512.0 + center * 512.0;
-//         myposition = vec2(gl_Position.x, gl_Position.y);
-        alph = 0.25 * 0.5;
-        gl_PointSize = 7.0;
-        // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
-        // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
+        float id = vertexID;
+        float x = ((fract(id / 512.)) - 0.5) * 2.;
+        float y = ((floor(id / 512.) / 288.) - 0.5) * 2.;
+        vec3 pos = vec3(0.0, 0.0, 0.0);
+        vec3 dir = normalize(vec3(x, y, 1.0));
+        vec3 color = vec3(0.0);
+        for (int i = 0; i < 128; i++) {
+            float d = map(pos);
+            if ( d < 0.01) {
+                // float sh = 1.0 - float(j) * 0.015;
+                // color = vec3(sh, sin(pos.y * 0.225) * 0.5 * sh, sin(pos.x * 0.125) * 1.5 * sh);
+                break;
+            }
+            pos += d * dir;
+            // x += sin(float(j)) * 0.01;
+        }
+        // float ds = dot(vec2(x, y), vec2(0.5, 0.5));
+        // y -= ( abs(x) * 1. / y * cos(x)) * 0.1;
+        // x -= cos( abs(y) * 1. / y * sin(t)) * 0.1;
+        // x += ds * 0.9;
+        // y += ds * 0.9;
+        // // x += cos(x * 0.0625 * sin(t * 1e3) + i * 0.0625e5 / cos(i * 15.5 + t * 1e-2) * 2e-1) * 0.5e-1;
+        // y += sin(x * 0.0625 * sin(t * 1e3) + i * 0.0625e5 / sin(i * 15.5 + t * 1e-2) * 2e-1) * 0.5e-1;
+        // gl_Position = vec4((x - 0.) * 8., (y - 0.) * 8., 0.0, 1.0);
+        float n = noise(vec2(x * 10. + cos(time * 2e-3) * 20., y * 10. + sin(time * 2e-3) * 20.));
+        // n = sin(n * 3. * tan(n * 1e1));
+        gl_Position = vec4(x * 1.75, y * 1.75 + n * 0.1, 0.0, 1.0);
+         // gl_Position = vec4((x - 0.25) * 4., (y - 0.25) * 4., 0.0, 1.0);
+        // gl_Position = vec4(color.r * 0.25, color.r * 0.25, 0.0, 1.0);
+        gl_PointSize = 12. - n * 7.;
+        alph = 0.25 * 0.75;
     }
     // endGLSL
 `;
@@ -1015,12 +1057,15 @@ newFlickeringVert.fragText = `
         alpha = smoothstep(0.05 / (0.9 + alph), 0.000125, dist_squared) * 0.49;
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
-        gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 0.25;
+        gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 0.75;
         // gl_FragColor = gl_FragColor.brba;
 //         gl_FragColor.g *= 0.525;
-//         gl_FragColor.b *= 0.0125;
+        gl_FragColor.rgb = gl_FragColor.bbb;
         
     }
     // endGLSL
 `;
+// newFlickeringVert.init();
+newFlickeringVert.vertText = newFlickeringVert.vertText.replace(/[^\x00-\x7F]/g, "");
+newFlickeringVert.fragText = newFlickeringVert.fragText.replace(/[^\x00-\x7F]/g, "");
 newFlickeringVert.init();
