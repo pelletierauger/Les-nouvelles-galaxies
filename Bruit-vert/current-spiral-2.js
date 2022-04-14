@@ -975,3 +975,99 @@ drawAlligatorQuiet = function(selectedProgram) {
     // Draw the triangle
     gl.drawArrays(gl.POINTS, 0, 27000);
 }
+
+
+
+drawGrid = function(selectedProgram) {
+    vertices = [];
+    let t = drawCount * 0.02;
+    let num = 0;
+    let sc = 0.005;
+    let tr = {x: 0, y: 0};
+    let asp = 1440 / 2560;
+    let r = {x: Math.cos(t), y: Math.sin(t)};
+    for (let x = -100; x < 100; x += 1) {
+        for (let y = -100; y < 100; y++) {
+            // r.x *= Math.sin(num);
+            let fx = x * r.y + y * r.x;
+            let fy = y * r.y - x * r.x;
+            fx += Math.sin(num * 1e-3 * y) * num * 0.005;
+            vertices.push((fx + tr.x) * sc * asp, (fy + tr.y) * sc, 20, 1);
+            num++;
+        }
+    }
+    // Create an empty buffer object to store the vertex buffer
+    // var vertex_buffer = gl.createBuffer();
+    //Bind appropriate array buffer to it
+    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // Pass the vertex data to the buffer
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    /*======== Associating shaders to buffer objects ========*/
+    // Bind vertex buffer object
+    gl.bindBuffer(gl.ARRAY_BUFFER, dotsVBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    // Get the attribute location
+    var coord = gl.getAttribLocation(selectedProgram, "coordinates");
+    // Point an attribute to the currently bound VBO
+    gl.vertexAttribPointer(coord, 4, gl.FLOAT, false, 0, 0);
+    // Enable the attribute
+    gl.enableVertexAttribArray(coord);
+    /*============= Drawing the primitive ===============*/
+    // // Clear the canvas
+    // gl.clearColor(0.5, 0.5, 0.5, 0.9);
+    // Clear the color buffer bit
+    // gl.clear(gl.COLOR_BUFFER_BIT);
+    // Draw the triangle
+    gl.drawArrays(gl.POINTS, 0, num);
+}
+
+
+
+drawGrid = function(selectedProgram) {
+    vertices = [];
+    let t = drawCount * 0.02;
+    let num = 0;
+    let sc = 0.03;
+    let tr = {x: 0, y: 0};
+    let asp = 1440 / 2560;
+    let am = 70;
+    let r = {x: Math.cos(t), y: Math.sin(t)};
+    for (let x = -am; x < am; x += 1) {
+        for (let y = -am; y < am; y++) {
+            // r.x *= Math.sin(num);
+            let fx = x * r.y + y * r.x;
+            let fy = y * r.y - x * r.x;
+            // fx += n * 100;
+            let n = openSimplex.noise3D(fx * 0.1, fy * 0.1, num * 0.001);
+            // fy += n * 100;
+            n *= dist(x, y, Math.cos(t * 1e6), Math.sin(t * 1e6)) * 0.02;
+            fx += (Math.cos(n) * 20.5) - 20;
+            // fy += Math.sin(n) * 5.5;
+            vertices.push((fx + tr.x) * sc * asp, (fy + tr.y) * sc, 80 * (n * 0.5 + 0.5) + 5, 1);
+            num++;
+        }
+    }
+    // Create an empty buffer object to store the vertex buffer
+    // var vertex_buffer = gl.createBuffer();
+    //Bind appropriate array buffer to it
+    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // Pass the vertex data to the buffer
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    /*======== Associating shaders to buffer objects ========*/
+    // Bind vertex buffer object
+    gl.bindBuffer(gl.ARRAY_BUFFER, dotsVBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    // Get the attribute location
+    var coord = gl.getAttribLocation(selectedProgram, "coordinates");
+    // Point an attribute to the currently bound VBO
+    gl.vertexAttribPointer(coord, 4, gl.FLOAT, false, 0, 0);
+    // Enable the attribute
+    gl.enableVertexAttribArray(coord);
+    /*============= Drawing the primitive ===============*/
+    // // Clear the canvas
+    // gl.clearColor(0.5, 0.5, 0.5, 0.9);
+    // Clear the color buffer bit
+    // gl.clear(gl.COLOR_BUFFER_BIT);
+    // Draw the triangle
+    gl.drawArrays(gl.POINTS, 0, num);
+}
