@@ -21,6 +21,7 @@ drawTerminal = function(selectedProgram) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 45.0 * sc, 1);
                 vertices.push(x * (9 / 16) * 0.02 * sc - 0.9, (-y * 0.03 * sc - 0.6) - 0.0, 45.0 * sc, 1);
                 num++;
+                        colors.push(0, 0, 0);
             }
         }
     }
@@ -28,7 +29,6 @@ drawTerminal = function(selectedProgram) {
         let r = Math.random();
         let g = Math.random();
         let b = Math.random();
-        colors.push(0, 0, 0);
     }
         for (let x = 0; x <= vt.stringArray[0].length; x++) {
         let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
@@ -40,14 +40,38 @@ drawTerminal = function(selectedProgram) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 40.0 * sc, 1);
                 vertices.push(x * (9 / 16) * 0.02 * sc - 0.9, -y * 0.03 * sc - 0.6, 40.0 * sc, 1);
             num++;
+                        colors.push(1, 1, 1);
             }
         }
     }
     for (let i = 0; i < num; i++) {
-        let r = Math.random();
-        let g = Math.random();
-        let b = Math.random();
-        colors.push(1, 1, 1);
+        // let r = Math.random();
+        // let g = Math.random();
+        // let b = Math.random();
+        // colors.push(1, 1, 1);
+    }
+    
+    for (let x = 0; x <= ornem[0].length; x++) {
+        let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
+        for (let y = 0; y < 9; y++) {
+            let caret = (vt.caretPosition - 0) * 7 + 7;
+            if (ornem[y][x] == 1) {
+                vertices.push(x * (9 / 16) * 0.02 * sc - 0.9, ( -y * 0.03 * sc - 0.6 + (Math.sin(y + drawCount * 3e-1) * 1e-2)) + -0.15, 40.0 * sc, 1);
+                num++;
+                colors.push(0, 0, 0);
+            }
+        }
+    }
+    for (let x = 0; x <= ornem[0].length; x++) {
+        let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
+        for (let y = 0; y < 9; y++) {
+            let caret = (vt.caretPosition - 0) * 7 + 7;
+            if (ornem[y][x] == 1) {
+                vertices.push(x * (9 / 16) * 0.02 * sc - 0.9,( -y * 0.03 * sc - 0.6 + (Math.sin(y + drawCount * 3e-1) * 1e-2)) + -0.15, 40.0 * sc, 1);
+                num++;
+                colors.push(1, 1, 1);
+            }
+        }
     }
     if (vt.enter > 0) {vt.enter--};
     // logJavaScriptConsole(colors.length);
@@ -1343,6 +1367,45 @@ getGlyph = function(g) {
             "0000000",
         ];
         break;
+        case "U+2591":
+        ch = [
+            "0001000",
+            "0100010",
+            "0001000",
+            "0100010",
+            "0001000",
+            "0100010",
+            "0001000",
+            "0100010",
+            "0001000",
+        ];
+        break;
+        case "U+2592":
+        ch = [
+            "0101010",
+            "1010101",
+            "0101010",
+            "1010101",
+            "0101010",
+            "1010101",
+            "0101010",
+            "1010101",
+            "0101010",
+        ];
+        break;
+        case "U+2593":
+        ch = [
+            "1101110",
+            "0111011",
+            "1101110",
+            "0111011",
+            "1101110",
+            "0111011",
+            "1101110",
+            "0111011",
+            "1101110",
+        ];
+        break;
         default:
         ch = [
             "0000000",
@@ -1495,3 +1558,25 @@ VirtualTerminal.prototype.clear = function(s) {
 let vt = new VirtualTerminal();
 // vt.stringArray = [];
 let vtActive = true;
+
+
+makeTerminalString = function(t) {
+    let s = t;
+    let a = new Array(9);
+    for (let y = 0; y < 9; y++) {
+        a[y] = "";
+        // a[y] = a[y] + getGlyph(">")[y];
+        for (let i = 0; i < s.length; i++) {
+             a[y] = a[y] + getGlyph(s[i])[y];
+        }
+    }
+    return a;
+}
+
+let t = ["U+2591", "U+2592", "U+2593"];
+let p = [0, 1, 2];
+let a = [];
+for (let i = 0; i < 46; i++) {
+    a.push(t[p[i % (p.length)]]);
+}
+ornem = makeTerminalString(a);
