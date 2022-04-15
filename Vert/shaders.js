@@ -2210,3 +2210,109 @@ newFlickeringVert.fragText = `
 newFlickeringVert.vertText = newFlickeringVert.vertText.replace(/[^\x00-\x7F]/g, "");
 newFlickeringVert.fragText = newFlickeringVert.fragText.replace(/[^\x00-\x7F]/g, "");
 newFlickeringVert.init();
+
+
+
+
+
+newFlickeringVert.vertText = `
+    // beginGLSL
+    attribute float vertexID;
+    uniform float time;
+    varying float alph;
+    varying vec3 cols;
+    float intersectPlane(vec3 pos, vec3 dir) {
+        return abs(-pos.y / dir.y);
+    }
+    float intersectSphere(vec3 pos, vec3 dir) {
+        // solve pos + k*dir = unit sphere surface
+        // dot(pos + k*dir, pos + k*dir) = 1
+        // quadratic coefficients
+        float a = dot(dir, dir);
+        float b = 2.01 * dot(pos, dir);
+        float c = dot(pos, pos) - 1.0;
+        float discriminant = b * b - 3.0 * a * c;
+        // only the positive root is useful
+        return (-b - sqrt(discriminant)) / (2.0 * a);
+    }
+    void main(void) {
+        float t = time * 1e-2;
+        float id = vertexID;
+        float x = ((fract(id / 512.)) - 0.5) * 2.;
+        float y = ((floor(id / 512.) / 288.) - 0.5) * 2.;
+        vec2 r = vec2(cos(time * 1e-2), sin(time * 1e-2));
+        float fx = x * r.y + y * r.x;
+        float fy = y * r.y - x * r.x;
+        // x = fx;
+        // y = fy;
+        vec3 pos = vec3(0.0, 10.0, -20.0);
+        // vec3 dir = normalize(vec3(x, y, 1.0));
+        vec3 dir = vec3(x * (16. / 9.), y * 1., 1.0);
+        float lfo = sin(time * 0.25e-1) * 3.;
+        float lfo2 = cos(time * 0.25e-1) * 3.;
+        float d = min(intersectPlane(pos, dir), intersectSphere(pos + vec3(lfo2 * 4., -9.5 + (lfo * 2.75), 0.0), dir));
+        d = intersectPlane(pos, dir);
+        for (int i = 0; i < 140; i++) {
+                float fi = float(i) * 0.2;
+                d = min(d, intersectSphere(pos + vec3(cos(time * 1e-3 * fi) * fi, -10. + sin(time * 1e-3 * fi) * fi, fi * -0.2 + 10.), dir));
+            }
+        pos += d * dir;
+        vec3 color = fract(pos * vec3(0.01, 0.005, 0.35));
+        // color = pos;
+        // y = mix(y * 1.5, y * 1.5 + (color.y * 0.2), 0.25 * (sin(time * 1e-1) * 0.5 + 0.5));
+        gl_Position = vec4(x * 1.5 + sin(color.y * 1e3) * 0., y * 1.5 + pos.y * 0., 0.0, 1.0);
+         // gl_Position = vec4((x - 0.25) * 4., (y - 0.25) * 4., 0.0, 1.0);
+        // gl_Position = vec4(color.r * 0.25, color.r * 0.25, 0.0, 1.0);
+        // gl_PointSize = 2. / color.x * 1e-2;
+        gl_PointSize = 8. * pow(color.z, 5.0) * 8. * 1.;
+        // gl_PointSize = 10.;
+        // gl_PointSize = 8. - ((color.z) * 2e-1) + 0.;
+        alph = 0.25 * 0.75;
+        cols = color;
+    }
+    // endGLSL
+`;
+newFlickeringVert.fragText = `
+    // beginGLSL
+    precision mediump float;
+//     varying vec2 myposition;
+//     varying vec2 center;
+    varying float alph;
+    varying vec3 cols;
+    float rand(vec2 co){
+        return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(co.x)));
+    }
+    void main(void) {
+        // vec2 uv = gl_PointCoord.xy / vec2(1600, 1600);
+        // float d = length(uv - center);
+        // vec2 pos = myposition;
+        vec2 uv = gl_FragCoord.xy / vec2(2560, 1600);
+        // uv.x = uv.x + 1.0;
+        uv = uv * 2.0;
+        uv = uv + 0.5;
+        // uv = uv * 1.0;
+        float ALPHA = 0.75;
+        vec2 pos = gl_PointCoord - vec2(0.5, 0.5);
+                float dist_squared = dot(pos, pos);
+        float alpha;
+        if (dist_squared < 0.25) {
+            alpha = ALPHA;
+        } else {
+            alpha = 0.0;
+        }
+        alpha = smoothstep(0.05 / (0.9 + alph), 0.000125, dist_squared) * 0.49;
+        float rando = rand(pos);
+        // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
+        gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 0.75;
+        // gl_FragColor = gl_FragColor.brba;
+//         gl_FragColor.g *= 0.525;
+        gl_FragColor.rgb = gl_FragColor.brr * cols.b * cols.g * vec3(1.0, 1.5, 1.0) * 12.;
+        // gl_FragColor.rgb = pow(gl_FragColor.rgb, 2.0);
+        
+    }
+    // endGLSL
+`;
+// newFlickeringVert.init();
+newFlickeringVert.vertText = newFlickeringVert.vertText.replace(/[^\x00-\x7F]/g, "");
+newFlickeringVert.fragText = newFlickeringVert.fragText.replace(/[^\x00-\x7F]/g, "");
+newFlickeringVert.init();
