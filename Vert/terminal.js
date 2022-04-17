@@ -1461,7 +1461,7 @@ VirtualTerminal.prototype.update = function(e) {
         this.selectionBounds = [0, 0];
     } else if ((s == "ArrowRight") && sel) {
         this.selectionBounds = [0, 0];
-    } else if ((s == "a") && (e.metaKey)) {
+    } else if ((s == "a" || s == "A") && (e.metaKey)) {
         this.selectionBounds = [1, this.text.length + 1];
         // logJavaScriptConsole("aaaaert");
         this.caretPosition = this.text.length;
