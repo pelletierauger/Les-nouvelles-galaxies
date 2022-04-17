@@ -3623,6 +3623,7 @@ void main(void) {
         // pos.y += cos(id * 1e-2 + time * 5e-3) * 0.01;
         // x = mix(x, px, 0.5);
         // y = mix(y, py, 0.5);
+        pos.y += 0.1;
          gl_Position = vec4(pos.x * 1.5, pos.y * 1.5, 0.0, 1.0);
          // gl_Position = vec4((x - 0.25) * 4., (y - 0.25) * 4., 0.0, 1.0);
         // gl_Position = vec4(color.r * 0.25, color.r * 0.25, 0.0, 1.0);
@@ -3632,7 +3633,7 @@ void main(void) {
         // gl_PointSize = 8. - ((color.z) * 2e-1) + 0.;
         alph = 0.25 * 0.75;
         cols = vec3(sin(turb * 40.), cos(turb * 40.), cos(turb * 40.));
-        float vig = (roundedRectangle(pos * 2.5, vec2(0.0, 0.0), vec2(0.9, 0.88) * 1.2, 0.05, 0.5) + 0.0);
+        float vig = (roundedRectangle(pos * 2.5, vec2(0.0, 0.2), vec2(0.9, 0.88) * 1.2, 0.05, 0.5) + 0.0);
         cols = mix(cols, cols * floor(vig), 1.);
     }
     // endGLSL
