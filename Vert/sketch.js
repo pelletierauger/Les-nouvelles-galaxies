@@ -11,7 +11,7 @@ let drawCount = 1110;
 drawCount = 125000;
 let drawIncrement = 1;
 let vertexBuffer;
-let vertices = [];
+let fvertices = [];
 const seed = 10;
 const openSimplex = openSimplexNoise(seed);
 let mS = 1;
@@ -21,14 +21,14 @@ let namedPrograms = {};
 
 // a shader variable
 let texcoordShader;
-let dotsVBuf, bgVBuf;
+let dotsVBuf, termVBuf, dotsCBuf, bgVBuf;
 let texture, texture2, framebuf, framebuf2;
 let vb;
-vertices = [];
+fvertices = [];
 for (let i = 0; i < 1000000; i++) {
-    vertices.push(i);
+    fvertices.push(i);
 }
-vertices = new Float32Array(vertices);
+fvertices = new Float32Array(fvertices);
 
 function setup() {
     socket = io.connect('http://localhost:8080');
@@ -76,7 +76,9 @@ function setup() {
     noStroke();
     vertex_buffer = gl.createBuffer();
     dotsVBuf = gl.createBuffer();
-    bgVBuf = gl.createBuffer();
+    bgVBuf = gl.createBuffer(); 
+    dotsCBuf = gl.createBuffer();
+    termVBuf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     if (!looping) {
         noLoop();
@@ -104,6 +106,12 @@ draw = function() {
     currentProgram = getProgram("new-flickering-dots-vert");
     gl.useProgram(currentProgram);
     drawAlligatorQuietVert(currentProgram);
+
+
+    currentProgram = getProgram("rounded-square");
+    time = gl.getUniformLocation(currentProgram, "time"); 
+    gl.useProgram(currentProgram);
+    drawTerminal(currentProgram);
     // drawSwirl(currentProgram);
     // drawPulsar(currentProgram);
 
@@ -300,22 +308,73 @@ draw = function() {
     }
 }
 
-function keyPressed() {
+// function keyPressed() {
+//     if (keysActive) {
+//         if (keyCode === 32) {
+//             if (looping) {
+//                 noLoop();
+//                 looping = false;
+//             } else {
+//                 loop();
+//                 looping = true;
+//             }
+//         }
+//         if (key == 'r' || key == 'R') {
+//             window.location.reload();
+//         }
+//         if (key == 'm' || key == 'M') {
+//             redraw();
+//         }
+//     }
+// }
+
+
+keyPressed = function() {
     if (keysActive) {
-        if (keyCode === 32) {
-            if (looping) {
+        // if (keyCode === 32) {
+        //     if (looping) {
+        //         noLoop();
+        //         looping = false;
+        //     } else {
+        //         loop();
+        //         looping = true;
+        //     }
+        // }
+        // if (key == 'r' || key == 'R') {
+        //     window.location.reload();
+        // }
+        // if (key == 'm' || key == 'M') {
+        //     redraw();
+        // }
+        // if (key == 'a' || key == 'A') {
+        //     logJavaScriptConsole("yur!");
+        // }
+        // logJavaScriptConsole(key);
+    if (vtActive) {
+                    vt.update(event);
+         // if (keyCode === 8) {
+            // vt.update("delete");
+             // // logJavaScriptConsole(event);
+        // }  else {
+            // vt.update(event);
+        // }
+                     // logJavaScriptConsole(event.key);
+        // logJavaScriptConsole(event.shiftKey);
+        // if (key == 'a' || key == 'A') {
+            // vt.update("a");
+            // logJavaScriptConsole(event.key);
+        // }
+        }
+    }
+}
+
+
+tl = function() {
+                if (looping) {
                 noLoop();
                 looping = false;
             } else {
                 loop();
                 looping = true;
             }
-        }
-        if (key == 'r' || key == 'R') {
-            window.location.reload();
-        }
-        if (key == 'm' || key == 'M') {
-            redraw();
-        }
-    }
-}
+};

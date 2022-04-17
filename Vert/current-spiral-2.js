@@ -1027,7 +1027,7 @@ drawAlligatorQuietVert = function(selectedProgram) {
     /*======== Associating shaders to buffer objects ========*/
     // Bind vertex buffer object
     gl.bindBuffer(gl.ARRAY_BUFFER, dotsVBuf);
-    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, fvertices, gl.STATIC_DRAW);
     // Get the attribute location
     var coord = gl.getAttribLocation(selectedProgram, "vertexID");
     // Point an attribute to the currently bound VBO
