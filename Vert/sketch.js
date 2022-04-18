@@ -351,7 +351,7 @@ keyPressed = function() {
         // }
         // logJavaScriptConsole(key);
     if (vtActive) {
-                    vt.update(event);
+                    // vt.update(event);
          // if (keyCode === 8) {
             // vt.update("delete");
              // // logJavaScriptConsole(event);
@@ -378,3 +378,14 @@ tl = function() {
                 looping = true;
             }
 };
+
+
+keyDown = function() {
+    if (keysActive) {
+        if (vtActive) {
+            vt.update(event);
+            // ljs(event.keyCode);
+        }
+    }
+}
+document.onkeydown = keyDown;       
