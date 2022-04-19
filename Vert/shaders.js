@@ -752,7 +752,7 @@ void main() {
         gl_FragColor = gl_FragColor.brga;
         gl_FragColor.r *= 0.5;
         gl_FragColor.b *= 1.25;
-    gl_FragColor.rgb *= 2.0;
+    gl_FragColor.rgb *= 0.0;
         // gl_FragColor = gl_FragColor.grra;
         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
 }
@@ -828,46 +828,48 @@ gold.init();
 let textureShader = new ShaderProgram("textu");
 
 textureShader.vertText = `
+    // beginGLSL
 attribute vec3 a_position;
 attribute vec2 a_texcoord;
 varying vec2 v_texcoord;
-
 void main() {
   // Multiply the position by the matrix.
   vec4 positionVec4 = vec4(a_position, 1.0);
   // gl_Position = a_position;
   positionVec4.xy = positionVec4.xy * 2.0 - 1.0;
   gl_Position = positionVec4;
-
   // Pass the texcoord to the fragment shader.
   v_texcoord = a_texcoord;
 }
+// endGLSL
 `;
-
 textureShader.fragText = `
+// beginGLSL
 precision mediump float;
-
 // Passed in from the vertex shader.
 uniform float time;
 varying vec2 v_texcoord;
-
 // The texture.
 uniform sampler2D u_texture;
-
 float rand(vec2 co){
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(time)));
 }
-
 void main() {
     vec2 uv = vec2(gl_FragCoord.xy) / vec2(1600, 1600);
    float rando = rand(vec2(uv.x, uv.y));
    gl_FragColor = texture2D(u_texture, v_texcoord);
    // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
    // gl_FragColor.r = gl_FragColor.r * 0.5;
-   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.025)) * 1.5;
+   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.025)) * 1.2;
+    vec3 col = gl_FragColor.rgb;
+    gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
+    gl_FragColor.r += col.r * 0.975;
+    gl_FragColor.b += col.b * 0.25;
+//gl_FragColor.rgb = gl_FragColor.rbg;
 }
+// endGLSL
 `;
-
+textureShader.init();
 
 let processorShader = new ShaderProgram("process");
 
@@ -3150,7 +3152,8 @@ newFlickeringVert.vertText = `
         y += cos(id * 1e-2 + time * 5e-3);
         x = mix(x, px, 0.5);
         y = mix(y, py, 0.5);
-         gl_Position = vec4(x * 0.75 * (9. / 16.), y * 0.75, 0.0, 1.0);
+        x += sin(x * y * 1e6) * 0.02 * sin(y + time * 1e2);
+        gl_Position = vec4(x * 0.75 * (9. / 16.), y * 0.75, 0.0, 1.0);
          // gl_Position = vec4((x - 0.25) * 4., (y - 0.25) * 4., 0.0, 1.0);
         // gl_Position = vec4(color.r * 0.25, color.r * 0.25, 0.0, 1.0);
         // gl_PointSize = 2. / color.x * 1e-2;
@@ -3235,6 +3238,7 @@ newFlickeringVert.vertText = `
         // y /= tan(id / (512. * 288.) * 1e3);
         // x += sin(id * 1e-2 + time * 5e-3);
         // y += cos(id * 1e-2 + time * 5e-3);
+        pos.x += sin(pos.x * pos.y * 1e6) * 0.02 * sin(pos.y + time * 1e2);
         // x = mix(x, px, 0.5);
         // y = mix(y, py, 0.5);
          gl_Position = vec4(pos.x * 0.75, pos.y * 0.75, 0.0, 1.0);
@@ -3608,6 +3612,7 @@ void main(void) {
             float ts = 0.015;
             float xd = sin(distance(pos, vec2(cos(t * i * 0.5) * 0.5, sin(t * i * 0.5) * 0.5)) * 30.) * ts;
             float yd = sin(distance(pos, vec2(sin(t * i * 0.5) * 0.5, cos(t * i * 0.5) * 0.5)) * 30.) * ts;
+xd += sin(pos.x * 1e4) * 0.0004;
             pos.x += xd;
             pos.y += yd;
             turb += xd + yd;
@@ -3628,13 +3633,13 @@ void main(void) {
          // gl_Position = vec4((x - 0.25) * 4., (y - 0.25) * 4., 0.0, 1.0);
         // gl_Position = vec4(color.r * 0.25, color.r * 0.25, 0.0, 1.0);
         // gl_PointSize = 2. / color.x * 1e-2;
-        gl_PointSize = 12.;
+        gl_PointSize = 9.;
         // gl_PointSize = dist_squared * 10.;
         // gl_PointSize = 8. - ((color.z) * 2e-1) + 0.;
         alph = 0.25 * 0.75;
         cols = vec3(sin(turb * 40.), cos(turb * 40.), cos(turb * 40.));
         float vig = (roundedRectangle(pos * 2.5, vec2(0.0, 0.2), vec2(0.9, 0.88) * 1.2, 0.05, 0.5) + 0.0);
-        cols = mix(cols, cols * floor(vig), 1.);
+        cols = mix(cols, cols * floor(vig), 1.) * 1.5;
     }
     // endGLSL
 `;
@@ -4380,7 +4385,8 @@ void main(void) {
         for (float i = 0.0; i < 20.0; i++) {
         float xd = sin(distance(pos, vec2(cos(t + i * 0.1) * 1.2, sin(t + i * 0.1) * 1.2)) * 30.) * 0.03;
         float yd = sin(distance(pos, vec2(sin(t + i * 0.1) * 1.2, cos(t + i * 0.1) * 1.2)) * 30.) * 0.03;
-        pos.x += xd;
+        xd += sin(pos.x * 1e4) * 0.008 * (i / 20.);
+            pos.x += xd;
         pos.y += yd;
             turb += xd + yd;
         }
@@ -4399,14 +4405,14 @@ void main(void) {
          // gl_Position = vec4((x - 0.25) * 4., (y - 0.25) * 4., 0.0, 1.0);
         // gl_Position = vec4(color.r * 0.25, color.r * 0.25, 0.0, 1.0);
         // gl_PointSize = 2. / color.x * 1e-2;
-        gl_PointSize = 8.;
+        gl_PointSize = 6.;
         // gl_PointSize = dist_squared * 10.;
         // gl_PointSize = 8. - ((color.z) * 2e-1) + 0.;
         alph = 0.25 * 0.75;
         cols = vec3(1.0);
         cols = vec3(sin(turb * 10.), cos(turb * 10.), cos(turb * 10.));
        float vig = (roundedRectangle(pos.xy * 1.5, vec2(0.0, 0.0), vec2(0.9, 0.88) * 1.6, 0.05, 0.5) + 0.0);
-        cols = mix(cols, cols * floor(vig), 1.);
+        cols = mix(cols, cols * floor(vig), 1.) * 1.4;
     }
     // endGLSL
 `;
@@ -4583,6 +4589,7 @@ newFlickeringVert.vertText = `
             float ts = 0.01;
             float xd = cos(distance(pos, vec2(cos(t * i * 0.005) * 1.5, sin(t * i * 0.5) * 0.5)) * 30.) * ts;
             float yd = sin(distance(pos, vec2(cos(t * i * 0.005) * 1.5, cos(t * i * 0.5) * 0.5)) * 30.) * ts;
+// xd += sin(pos.x * 1e4) * 0.0008;
             pos.x += xd;
             pos.y += yd;
             turb += xd + yd;
@@ -4689,6 +4696,7 @@ newFlickeringVert.vertText = `
             float ts = 0.01;
             float xd = cos(distance(pos, vec2(cos(fi + -time * 1e-2) * fi, sin(fi + -time * 1e-2) * fi)) * 50.75) * ts;
             float yd = sin(distance(pos, vec2(cos(fi + -time * 1e-2) * fi, sin(fi + -time * 1e-2) * fi)) * 50.75) * ts;
+xd += sin(pos.x * 1e4) * 0.0002;
             pos.x += xd;
             pos.y += yd;
             turb += xd + yd;
@@ -4709,14 +4717,14 @@ newFlickeringVert.vertText = `
          // gl_Position = vec4((x - 0.25) * 4., (y - 0.25) * 4., 0.0, 1.0);
         // gl_Position = vec4(color.r * 0.25, color.r * 0.25, 0.0, 1.0);
         // gl_PointSize = 2. / color.x * 1e-2;
-        gl_PointSize = 9.;
+        gl_PointSize = 8.;
         // gl_PointSize = dist_squared * 10.;
         // gl_PointSize = 8. - ((color.z) * 2e-1) + 0.;
         alph = 0.25 * 0.75;
         cols = vec3(turb * 2.);
         cols = vec3(sin(turb * 100.) * pow(pos.x, -2.5), cos(turb * 100.), cos(turb * 100.));
        float vig = (roundedRectangle(pos * 1.5, vec2(0.0, 0.0), vec2(0.9, 0.88) * 1.2, 0.05, 0.5) + 0.0);
-        cols = mix(cols, cols * floor(vig), 1.);
+        cols = mix(cols, cols * floor(vig), 1.) * 1.2;
         // gl_PointSize *= floor(vig);
     }
     // endGLSL
@@ -4798,6 +4806,7 @@ newFlickeringVert.vertText = `
             float ts = 0.005;
             float xd = cos(distance(pos, vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 50.75) * ts;
             float yd = sin(distance(pos, vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 50.75) * ts;
+xd += sin(pos.x * 1e4) * 0.0008;
             pos.x += xd;
             pos.y += yd;
             turb += xd + yd;
@@ -4908,6 +4917,7 @@ newFlickeringVert.vertText = `
             float xd = cos(distance(pos, vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 30.75) * ts;
             float yd = sin(distance(pos, vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 30.75) * ts;
             xd += sin(pos.y * 1e2) * 0.001;
+            xd += sin(pos.x * 1e4) * 0.0002;
             pos.x += xd;
             pos.y += yd;
             turb += xd + yd;
@@ -5018,6 +5028,7 @@ newFlickeringVert.vertText = `
             float xd = cos(distance(pos, vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 30.75) * ts;
             float yd = sin(distance(pos, vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 30.75) * ts;
             yd += sin(pos.y * 1e2) * 0.0001;
+            xd += sin(pos.x * 1e4) * 0.0002;
             pos.x += xd;
             pos.y += yd;
             turb += xd + yd;
@@ -5155,6 +5166,7 @@ newFlickeringVert.vertText = `
         cols = vec3(sin(turb * 800.) * pow(pos.x, -2.5), cos(turb * 800.), cos(turb * 800.));
        float vig = (roundedRectangle(pos * 1.67, vec2(0.0, 0.0), vec2(0.9, 0.88) * 1.2, 0.05, 0.5) + 0.0);
         cols = mix(cols, cols * floor(vig), 1.);
+            gl_PointSize *= floor(vig);
     }
     // endGLSL
 `;
@@ -5328,7 +5340,7 @@ newFlickeringVert.vertText = `
         return smoothstep(0.66, 0.33, d / thickness * 5.0);
     }
     void main(void) {
-        float t = time * 0.5e-2;
+        float t = time * 0.5e-3;
         float ratio = 16.0 / 9.0;
         float id = vertexID;
         float x = ((fract(id / 512.)) - 0.5) * 2.;
@@ -5348,8 +5360,9 @@ newFlickeringVert.vertText = `
             float ts = 0.005;
             float xd = cos(distance(pos, vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 50.75) * ts;
             float yd = sin(distance(pos, vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 50.75) * ts;
-            pos.x += xd * cos(fi * 0.25 * time);
-            pos.y += yd * cos(fi * 0.25 * time);
+            xd += sin(pos.x * 1e4) * 0.0008;
+            pos.x += xd * cos(fi * 0.25 * t * 1e3);
+            pos.y += yd * cos(fi * 0.25 * t * 1e3);
             turb += xd + yd;
         }
         // pos.x += sin(turb * 10.) * 0.2;
@@ -5444,7 +5457,7 @@ newFlickeringVert.vertText = `
         float id = vertexID;
         float x = ((fract(id / 512.)) - 0.5) * 2.;
         float y = ((floor(id / 512.) / 288.) - 0.5) * 2.;
-        vec2 r = vec2(cos(t), sin(t));
+        vec2 r = vec2(cos(t * 0.5), sin(t * 0.5));
         float dist_squared = dot(vec2(x, y), vec2(0., 0.));
         // x += (dist_squared) * 200.;
         float px = x;
@@ -5457,8 +5470,9 @@ newFlickeringVert.vertText = `
         for (float i = 0.0; i < 25.0; i++) {
             float fi = i * 1e-1;
             float ts = 0.005;
-            float xd = cos(distance(pos, vec2(cos(fi * 1000. + t * 2.) * fi, sin(fi * 1000. + t * 2.) * fi)) * 50.75 + time * 1e-1) * ts;
-            float yd = sin(distance(pos, vec2(cos(fi * 1000. + t * 2.) * fi, sin(fi * 1000. + t * 2.) * fi)) * 50.75 + time * 1e-1) * ts;
+            float xd = cos(distance(pos, vec2(cos(fi * 1000. + t * 1.) * fi, sin(fi * 1000. + t * 1.) * fi)) * 50.75 + time * 0.5e-1) * ts;
+            float yd = sin(distance(pos, vec2(cos(fi * 1000. + t * 1.) * fi, sin(fi * 1000. + t * 1.) * fi)) * 50.75 + time * 0.5e-1) * ts;
+            xd += sin(pos.x * 1e4) * 0.0008;
             pos.x += xd * cos(xd * 2e2) * 0.6;
             pos.y += yd * cos(yd * 2e2) * 0.6;
             turb += xd + yd;
