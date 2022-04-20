@@ -854,6 +854,7 @@ uniform sampler2D u_texture;
 float rand(vec2 co){
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(time)));
 }
+${blendingMath}
 void main() {
     vec2 uv = vec2(gl_FragCoord.xy) / vec2(1600, 1600);
    float rando = rand(vec2(uv.x, uv.y));
@@ -862,6 +863,10 @@ void main() {
    // gl_FragColor.r = gl_FragColor.r * 0.5;
    gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.07)) * 1.2;
     vec3 col = gl_FragColor.rgb;
+        // vec3 levels = LevelsControlInputRange(gl_FragColor.rgb, 0.2, 0.95);
+    vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0));
+    // vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
+    gl_FragColor.rgb = blender;
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.b += col.b * 0.25;
