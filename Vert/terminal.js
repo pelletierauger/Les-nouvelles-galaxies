@@ -1562,3 +1562,54 @@ VirtualTerminal.prototype.clear = function(s) {
 let vt = new VirtualTerminal();
 // vt.stringArray = [];
 let vtActive = true;
+
+
+let TerminalRecorder = function() {
+    this.reset();
+};
+
+Terminal.prototype.reset = function() {
+    this.recording = false;
+    this.frameCount = 0;
+    this.session = [];
+};
+
+
+TerminalRecord.prototype.record = function() {
+    this.reset();
+    this.recording = true;
+    let that = this;
+    keyDown = function() {
+        if (keysActive) {
+            if (vtActive) {
+                vt.update(event);
+                that.log(event);
+                // ljs(event.keyCode);
+            }
+        }
+    }
+    document.onkeydown = keyDown;
+};
+
+
+TerminalRecord.prototype.log = function() {
+  this.session.push([this.frameCount])
+};
+
+TerminalRecord.prototype.stop = function() {
+    this.recording = false;
+    keyDown = function() {
+        if (keysActive) {
+            if (vtActive) {
+                vt.update(event);
+                // ljs(event.keyCode);
+            }
+        }
+    }
+    document.onkeydown = keyDown;
+};
+
+
+
+
+       
