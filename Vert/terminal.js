@@ -41,7 +41,7 @@ drawTerminal = function(selectedProgram) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 40.0 * sc, 1);
                 vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7, 50.0 * sc * 0.9, 1);
             num++;
-                colors.push(0.7, 0.7, 0.7);
+                colors.push(0.75, 0.75, 0.75);
             }
         }
     }
