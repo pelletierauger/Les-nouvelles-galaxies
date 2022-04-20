@@ -5570,24 +5570,33 @@ newFlickeringVert.vertText = `
         float t = time * 0.5e-2;
         float ratio = 16.0 / 9.0;
         float id = vertexID;
-        float x = ((fract(id / 512.)) - 0.5) * 8.;
-        float y = ((floor(id / 512.) / 512.) - 0.5 / ratio) * 8.;
+        float x = ((fract(id / 512.)) - 0.5);
+        float y = ((floor(id / 512.) / 512.) - 0.5 / ratio);
         // float dist_squared = dot(vec2(x, y), vec2(0., 0.));
         // x += (dist_squared) * 200.;
         // float px = x;
         // float py = y;
-        vec2 r = vec2(cos(t * 4.), sin(t * 4.));
-        mat3 m = mat3(
+        vec2 r = vec2(cos(t * 10.), sin(t * 10.));
+        vec2 tr = vec2(0.5, 0.5 / ratio);
+        mat3 tm = mat3(
+            1.0, 0.0, 0.0,
+            0.0, 1.0, 0.0,
+            tr.x, tr.y, 1.0
+        );
+        mat3 rm = mat3(
            r.x, r.y, 0.0, // first column 
           -r.y, r.x, 0.0, // second column
            0.0, 0.0, 1.0  // third column
         );
-        mat3 mm = mat3(
-            3.0, 0.0, 0.0,
-            0.0, 3.0, 0.0,
-            0.0, 0.0, 0.0
+        mat3 sm = mat3(
+            0.5, 0.0, 0.0,
+            0.0, 0.5, 0.0,
+            0.0, 0.0, 1.0
         );
-        m = mm * m;
+        mat3 m = tm * sm * rm;
+        // m = m * 4.0;
+        // rm = sm * rm;
+                // m = tm * m;
         // vec2 pos = cx_mul(vec2(x, y), vec2(0.5, 0.5));
         // pos = cx_mul(pos, vec2(0.75, 0.75));
         
