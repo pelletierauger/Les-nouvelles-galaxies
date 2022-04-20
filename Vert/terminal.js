@@ -1568,14 +1568,14 @@ let TerminalRecorder = function() {
     this.reset();
 };
 
-Terminal.prototype.reset = function() {
+TerminalRecorder.prototype.reset = function() {
     this.recording = false;
     this.frameCount = 0;
     this.session = [];
 };
 
 
-TerminalRecord.prototype.record = function() {
+TerminalRecorder.prototype.record = function() {
     this.reset();
     this.recording = true;
     let that = this;
@@ -1592,11 +1592,11 @@ TerminalRecord.prototype.record = function() {
 };
 
 
-TerminalRecord.prototype.log = function() {
+TerminalRecorder.prototype.log = function() {
   this.session.push([this.frameCount])
 };
 
-TerminalRecord.prototype.stop = function() {
+TerminalRecorder.prototype.stop = function() {
     this.recording = false;
     keyDown = function() {
         if (keysActive) {
