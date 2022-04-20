@@ -19,8 +19,8 @@ drawTerminal = function(selectedProgram) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 45.0 * sc, 1);
-                vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, (-y * 0.03 * sc - 0.7) - 0.0, 45.0 * sc * 0.9, 1);
-                num++;
+                // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, (-y * 0.03 * sc - 0.7) - 0.0, 45.0 * sc * 0.9, 1.0);
+                // num++;
             }
         }
     }
@@ -29,7 +29,7 @@ drawTerminal = function(selectedProgram) {
         let r = Math.random();
         let g = Math.random();
         let b = Math.random();
-        colors.push(0.25, 0, 0);
+        // colors.push(0, 0, 0);
     }
         for (let x = 0; x <= vt.stringArray[0].length; x++) {
         let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
@@ -41,7 +41,7 @@ drawTerminal = function(selectedProgram) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 40.0 * sc, 1);
                 vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7, 40.0 * sc * 0.9, 1);
             num++;
-                colors.push(1, 0.65, 0.45);
+                colors.push(0.7, 0.7, 0.7);
             }
         }
     }

@@ -6066,6 +6066,9 @@ z += tan(id * 1e-4) * id / vertexCount;
         gl_PointSize = 25. - (60. * pos.z * 0.01);
         alph = 0.25 * 0.75;
         cols = vec3(0.65 + 0.5 / pos.z);
+       float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(1.68, 0.91) * 1.5, 0.05, 0.5) + 0.0);
+        cols = mix(cols, cols * floor(vig), 1.);
+        gl_PointSize *= floor(vig);
     }
     // endGLSL
 `;
