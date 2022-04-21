@@ -95,6 +95,7 @@ function setup() {
     setTimeout( function() {
         // keysControl.style.cursor = 'none';
     keysControl.addEventListener("mouseenter", function(event) {
+        document.body.style.cursor = "none";
         document.body.style.backgroundColor = "#000000";
     appControl.setAttribute("style", "display:none;");
     let tabs = document.querySelector("#file-tabs");
@@ -110,6 +111,7 @@ function setup() {
     jsConsoleArea.style.display = "none";
 }, false);
 keysControl.addEventListener("mouseleave", function(event) {
+    document.body.style.cursor = "default";
     document.body.style.backgroundColor = "#1C1C1C";
     appControl.setAttribute("style", "display:block;");
     let tabs = document.querySelector("#file-tabs");
@@ -131,6 +133,7 @@ keysControl.addEventListener("mouseleave", function(event) {
         jsConsoleArea.style.display = "block";
     }
     cinemaMode = false;
+    document.selection.empty();
 }, false);
 }, 1);
 }

@@ -864,9 +864,11 @@ void main() {
    gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.07)) * 1.2;
     vec3 col = gl_FragColor.rgb;
         // vec3 levels = LevelsControlInputRange(gl_FragColor.rgb, 0.2, 0.95);
-    vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0));
+    vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
     // vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
     gl_FragColor.rgb = blender;
+            // vec3 bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
+        // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 0.35);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.b += col.b * 0.25;
@@ -1201,7 +1203,7 @@ newFlickeringVert.vertText = `
         float id = vertexID;
         float x = ((fract(id / 512.)) - 0.5) * 2.;
         float y = ((floor(id / 512.) / 288.) - 0.5) * 2.;
-        vec2 r = vec2(cos(time * 1e-2), sin(time * 1e-2));
+        vec2 r = vec2(cos(time * 1e-3), sin(time * 1e-3));
         float fx = x * r.y + y * r.x;
         float fy = y * r.y - x * r.x;
         x = fx;
@@ -1215,7 +1217,7 @@ newFlickeringVert.vertText = `
         d = intersectPlane(pos, dir);
         for (int i = 0; i < 140; i++) {
                 float fi = float(i) * 0.1;
-                d = min(d, intersectSphere(pos + vec3(cos(time * 1e-2 * fi) * fi, -10. + sin(time * 1e-2 * fi) * fi, fi * 0.2), dir));
+                d = min(d, intersectSphere(pos + vec3(cos(173607. * 1e-3 * fi) * fi, -10. + sin(173607. * 1e-3 * fi) * fi, fi * 0.2), dir));
             }
         pos += d * dir;
         vec3 color = fract(pos * 0.5);
@@ -1704,6 +1706,10 @@ newFlickeringVert.vertText = `
     uniform float time;
     varying float alph;
     varying vec3 cols;
+    float roundedRectangle (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
+        float d = length(max(abs(uv - pos),size) - size) - radius;
+        return smoothstep(0.66, 0.33, d / thickness * 5.0);
+    }
     float intersectPlane(vec3 pos, vec3 dir) {
         return abs(-pos.y / dir.y);
     }
@@ -1752,6 +1758,13 @@ newFlickeringVert.vertText = `
         // gl_PointSize = 8. - ((color.z) * 2e-1) + 0.;
         alph = 0.25 * 0.75;
         cols = color;
+       float vig = (roundedRectangle(vec2(x * 1.5, y * 1.5), vec2(0.0, 0.0), vec2(0.9, 0.88) * 0.92, 0.05, 0.25) + 0.0);
+        cols = mix(cols, cols * (vig), 1.);
+        gl_PointSize = (gl_PointSize * vig);
+        if (floor(vig) == 0.0) {
+            // gl_PointSize = 0.0;
+        }
+        // gl_PointSize = min(0.0,  vig);
     }
     // endGLSL
 `;
@@ -4455,6 +4468,8 @@ newFlickeringVert.fragText = `
         gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph)) * 0.045 + alpha)) * 0.75;
         gl_FragColor.rgb = cols;
         gl_FragColor.b *= 0.75;
+        vec3 bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
+        gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 0.7);
         
     }
     // endGLSL
@@ -5210,7 +5225,7 @@ newFlickeringVert.fragText = `
         gl_FragColor.rgb = gl_FragColor.rbr;
         gl_FragColor.rgb = cols;
         gl_FragColor.b *= 0.75;
-        
+         
     }
     // endGLSL
 `;
@@ -5989,7 +6004,7 @@ newFlickeringVert.vertText = `
         return smoothstep(0.66, 0.33, d / thickness * 5.0);
     }
     void main(void) {
-        float t = time * 0.5e-2;
+        float t = time * 0.25e-2;
         float ratio = 16.0 / 9.0;
         float vertexCount = 147456.0;
         float id = vertexID;
