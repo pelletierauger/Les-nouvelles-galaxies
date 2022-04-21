@@ -977,6 +977,50 @@ drawAlligatorQuiet = function(selectedProgram) {
 }
 
 
+if (JSONs) {
+avila = JSON.parse(JSONs[0].data)
+drawAlligatorQuiet = function(selectedProgram) {
+    vertices = [];
+    let dotCount = 0;
+    let t = drawCount;
+    let al = 1.29 - Math.sin(t * 0.1) * 0.5;
+    // vertices = JSONs[0].data;
+    // JSONs[0].data.length
+    for (let i = 0; i < avila.length; i += 2) {
+        let x = avila[i] * (9 / 16) * 1.5;
+        let y = -avila[i + 1] * 1.5;
+        let zo = (openSimplex.noise2D(i, (t * 0.001 + i) * 1e2 + 1)) * 40;
+        let mo = Math.sin(Math.sin(y * 1e-2 + t * 1e2) + zo * 0.25e-1 + y * 0.25e-1) * Math.floor(Math.sin(y + t * 1e2)) * 10;
+        // x += mo * Math.sin(t * 1e-1);
+        vertices.push(x * 0.003 - 1.5, y * 0.003 + 1.2, 20 + zo, al);
+        dotCount++;
+    }
+    // Create an empty buffer object to store the vertex buffer
+    // var vertex_buffer = gl.createBuffer();
+    //Bind appropriate array buffer to it
+    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // Pass the vertex data to the buffer
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    /*======== Associating shaders to buffer objects ========*/
+    // Bind vertex buffer object
+    gl.bindBuffer(gl.ARRAY_BUFFER, dotsVBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    // Get the attribute location
+    var coord = gl.getAttribLocation(selectedProgram, "coordinates");
+    // Point an attribute to the currently bound VBO
+    gl.vertexAttribPointer(coord, 4, gl.FLOAT, false, 0, 0);
+    // Enable the attribute
+    gl.enableVertexAttribArray(coord);
+    /*============= Drawing the primitive ===============*/
+    // // Clear the canvas
+    // gl.clearColor(0.5, 0.5, 0.5, 0.9);
+    // Clear the color buffer bit
+    // gl.clear(gl.COLOR_BUFFER_BIT);
+    // Draw the triangle
+    gl.drawArrays(gl.POINTS, 0, dotCount - 50000);
+}
+}
+
 
 drawGrid = function(selectedProgram) {
     vertices = [];

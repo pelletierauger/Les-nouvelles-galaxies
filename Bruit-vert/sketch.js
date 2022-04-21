@@ -48,9 +48,15 @@ let namedPrograms = {};
 // a shader variable
 let texcoordShader;
 let dotsVBuf, termVBuf, dotsCBuf, bgVBuf;
+let JSONs;
 
 function setup() {
     socket = io.connect('http://localhost:8080');
+        socket.on('pushJSONs', function(data) {
+        JSONs = data;
+        draw();
+    });
+    socket.emit('pullJSONs', "");
     // socket.on('receiveOSC', receiveOSC);
     pixelDensity(1);
     cnvs = createCanvas(windowWidth, windowWidth * 9 / 16, WEBGL);
@@ -179,9 +185,9 @@ draw = function() {
     // currentProgram = getProgram("faster-dots");
     gl.useProgram(currentProgram);
     // drawPulsar(currentProgram);
-    // drawAlligatorQuiet(currentProgram);
+    drawAlligatorQuiet(currentProgram);
     // drawSwirl(currentProgram);
-    drawGrid(currentProgram);
+    // drawGrid(currentProgram);
     // drawSmoke(currentProgram);
     currentProgram = getProgram("rounded-square");
     time = gl.getUniformLocation(currentProgram, "time"); 
