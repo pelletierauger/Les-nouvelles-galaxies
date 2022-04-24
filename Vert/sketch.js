@@ -414,7 +414,8 @@ keyPressed = function() {
 }
 
 
-tl = function() {
+tl = function(d = 0) {
+    setTimeout(function() {
                 if (looping) {
                 noLoop();
                 looping = false;
@@ -422,6 +423,7 @@ tl = function() {
                 loop();
                 looping = true;
             }
+    }, d * 1e3);
 };
 
 
