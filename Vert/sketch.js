@@ -133,9 +133,14 @@ keysControl.addEventListener("mouseleave", function(event) {
         jsConsoleArea.style.display = "block";
     }
     cinemaMode = false;
-    document.selection.empty();
+    clearSelection();
 }, false);
 }, 1);
+}
+
+function clearSelection() {
+    if (window.getSelection) {window.getSelection().removeAllRanges();}
+    else if (document.selection) {document.selection.empty();}
 }
 
 draw = function() {

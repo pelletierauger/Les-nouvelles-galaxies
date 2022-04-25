@@ -6329,7 +6329,7 @@ newFlickeringVert.vertText = `
         return smoothstep(0.66, 0.33, d / thickness * 5.0);
     }
     void main(void) {
-        float t = time * 0.5e-2;
+        float t = time * 0.25e-2;
         float ratio = 16.0 / 9.0;
         float vertexCount = 147456.0;
         float id = vertexID;

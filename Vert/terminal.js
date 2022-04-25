@@ -51,6 +51,25 @@ drawTerminal = function(selectedProgram) {
         let b = Math.random();
         // colors.push(1, 0.65, 0.45);
     }
+    
+    
+    // First idea for visualizing some data
+    // for (let x = 0; x < 30; x++) {
+    //      for (let y = 0; y < 15; y++) {
+    //         let m = Math.sin(x * 1e-1 + y * drawCount * 1e-2);
+    //          m += Math.cos(x * y * 0.01);
+    //          let tx = -0.86, ty = 0;
+    //          if (m < 0.5) {
+    //              vertices.push(x * 0.01 * (9 / 16) * 4 + tx, -y * 4 * 0.01 + ty - 0.02, 50.0 * sc * 0.9, 1);
+    //                          num++;
+    //             colors.push(0, 0, 0);
+    //              vertices.push(x * 0.01 * (9 / 16) * 4 + tx, -y * 4 * 0.01 + ty, 50.0 * sc * 0.9, 1);
+    //                          num++;
+    //             colors.push(0.75, 0.75, 0.75);
+    //          }
+    //     }
+    // }
+    
     if (vt.enter > 0) {vt.enter--};
     // logJavaScriptConsole(colors.length);
     // Create an empty buffer object to store the vertex buffer
