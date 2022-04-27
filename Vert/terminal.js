@@ -19,8 +19,8 @@ drawTerminal = function(selectedProgram) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 45.0 * sc, 1);
-                vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, (-y * 0.03 * sc - 0.7) - 0.02, 55.0 * sc * 0.9, 1.0);
-                num++;
+                // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, (-y * 0.03 * sc - 0.7) - 0.02, 55.0 * sc * 0.9, 1.0);
+                // num++;
             }
         }
     }
@@ -29,7 +29,7 @@ drawTerminal = function(selectedProgram) {
         let r = Math.random();
         let g = Math.random();
         let b = Math.random();
-        colors.push(0, 0, 0);
+        // colors.push(0, 0, 0);
     }
         for (let x = 0; x <= vt.stringArray[0].length; x++) {
         let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
@@ -39,9 +39,9 @@ drawTerminal = function(selectedProgram) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 40.0 * sc, 1);
-                vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7, 50.0 * sc * 0.9, 1);
-            num++;
-                colors.push(0.75, 0.75, 0.75);
+                // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7, 50.0 * sc * 0.9, 1);
+            // num++;
+                // colors.push(0.75, 0.75, 0.75);
             }
         }
     }
@@ -53,6 +53,42 @@ drawTerminal = function(selectedProgram) {
     }
     
     
+                for (let x = 0; x <= lune.stringArray[0].length; x++) {
+                let sc = 1.2;
+        let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
+        for (let y = 0; y < 9; y++) {
+            let caret = (lune.caretPosition - 0) * 7 + 7;
+            if (lune.stringArray[y][x] == sel) {
+            // if (Math.sin(x * y) > 0.5) {
+            // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
+            // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 40.0 * sc, 1);
+                vertices.push(x * (9 / 16) * 0.02 * sc - 0.52, -y * 0.03 * sc - 0.7 + 1.05 - 0.04, 50.0 * sc * 0.9, 1);
+            num++;
+                colors.push(0, 0, 0);
+                // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 + 1.2, 50.0 * sc * 0.9, 1);
+            // num++;
+                // colors.push(0.75, 0.75, 0.75);
+            }
+        }
+    }
+            for (let x = 0; x <= lune.stringArray[0].length; x++) {
+                let sc = 1.2;
+        let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
+        for (let y = 0; y < 9; y++) {
+            let caret = (lune.caretPosition - 0) * 7 + 7;
+            if (lune.stringArray[y][x] == sel) {
+            // if (Math.sin(x * y) > 0.5) {
+            // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
+            // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 40.0 * sc, 1);
+                // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 + 1.2 - 0.1, 50.0 * sc * 0.9, 1);
+            // num++;
+                // colors.push(0, 0, 0);
+                vertices.push(x * (9 / 16) * 0.02 * sc - 0.52, -y * 0.03 * sc - 0.7 + 1.05, 50.0 * sc * 0.9, 1);
+            num++;
+                colors.push(0.75, 0.75, 0.75);
+            }
+        }
+    }
     // First idea for visualizing some data
     // for (let x = 0; x < 30; x++) {
     //      for (let y = 0; y < 15; y++) {
@@ -165,7 +201,7 @@ roundedSquare.fragText = `
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;
-        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 0.5, 0.1, 0.5);
+        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 0.95, 0.4, 0.125);
         float rando = rand(uv * time) * 0.1;
         gl_FragColor = vec4(cols, color - rando);
     }
@@ -1629,6 +1665,6 @@ TerminalRecorder.prototype.stop = function() {
 };
 
 
-
-
-       
+lune = new VirtualTerminal();
+lune.text = "Lune Vide"
+lune.makeTerminalString();
