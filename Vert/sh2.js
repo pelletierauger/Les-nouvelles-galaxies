@@ -2072,7 +2072,7 @@ newFlickeringVert.vertText = `
            0.0, 0.0, 1.0, 0.0,  // third column
            0.0, 0.0, 0.0, 1.0
         );
-        float a = 10.;
+        float a = time * 1e-2;
         vec2 zz = vec2(cos(a), sin(a));
         mat4 zr2 = mat4(
            zz.x, -zz.y, 0.0, 0.0, // first column 
@@ -2097,12 +2097,12 @@ newFlickeringVert.vertText = `
         float turb = 0.0;
         for (float i = 0.0; i < 25.0; i++) {
             float fi = i * 2e-2;
-            float ts = 0.001 * sin(x * y * 1.5e1) * 3.;
-            float xd = cos(distance(pos2, vec2(cos(fi * 1000. + t * 0.001) * fi, sin(fi * 1000. + t * 0.001) * fi)) * 50.75 + time * 0.25) * ts;
-            float yd = sin(distance(pos2, vec2(cos(fi * 1000. + t * 0.001) * fi, sin(fi * 1000. + t * 0.001) * fi)) * 50.75 + time * 0.25) * ts;
-            xd += sin(pos2.x * 1e3) * 0.0008;
-            pos2.x += xd * cos(xd * 2e2) * 1.6;
-            pos2.y += yd * cos(yd * 2e2) * 1.6;
+            float ts = 0.0001 * sin(x * y * 1.5e1) * 3.;
+            float xd = cos(distance(pos2, vec2(cos(fi * 1000. + t * 0.0001) * fi, sin(fi * 1000. + t * 0.001) * fi)) * 50.75 + time * 0.25) * ts;
+            float yd = sin(distance(pos2, vec2(cos(fi * 1000. + t * 0.0001) * fi, sin(fi * 1000. + t * 0.001) * fi)) * 50.75 + time * 0.25) * ts;
+            // xd += sin(pos2.x * 1e3) * 0.0008;
+            pos2.x += xd * cos(xd * 2e-2) * 0.6;
+            pos2.y += yd * cos(yd * 2e-2) * 0.6;
             turb += xd + yd;
         }
         
@@ -2115,7 +2115,7 @@ newFlickeringVert.vertText = `
         // z = id / vertexCount * 40. * sin(x * id * 1e2 + tan(id * 1e8) * 1e-1) * 0.5;
         // z = mix(z, 0.0, 0.85);
         z = 0.0;
-        z = z + fbm((vec2(x, y) + 10.0) * 1. + t * 2e-1) * 0.75;
+        z = z + fbm((vec2(x, y) + 10.0) * 1. + t * 2e-1) * 0.5;
                 // z += id / vertexCount * 400. * sin(x * id * 1e2 + tan(id * 1e8) * 1e-1) * 0.5;
                 // z += tan(id * 1e-4) * id / vertexCount * 0.1;
         float d = distance(vec2(pos2.x, pos2.y), vec2(0.0, 0.0));
@@ -2127,11 +2127,11 @@ newFlickeringVert.vertText = `
                 pos = yr * pos;
         pos = tm4 * pos;
         // pos = m * pos;
-        gl_Position = vec4(pos.x / ratio * 50., pos.y * 50., 0.0, pos.z * 1.);
+        gl_Position = vec4(pos.x / ratio * 30., pos.y * 30. + 10.1, 0.0, pos.z * 1.);
         gl_PointSize = 34. - (60. * pos.z * 0.02);
         alph = 0.25 * 0.75;
         cols = vec3(0.65 + 0.5 / pos.z);
-       float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(1.85, 0.94) * 0.026, 0.001, 0.05) + 0.0);
+       float vig = (roundedRectangle(pos.xy * 1.5 * 0.25 / pos.z, vec2(0.0, -0.007), vec2(1.85, 0.94) * 0.006, 0.001, 0.05) + 0.0);
         cols = mix(cols, cols * floor(vig), 1.);
         gl_PointSize *= floor(vig);
     }

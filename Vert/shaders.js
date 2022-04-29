@@ -925,9 +925,9 @@ void main() {
     
     blender = BlendSoftLight(blender, vec3(1.0, 0.0, 0.0).brg.gbr);
     // Les aubes rouges et sanguinolentes
-    gl_FragColor.rgb = blender;
-    // Les nuits bleues, profondes et ensorcelantes
     gl_FragColor.rgb = blender.bgr;
+    // Les nuits bleues, profondes et ensorcelantes
+    // gl_FragColor.rgb = mix(gl_FragColor.bgr, blender, 0.75);
             // vec3 bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
         // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 0.35);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
