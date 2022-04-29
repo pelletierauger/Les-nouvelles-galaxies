@@ -2132,8 +2132,12 @@ newFlickeringVert.vertText = `
         alph = 0.25 * 0.75;
         cols = vec3(0.65 + 0.5 / pos.z);
        float vig = (roundedRectangle(pos.xy * 1.5 * 0.25 / pos.z, vec2(0.0, -0.007), vec2(1.85, 0.94) * 0.006, 0.001, 0.05) + 0.0);
-        cols = mix(cols, cols * floor(vig), 1.);
-        gl_PointSize *= floor(vig);
+       float vig2 = (roundedRectangle(pos.xy * 1.5 * 0.25 / pos.z, vec2(0.0, -0.007), vec2(1.85, 0.94) * 0.008 * sin(pos.x * 1e1), 0.001, 0.05) + 0.0);
+        vig += sin(pos.x * 1e5 + pos.y * 1e4) * 10.5;
+        cols = mix(cols, cols * floor(vig2), 1.);
+        gl_PointSize *= 1.0 + (floor(vig));
+        gl_PointSize *= (floor(vig2 * 10.5));
+        // gl_PointSize *= (floor(vig2));
     }
     // endGLSL
 `;
