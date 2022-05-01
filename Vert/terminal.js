@@ -74,19 +74,20 @@ drawTerminal = function(selectedProgram) {
         for (let x = 0; x < face[0].length; x++) {
          for (let y = 0; y < face.length; y++) {
             let p = face[y][x];
+             // p = "x";
              let sc = 1.5;
              // m += Math.cos(x * y * 0.01);
-             let tx = -0.2, ty = 0.7;
+             let tx = -0.35, ty = 0.7;
              if (p == "1") {
-                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.5 * sc * 0.01 + Math.sin(drawCount * 0.25 + y) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
+                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.01 + Math.sin(drawCount * 0.25 + y) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
                              num++;
                 colors.push(0, 0, 0);                 
              } else if (p == "0") {
-                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.5 * sc * 0.01 + Math.sin(drawCount * 0.25 + y) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
+                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.01 + Math.sin(drawCount * 0.25 + y) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
                              num++;
                 colors.push(0.75, 0.75, 0.75);
              } else if (p == "2") {
-                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.5 * sc * 0.01 + Math.sin(drawCount * 0.25 + y) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
+                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.01 + Math.sin(drawCount * 0.25 + y) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
                              num++;
                 colors.push(0.6, 0.6, 0.6);
              }
