@@ -873,14 +873,14 @@ void main() {
     // Les aubes rouges et sanguinolentes
     gl_FragColor.rgb = blender;
     // Les nuits bleues, profondes et ensorcelantes
-    gl_FragColor.rgb = blender.bgr;
+    // gl_FragColor.rgb = blender.bgr;
     // ------------------------------------------------
     // Spatial desaturation filter
     // ------------------------------------------------
     float lum = (gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) * 0.333333 * 1.;
-    float d = distance(uv, vec2(0.35));
+    float d = distance(uv, vec2(0.4, 0.22));
     d = smoothstep(0.2, 0.5, d);
-    gl_FragColor.rgb += vec3(lum * -5.125, lum * -5.125, 1.3 / lum) * -0.04 * pow(d, 0.25);
+    gl_FragColor.rgb += vec3(lum * -5.125, lum * -5.125, 1.3 / lum).bgr * -0.04 * pow(d, 0.25);
     // ------------------------------------------------
              // vec3 bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
         // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 0.35);
@@ -6765,7 +6765,7 @@ newFlickeringVert.vertText = `
         return f/(0.9375)*smoothstep( 260., 768., p.y ); // flat at beginning
     }
     void main(void) {
-        float t = time * 0.5e-2;
+        float t = 1e3 * 0.5e-2;
         float ratio = 16.0 / 9.0;
         float vertexCount = 147456.0;
         float id = vertexID;
@@ -7276,9 +7276,12 @@ newFlickeringVert.vertText = `
         gl_PointSize = 29.5 - (60. * pos.z * 0.02);
         alph = 0.25 * 0.75;
         cols = vec3(0.65 + 0.5 / pos.z);
-       float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(1.82, 0.96) * 0.026 * 2.69, 0.001, 0.05) + 0.0);
-        cols = mix(cols, cols * floor(vig), 1.);
-        gl_PointSize *= floor(vig);
+       float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(2.05, 1.01) * 0.09 * 0.63, 0.005, 0.1) + 0.0);
+        cols = mix(cols, cols * pow(vig, 0.1), 1.);
+        gl_PointSize *= pow(vig, 4.);
+       // float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(1.82, 0.96) * 0.026 * 2.69, 0.001, 0.05) + 0.0);
+       //  cols = mix(cols, cols * floor(vig), 1.);
+       //  gl_PointSize *= floor(vig);
     }
     // endGLSL
 `;
