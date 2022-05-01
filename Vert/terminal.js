@@ -75,9 +75,9 @@ drawTerminal = function(selectedProgram) {
          for (let y = 0; y < face.length; y++) {
             let p = face[y][x];
              // p = "x";
-             let sc = 1.5;
+             let sc = 3.5;
              // m += Math.cos(x * y * 0.01);
-             let tx = -0.35, ty = 0.7;
+             let tx = -0.35, ty = 0.85;
              if (p == "1") {
                  vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.01 + Math.sin(drawCount * 0.25 + y) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
                              num++;
@@ -183,7 +183,7 @@ roundedSquare.fragText = `
         t = 100. + (t * 1e-4);
         float w = 0.15 + (sin(t * 1e-2 * tan(t * 2e-2)) + 1.0) * 0.25;
         float d = length(max(abs(uv - pos), size * 0.5) - size * 0.5) * w - radius * 0.01;
-        return smoothstep(1.99 + ((sin(t * 10. * tan(t * 1e1)) + 1.0) * 0.5), 0.11, d * 10. / thickness * 5.0 * 0.125 * 1.5);
+        return smoothstep(1.99 + ((sin(t * 10. * tan(t * 1e1)) + 1.0) * 0.5), 0.11, d * 10. / thickness * 5.0 * 0.25 * 1.5);
     }
     float roundedRectangle (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
         float d = length(max(abs(uv - pos), size) - size) - radius;
@@ -194,7 +194,7 @@ roundedSquare.fragText = `
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;
-        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 0.5, 0.1, 0.5);
+        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 1.75, 0.8, 0.125);
         float rando = rand(uv * time) * 0.1;
         gl_FragColor = vec4(cols, color - rando);
     }
@@ -1670,8 +1670,8 @@ TerminalRecorder.prototype.stop = function() {
             "..........000000000000000002...........",
             ".......000000000000000000000002........",
             ".....0000000000000000000000000002......",
-            "....000001111110000000000011111002.....",
-            "...00000000001111000000011110000022....",
+            "....000111111110000000000011111102.....",
+            "...00111000001111000000011110001112....",
             "..00000002222220000002222220000000222..",
             ".0000011111111100000122221111111112222.",
             "000001000111000100001222100011100012222",
@@ -1680,7 +1680,7 @@ TerminalRecorder.prototype.stop = function() {
             ".0000000000000000011111220000000000222.",
             "...0000000000000000000000000000022222..",
             "....0000000000000000000000000002222....",
-            "......0000000002111111111120000222.....",
+            "......0000000000111111111120000222.....",
             "........0000000000000222200000222......",
             "...........00000000222200000222........",
             "..............00000000000022...........",

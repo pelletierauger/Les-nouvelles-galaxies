@@ -6245,7 +6245,7 @@ newFlickeringVert.vertText = `
         return f/(0.9375)*smoothstep( 260., 768., p.y ); // flat at beginning
     }
     void main(void) {
-        float t = 7501683. * 0.5e-2;
+        float t = time * 0.5e-2;
         float ratio = 16.0 / 9.0;
         float vertexCount = 147456.0;
         float id = vertexID;
@@ -7318,7 +7318,7 @@ newFlickeringVert.fragText = `
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph)) * 0.045 + alpha)) * 0.5;
         // gl_FragColor.rgb = gl_FragColor.rbr;
-        gl_FragColor.rgb = cols;
+        gl_FragColor.rgb = cols * 0.5;
         // gl_FragColor.b *= 0.75;
         
     }
@@ -7479,7 +7479,7 @@ newFlickeringVert.vertText = `
         gl_Position = vec4(pos.x / ratio * 20., pos.y * 20., 0.0, pos.z * 1.);
         gl_PointSize = 29.5 - (60. * pos.z * 0.02);
         alph = 0.25 * 0.75;
-        cols = vec3(0.65 + 0.5 / pos.z);
+        cols = vec3(0.65 + 0.5 / pos.z) * 0.5;
        float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(1.82, 0.96) * 0.026 * 2.69, 0.001, 0.05) + 0.0);
         cols = mix(cols, cols * floor(vig), 1.);
         gl_PointSize *= floor(vig);
@@ -7680,7 +7680,7 @@ newFlickeringVert.vertText = `
         gl_Position = vec4(pos.x / ratio * 20., pos.y * 20., 0.0, pos.z * 1.);
         gl_PointSize = 29.5 - (60. * pos.z * 0.02);
         alph = 0.25 * 0.75;
-        cols = vec3(0.65 + 0.5 / pos.z);
+        cols = vec3(0.65 + 0.5 / pos.z) * 0.5;
        float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(1.82, 0.96) * 0.026 * 2.69, 0.001, 0.05) + 0.0);
         cols = mix(cols, cols * floor(vig), 1.);
         gl_PointSize *= floor(vig);
@@ -7889,7 +7889,7 @@ newFlickeringVert.vertText = `
         gl_Position = vec4(pos.x / ratio * 15., pos.y * 15., 0.0, pos.z * 1.);
         gl_PointSize = 29.5 - (60. * pos.z * 0.02);
         alph = 0.25 * 0.75;
-        cols = vec3(0.65 + 0.5 / pos.z);
+        cols = vec3(0.65 + 0.5 / pos.z) * 0.5;
        float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(1.82, 0.98) * 0.026 * 3.59, 0.001, 0.05) + 0.0);
         cols = mix(cols, cols * floor(vig), 1.);
         gl_PointSize *= floor(vig);
