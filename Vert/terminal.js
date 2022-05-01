@@ -75,9 +75,9 @@ drawTerminal = function(selectedProgram) {
          for (let y = 0; y < face.length; y++) {
             let p = face[y][x];
              // p = "x";
-             let sc = 3.5;
+             let sc = 1.5;
              // m += Math.cos(x * y * 0.01);
-             let tx = -0.4, ty = 0.85;
+             let tx = -0.17, ty = 0.85;
              let osc = Math.sin(drawCount * 1e-1 + 2e-1 * x) * 0.1;
              if (p == "1") {
                  vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.01 + Math.sin(drawCount * 0.25 + y) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
@@ -197,7 +197,7 @@ roundedSquare.fragText = `
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;
-        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 1.75, 0.8, 0.125);
+        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 1.15, 0.48, 0.5);
         float rando = rand(uv * time) * 0.1;
         gl_FragColor = vec4(cols, color - rando);
     }
