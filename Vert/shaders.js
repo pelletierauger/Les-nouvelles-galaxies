@@ -941,15 +941,15 @@ void main() {
     // Les aubes rouges et sanguinolentes
     gl_FragColor.rgb = blender;
     // Les nuits bleues, profondes et ensorcelantes
-    gl_FragColor.rgb = blender.bgr;
+    // gl_FragColor.rgb = blender.bgr;
     // ------------------------------------------------
     // Spatial desaturation filter
     // ------------------------------------------------
     float lum = (gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) * 0.333333 * 1.;
     float d = distance(uv, vec2(0.35));
     d = smoothstep(0.2, 0.5, d);
-    gl_FragColor.rgb += vec3(lum * -5.125, lum * -5.125, 1.3 / lum) * -0.04 * pow(d, 0.25);
-    gl_FragColor.b *= 0.6;
+    gl_FragColor.rgb += vec3(lum * -5.125, lum * -5.125, 1.3 / lum).bgr * -0.04 * pow(d, 0.25);
+    // gl_FragColor.b *= 0.6;
     // ------------------------------------------------
              // vec3 bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
         // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 0.35);
