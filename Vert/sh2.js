@@ -2580,6 +2580,7 @@ pixelateShader.vertText = `
     varying float alph;
     varying vec3 cols;
     varying float ttime;
+    varying vec2 pos;
     uniform sampler2D u_texture;
     float map(float value, float min1, float max1, float min2, float max2) {
         float perc = (value - min1) / (max1 - min1);
@@ -2602,15 +2603,15 @@ pixelateShader.vertText = `
         float id = vertexID;
         float x = ((fract(id / 512.)) - 0.5) * 1.;
         float y = ((floor(id / 512.) / 288.) - 0.5) * 1.;
-        vec3 pos = vec3(0.0, 0.0, 0.0);
+        pos = vec2(x, y);
         vec3 dir = normalize(vec3(x, y, 1.0));
         vec3 color = vec3(1.0, 0.0, 0.0);
-        color = texture2D(u_texture, vec2(x + 0.5, y + 0.5) * 0.25).rgb * vec3(1., 1., 1.);
+        color = texture2D(u_texture, vec2(x + 0.5, y + 0.5) * 0.5 * (1. - sin(time * 1e-1) * 0.1)).rgb * vec3(1., 1., 1.);
         // y += sin(y * 1e-3 + time * 0.01) * 2.5;
-        x += sin(y + (noise(vec2(tan(y), tan(x)) * 1e2 * time) * 5.5 * noise(vec2(x, y))) + time * 1e1) * 0.1;
+        x += sin(y + (noise(vec2(tan(y), tan(x)) * 1e1 * time) * 5.5 * noise(vec2(x, y))) + time * 3e-2) * 0.4;
         float n = noise(vec2(x * 10. + cos(time * 2e-3) * 20., y * 10. + sin(time * 2e-3) * 20.));
-        gl_Position = vec4(x * 2., y * 2., 0.0, 1.0);
-        gl_PointSize = 4.;
+        gl_Position = vec4(x * 2., y * 3. + 0.5, 0.0, 1.0);
+        gl_PointSize = 5.;
         alph = 0.25 * 0.75;
         cols = color;
         ttime = time;
@@ -2624,7 +2625,8 @@ pixelateShader.fragText = `
 //     varying vec2 myposition;
 //     varying vec2 center;
     varying float alph;
-varying vec3 cols;
+    varying vec3 cols;
+    varying vec2 pos;
     float rand(vec2 co){
         return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(co.x)));
     }
@@ -2662,10 +2664,11 @@ varying vec3 cols;
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 0.75;
-        gl_FragColor.a = roundedRectangleFlicker(gl_PointCoord, vec2(1.), vec2(1.4), 0.02, 0.005);
+        gl_FragColor.a = roundedRectangleFlicker(gl_PointCoord, vec2(0.5), vec2(0.1), 0.3, 0.5);
         // gl_FragColor = gl_FragColor.brba;
-//         gl_FragColor.g *= 0.525;
+        // gl_FragColor.a = 1.;
         gl_FragColor.rgb = cols;
+        // gl_FragColor.rgb = vec3(1.);
         
     }
     // endGLSL

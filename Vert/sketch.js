@@ -334,9 +334,13 @@ draw = function() {
     
     var textureLocation = gl.getUniformLocation(textureShader, "u_texture");
     gl.uniform1i(textureLocation, 0);
-    var timeLocation = gl.getUniformLocation(textureShader, "time");
-    gl.uniform1f(timeLocation, frameCount * 0.01);
-// 
+    // var timeLocation = gl.getUniformLocation(textureShader, "time");
+        var time = gl.getUniformLocation(textureShader, "time");
+// gl.uniform1f(timeLocation, frameCount * 0.01);
+//     var time = gl.getUniformLocation(selectedProgram, "time");
+    // Point an attribute to the currently bound VBO
+    // gl.vertexAttribPointer(coord, 1, gl.FLOAT, false, 0, 0);
+    gl.uniform1f(time, drawCount);
 //     var texcoordLocation = gl.getAttribLocation(textureShader, "a_texcoord");
 //     gl.enableVertexAttribArray(texcoordLocation);
 // // 
