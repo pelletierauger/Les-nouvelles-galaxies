@@ -2566,3 +2566,112 @@ newFlickeringVert.fragText = `
 newFlickeringVert.vertText = newFlickeringVert.vertText.replace(/[^\x00-\x7F]/g, "");
 newFlickeringVert.fragText = newFlickeringVert.fragText.replace(/[^\x00-\x7F]/g, "");
 newFlickeringVert.init();
+
+
+
+
+
+let pixelateShader = new ShaderProgram("pixelate");
+
+pixelateShader.vertText = `
+    // beginGLSL
+    attribute float vertexID;
+    uniform float time;
+    varying float alph;
+    varying vec3 cols;
+    varying float ttime;
+    uniform sampler2D u_texture;
+    float map(float value, float min1, float max1, float min2, float max2) {
+        float perc = (value - min1) / (max1 - min1);
+        return perc * (max2 - min2) + min2;
+    }
+    float rand(vec2 n) { 
+      return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+    }
+    float noise(vec2 p){
+      vec2 ip = floor(p);
+      vec2 u = fract(p);
+      u = u*u*(3.0-2.0*u);
+      float res = mix(
+        mix(rand(ip),rand(ip+vec2(1.0,0.0)),u.x),
+        mix(rand(ip+vec2(0.0,1.0)),rand(ip+vec2(1.0,1.0)),u.x),u.y);
+      return res*res;
+    }
+    void main(void) {
+        float t = time * 1e-2;
+        float id = vertexID;
+        float x = ((fract(id / 512.)) - 0.5) * 1.;
+        float y = ((floor(id / 512.) / 288.) - 0.5) * 1.;
+        vec3 pos = vec3(0.0, 0.0, 0.0);
+        vec3 dir = normalize(vec3(x, y, 1.0));
+        vec3 color = vec3(1.0, 0.0, 0.0);
+        color = texture2D(u_texture, vec2(x + 0.5, y + 0.5) * 0.25).rgb * vec3(1., 1., 1.);
+        // y += sin(y * 1e-3 + time * 0.01) * 2.5;
+        x += sin(y + (noise(vec2(tan(y), tan(x)) * 1e2 * time) * 5.5 * noise(vec2(x, y))) + time * 1e1) * 0.1;
+        float n = noise(vec2(x * 10. + cos(time * 2e-3) * 20., y * 10. + sin(time * 2e-3) * 20.));
+        gl_Position = vec4(x * 2., y * 2., 0.0, 1.0);
+        gl_PointSize = 4.;
+        alph = 0.25 * 0.75;
+        cols = color;
+        ttime = time;
+    }
+    // endGLSL
+`;
+pixelateShader.fragText = `
+    // beginGLSL
+    precision mediump float;
+    varying float ttime;
+//     varying vec2 myposition;
+//     varying vec2 center;
+    varying float alph;
+varying vec3 cols;
+    float rand(vec2 co){
+        return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(co.x)));
+    }
+    float roundedRectangle (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
+        float d = length(max(abs(uv - pos),size) - size) - radius;
+        return smoothstep(0.66, 0.33, d / thickness * 5.0);
+    }
+    float roundedRectangleFlicker (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
+        // vec2 uv = gl_PointCoord.xy;
+        float t = ttime * 0.05;
+        t = 100. + (t * 1e-4);
+        float w = 0.15 + (sin(t * 1e-2 * tan(t * 2e-2)) + 1.0) * 0.25;
+        float d = length(max(abs(uv - pos), size * 0.5) - size * 0.5) * w - radius * 0.01;
+        return smoothstep(1.99 + ((sin(t * 10. * tan(t * 1e1)) + 1.0) * 0.5), 0.11, d * 10. / thickness * 5.0 * 0.125 * 1.5);
+    }
+    void main(void) {
+        // vec2 uv = gl_PointCoord.xy / vec2(1600, 1600);
+        // float d = length(uv - center);
+        // vec2 pos = myposition;
+        vec2 uv = gl_FragCoord.xy / vec2(2560, 1600);
+        // uv.x = uv.x + 1.0;
+        uv = uv * 2.0;
+        uv = uv + 0.5;
+        // uv = uv * 1.0;
+        float ALPHA = 0.75;
+        vec2 pos = gl_PointCoord - vec2(0.5, 0.5);
+                float dist_squared = dot(pos, pos);
+        float alpha;
+        if (dist_squared < 0.25) {
+            alpha = ALPHA;
+        } else {
+            alpha = 0.0;
+        }
+        alpha = smoothstep(0.05 / (0.9 + alph), 0.000125, dist_squared) * 0.49;
+        float rando = rand(pos);
+        // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
+        gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 0.75;
+        gl_FragColor.a = roundedRectangleFlicker(gl_PointCoord, vec2(1.), vec2(1.4), 0.02, 0.005);
+        // gl_FragColor = gl_FragColor.brba;
+//         gl_FragColor.g *= 0.525;
+        gl_FragColor.rgb = cols;
+        
+    }
+    // endGLSL
+`;
+// newFlickeringVert.init();
+pixelateShader.vertText = pixelateShader.vertText.replace(/[^\x00-\x7F]/g, "");
+pixelateShader.fragText = pixelateShader.fragText.replace(/[^\x00-\x7F]/g, "");
+pixelateShader.init();
+

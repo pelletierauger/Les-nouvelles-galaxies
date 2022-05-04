@@ -313,43 +313,44 @@ draw = function() {
 // 
     gl.bindTexture(gl.TEXTURE_2D, texture);
 // 
-    gl.clearColor(0.5, 0.5, 0.5, 1); // clear to white
+    gl.clearColor(0., 0., 0., 1); // clear to white
 // 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 // 
-    var textureShader = getProgram("textu");
+    var textureShader = getProgram("pixelate");
     gl.useProgram(textureShader);
 // 
-    aspect = cnvs.width / cnvs.height;
-    let vertices = new Float32Array([-1, 1, 1, 1, 1, -1, // Triangle 1
-        -1, 1, 1, -1, -1, -1 // Triangle 2
-    ]);
-    vbuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vbuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-    itemSize = 2;
-    numItems = vertices.length / itemSize;
-    textureShader.aVertexPosition = gl.getAttribLocation(textureShader, "a_position");
-    gl.enableVertexAttribArray(textureShader.aVertexPosition);
-    gl.vertexAttribPointer(textureShader.aVertexPosition, itemSize, gl.FLOAT, false, 0, 0);
-// 
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    /*======== Associating shaders to buffer objects ========*/
+    // Bind vertex buffer object
+    gl.bindBuffer(gl.ARRAY_BUFFER, dotsVBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, fvertices, gl.STATIC_DRAW);
+    // Get the attribute location
+    var coord = gl.getAttribLocation(textureShader, "vertexID");
+    // Point an attribute to the currently bound VBO
+    gl.vertexAttribPointer(coord, 1, gl.FLOAT, false, 0, 0);
+    // Enable the attribute
+    gl.enableVertexAttribArray(coord);
+    
     var textureLocation = gl.getUniformLocation(textureShader, "u_texture");
     gl.uniform1i(textureLocation, 0);
     var timeLocation = gl.getUniformLocation(textureShader, "time");
     gl.uniform1f(timeLocation, frameCount * 0.01);
 // 
-    var texcoordLocation = gl.getAttribLocation(textureShader, "a_texcoord");
-    gl.enableVertexAttribArray(texcoordLocation);
+//     var texcoordLocation = gl.getAttribLocation(textureShader, "a_texcoord");
+//     gl.enableVertexAttribArray(texcoordLocation);
+// // 
+//     // Tell the position attribute how to get data out of positionBuffer (ARRAY_BUFFER)
+//     var size = 2; // 2 components per iteration
+//     var type = gl.FLOAT; // the data is 32bit floats
+//     var normalize = false; // don't normalize the data
+//     var stride = 0; // 0 = move forward size * sizeof(type) each iteration to get the next position
+//     var offset = 0; // start at the beginning of the buffer
+//     gl.vertexAttribPointer(texcoordLocation, size, type, normalize, stride, offset);
 // 
-    // Tell the position attribute how to get data out of positionBuffer (ARRAY_BUFFER)
-    var size = 2; // 2 components per iteration
-    var type = gl.FLOAT; // the data is 32bit floats
-    var normalize = false; // don't normalize the data
-    var stride = 0; // 0 = move forward size * sizeof(type) each iteration to get the next position
-    var offset = 0; // start at the beginning of the buffer
-    gl.vertexAttribPointer(texcoordLocation, size, type, normalize, stride, offset);
-// 
-    gl.drawArrays(gl.TRIANGLES, 0, numItems);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.POINTS, 0, 147456 * 1);
+    // gl.drawArrays(gl.TRIANGLES, 0, numItems);
 // 
     drawCount += drawIncrement;
     // if (exporting && frameCount < maxFrames && drawCount > 1113) {
