@@ -78,6 +78,7 @@ drawTerminal = function(selectedProgram) {
     // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     // Pass the vertex data to the buffer
     // Unbind the buffer
+            var time = gl.getUniformLocation(selectedProgram, "time");
     gl.uniform1f(time, drawCount);
     /*======== Associating shaders to buffer objects ========*/
     // Bind vertex buffer object
