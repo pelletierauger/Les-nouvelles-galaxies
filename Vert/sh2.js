@@ -2612,7 +2612,8 @@ pixelateShader.vertText = `
         vec3 color = vec3(1.0, 0.0, 0.0);
         color = texture2D(u_texture, vec2(x + 0.5, y + 0.5) * 0.75 * (1. - sin(time * 1e-2) * 0.4)).rgb * vec3(1., 1., 1.);
         y *= 1.0 - (sin(y * 4e1 + time * 0.05e1) * 0.01);
-        x += sin(y + (noise(vec2(tan(y), tan(x)) * 1e1 * time) * 5.5 * noise(vec2(x, y) * 0.1)) + time * 3e-2) * 0.05;
+        x += sin(x * 10. + (noise(vec2(tan(y), tan(x)) * 1e1 * time) * 5.5 * noise(vec2(x, y) * 0.1)) + time * 3e-2) * 0.05;
+        y += cos(y * 10. + (noise(vec2(tan(y), tan(x)) * 1e1 * time) * 5.5 * noise(vec2(x, y) * 0.1)) + time * 3e-2) * 0.05;
         float n = noise(vec2(x * 10. + cos(time * 2e-3) * 20., y * 10. + sin(time * 2e-3) * 20.));
         float sc = 1.;
         gl_Position = vec4(x * 2. * sc, y * 3. * sc + 0.5, 0.0, 1.0);
@@ -2681,7 +2682,7 @@ pixelateShader.fragText = `
             vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
     // vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
     
-    blender = BlendSoftLight(blender, vec3(1.0, 0.0, 0.0).brg.gbr);
+    blender = BlendSoftLight(blender, vec3(1.0, 0.0, 0.0).brg);
     // Les aubes rouges et sanguinolentes
     gl_FragColor.rgb = blender;
         
