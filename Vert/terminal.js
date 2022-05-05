@@ -7,7 +7,7 @@ drawTerminal = function(selectedProgram) {
         // vertices.push(x * (9 / 16), y, 40.0, 1);
     }
     num = 0;
-    let sc = 0.4;
+    let sc = 0.8;
     let sx0 = vt.selectionBounds[0];
     let sx1 = vt.selectionBounds[1];
     let colors = [];
@@ -19,7 +19,7 @@ drawTerminal = function(selectedProgram) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 45.0 * sc, 1);
-                vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, (-y * 0.03 * sc - 0.7) - 0.02, 55.0 * sc * 0.9, 1.0);
+                vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, (-y * 0.03 * sc - 0.7) - (0.02 * sc / 0.4), 55.0 * sc * 0.9, 1.0);
                 num++;
             }
         }
@@ -1580,6 +1580,9 @@ VirtualTerminal.prototype.clear = function(s) {
 
 
 let vt = new VirtualTerminal();
+vt.text = "Isidore was driving the car";
+vt.caretPosition = vt.text.length;
+vt.makeTerminalString();
 // vt.stringArray = [];
 let vtActive = true;
 
