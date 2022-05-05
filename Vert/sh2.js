@@ -2589,6 +2589,10 @@ pixelateShader.vertText = `
     float rand(vec2 n) { 
       return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
     }
+    float roundedRectangle (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
+        float d = length(max(abs(uv - pos),size) - size) - radius;
+        return smoothstep(0.66, 0.33, d / thickness * 5.0);
+    }
     float noise(vec2 p){
       vec2 ip = floor(p);
       vec2 u = fract(p);
@@ -2606,15 +2610,19 @@ pixelateShader.vertText = `
         pos = vec2(x, y);
         vec3 dir = normalize(vec3(x, y, 1.0));
         vec3 color = vec3(1.0, 0.0, 0.0);
-        color = texture2D(u_texture, vec2(x + 0.5, y + 0.5) * 0.5 * (1. - sin(time * 1e-1) * 0.1)).rgb * vec3(1., 1., 1.);
-        // y += sin(y * 1e-3 + time * 0.01) * 2.5;
-        x += sin(y + (noise(vec2(tan(y), tan(x)) * 1e1 * time) * 5.5 * noise(vec2(x, y))) + time * 3e-2) * 0.4;
+        color = texture2D(u_texture, vec2(x + 0.5, y + 0.5) * 0.75 * (1. - sin(time * 1e-1) * 0.1)).rgb * vec3(1., 1., 1.);
+        // y *= 1.0 - (sin(y * 1e1 * time * 0.1) * 0.01);
+        x += sin(y + (noise(vec2(tan(y), tan(x)) * 1e1 * time) * 5.5 * noise(vec2(x, y))) + time * 3e-2) * 0.2;
         float n = noise(vec2(x * 10. + cos(time * 2e-3) * 20., y * 10. + sin(time * 2e-3) * 20.));
-        gl_Position = vec4(x * 2., y * 3. + 0.5, 0.0, 1.0);
-        gl_PointSize = 5.;
+        float sc = 1.;
+        gl_Position = vec4(x * 2. * sc, y * 3. * sc + 0.5, 0.0, 1.0);
+        gl_PointSize = 5. * sc;
         alph = 0.25 * 0.75;
         cols = color;
         ttime = time;
+       float vig = (roundedRectangle(vec2(x * 1.5 * sc, y * 1.5 * sc + 0.25), vec2(0.0, 0.0), vec2(1.46, 0.88) * 0.45, 0.05, 0.25) + 0.0);
+        cols = mix(cols, cols * (vig), 1.);
+        gl_PointSize = (gl_PointSize * floor(vig));
     }
     // endGLSL
 `;
@@ -2627,6 +2635,7 @@ pixelateShader.fragText = `
     varying float alph;
     varying vec3 cols;
     varying vec2 pos;
+    ${blendingMath}
     float rand(vec2 co){
         return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(co.x)));
     }
@@ -2669,6 +2678,12 @@ pixelateShader.fragText = `
         // gl_FragColor.a = 1.;
         gl_FragColor.rgb = cols;
         // gl_FragColor.rgb = vec3(1.);
+            vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
+    // vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
+    
+    blender = BlendSoftLight(blender, vec3(1.0, 0.0, 0.0).brg.gbr);
+    // Les aubes rouges et sanguinolentes
+    gl_FragColor.rgb = blender;
         
     }
     // endGLSL
