@@ -1580,7 +1580,7 @@ VirtualTerminal.prototype.clear = function(s) {
 
 
 let vt = new VirtualTerminal();
-vt.text = "Isidore was driving the car";
+vt.text = "Lune Vide                     ";
 vt.caretPosition = vt.text.length;
 vt.makeTerminalString();
 // vt.stringArray = [];

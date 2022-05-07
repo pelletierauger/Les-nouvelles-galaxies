@@ -2621,9 +2621,9 @@ pixelateShader.vertText = `
         alph = 0.25 * 0.75;
         cols = color;
         ttime = time;
-       float vig = (roundedRectangle(vec2(x * 1.5 * sc, y * 1.5 * sc + 0.25), vec2(0.0, 0.0), vec2(1.46, 0.88) * 0.45, 0.05, 0.25) + 0.0);
+       float vig = (roundedRectangle(vec2(x * 1.5 * sc, y * 1.5 * sc + 0.25), vec2(0.0, 0.0), vec2(1.06, 0.88) * 0.45, 0.05, 0.25) + 0.0);
         cols = mix(cols, cols * (vig), 1.);
-        gl_PointSize = (gl_PointSize * floor(vig));
+        // gl_PointSize = (gl_PointSize * (vig));
     }
     // endGLSL
 `;
@@ -2682,7 +2682,7 @@ pixelateShader.fragText = `
             vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
     // vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
     
-    blender = BlendSoftLight(blender, vec3(1.0, 0.0, 0.0).brg);
+    blender = BlendSoftLight(blender, vec3(1.0, 0.0, 0.0));
     // Les aubes rouges et sanguinolentes
     gl_FragColor.rgb = blender;
         
