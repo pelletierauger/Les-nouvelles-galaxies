@@ -144,16 +144,15 @@ function clearSelection() {
 }
 
 draw = function() {
-    gl.clear(gl.COLOR_BUFFER_BIT);
     // We bind the framebuffer...
     bindFrameBuffer(texture, framebuf);
     gl.viewport(0, 0, 1280, 720);
-// 
+    gl.clear(gl.COLOR_BUFFER_BIT);
     // draw the scene, presumably on a framebuffer
-    let currentProgram = getProgram("pulsar-fog");
-    gl.useProgram(currentProgram);
-    drawBG(currentProgram);
-    currentProgram = getProgram("new-flickering-dots-vert");
+    // let currentProgram = getProgram("pulsar-fog");
+    // gl.useProgram(currentProgram);
+    // drawBG(currentProgram);
+    let currentProgram = getProgram("new-flickering-dots-vert");
     gl.useProgram(currentProgram);
     drawAlligatorQuietVert(currentProgram);
 // 
