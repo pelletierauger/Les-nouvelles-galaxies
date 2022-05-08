@@ -7836,7 +7836,7 @@ newFlickeringVert.vertText = `
         return f/(0.9375)*smoothstep( 260., 768., p.y ); // flat at beginning
     }
     void main(void) {
-        float t = time * 0.5e-2;
+        float t = time * 0.5e-4;
         float ratio = 16.0 / 9.0;
         float vertexCount = 147456.0;
         float id = vertexID;
@@ -7923,8 +7923,8 @@ newFlickeringVert.vertText = `
         for (float i = 0.0; i < 25.0; i++) {
             float fi = i * 2e-2;
             float ts = 0.001 * sin(x * y * 1.5e1) * 5.;
-            float xd = cos(distance(pos2 * 0.25, vec2(cos(fi + t) * fi, sin(fi * 1. + t * 1.02) * fi)) * 50.75 + time * 50.5e-2) * ts;
-            float yd = sin(distance(pos2 * 0.25, vec2(cos(fi + t) * fi, sin(fi * 1. + t * 1.02) * fi)) * 50.75 + time * 50.5e-2) * ts;
+            float xd = cos(distance(pos2 * 0.25, vec2(cos(fi + t) * fi, sin(fi * 1. + t * 1.02) * fi)) * 50.75 + time * 15.5e-2) * ts;
+            float yd = sin(distance(pos2 * 0.25, vec2(cos(fi + t) * fi, sin(fi * 1. + t * 1.02) * fi)) * 50.75 + time * 15.5e-2) * ts;
             xd += sin(pos2.x * 1e3) * 0.00008;
             pos2.x += xd * cos(xd * 5e1) * 1.6;
             pos2.y += yd * cos(yd * 5e1) * 1.6;
