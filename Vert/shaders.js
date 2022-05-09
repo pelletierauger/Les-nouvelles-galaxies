@@ -886,7 +886,7 @@ void main() {
         // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 0.35);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
-    // gl_FragColor.b += col.b * 0.25;
+    // gl_FragColor.rgb *= 0.85;
 //gl_FragColor.rgb = gl_FragColor.rbg;
 }
 // endGLSL
@@ -7115,7 +7115,7 @@ newFlickeringVert.fragText = `
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph)) * 0.045 + alpha)) * 0.5;
         // gl_FragColor.rgb = gl_FragColor.rbr;
-        gl_FragColor.rgb = cols;
+        gl_FragColor.rgb = cols * 0.5;
         // gl_FragColor.b *= 0.75;
         
     }
@@ -8147,7 +8147,7 @@ newFlickeringVert.fragText = `
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph)) * 0.045 + alpha)) * 0.5;
         // gl_FragColor.rgb = gl_FragColor.rbr;
-        gl_FragColor.rgb = cols;
+        gl_FragColor.rgb = cols * 0.5;
         // gl_FragColor.b *= 0.75;
         
     }
