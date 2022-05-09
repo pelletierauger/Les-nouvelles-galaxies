@@ -80,16 +80,16 @@ drawTerminal = function(selectedProgram) {
              let tx = -0.17, ty = 0.65;
              let osc = Math.sin(drawCount * 1e-1 + 2e-1 * x) * 0.1;
              if (p == "1") {
-                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.009 + Math.sin(drawCount * 0.25 + y * 0.25) * 0.015 + ty - 0.02, 20.0 * sc * 0.9, 1);
+                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.009 + Math.sin(drawCount * 0.25 + x * 10.25) * 0.015 + ty - 0.02, 20.0 * sc * 0.9, 1);
                              num++;
                 colors.push(0, 0, 0);                 
              } else if (p == "0") {
-                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.009 + Math.sin(drawCount * 0.25 + y * 0.25) * 0.015 + ty - 0.02, 20.0 * sc * 0.9, 1);
+                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.009 + Math.sin(drawCount * 0.25 + x * 10.25) * 0.015 + ty - 0.02, 20.0 * sc * 0.9, 1);
                              num++;
                 // colors.push(0.75, 0.75, 0.75);
                 colors.push(0.75 + osc, 0.75 + osc, 0.75 + osc);
              } else if (p == "2") {
-                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.009 + Math.sin(drawCount * 0.25 + y * 0.25) * 0.015 + ty - 0.02, 20.0 * sc * 0.9, 1);
+                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.009 + Math.sin(drawCount * 0.25 + x * 10.25) * 0.015 + ty - 0.02, 20.0 * sc * 0.9, 1);
                              num++;
                 // colors.push(0.6, 0.6, 0.6);
                 colors.push(0.6 + osc, 0.6 + osc, 0.6 + osc);
