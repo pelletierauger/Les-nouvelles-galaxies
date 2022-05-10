@@ -6135,6 +6135,7 @@ newFlickeringVert.vertText = `
     attribute float vertexID;
     uniform float time;
     varying float alph;
+    varying float alsca;
     varying vec3 cols;
     #define cx_mul(a, b) vec2(a.x*b.x-a.y*b.y, a.x*b.y+a.y*b.x)
     float roundedRectangle (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
@@ -6229,7 +6230,17 @@ newFlickeringVert.vertText = `
         cols = vec3(0.65 + 0.5 / pos.z);
        float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(1.82, 0.91) * 0.43, 0.05, 0.5) + 0.0);
         cols = mix(cols, cols * floor(vig), 1.);
-        gl_PointSize *= floor(vig);
+        gl_PointSize *= floor(vig) * 1.2;
+        alsca = 1.0;
+        if ((sin((vertexID * 1e-5)) + 1.0) * 0.5 < (cos(time * 0.5e-2) + 1.) * 0.5) {
+            // cols = vec3(0.0);
+            gl_PointSize = 0.0;
+            alsca = 0.0;
+        }
+        // gl_PointSize = max(9.0, gl_PointSize) * gl_PointSize * 0.1;
+    if (gl_PointSize < 6.0) {
+        alsca = 0.0;
+    }
     }
     // endGLSL
 `;
@@ -6240,6 +6251,7 @@ newFlickeringVert.fragText = `
 //     varying vec2 center;
     varying float alph;
     varying vec3 cols;
+    varying float alsca;
     float rand(vec2 co){
         return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(co.x)));
     }
@@ -6267,6 +6279,7 @@ newFlickeringVert.fragText = `
         gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph)) * 0.045 + alpha)) * 0.5;
         // gl_FragColor.rgb = gl_FragColor.rbr;
         gl_FragColor.rgb = cols;
+        gl_FragColor.a *= alsca;
         // gl_FragColor.b *= 0.75;
         
     }
