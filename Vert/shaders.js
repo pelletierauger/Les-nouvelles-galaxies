@@ -665,6 +665,7 @@ float fbm(vec2 p) {
     return  0.5 + 0.5 * h;
 }
 vec3 smokeEffect(vec2 uv) {
+    float time = 2.0;
     vec3 col = vec3(0.0, 0.0, 0.0);
     // time scale
     float v = 0.0002;
@@ -687,6 +688,7 @@ float circle(vec2 p, float r) {
     return smoothstep(r + 0.02, r, c);
 }
 float sinwave(vec2 p, float scale, float amp) {
+    float time = 1.0;
     float wave = cos(p.x * scale + 1.5 + time * 20.) + 0.25 * cos(p.x * scale * scale + time * 20.);
     float s = smoothstep(amp + 0.07, amp, amp * wave * 0.5 - p.y * 0.5);
     return s;
@@ -698,7 +700,7 @@ float plot(vec2 s, float p) {
 float circ(float speed, float size, float vx, float vy, float dist) {
   // float x = cos(time * speed) * dist * 0.012 - 0.425;
   // float y = sin(time * speed) * dist * 0.012 - 0.25;
-  float t = time;
+  float t = 1.;
   float x = cos(t * speed * 1000.0) * dist * (sin(t)) * 0.12 - 0.425;
   float y = sin(t * speed * 1000.0) * dist * (sin(t)) * 0.12 - 0.25;
   // float x = cos(time * speed) * dist * abs(sin(time * 0.01) * 1.0) - 0.425;
@@ -711,8 +713,12 @@ float circ(float speed, float size, float vx, float vy, float dist) {
 float rand(vec2 co){
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(time)));
 }
+    float roundedRectangle (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
+        float d = length(max(abs(uv - pos),size) - size) - radius;
+        return smoothstep(0.66, 0.33, d / thickness * 5.0);
+    }
 void main() {
-    vec2 uv = gl_FragCoord.xy / vec2(1600, 1600);
+    vec2 uv = gl_FragCoord.xy / vec2(1440., 1440.);
     vec2 p = gl_FragCoord.xy/1000.0;
     p -= 0.5;
 //     p.x *= 2.0;
@@ -726,7 +732,7 @@ void main() {
     vec3 mountCol = mix(vec3(12.0, 153.0, 253.0) / 255.0, vec3(253.0 ,104.0 ,50.0) / 255.0, p.y + 0.5);
 //     vec3 sunCol = 0.85 * mix(vec3(1.0, 0.0, 1.0), vec3(1.0, 1.0, 0.0), p.y + 0.5);
     vec3 cloudCol = vec3(0.9);
-    float t = time * 20.5;
+    float t = 1. * 20.5;
 //     vec2 sunPos = p - vec2(0.4 * cos(t * 0.1), 0.4 * sin(t * 0.1));
 //     float sun = circle(sunPos, 0.03);
     float mountain1 = sinwave(p - vec2(0.5, -1.1), 2.4, 0.1);
@@ -743,7 +749,7 @@ void main() {
     col = mix(cloudCol, col, vec3(cloud2 * 0.85, cloud2 * 0.85, cloud2 * 1.75));
     float rando = rand(vec2(uv.x, uv.y) * 100.);
 //     col *= 0.2 + 0.8 * pow(32.0 * uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y), 0.2);
-    gl_FragColor = vec4(col - rando * 0.1, 1.0);
+    gl_FragColor = vec4(col - rando * 0.025, 1.0);
 //     gl_FragColor.b *= 0.25;
 //     gl_FragColor = gl_FragColor.brga;
 //     gl_FragColor.r = gl_FragColor.r - rando * 0.1;
@@ -752,7 +758,11 @@ void main() {
         gl_FragColor = gl_FragColor.brga;
         gl_FragColor.r *= 0.5;
         gl_FragColor.b *= 1.25;
-    gl_FragColor.rgb *= 0.0;
+        gl_FragColor.b += 0.05;
+    // gl_FragColor.r += 0.05;
+    // gl_FragColor.rgb = vec3(1.0);
+    // gl_FragColor.rgb *= 1.25;
+    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.1) * 2.1, 0.001, 0.25) * 0.9;
         // gl_FragColor = gl_FragColor.grra;
         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
 }
