@@ -6129,7 +6129,7 @@ newFlickeringVert.fragText = newFlickeringVert.fragText.replace(/[^\x00-\x7F]/g,
 newFlickeringVert.init();
 
 
-
+// radiator
 newFlickeringVert.vertText = `
     // beginGLSL
     attribute float vertexID;
@@ -6291,6 +6291,7 @@ newFlickeringVert.fragText = newFlickeringVert.fragText.replace(/[^\x00-\x7F]/g,
 newFlickeringVert.init();
 
 
+// radsigil
 newFlickeringVert.vertText = `
     // beginGLSL
     attribute float vertexID;
@@ -6452,6 +6453,7 @@ newFlickeringVert.fragText = newFlickeringVert.fragText.replace(/[^\x00-\x7F]/g,
 newFlickeringVert.init();
 
 
+// radflow
 newFlickeringVert.vertText = `
     // beginGLSL
     attribute float vertexID;
@@ -6614,7 +6616,7 @@ newFlickeringVert.fragText = newFlickeringVert.fragText.replace(/[^\x00-\x7F]/g,
 newFlickeringVert.init();
 
 
-
+// zenterrain
 newFlickeringVert.vertText = `
     // beginGLSL
     attribute float vertexID;
