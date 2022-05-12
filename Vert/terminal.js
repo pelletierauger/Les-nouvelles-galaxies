@@ -1643,6 +1643,21 @@ VirtualTerminal.prototype.clear = function(s) {
 };
 
 
+VirtualTerminal.prototype.loadSession = function(s) {
+    this.recordingSession = [];
+    for (let i = 0; i < s.length; i++) {
+        let e = s[i];
+        this.recordingSession.push([
+            e[0],
+            {
+                key: e[1],
+                shiftKey: e[2],
+                metaKey: e[3]
+            }
+        ]);
+    }
+};
+
 
 let vt = new VirtualTerminal();
 // vt.stringArray = [];

@@ -2,6 +2,7 @@ let looping = true;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
 let fileName = "./frames/alligator/alligator";
+let JSONs = [];
 let maxFrames = 15000;
 let gl;
 let time;
@@ -32,6 +33,11 @@ fvertices = new Float32Array(fvertices);
 
 function setup() {
     socket = io.connect('http://localhost:8080');
+    socket.on('pushJSONs', function(data) {
+        JSONs = data;
+        // draw();
+    });
+    socket.emit('pullJSONs', "/Users/guillaumepelletier/Desktop/Dropbox/Art/p5/Les-nouvelles-galaxies/Vert/sessions");
     // socket.on('receiveOSC', receiveOSC);
     pixelDensity(1);
     cnvs = createCanvas(windowWidth, windowWidth * 9 / 16, WEBGL);
