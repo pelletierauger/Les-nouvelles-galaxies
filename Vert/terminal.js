@@ -108,6 +108,12 @@ drawTerminal = function(selectedProgram) {
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
     gl.drawArrays(gl.POINTS, 0, num);
+    if (vt.recording || vt.playback) {
+        vt.recordingFrame++;
+    }
+    if (vt.playback) {
+        vt.play();
+    }
 }
 
 
@@ -1456,6 +1462,9 @@ let VirtualTerminal = function() {
     this.selectionBounds = [0, 0];
     this.history = [];
     this.clear();
+    this.recording = false;
+    this.recordingFrame = 0;
+    this.recordingSession = [];
 };
 
 VirtualTerminal.prototype.logState = function(frame) {
@@ -1478,9 +1487,66 @@ VirtualTerminal.prototype.makeTerminalString = function() {
         }
     }
     this.stringArray = a;
-}
+};
+
+VirtualTerminal.prototype.record = function() {
+    this.recordingFrame = 0;
+    this.recordingSession = [];
+    this.recording = true;
+};
+
+VirtualTerminal.prototype.stopRecord = function() {
+    this.recording = false;
+};
+
+VirtualTerminal.prototype.startPlayback = function() {
+    this.playback = true;
+    this.recordingFrame = 0;
+};
+
+VirtualTerminal.prototype.stopPlayback = function() {
+    this.playback = false;
+    this.recordingFrame = 0;
+};
+
+VirtualTerminal.prototype.saveSession = function() {
+    let bundle = [];
+    for (let i = 0; i < this.recordingSession.length; i++) {
+        let e = this.recordingSession[i];
+        let item = [
+            e[0], e[1].key, e[1].shiftKey, e[1].metaKey
+        ];
+        bundle.push(item);
+    }
+    let file = {
+        name: "session.json", 
+        path: "/Users/guillaumepelletier/Desktop/Dropbox/Art/p5/Les-nouvelles-galaxies/Vert/session.json",
+        data: JSON.stringify(bundle)
+    };
+    socket.emit('saveFile', file);
+};
+
+VirtualTerminal.prototype.play = function() {
+    // ljs("Playing!");
+    for (let i = 0; i < this.recordingSession.length; i++) {
+        let e = this.recordingSession[i];
+        if (this.recordingFrame == e[0]) {
+            // ljs("Caught one!");
+            this.update(e[1]);
+        }
+    }
+    let l = this.recordingSession.length - 1;
+    let last = this.recordingSession[l][0];
+    if (this.recordingFrame > last) {
+        this.stopPlayback();
+    };
+};
+
 
 VirtualTerminal.prototype.update = function(e) {
+    if (this.recording) {
+        this.recordingSession.push([this.recordingFrame, e]);
+    }
     let s = e.key;
     let c = this.caretPosition;
     let sel = this.selectionBounds[1] - this.selectionBounds[0] !== 0;
