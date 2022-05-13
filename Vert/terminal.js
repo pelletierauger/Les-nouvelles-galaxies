@@ -1465,7 +1465,28 @@ let VirtualTerminal = function() {
     this.recording = false;
     this.recordingFrame = 0;
     this.recordingSession = [];
+    this.commands = [];
+    this.commandID = 0;
 };
+
+VirtualTerminal.prototype.commandDecID = function() {
+    if (this.commandID > 0) {
+        this.commandID -= 1;
+        let newCommand = this.commands[this.commandID];
+        this.text = newCommand;
+        this.caretPosition = this.text.length;
+    }
+};
+
+VirtualTerminal.prototype.commandIncID = function() {
+    if (this.commandID < this.commands.length - 1) {
+        this.commandID += 1;
+        let newCommand = this.commands[this.commandID];
+        this.text = newCommand;
+        this.caretPosition = this.text.length;
+    }
+};
+
 
 VirtualTerminal.prototype.logState = function(frame) {
     this.history.push({
@@ -1493,6 +1514,15 @@ VirtualTerminal.prototype.record = function() {
     this.recordingFrame = 0;
     this.recordingSession = [];
     this.recording = true;
+    this.clear();
+    let commands = [];
+    for (let i = 0; i < this.commands.length; i++) {
+        commands.push(this.commands[i]);
+    }
+    this.recordingInitialState = [
+        this.commandID,
+        commands
+    ];
 };
 
 VirtualTerminal.prototype.stopRecord = function() {
@@ -1502,6 +1532,12 @@ VirtualTerminal.prototype.stopRecord = function() {
 VirtualTerminal.prototype.startPlayback = function() {
     this.playback = true;
     this.recordingFrame = 0;
+    this.clear();
+    this.commands = [];
+    for (let i = 0; i < this.recordingInitialState[1].length; i++) {
+        this.commands.push(this.recordingInitialState[1][i]);
+    }
+    this.commandID = this.recordingInitialState[0];
 };
 
 VirtualTerminal.prototype.stopPlayback = function() {
@@ -1509,7 +1545,7 @@ VirtualTerminal.prototype.stopPlayback = function() {
     this.recordingFrame = 0;
 };
 
-VirtualTerminal.prototype.saveSession = function() {
+VirtualTerminal.prototype.saveSession = function(name) {
     let bundle = [];
     for (let i = 0; i < this.recordingSession.length; i++) {
         let e = this.recordingSession[i];
@@ -1519,12 +1555,40 @@ VirtualTerminal.prototype.saveSession = function() {
         bundle.push(item);
     }
     let file = {
-        name: "session.json", 
-        path: "/Users/guillaumepelletier/Desktop/Dropbox/Art/p5/Les-nouvelles-galaxies/Vert/session.json",
-        data: JSON.stringify(bundle)
+        name: name + ".json", 
+        path: "/Users/guillaumepelletier/Desktop/Dropbox/Art/p5/Les-nouvelles-galaxies/Vert/sessions/" + name + ".json",
+        data: JSON.stringify([
+            this.recordingInitialState[0],
+            this.recordingInitialState[1],
+            bundle
+        ])
     };
     socket.emit('saveFile', file);
 };
+
+VirtualTerminal.prototype.loadSession = function(s) {
+    this.recordingSession = [];
+    let commands = [];
+    for (let i = 0; i < s[1].length; i++) {
+        commands.push(s[1][i]);
+    }
+    this.recordingInitialState = [
+        s[0],
+        commands
+    ];
+    for (let i = 0; i < s[2].length; i++) {
+        let e = s[2][i];
+        this.recordingSession.push([
+            e[0],
+            {
+                key: e[1],
+                shiftKey: e[2],
+                metaKey: e[3]
+            }
+        ]);
+    }
+};
+
 
 VirtualTerminal.prototype.play = function() {
     // ljs("Playing!");
@@ -1617,6 +1681,10 @@ VirtualTerminal.prototype.update = function(e) {
         this.selectionBounds = [1, this.text.length + 1];
         // logJavaScriptConsole("aaaaert");
         this.caretPosition = this.text.length;
+    } else if (s == "ArrowUp") {
+        this.commandDecID();
+    } else if (s == "ArrowDown") {
+        this.commandIncID();
     } else if (s.length == "1") {
         if (sel) {
               this.text = this.text.slice(0, this.selectionBounds[0] - 1) + s + this.text.slice(this.selectionBounds[1] - 1);
@@ -1628,6 +1696,10 @@ VirtualTerminal.prototype.update = function(e) {
               this.caretPosition++;
           }
     } else if (s == "Enter") {
+        if (this.text !== this.commands[this.commands.length - 1]) {
+            this.commands.push(this.text);
+            this.commandID = this.commands.length - 1;
+        }
         this.enter = 5;
         var scTest = /(^s\s|^l\s)([\s\S]*)/;
         var scMatch = scTest.exec(this.text);
@@ -1646,22 +1718,6 @@ VirtualTerminal.prototype.clear = function(s) {
     this.selectionBounds = [0, 0];
     this.makeTerminalString();
     this.selDir = 0;
-};
-
-
-VirtualTerminal.prototype.loadSession = function(s) {
-    this.recordingSession = [];
-    for (let i = 0; i < s.length; i++) {
-        let e = s[i];
-        this.recordingSession.push([
-            e[0],
-            {
-                key: e[1],
-                shiftKey: e[2],
-                metaKey: e[3]
-            }
-        ]);
-    }
 };
 
 
