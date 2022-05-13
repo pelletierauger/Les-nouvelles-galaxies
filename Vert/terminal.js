@@ -1724,6 +1724,9 @@ VirtualTerminal.prototype.clear = function(s) {
 let vt = new VirtualTerminal();
 // vt.stringArray = [];
 let vtActive = true;
+vt.text = "Let the vision transform you, let the clouds of Phobos gather in your mind.";
+vt.makeTerminalString();
+vt.caretPosition = vt.text.length;
 
 
 let TerminalRecorder = function() {
