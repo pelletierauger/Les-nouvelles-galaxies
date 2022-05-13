@@ -45,6 +45,31 @@ drawTerminal = function(selectedProgram) {
             }
         }
     }
+    for (let x = 0; x <= vt2.stringArray[0].length; x++) {
+        for (let y = 0; y < 10; y++) {
+            let sc = 0.03;
+            let tr = {x: -0.5, y: 0.45};
+            let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
+            if (vt2.stringArray[y][x] == 1) {
+                vertices.push(x * (9 / 16) * sc + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
+                num++;
+                colors.push(0, 0, 0);
+            }
+        }
+    }
+    for (let x = 0; x <= vt2.stringArray[0].length; x++) {
+        for (let y = 0; y < 10; y++) {
+            let sc = 0.03;
+            let tr = {x: -0.5, y: 0.5};
+            let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
+            if (vt2.stringArray[y][x] == 1) {
+                vertices.push(x * (9 / 16) * sc + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
+                num++;
+                colors.push(0.75, 0.75, 0.75);
+            }
+        }
+    }
+    
     for (let i = 0; i < num; i++) {
         let r = Math.random();
         let g = Math.random();
@@ -128,11 +153,38 @@ roundedSquare.vertText = `
     varying float alph;
     varying float size;
     varying vec3 cols;
+    const mat2 mr = mat2 (
+        0.84147,  0.54030,
+        0.54030, -0.84147
+    );
+    float hash(in float n) {
+      return fract(sin(n)*43758.5453);
+    }
+    float noise(in vec2 x) {
+        vec2 p = floor(x);
+        vec2 f = fract(x);
+        f = f*f*(3.0-2.0*f);  
+        float n = p.x + p.y*57.0;
+        float res = mix(mix( hash(n+  0.0), hash(n+  1.0),f.x),
+              mix( hash(n+ 57.0), hash(n+ 58.0),f.x),f.y);
+        return res;
+    }
+    float fbm( in vec2 p ) {
+        float f;
+        f  = 0.5000*noise( p ); p = mr*p*2.02;
+        f += 0.2500*noise( p ); p = mr*p*2.33;
+        f += 0.1250*noise( p ); p = mr*p*2.01;
+        f += 0.0625*noise( p ); p = mr*p*5.21;
+        return f/(0.9375)*smoothstep( 260., 768., p.y ); // flat at beginning
+    }
     void main(void) {
         gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.0);
+        vec2 pos = gl_Position.xy;
+        gl_Position.xy += fbm(pos) * 1000.;
+        // gl_Position.xy += 0.1;
         center = vec2(gl_Position.x, gl_Position.y);
         center = 512.0 + center * 512.0;
-        myposition = vec2(gl_Position.x, gl_Position.y);
+        // myposition = vec2(gl_Position.x, gl_Position.y);
         alph = coordinates.w;
         gl_PointSize = coordinates.z;
         size = gl_PointSize;
@@ -160,7 +212,7 @@ roundedSquare.fragText = `
         t = 100. + (t * 1e-4);
         float w = 0.15 + (sin(t * 1e-2 * tan(t * 2e-2)) + 1.0) * 0.25;
         float d = length(max(abs(uv - pos), size * 0.5) - size * 0.5) * w - radius * 0.01;
-        return smoothstep(1.99 + ((sin(t * 10. * tan(t * 1e1)) + 1.0) * 0.5), 0.11, d * 10. / thickness * 5.0 * 0.125 * 1.5);
+        return smoothstep(1.99 + ((sin(t * 10. * tan(t * 1e1)) + 1.0) * 0.5), 0.11, d * 10. / thickness * 4.0 * 0.125 * 1.5);
     }
     float roundedRectangle (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
         float d = length(max(abs(uv - pos), size) - size) - radius;
@@ -171,7 +223,7 @@ roundedSquare.fragText = `
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;
-        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 0.5, 0.1, 0.5);
+        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.24) * 4., 0.2, 0.12);
         float rando = rand(uv * time) * 0.1;
         gl_FragColor = vec4(cols, color - rando);
     }
@@ -1777,4 +1829,141 @@ TerminalRecorder.prototype.stop = function() {
 
 
 
-       
+getGlyphFT88 = function(g) {
+    let ch;
+    switch (g) {
+        case "L":
+        ch = [
+            "0001101",
+            "0010110",
+            "0110100",
+            "0110100",
+            "1110100",
+            "0110100",
+            "0110100",
+            "0111101",
+            "1001110",
+            "0000000",
+        ];
+        break;
+        case "u":
+        ch = [
+            "0000000",
+            "0000000",
+            "0010010",
+            "0110110",
+            "1110110",
+            "0110110",
+            "0110110",
+            "0110111",
+            "0011010",
+            "0000000",
+        ];
+        break;
+        case "n":
+        ch = [
+            "0000000",
+            "0000000",
+            "0101100",
+            "1110110",
+            "0110110",
+            "0110110",
+            "0110110",
+            "0110111",
+            "0010010",
+            "0000000",
+        ];
+        break;
+        case "e":
+        ch = [
+            "0000000",
+            "0000000",
+            "0001100",
+            "0010110",
+            "0110110",
+            "0111000",
+            "0110000",
+            "0110010",
+            "0011100",
+            "0000000",
+        ];
+        break;
+        case "V":
+        ch = [
+            "0100100",
+            "1110110",
+            "0110110",
+            "0110110",
+            "0110110",
+            "1110110",
+            "0110110",
+            "0110100",
+            "0011000",
+            "0000000",
+        ];
+        break;
+        case " ":
+        ch = [
+            "0000000",
+            "0000000",
+            "0000000",
+            "0000000",
+            "0000000",
+            "0000000",
+            "0000000",
+            "0000000",
+            "0000000",
+            "0000000",
+        ];
+        break;
+        case "i":
+        ch = [
+            "0000100",
+            "0001000",
+            "0000100",
+            "0001100",
+            "0011100",
+            "0101100",
+            "0001101",
+            "0001110",
+            "0000100",
+            "0000000",
+        ];
+        break;
+        case "d":
+        ch = [
+            "0000000",
+            "0111000",
+            "0011100",
+            "0001110",
+            "0010110",
+            "0110110",
+            "0110110",
+            "0110100",
+            "0011000",
+            "0000000",
+        ];
+        break;
+    };
+    return ch;
+};
+
+let vt2 = new VirtualTerminal();
+// vt.stringArray = [];
+// let vtActive = true;
+vt2.text = "Lune Vide";
+vt2.caretPosition = vt.text.length;
+
+
+vt2.makeTerminalString = function() {
+    let s = this.text;
+    let a = new Array(10);
+    for (let y = 0; y < 10; y++) {
+        a[y] = "";
+        for (let i = 0; i < s.length; i++) {
+             a[y] = a[y] + getGlyphFT88(s[i])[y];
+        }
+    }
+    this.stringArray = a;
+};
+vt2.makeTerminalString();
