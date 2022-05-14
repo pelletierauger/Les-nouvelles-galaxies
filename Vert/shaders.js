@@ -5486,6 +5486,7 @@ newFlickeringVert.fragText = `
         gl_FragColor.rgb = gl_FragColor.rbr;
         gl_FragColor.rgb = cols;
         gl_FragColor.b *= 0.75;
+        gl_FragColor.rgb -= 0.75;
         
     }
     // endGLSL
