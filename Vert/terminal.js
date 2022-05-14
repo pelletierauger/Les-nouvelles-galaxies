@@ -15,9 +15,9 @@ drawTerminal = function(selectedProgram) {
          for (let y = 0; y < face.length; y++) {
             let p = face[y][x];
              // p = "x";
-             let sc = 2.5;
+             let sc = 5.5;
              // m += Math.cos(x * y * 0.01);
-             let tx = -0.185, ty = -0.1;
+             let tx = -0.385, ty = 0.5;
              let osc = Math.sin(drawCount * 1e-1 + 2e-1 * x) * 0.1 - 0.2;
              if (p == "1") {
                  vertices.push(x * 0.0025 * sc * (9 / 16) * 4 * 1.6 + tx, -y * 2.2 * sc * 0.0126 + Math.sin(drawCount * 0.25 + y * 0.25) * 0.0025 + ty - 0.02, 20.0 * sc * 0.9, 1);
@@ -225,9 +225,10 @@ roundedSquare.vertText = `
     }
     void main(void) {
         gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.0);
-        vec2 pos = gl_Position.xy;
-        gl_Position.xy += fbm(pos) * 1000.;
+        // vec2 pos = gl_Position.xy;
+        // gl_Position.xy += fbm(pos) * 1000.;
         // gl_Position.xy += 0.1;
+        gl_Position.xy *= 0.95;
         center = vec2(gl_Position.x, gl_Position.y);
         center = 512.0 + center * 512.0;
         // myposition = vec2(gl_Position.x, gl_Position.y);
@@ -254,7 +255,7 @@ roundedSquare.fragText = `
     }
     float roundedRectangleFlicker (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
         // vec2 uv = gl_PointCoord.xy;
-        float t = time * 0.05;
+        float t = time * 0.0125;
         t = 100. + (t * 1e-4);
         float w = 0.15 + (sin(t * 1e-2 * tan(t * 2e-2)) + 1.0) * 0.25;
         float d = length(max(abs(uv - pos), size * 0.5) - size * 0.5) * w - radius * 0.01;
@@ -269,9 +270,9 @@ roundedSquare.fragText = `
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;
-        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.24) * 4., 0.2, 0.12);
-        float rando = rand(uv * time) * 0.1;
-        gl_FragColor = vec4(cols, color - rando);
+        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.24) * 4., 0.001, 0.1);
+        float rando = rand(uv * time) * 0.05;
+        gl_FragColor = vec4(cols - rando, color);
     }
     // endGLSL
 `;
