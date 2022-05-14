@@ -48,7 +48,7 @@ drawTerminal = function(selectedProgram) {
     for (let x = 0; x <= vt2.stringArray[0].length; x++) {
         for (let y = 0; y < 10; y++) {
             let sc = 0.03;
-            let tr = {x: -0.5, y: 0.45};
+            let tr = {x: -0.54, y: 0.45};
             let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
             if (vt2.stringArray[y][x] == 1) {
                 vertices.push(x * (9 / 16) * sc + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
@@ -60,7 +60,7 @@ drawTerminal = function(selectedProgram) {
     for (let x = 0; x <= vt2.stringArray[0].length; x++) {
         for (let y = 0; y < 10; y++) {
             let sc = 0.03;
-            let tr = {x: -0.5, y: 0.5};
+            let tr = {x: -0.54, y: 0.5};
             let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
             if (vt2.stringArray[y][x] == 1) {
                 vertices.push(x * (9 / 16) * sc + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
