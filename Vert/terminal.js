@@ -18,7 +18,7 @@ drawTerminal = function(selectedProgram) {
              let sc = 2.54;
              // m += Math.cos(x * y * 0.01);
              let tx = -1.12, ty = 1;
-             let osc = Math.sin(drawCount * 1e-1 + 2e-1 * x) * 0.1 - 0.2;
+             let osc = Math.sin(drawCount * 1e-1 + 2e-1 * x) * 0.1 - 0.5;
              if (p !== ".") {
                  let xx = x * 0.0025 * sc * (9 / 16) * 4 * 1.6 + tx + (Math.sin(drawCount * 0.125 + y * 0.25) * 0.0125 * 0);
                  let yy = -y * 2.2 * sc * 0.0126 + Math.sin(drawCount * 0.25 + y * 0.25) * 0.0025 + ty - 0.02;
@@ -26,17 +26,17 @@ drawTerminal = function(selectedProgram) {
              num++;
              }
              if (p == "1") {
-                 colors.push(0, 0, 0);                 
+                 colors.push(0, 0 + 0.01, 0 + 0.1);                 
              } else if (p == "0") {
-                colors.push(0.75 + osc, 0.75 + osc, 0.75 + osc);
+                colors.push(0.75 + osc, 0.75 + osc + 0.01, 0.75 + osc + 0.1);
              } else if (p == "2") {
-                colors.push(0.6 + osc, 0.6 + osc, 0.6 + osc);
+                colors.push(0.6 + osc, 0.6 + osc + 0.01, 0.6 + osc + 0.1);
              }else if (p == "3") {
-               colors.push(0.15 + osc, 0.15 + osc, 0.15 + osc);
+               colors.push(0.15 + osc, 0.15 + osc + 0.01, 0.15 + osc + 0.1);
              }else if (p == "4") {
-                colors.push(0.7 + osc, 0.7 + osc, 0.7 + osc);
+                colors.push(0.7 + osc, 0.7 + osc + 0.01, 0.7 + osc + 0.1);
              }else if (p == "5") {
-                colors.push(0.5 + osc, 0.5 + osc, 0.5 + osc);
+                colors.push(0.5 + osc, 0.5 + osc + 0.01, 0.5 + osc + 0.1);
              }
              // if (m < 0.5) {
                  // vertices.push(x * 0.01 * (9 / 16) * 4 + tx, -y * 4 * 0.01 + ty, 50.0 * sc * 0.9, 1);
