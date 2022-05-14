@@ -265,7 +265,7 @@ roundedSquare.fragText = `
         uv = uv * 2. - 1.;
         float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.24) * 4., 0.001, 0.1);
         float rando = rand(uv * ttime) * 0.05;
-       float vig = (roundedRectangle(gl_FragCoord.xy, vec2(1280./ 2.0, 720./ 2.), vec2(0.9, 0.392) * 850., 0.05, 120.5) + 0.0);
+       float vig = (roundedRectangle(gl_FragCoord.xy, vec2(1280./ 2.0, 720./ 2.), vec2(0.9, 0.392) * 840., 0.05, 120.5) + 0.0);
         gl_FragColor = vec4((cols - rando) * vig, color);
     }
     // endGLSL
