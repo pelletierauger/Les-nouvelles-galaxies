@@ -154,7 +154,7 @@ draw = function() {
     drawBG(currentProgram);
     currentProgram = getProgram("new-flickering-dots-vert");
     gl.useProgram(currentProgram);
-    drawAlligatorQuietVert(currentProgram);
+    // drawAlligatorQuietVert(currentProgram);
 // 
 // 
     currentProgram = getProgram("rounded-square");
