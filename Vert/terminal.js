@@ -97,7 +97,7 @@ drawTerminal = function(selectedProgram) {
             let tr = {x: -0.8, y: 0.45 - 0.85};
             let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
             if (vt2.stringArray[y][x] == 1) {
-                vertices.push(x * (9 / 16) * sc * 1.75 + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
+                vertices.push(x * (9 / 16) * sc * 0.95 + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
                 num++;
                 colors.push(0, 0, 0);
             }
@@ -109,7 +109,7 @@ drawTerminal = function(selectedProgram) {
             let tr = {x: -0.8, y: 0.5 - 0.85};
             let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
             if (vt2.stringArray[y][x] == 1) {
-                vertices.push(x * (9 / 16) * sc * 1.75 + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
+                vertices.push(x * (9 / 16) * sc * 0.95 + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
                 num++;
                 colors.push(0.75, 0, 0);
             }
@@ -2078,7 +2078,13 @@ vt2.makeTerminalString = function() {
     for (let y = 0; y < 10; y++) {
         a[y] = "";
         for (let i = 0; i < s.length; i++) {
-             a[y] = a[y] + getGlyphFT88(s[i])[y] + "0";
+            let sz = getGlyphFT88(s[i])[y];
+              sz = sz.split('').map(function(v) {
+    // iterate and update
+    return v + v;
+    // join the updated array
+  }).join('')
+             a[y] = a[y] + sz + "0";
         }
     }
     this.stringArray = a;
