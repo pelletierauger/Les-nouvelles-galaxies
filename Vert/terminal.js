@@ -91,30 +91,30 @@ drawTerminal = function(selectedProgram) {
             }
         }
     }
-//     for (let x = 0; x <= vt2.stringArray[0].length; x++) {
-//         for (let y = 0; y < 10; y++) {
-//             let sc = 0.03;
-//             let tr = {x: -0.54, y: 0.45};
-//             let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
-//             if (vt2.stringArray[y][x] == 1) {
-//                 vertices.push(x * (9 / 16) * sc + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
-//                 num++;
-//                 colors.push(0, 0, 0);
-//             }
-//         }
-//     }
-//     for (let x = 0; x <= vt2.stringArray[0].length; x++) {
-//         for (let y = 0; y < 10; y++) {
-//             let sc = 0.03;
-//             let tr = {x: -0.54, y: 0.5};
-//             let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
-//             if (vt2.stringArray[y][x] == 1) {
-//                 vertices.push(x * (9 / 16) * sc + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
-//                 num++;
-//                 colors.push(0.75, 0.75, 0.75);
-//             }
-//         }
-//     }
+    for (let x = 0; x <= vt2.stringArray[0].length; x++) {
+        for (let y = 0; y < 10; y++) {
+            let sc = 0.03;
+            let tr = {x: -0.71, y: 0.45 - 0.85};
+            let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
+            if (vt2.stringArray[y][x] == 1) {
+                vertices.push(x * (9 / 16) * sc * 1.75 + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
+                num++;
+                colors.push(0, 0, 0);
+            }
+        }
+    }
+    for (let x = 0; x <= vt2.stringArray[0].length; x++) {
+        for (let y = 0; y < 10; y++) {
+            let sc = 0.03;
+            let tr = {x: -0.71, y: 0.5 - 0.85};
+            let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
+            if (vt2.stringArray[y][x] == 1) {
+                vertices.push(x * (9 / 16) * sc * 1.75 + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
+                num++;
+                colors.push(0.75, 0.75, 0.75);
+            }
+        }
+    }
     
     for (let i = 0; i < num; i++) {
         let r = Math.random();
@@ -1823,7 +1823,7 @@ VirtualTerminal.prototype.clear = function(s) {
 let vt = new VirtualTerminal();
 // vt.stringArray = [];
 let vtActive = true;
-vt.text = "Let the vision transform you, let the clouds of Phobos gather in your mind.";
+vt.text = "tl()";
 vt.makeTerminalString();
 vt.caretPosition = vt.text.length;
 
@@ -1991,6 +1991,76 @@ getGlyphFT88 = function(g) {
             "0000000",
         ];
         break;
+        case "C":
+        ch = [
+            "0001110",
+            "0011101",
+            "0101100",
+            "1101100",
+            "1101100",
+            "1101100",
+            "1101001",
+            "0110010",
+            "0011100",
+            "0000000",
+        ];
+        break;
+        case "a":
+        ch = [
+            "0000000",
+            "0000000",
+            "0001100",
+            "0010110",
+            "0100110",
+            "0010110",
+            "0110110",
+            "0110111",
+            "0011010",
+            "0000000",
+        ];
+        break;
+        case "y":
+        ch = [
+            "0000000",
+            "0000000",
+            "0100100",
+            "1110110",
+            "0110110",
+            "0110110",
+            "0110110",
+            "0011110",
+            "0100100",
+            "0011000",
+        ];
+        break;
+                    case "o":
+        ch = [
+            "0000000",
+            "0000000",
+            "0001100",
+            "0010110",
+            "0110110",
+            "0110110",
+            "0110110",
+            "0110100",
+            "0011000",
+            "0000000",
+        ];
+        break;
+        case "s":
+        ch = [
+            "0000000",
+            "0000000",
+            "0001101",
+            "0010010",
+            "0110100",
+            "0111110",
+            "0010110",
+            "0100100",
+            "1011000",
+            "0000000",
+        ];
+        break;
     };
     return ch;
 };
@@ -1998,8 +2068,8 @@ getGlyphFT88 = function(g) {
 let vt2 = new VirtualTerminal();
 // vt.stringArray = [];
 // let vtActive = true;
-vt2.text = "Lune Vide";
-vt2.caretPosition = vt.text.length;
+vt2.text = "Canyons";
+vt2.caretPosition = vt2.text.length;
 
 
 vt2.makeTerminalString = function() {
