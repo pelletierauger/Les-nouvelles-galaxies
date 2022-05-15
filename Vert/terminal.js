@@ -23,7 +23,7 @@ drawTerminal = function(selectedProgram) {
                  let yy = -y * 2.2 * sc * 0.0126 + Math.sin(drawCount * 0.25 + y * 0.25) * 0.0025 + ty - 0.02;
                  vertices.push(xx, yy, 20.0 * sc * 0.9, 1);
                  num++;
-                 if (p == "1") { colors.push(0, 0, 0); 
+                 if (p == "1") { colors.push(0.25, 0, 0); 
                  } else if (p == "0") {colors.push(0.75 + osc, 0.75 + osc, 0.75 + osc);
                  } else if (p == "2") {colors.push(0.5 + 0.65 - 0.2 + osc, 0.35 + 0.5 - 0.2 + osc, 0.5 + 0.2 - 0.2 + osc);
                  } else if (p == "3") {colors.push(0.15 + osc, 0.15 + osc, 0.15 + osc);
@@ -45,10 +45,10 @@ drawTerminal = function(selectedProgram) {
                  let yy = -y * 2.2 * sc * 0.0126 + Math.sin(drawCount * 0.25 + y * 0.25) * 0.0025 + ty - 0.02;
                  vertices.push(xx, yy, 20.0 * sc * 0.9, 1);
                  num++;
-                 if (p == "1") { colors.push(0, 0, 0); 
+                 if (p == "1") { colors.push(0.25, 0, 0); 
                  } else if (p == "0") {colors.push(0.75 + osc, 0.75 + osc, 0.75 + osc);
                  } else if (p == "2") {colors.push(0.5 + 0.65 - 0.2 + osc, 0.35 + 0.5 - 0.2 + osc, 0.5 + 0.2 - 0.2 + osc);
-                 } else if (p == "3") {colors.push(0.15 + osc, 0.15 + osc, 0.15 + osc);
+                 } else if (p == "3") {colors.push(0.5 + osc, 0.15 + osc, 0.15 + osc);
                  } else if (p == "4") {colors.push(0.7 + osc, 0.7 + osc, 0.7 + osc);
                  } else if (p == "5") {colors.push(0.5 + osc, 0.5 + osc, 0.5 + osc);
                  }
@@ -270,7 +270,9 @@ roundedSquare.fragText = `
         uv = uv * 2. - 1.;
         float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.24) * 4., 0.001, 0.1);
         float rando = rand(uv * time) * 0.05;
+       float vig = (roundedRectangle(gl_FragCoord.xy, vec2(0.0, 580.0), vec2(2.825, 0.929) * 587.2, 0.05, 250.5) + 0.0);
         gl_FragColor = vec4(cols - rando, color);
+        gl_FragColor.a *= vig;
     }
     // endGLSL
 `;
