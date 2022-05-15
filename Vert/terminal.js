@@ -94,7 +94,7 @@ drawTerminal = function(selectedProgram) {
     for (let x = 0; x <= vt2.stringArray[0].length; x++) {
         for (let y = 0; y < 10; y++) {
             let sc = 0.03;
-            let tr = {x: -0.71, y: 0.45 - 0.85};
+            let tr = {x: -0.8, y: 0.45 - 0.85};
             let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
             if (vt2.stringArray[y][x] == 1) {
                 vertices.push(x * (9 / 16) * sc * 1.75 + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
@@ -106,7 +106,7 @@ drawTerminal = function(selectedProgram) {
     for (let x = 0; x <= vt2.stringArray[0].length; x++) {
         for (let y = 0; y < 10; y++) {
             let sc = 0.03;
-            let tr = {x: -0.71, y: 0.5 - 0.85};
+            let tr = {x: -0.8, y: 0.5 - 0.85};
             let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
             if (vt2.stringArray[y][x] == 1) {
                 vertices.push(x * (9 / 16) * sc * 1.75 + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
@@ -2074,11 +2074,11 @@ vt2.caretPosition = vt2.text.length;
 
 vt2.makeTerminalString = function() {
     let s = this.text;
-    let a = new Array(10);
+    let a = new Array(11);
     for (let y = 0; y < 10; y++) {
         a[y] = "";
         for (let i = 0; i < s.length; i++) {
-             a[y] = a[y] + getGlyphFT88(s[i])[y];
+             a[y] = a[y] + getGlyphFT88(s[i])[y] + "0";
         }
     }
     this.stringArray = a;
