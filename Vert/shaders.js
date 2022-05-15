@@ -633,6 +633,7 @@ pulsarFog.fragText = `
 precision lowp float;
 varying vec2 vTexCoord;
 uniform float time;
+${blendingMath}
 const float TURBULENCE = 0.009;
 //noise function from iq: https://www.shadertoy.com/view/Msf3WH
 vec2 hash(vec2 p) {
@@ -665,7 +666,7 @@ float fbm(vec2 p) {
     return  0.5 + 0.5 * h;
 }
 vec3 smokeEffect(vec2 uv) {
-    float time = 130.0;
+    float time = 140.0;
     vec3 col = vec3(0.0, 0.0, 0.0);
     // time scale
     float v = 0.0002;
@@ -761,10 +762,17 @@ void main() {
         gl_FragColor.b += 0.05;
     // gl_FragColor.r += 0.05;
     // gl_FragColor.rgb = vec3(1.0);
-    gl_FragColor.rgb += vec3(0.0, 0.0, 0.25);
+    gl_FragColor.rgb += vec3(0.15, 0.1, 0.75);
+       // gl_FragColor = gl_FragColor.grra;
+                vec3 bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
+        // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 1.) * 1.1;
+    gl_FragColor.rgb = min(vec3(0.1), gl_FragColor.rgb);
+    gl_FragColor.rgb = max(vec3(0.3), gl_FragColor.rgb);
+        vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(0.8, 0.5, 0.0).brg.gbr);
+    // vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
+    gl_FragColor.rgb = blender - 0.15 - (col * 0.35);
     gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.099) * 2.0, 0.02, 0.25) * 0.9;
-        // gl_FragColor = gl_FragColor.grra;
-        // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
+         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
 }
 // endGLSL
 `;
@@ -1014,11 +1022,11 @@ void main() {
         // vec3 levels = LevelsControlInputRange(gl_FragColor.rgb, 0.2, 0.95);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b)) / 3.;
             vec3 bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
-        gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 1.) * 1.1;
+        // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 1.) * 1.1;
         vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
     // vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
-    gl_FragColor.rgb = blender;
-    gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 2.2);
+    // gl_FragColor.rgb = blender;
+    // gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 2.2);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.b += col.b * 0.25;
