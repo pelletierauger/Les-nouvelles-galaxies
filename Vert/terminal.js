@@ -55,6 +55,94 @@ drawTerminal = function(selectedProgram) {
              }
         }
     }
+        for (let x = 0; x < face[0].length; x++) {
+         for (let y = 0; y < face.length; y++) {
+            let p = face[y][x];
+             // p = "x";
+             let sc = 1;
+             let tx = -0.45, ty = 0.45;
+             let osc = Math.sin(drawCount * 1e-1 + 1e-1 * x) * 0.1 - 0.4;
+             if (p == "1") {
+                 let xx = x * 0.0025 * sc * (9 / 16) * 4.4 * 1.6 + Math.sin(drawCount * 0.25 + y * 0.75) * 0.007 + tx;
+                 let yy = -y * 2.65 * sc * 0.0126 + ty - 0.02;
+                 vertices.push(xx, yy, 20.0 * sc * 0.9, 0.3 * ((Math.sin(drawCount * 0.25e-1) * 0.5) + 0.5));
+                 num++;
+                 if (p == "1") { colors.push(0, 0, 0); 
+                 } else if (p == "0") {colors.push(0.75 + osc, 0.75 + osc, 0.75 + osc);
+                 } else if (p == "2") {colors.push(0.5 + 0.65 - 0.2 + osc, 0.35 + 0.5 - 0.2 + osc, 0.5 + 0.2 - 0.2 + osc);
+                 } else if (p == "3") {colors.push(0.15 + osc, 0.15 + osc, 0.15 + osc);
+                 } else if (p == "4") {colors.push(0.7 + osc, 0.7 + osc, 0.7 + osc);
+                 } else if (p == "5") {colors.push(0.5 + osc, 0.5 + osc, 0.5 + osc);
+                 }
+             }
+        }
+    }
+    for (let x = 0; x < face[0].length; x++) {
+         for (let y = 0; y < face.length; y++) {
+            let p = face[y][x];
+             // p = "x";
+             let sc = 1;
+             let tx = -0.45, ty = 0.45;
+             let osc = Math.sin(drawCount * 1e-1 + 1e-1 * x) * 0.1 - 0.4;
+             if (p !== "." && p !== "1") {
+                 let xx = x * 0.0025 * sc * (9 / 16) * 4.4 * 1.6 + Math.sin(drawCount * 0.25 + y * 0.75) * 0.007 + tx;
+                 let yy = -y * 2.65 * sc * 0.0126 + ty - 0.02;
+                 vertices.push(xx, yy, 20.0 * sc * 0.9, 0.3 * ((Math.sin(drawCount * 0.25e-1) * 0.5) + 0.5));
+                 num++;
+                 if (p == "1") { colors.push(0, 0, 0); 
+                 } else if (p == "0") {colors.push(0.75 + osc, 0.75 + osc, 0.75 + osc);
+                 } else if (p == "2") {colors.push(0.5 + 0.65 - 0.2 + osc, 0.35 + 0.5 - 0.2 + osc, 0.5 + 0.2 - 0.2 + osc);
+                 } else if (p == "3") {colors.push(0.5 + 0.65 - 0.25 + osc, 0.35 + 0.5 - 0.25 + osc, 0.5 + 0.2 - 0.25 + osc);
+                 } else if (p == "4") {colors.push(0.5 + 0.65 - 0.3 + osc, 0.35 + 0.5 - 0.3 + osc, 0.5 + 0.2 - 0.3 + osc);
+                 } else if (p == "5") {colors.push(0.5 + osc, 0.5 + osc, 0.5 + osc);
+                 }
+             }
+        }
+    }
+        for (let x = 0; x < face[0].length; x++) {
+         for (let y = 0; y < face.length; y++) {
+            let p = face[y][x];
+             // p = "x";
+             let sc = 1;
+             let tx = -0.4, ty = 0.45;
+             let osc = Math.sin(drawCount * 1e-1 + 1e-1 * x) * 0.1 - 0.4;
+             if (p == "1") {
+                 let xx = x * 0.0025 * sc * (9 / 16) * 4.4 * 1.6 + Math.sin(drawCount * 0.25 + y * 0.75) * 0.007 + tx;
+                 let yy = -y * 2.65 * sc * 0.0126 + ty - 0.02;
+                 vertices.push(xx, yy, 20.0 * sc * 0.9, 0.3 * ((Math.sin(drawCount * 0.25e-1) * 0.5) + 0.5));
+                 num++;
+                 if (p == "1") { colors.push(0, 0, 0); 
+                 } else if (p == "0") {colors.push(0.75 + osc, 0.75 + osc, 0.75 + osc);
+                 } else if (p == "2") {colors.push(0.5 + 0.65 - 0.2 + osc, 0.35 + 0.5 - 0.2 + osc, 0.5 + 0.2 - 0.2 + osc);
+                 } else if (p == "3") {colors.push(0.15 + osc, 0.15 + osc, 0.15 + osc);
+                 } else if (p == "4") {colors.push(0.7 + osc, 0.7 + osc, 0.7 + osc);
+                 } else if (p == "5") {colors.push(0.5 + osc, 0.5 + osc, 0.5 + osc);
+                 }
+             }
+        }
+    }
+    for (let x = 0; x < face[0].length; x++) {
+         for (let y = 0; y < face.length; y++) {
+            let p = face[y][x];
+             // p = "x";
+             let sc = 1;
+             let tx = -0.4, ty = 0.45;
+             let osc = Math.sin(drawCount * 1e-1 + 1e-1 * x) * 0.1 - 0.4;
+             if (p !== "." && p !== "1") {
+                 let xx = x * 0.0025 * sc * (9 / 16) * 4.4 * 1.6 + Math.sin(drawCount * 0.25 + y * 0.75) * 0.007 + tx;
+                 let yy = -y * 2.65 * sc * 0.0126 + ty - 0.02;
+                 vertices.push(xx, yy, 20.0 * sc * 0.9, 0.3 * ((Math.sin(drawCount * 0.25e-1) * 0.5) + 0.5));
+                 num++;
+                 if (p == "1") { colors.push(0, 0, 0); 
+                 } else if (p == "0") {colors.push(0.75 + osc, 0.75 + osc, 0.75 + osc);
+                 } else if (p == "2") {colors.push(0.5 + 0.65 - 0.2 + osc, 0.35 + 0.5 - 0.2 + osc, 0.5 + 0.2 - 0.2 + osc);
+                 } else if (p == "3") {colors.push(0.5 + 0.65 - 0.25 + osc, 0.35 + 0.5 - 0.25 + osc, 0.5 + 0.2 - 0.25 + osc);
+                 } else if (p == "4") {colors.push(0.5 + 0.65 - 0.3 + osc, 0.35 + 0.5 - 0.3 + osc, 0.5 + 0.2 - 0.3 + osc);
+                 } else if (p == "5") {colors.push(0.5 + osc, 0.5 + osc, 0.5 + osc);
+                 }
+             }
+        }
+    }
     for (let x = 0; x <= vt.stringArray[0].length; x++) {
         let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
         for (let y = 0; y < 9; y++) {
@@ -270,7 +358,7 @@ roundedSquare.fragText = `
         uv = uv * 2. - 1.;
         float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.28) * 4., 0.001, 0.1);
         float rando = rand(uv * time) * 0.05;
-        gl_FragColor = vec4(cols - rando, color);
+        gl_FragColor = vec4(cols - rando, color * alph);
     }
     // endGLSL
 `;
