@@ -158,9 +158,9 @@ draw = function() {
     let currentProgram = getProgram("pulsar-fog");
     gl.useProgram(currentProgram);
     // drawBG(currentProgram);
-    currentProgram = getProgram("new-flickering-dots-vert");
+    currentProgram = getProgram("new-flickering-dots");
     gl.useProgram(currentProgram);
-    drawAlligatorQuietVert(currentProgram);
+    drawAlligatorQuiet(currentProgram);
 // 
 // 
     currentProgram = getProgram("rounded-square");

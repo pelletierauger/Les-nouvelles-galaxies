@@ -926,28 +926,25 @@ drawAlligatorQuiet = function(selectedProgram) {
     let t3 = t * 1e1 * 0.5;
     let al = map(openSimplex.noise2D(t3, t3 + 1000), -1, 1, 0.1, 1.25);
     al = 0.3;
-    for (let i = 0; i < 27000; i += 1) {
-        // al = map(i, 0, 27000, 15, 80);
-        x = sin(tan(i * 0.001) * fx + i * t * 0.001) * i * 0.00005;
-        y = cos(tan(i * 0.001) * fx + i * t * 0.001) * i * 0.00015;
-        //         x *= cos(fx * fy * 0.001) * sin(x + t * 20);
-        //         y *= cos(fx * fy * 0.001) * cos(x + t * 20);
-        fx = sin(i * m);
-        fy = y * 5;
-        x += (Math.random() - 0.5) * 0.00005;
-        y += (Math.random() - 0.5) * 0.00005;
-        x += xOffset * 0.15 * 2 * 0.2;
-        y += yOffset * 0.15 * 3 * 0.2;
-        x += xOffset2 * 2 * 1e-3 * 0.5;
-        y += yOffset2 * 3 * 1e-3 * 0.5;
-        x += cos(t * -1e2 * 0.25) * i * 1e-5 * 2;
-        y += sin(t * -1e2 * 0.25) * i * 1e-5 * 3;
-        // let xo = openSimplex.noise2D(i, t * 1e4) * 4e-4;
-        let xo = 0;
-        // let yo = openSimplex.noise2D(i, t * 1e4 + 1000) * 4e-4;
-        let yo = 0;
-        let zo = (openSimplex.noise2D(i, (t + i) * 1e2 + 100)) * 3;
-        vertices.push((x + xo) * 1.4, (y + yo) * 0.8, 15 + zo, al);
+    let num = 3000;
+    for (let i = 0; i < num; i += 1) {
+        let t = i;
+        let t2 = Math.abs(Math.cos(t * 1.75))
+        let y = Math.cos(t) * Math.sqrt(t2) * 0.5;
+        let x = Math.sin(t) * Math.sqrt(t2) * 0.5;
+        vertices.push(x * (9 / 16), y, 15, al);
+    }
+    let sides = 6;
+    let inc = (Math.PI * 2) / sides;
+    for (let i = 0; i <= (Math.PI * 2) - inc; i += inc) {
+        let p0 = [Math.cos(i), Math.sin(i)];
+        let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
+        for (let p = 0; p < 1; p += 0.01) {
+            let x = lerp(p0[0], p1[0], p) * 0.75;
+            let y = lerp(p0[1], p1[1], p) * 0.75;
+            vertices.push(x * (9 / 16), y, 15, al);
+            num++;
+        }
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
@@ -971,7 +968,7 @@ drawAlligatorQuiet = function(selectedProgram) {
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
-    gl.drawArrays(gl.POINTS, 0, 27000);
+    gl.drawArrays(gl.POINTS, 0, num);
 }
 
 
