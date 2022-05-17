@@ -926,22 +926,67 @@ drawAlligatorQuiet = function(selectedProgram) {
     let t3 = t * 1e1 * 0.5;
     let al = map(openSimplex.noise2D(t3, t3 + 1000), -1, 1, 0.1, 1.25);
     al = 0.3;
-    let num = 3000;
-    for (let i = 0; i < num; i += 1) {
+    let num = 0;
+    let nnn = 1500;
+    let sst = Math.PI * 2, iiin = (Math.PI * 4) / nnn;
+    for (let i = sst; i < (Math.PI * 4) + sst; i += iiin) {
         let t = i;
-        let t2 = Math.abs(Math.cos(t * 1.75))
-        let y = Math.cos(t) * Math.sqrt(t2) * 0.5;
-        let x = Math.sin(t) * Math.sqrt(t2) * 0.5;
+        let t2 = Math.abs(Math.cos(t * 1.5 * 1.5))
+        let y = Math.cos(t + drawCount * 1e-2 + 1.23) * Math.sqrt(t2) * 0.35;
+        let x = Math.sin(t + drawCount * 1e-2 + 1.23) * Math.sqrt(t2) * 0.35;
         vertices.push(x * (9 / 16), y, 15, al);
+        num++;
+    }
+        for (let i = 0; i < 1500; i += 1) {
+        let t = i;
+        let t2 = Math.abs(Math.cos(t * 1.5))
+        let sc = 0.49;
+        let y = Math.cos(t + drawCount * 1e-2) * Math.sqrt(t2) * 0.35;
+        let x = Math.sin(t + drawCount * 1e-2) * Math.sqrt(t2) * 0.35;
+        vertices.push(x * (9 / 16) + sc, -y + sc, 15, al);
+        num++;
+        vertices.push(x * (9 / 16) - sc, y - sc, 15, al);
+        num++;
+        vertices.push(x * (9 / 16) + sc, y - sc, 15, al);
+        num++;
+        vertices.push(x * (9 / 16) - sc, -y + sc, 15, al);
+        num++;
     }
     let sides = 6;
     let inc = (Math.PI * 2) / sides;
-    for (let i = 0; i <= (Math.PI * 2) - inc; i += inc) {
+    let st = -drawCount * 1e-2;
+    for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
         let p0 = [Math.cos(i), Math.sin(i)];
         let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
         for (let p = 0; p < 1; p += 0.01) {
-            let x = lerp(p0[0], p1[0], p) * 0.75;
-            let y = lerp(p0[1], p1[1], p) * 0.75;
+            let x = lerp(p0[0], p1[0], p) * 0.5;
+            let y = lerp(p0[1], p1[1], p) * 0.5;
+            vertices.push(x * (9 / 16), y, 15, al);
+            num++;
+        }
+    }
+    sides = 3;
+    inc = (Math.PI * 2) / sides;
+    st = -drawCount * 1e-2;
+    for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
+        let p0 = [Math.cos(i), Math.sin(i)];
+        let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
+        for (let p = 0; p < 1; p += 0.01) {
+            let x = lerp(p0[0], p1[0], p) * 0.5;
+            let y = lerp(p0[1], p1[1], p) * 0.5;
+            vertices.push(x * (9 / 16), y, 15, al);
+            num++;
+        }
+    }
+        sides = 3;
+    inc = (Math.PI * 2) / sides;
+    st = Math.PI * 0.5;
+    for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
+        let p0 = [Math.cos(i), Math.sin(i)];
+        let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
+        for (let p = 0; p < 1; p += 0.005) {
+            let x = lerp(p0[0], p1[0], p) * 1;
+            let y = lerp(p0[1], p1[1], p) * 1;
             vertices.push(x * (9 / 16), y, 15, al);
             num++;
         }

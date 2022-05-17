@@ -274,13 +274,30 @@ newFlickering.vertText = `
     varying vec2 myposition;
     varying vec2 center;
     varying float alph;
-    void main(void) {
+    float rand(vec2 n) { 
+      return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+    }
+    float noise(vec2 p){
+      vec2 ip = floor(p);
+      vec2 u = fract(p);
+      u = u*u*(3.0-2.0*u);
+      float res = mix(
+        mix(rand(ip),rand(ip+vec2(1.0,0.0)),u.x),
+        mix(rand(ip+vec2(0.0,1.0)),rand(ip+vec2(1.0,1.0)),u.x),u.y);
+      return res*res;
+    }
+void main(void) {
         gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.0);
+    gl_Position.xy *= 0.75;
+        float n = noise(gl_Position.xy * 0.4);
+        // gl_Position.y += tan(n * 100. * 1e2) * 0.0009 * 2.;
+        // gl_Position.x += floor(tan(n * 10. * 1e2) * 0.09 * 2.) * 0.015;
+    // gl_Position.xy += vec2(cos(n * 1.), sin(n * 1.)) * 0.1;
         center = vec2(gl_Position.x, gl_Position.y);
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
         alph = coordinates.w;
-        gl_PointSize = (9. + coordinates.z / ((6.0 + alph) * 0.25)) * 1.0;
+        gl_PointSize = (9. + coordinates.z / ((6.0 + alph) * 0.25)) * 0.75;
         // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
     }
@@ -762,7 +779,7 @@ void main() {
     // gl_FragColor.r += 0.05;
     // gl_FragColor.rgb = vec3(1.0);
     // gl_FragColor.rgb *= 1.25;
-    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.1) * 2.1, 0.001, 0.25) * 0.9;
+    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.1) * 2.1, 0.001, 0.25) * 1.2;
         // gl_FragColor = gl_FragColor.grra;
         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
 }
