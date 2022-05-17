@@ -1009,7 +1009,7 @@ void main() {
    gl_FragColor = texture2D(u_texture, v_texcoord);
    // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
    // gl_FragColor.r = gl_FragColor.r * 0.5;
-   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.07)) * 1.2;
+   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.04) - 0.025) * 1.2;
     vec3 col = gl_FragColor.rgb;
         // vec3 levels = LevelsControlInputRange(gl_FragColor.rgb, 0.2, 0.95);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b)) / 3.;
@@ -1018,7 +1018,9 @@ void main() {
         vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
     // vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
     gl_FragColor.rgb = blender;
-    // gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, -0.75);
+    gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, -0.75);
+    gl_FragColor.b += 0.125 * (0.5 / gl_FragColor.b);
+    gl_FragColor.b += 1.;
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.b += col.b * 0.25;
