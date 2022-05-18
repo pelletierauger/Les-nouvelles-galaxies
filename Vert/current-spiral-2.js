@@ -932,9 +932,9 @@ drawAlligatorQuiet = function(selectedProgram) {
     for (let i = sst; i < (Math.PI * 4) + sst; i += iiin) {
     let al = map(openSimplex.noise2D(t3, i), -1, 1, 0.001, 1.25);
         let t = i;
-        let t2 = Math.abs(Math.cos(t * 1.5 * 1.5))
-        let y = Math.cos(t + drawCount * 1e-2 + 1.23) * Math.sqrt(t2) * 0.35;
-        let x = Math.sin(t + drawCount * 1e-2 + 1.23) * Math.sqrt(t2) * 0.35;
+        let t2 = Math.abs(Math.cos(t * 5 * 0.25));
+        let y = Math.cos(t + drawCount * 1e-2 + 180) * Math.sqrt(t2) * 0.35;
+        let x = Math.sin(t + drawCount * 1e-2 + 180) * Math.sqrt(t2) * 0.35;
         vertices.push(x * (9 / 16), y, 15, al);
         num++;
     }
@@ -956,7 +956,7 @@ drawAlligatorQuiet = function(selectedProgram) {
     //     vertices.push(x * (9 / 16) + sc, y - sc, 15, al);
     //     num++;
     // }
-    let sides = 6;
+    let sides = 5;
     let inc = (Math.PI * 2) / sides;
     let st = -drawCount * 1e-2;
     for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
@@ -979,19 +979,19 @@ drawAlligatorQuiet = function(selectedProgram) {
         for (let p = 0; p < 1; p += 0.01) {
             let x = lerp(p0[0], p1[0], p) * 0.5;
             let y = lerp(p0[1], p1[1], p) * 0.5;
-            vertices.push(x * (9 / 16), y, 15, al);
-            num++;
+            // vertices.push(x * (9 / 16), y, 15, al);
+            // num++;
         }
     }
-        sides = 3;
+        sides = 5;
     inc = (Math.PI * 2) / sides;
     st = Math.PI * 0.5;
     for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
         let p0 = [Math.cos(i), Math.sin(i)];
         let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
         for (let p = 0; p < 1; p += 0.005) {
-            let x = lerp(p0[0], p1[0], p) * 1;
-            let y = lerp(p0[1], p1[1], p) * 1;
+            let x = lerp(p0[0], p1[0], p) * 0.625;
+            let y = lerp(p0[1], p1[1], p) * 0.625;
             vertices.push(x * (9 / 16), y, 15, al);
             num++;
         }
@@ -1029,6 +1029,10 @@ drawAlligatorQuiet = function(selectedProgram) {
         vertices[i] += nx * 0.02;
         vertices[i + 1] += ny * 0.02;
     }
+    vertices.push(0.5, 0.5, 250, 1 + (al * 1.5));
+    num++;
+    vertices.push(-0.5, 0.5, 250, 1 + (al * 1.5));
+    num++;
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
     //Bind appropriate array buffer to it
