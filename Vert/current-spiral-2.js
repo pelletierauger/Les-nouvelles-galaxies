@@ -941,15 +941,17 @@ drawAlligatorQuiet = function(selectedProgram) {
         let t = i;
         let t2 = Math.abs(Math.cos(t * 1.5))
         let sc = 0.49;
-        let y = Math.cos(t + drawCount * 1e-2) * Math.sqrt(t2) * 0.35;
-        let x = Math.sin(t + drawCount * 1e-2) * Math.sqrt(t2) * 0.35;
-        vertices.push(x * (9 / 16) + sc, -y + sc, 15, al);
+        let y = Math.cos(t + drawCount * 1e-2) * Math.sqrt(t2) * 0.4;
+        let x = Math.sin(t + drawCount * 1e-2) * Math.sqrt(t2) * 0.4;
+        vertices.push(x * (9 / 16) - sc, -y + sc, 15, al);
         num++;
         vertices.push(x * (9 / 16) - sc, y - sc, 15, al);
         num++;
-        vertices.push(x * (9 / 16) + sc, y - sc, 15, al);
+        y = Math.cos(t - drawCount * 1e-2) * Math.sqrt(t2) * 0.4;
+        x = Math.sin(t - drawCount * 1e-2) * Math.sqrt(t2) * 0.4;
+        vertices.push(x * (9 / 16) + sc, -y + sc, 15, al);
         num++;
-        vertices.push(x * (9 / 16) - sc, -y + sc, 15, al);
+        vertices.push(x * (9 / 16) + sc, y - sc, 15, al);
         num++;
     }
     let sides = 6;
@@ -1088,5 +1090,5 @@ drawAlligatorQuietVert = function(selectedProgram) {
     // Clear the color buffer bit
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
-    gl.drawArrays(gl.POINTS, 0, 147456 * 3);
+    gl.drawArrays(gl.POINTS, 0, 147456 * 1.5);
 }
