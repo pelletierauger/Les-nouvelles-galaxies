@@ -993,6 +993,33 @@ drawAlligatorQuiet = function(selectedProgram) {
             num++;
         }
     }
+    inc = PI / 500;
+     for (let i = Math.PI / 4; i < Math.PI / 4 * 3; i += inc) {
+         let sc = 0.75;
+    let x = (Math.cos(i) * sc);
+    let y = (Math.sin(i) * sc) - Math.sin(Math.PI/4) * sc;
+    // ellipse(x + 60, y, 1);
+    // vertex(x + 60, y);
+         vertices.push(x * (9 / 16) - 0.9, y, 15, al);
+         num++;         
+         vertices.push(x * (9 / 16) - 0.9, -y, 15, al);
+         num++;
+         vertices.push(x * (9 / 16) + 0.9, y, 15, al);
+         num++;         
+         vertices.push(x * (9 / 16) + 0.9, -y, 15, al);
+         num++;
+    // ellipse(x - 55, y, 1);
+    // ellipse(x + 60, y * -1 + 300 - 17, 1);
+    // ellipse(x - 55, y * -1 + 300 - 17, 1);
+  }
+    for (let i = 0; i < 150; i++) {
+        let x = Math.cos(i + drawCount) * i * 0.001;
+        let y = Math.sin(i + drawCount) * i * 0.001;
+        vertices.push(x * (9 / 16) + 0.9, -y, 15, al);
+        num++;
+        vertices.push(x * (9 / 16) - 0.9, -y, 15, al);
+        num++;
+    }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
     //Bind appropriate array buffer to it
