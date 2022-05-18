@@ -289,15 +289,15 @@ newFlickering.vertText = `
 void main(void) {
         gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.0);
     gl_Position.xy *= 0.75;
-        float n = noise(gl_Position.xy * 0.4);
-        // gl_Position.y += tan(n * 100. * 1e2) * 0.0009 * 2.;
-        // gl_Position.x += floor(tan(n * 10. * 1e2) * 0.09 * 2.) * 0.015;
+        float n = noise(gl_Position.xy * 1.1);
+        // gl_Position.y += tan(n * 100. * 1e2 + alph) * 0.0009 * 2.;
+        // gl_Position.x += tan(alph * 1e4) * 10.5;
     // gl_Position.xy += vec2(cos(n * 1.), sin(n * 1.)) * 0.1;
         center = vec2(gl_Position.x, gl_Position.y);
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
         alph = coordinates.w;
-        gl_PointSize = (9. + coordinates.z / ((6.0 + alph) * 0.25)) * 0.75 * 1.2;
+        gl_PointSize = (9. + coordinates.z / ((6.0 + alph) * 0.25)) * alph * 2.5;
         // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
     }
@@ -333,7 +333,7 @@ newFlickering.fragText = `
         alpha = smoothstep(0.015 / (0.9 + alph), 0.000125, dist_squared) * 0.49;
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
-        gl_FragColor = vec4(1.0, 0.2 - dist_squared, 0.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 1.25;
+        gl_FragColor = vec4(1.0, 0.2 - dist_squared, 0.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 4.1)) * 0.045 + alpha)) * 1.25;
         // gl_FragColor.b = 0.5;
         
         
@@ -5390,7 +5390,7 @@ newFlickeringVert.fragText = `
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph)) * 0.045 + alpha)) * 0.75;
         gl_FragColor.rgb = gl_FragColor.rbr;
-        gl_FragColor.rgb = cols * 0.5;
+        gl_FragColor.rgb = cols;
         gl_FragColor.b *= 0.75;
          
     }

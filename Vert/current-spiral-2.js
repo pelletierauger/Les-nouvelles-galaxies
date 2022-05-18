@@ -923,13 +923,14 @@ drawAlligatorQuiet = function(selectedProgram) {
     let x = 1;
     let y = 1;
     let m = map(sin(t * 0.25e1), -1, 1, 1e-5, 1e-3);
-    let t3 = t * 1e1 * 0.5;
-    let al = map(openSimplex.noise2D(t3, t3 + 1000), -1, 1, 0.1, 1.25);
-    al = 0.3;
+    let t3 = drawCount * 1e7 * 0.5;
+    let al = map(openSimplex.noise2D(t3, t3 + 10000), -1, 1, 0.001, 1.25);
+    // al = 0.3;
     let num = 0;
     let nnn = 1500;
     let sst = Math.PI * 2, iiin = (Math.PI * 4) / nnn;
     for (let i = sst; i < (Math.PI * 4) + sst; i += iiin) {
+    let al = map(openSimplex.noise2D(t3, i), -1, 1, 0.001, 1.25);
         let t = i;
         let t2 = Math.abs(Math.cos(t * 1.5 * 1.5))
         let y = Math.cos(t + drawCount * 1e-2 + 1.23) * Math.sqrt(t2) * 0.35;
@@ -937,23 +938,24 @@ drawAlligatorQuiet = function(selectedProgram) {
         vertices.push(x * (9 / 16), y, 15, al);
         num++;
     }
-        for (let i = 0; i < 1500; i += 1) {
-        let t = i;
-        let t2 = Math.abs(Math.cos(t * 1.5))
-        let sc = 0.49;
-        let y = Math.cos(t + drawCount * 1e-2) * Math.sqrt(t2) * 0.4;
-        let x = Math.sin(t + drawCount * 1e-2) * Math.sqrt(t2) * 0.4;
-        vertices.push(x * (9 / 16) - sc, -y + sc, 15, al);
-        num++;
-        vertices.push(x * (9 / 16) - sc, y - sc, 15, al);
-        num++;
-        y = Math.cos(t - drawCount * 1e-2) * Math.sqrt(t2) * 0.4;
-        x = Math.sin(t - drawCount * 1e-2) * Math.sqrt(t2) * 0.4;
-        vertices.push(x * (9 / 16) + sc, -y + sc, 15, al);
-        num++;
-        vertices.push(x * (9 / 16) + sc, y - sc, 15, al);
-        num++;
-    }
+    //     for (let i = 0; i < 1500; i += 1) {
+    // let al = map(openSimplex.noise2D(t3, i), -1, 1, 0.001, 1.25);
+    //     let t = i;
+    //     let t2 = Math.abs(Math.cos(t * 1.75))
+    //     let sc = 0.49;
+    //     let y = Math.cos(t + drawCount * 1e-2) * Math.sqrt(t2) * 0.3;
+    //     let x = Math.sin(t + drawCount * 1e-2) * Math.sqrt(t2) * 0.3;
+    //     vertices.push(x * (9 / 16) - sc, -y + sc, 15, al);
+    //     num++;
+    //     vertices.push(x * (9 / 16) - sc, y - sc, 15, al);
+    //     num++;
+    //     y = Math.cos(t - drawCount * 1e-2) * Math.sqrt(t2) * 0.3;
+    //     x = Math.sin(t - drawCount * 1e-2) * Math.sqrt(t2) * 0.3;
+    //     vertices.push(x * (9 / 16) + sc, -y + sc, 15, al);
+    //     num++;
+    //     vertices.push(x * (9 / 16) + sc, y - sc, 15, al);
+    //     num++;
+    // }
     let sides = 6;
     let inc = (Math.PI * 2) / sides;
     let st = -drawCount * 1e-2;
@@ -961,6 +963,7 @@ drawAlligatorQuiet = function(selectedProgram) {
         let p0 = [Math.cos(i), Math.sin(i)];
         let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
         for (let p = 0; p < 1; p += 0.01) {
+    // let al = map(openSimplex.noise2D(t3, p * 1e6), -1, 1, 0.001, 1.25);
             let x = lerp(p0[0], p1[0], p) * 0.5;
             let y = lerp(p0[1], p1[1], p) * 0.5;
             vertices.push(x * (9 / 16), y, 15, al);
@@ -1000,13 +1003,13 @@ drawAlligatorQuiet = function(selectedProgram) {
     let y = (Math.sin(i) * sc) - Math.sin(Math.PI/4) * sc;
     // ellipse(x + 60, y, 1);
     // vertex(x + 60, y);
-         vertices.push(x * (9 / 16) - 0.9, y, 15, al);
+         vertices.push(x * (9 / 16) - 0.7, y, 15, al);
          num++;         
-         vertices.push(x * (9 / 16) - 0.9, -y, 15, al);
+         vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
          num++;
-         vertices.push(x * (9 / 16) + 0.9, y, 15, al);
+         vertices.push(x * (9 / 16) + 0.7, y, 15, al);
          num++;         
-         vertices.push(x * (9 / 16) + 0.9, -y, 15, al);
+         vertices.push(x * (9 / 16) + 0.7, -y, 15, al);
          num++;
     // ellipse(x - 55, y, 1);
     // ellipse(x + 60, y * -1 + 300 - 17, 1);
@@ -1015,10 +1018,16 @@ drawAlligatorQuiet = function(selectedProgram) {
     for (let i = 0; i < 1500; i++) {
         let x = Math.cos(i + drawCount) * i * 0.0001;
         let y = Math.sin(i + drawCount) * i * 0.0001;
-        vertices.push(x * (9 / 16) + 0.9, -y, 15, al);
+        vertices.push(x * (9 / 16) + 0.7, -y, 15, al);
         num++;
-        vertices.push(x * (9 / 16) - 0.9, -y, 15, al);
+        vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
         num++;
+    }
+    let nx = openSimplex.noise2D(0, drawCount * 5e-2);
+    let ny = openSimplex.noise2D(0, drawCount * 5e-2 + 1e5);
+    for (let i = 0; i < vertices.length; i += 4) {
+        vertices[i] += nx * 0.02;
+        vertices[i + 1] += ny * 0.02;
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
