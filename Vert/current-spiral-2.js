@@ -1012,9 +1012,9 @@ drawAlligatorQuiet = function(selectedProgram) {
     // ellipse(x + 60, y * -1 + 300 - 17, 1);
     // ellipse(x - 55, y * -1 + 300 - 17, 1);
   }
-    for (let i = 0; i < 150; i++) {
-        let x = Math.cos(i + drawCount) * i * 0.001;
-        let y = Math.sin(i + drawCount) * i * 0.001;
+    for (let i = 0; i < 1500; i++) {
+        let x = Math.cos(i + drawCount) * i * 0.0001;
+        let y = Math.sin(i + drawCount) * i * 0.0001;
         vertices.push(x * (9 / 16) + 0.9, -y, 15, al);
         num++;
         vertices.push(x * (9 / 16) - 0.9, -y, 15, al);
