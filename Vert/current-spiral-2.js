@@ -932,9 +932,9 @@ drawAlligatorQuiet = function(selectedProgram) {
     for (let i = sst; i < (Math.PI * 4) + sst; i += iiin) {
     let al = map(openSimplex.noise2D(t3, i), -1, 1, 0.001, 1.25);
         let t = i;
-        let t2 = Math.abs(Math.cos(t * 5 * 0.25));
-        let y = Math.cos(t + drawCount * 1e-2 + 180) * Math.sqrt(t2) * 0.35;
-        let x = Math.sin(t + drawCount * 1e-2 + 180) * Math.sqrt(t2) * 0.35;
+        let t2 = Math.abs(Math.cos(t * 1.5 * 1.5))
+        let y = Math.cos(t + drawCount * 1e-2 + 1.23) * Math.sqrt(t2) * 0.35;
+        let x = Math.sin(t + drawCount * 1e-2 + 1.23) * Math.sqrt(t2) * 0.35;
         vertices.push(x * (9 / 16), y, 15, al);
         num++;
     }
@@ -956,7 +956,7 @@ drawAlligatorQuiet = function(selectedProgram) {
     //     vertices.push(x * (9 / 16) + sc, y - sc, 15, al);
     //     num++;
     // }
-    let sides = 5;
+    let sides = 6;
     let inc = (Math.PI * 2) / sides;
     let st = -drawCount * 1e-2;
     for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
@@ -979,22 +979,35 @@ drawAlligatorQuiet = function(selectedProgram) {
         for (let p = 0; p < 1; p += 0.01) {
             let x = lerp(p0[0], p1[0], p) * 0.5;
             let y = lerp(p0[1], p1[1], p) * 0.5;
-            // vertices.push(x * (9 / 16), y, 15, al);
-            // num++;
+            vertices.push(x * (9 / 16), y, 15, al);
+            num++;
         }
     }
-        sides = 5;
+        sides = 3;
     inc = (Math.PI * 2) / sides;
     st = Math.PI * 0.5;
     for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
         let p0 = [Math.cos(i), Math.sin(i)];
         let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
         for (let p = 0; p < 1; p += 0.005) {
-            let x = lerp(p0[0], p1[0], p) * 0.625;
-            let y = lerp(p0[1], p1[1], p) * 0.625;
+            let x = lerp(p0[0], p1[0], p) * 1;
+            let y = lerp(p0[1], p1[1], p) * 1;
             vertices.push(x * (9 / 16), y, 15, al);
             num++;
         }
+    }
+    // aaa = 1000;
+    // teardrop equation
+    // http://paulbourke.net/geometry/teardrop/
+    inc = (Math.PI * 2) / 1000;
+    for (let i = 0; i < Math.PI * 2; i += inc) {
+        let sc = 0.25;
+        let x = 0.5 * (4 * Math.cos(i * 0.5) * Math.pow(Math.sin(i * 0.5), 4)) * sc; 
+        let y = -Math.cos(i) * sc; 
+        vertices.push(x * (9 / 16) + 0.7, -y - (Math.cos(0) * sc) - 0.22, 15, al);
+        num++;
+                vertices.push(x * (9 / 16) - 0.7, -y - (Math.cos(0) * sc) - 0.22, 15, al);
+        num++;
     }
     inc = PI / 500;
      for (let i = Math.PI / 4; i < Math.PI / 4 * 3; i += inc) {
@@ -1023,16 +1036,13 @@ drawAlligatorQuiet = function(selectedProgram) {
         vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
         num++;
     }
+    
     let nx = openSimplex.noise2D(0, drawCount * 5e-2);
     let ny = openSimplex.noise2D(0, drawCount * 5e-2 + 1e5);
     for (let i = 0; i < vertices.length; i += 4) {
         vertices[i] += nx * 0.02;
         vertices[i + 1] += ny * 0.02;
     }
-    vertices.push(0.5, 0.5, 250, 1 + (al * 1.5));
-    num++;
-    vertices.push(-0.5, 0.5, 250, 1 + (al * 1.5));
-    num++;
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
     //Bind appropriate array buffer to it
