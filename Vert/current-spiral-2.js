@@ -996,6 +996,24 @@ drawAlligatorQuiet = function(selectedProgram) {
             num++;
         }
     }
+    inc = (Math.PI * 2) / 1000;
+    for (let i = 0 ; i < Math.PI * 2; i += inc) {
+        let x = Math.cos(i) * 0.5;
+        let y = Math.sin(i) * 0.5;
+        vertices.push(x * (9 / 16), y, 15, al);
+        num++;
+    }
+        inc = (Math.PI * 2) / 1000;
+    for (let i = Math.PI * 0.5 ; i < Math.PI * 2.5; i += inc) {
+        let x = Math.cos(i) * 0.5;
+        let y = Math.sin(i) * 0.5;
+        let xx = Math.min(x, -Math.abs(x * 0.75));
+        vertices.push(xx * (9 / 16) * 0.75 + 0.7, y * 0.75 + 0.75, 15, al);
+        num++;
+        xx = Math.min(x, -Math.abs(x * 0.75));
+        vertices.push(-xx * (9 / 16) * 0.75 - 0.7, y * 0.75 + 0.75, 15, al);
+        num++;
+    }
     // aaa = 1000;
     // teardrop equation
     // http://paulbourke.net/geometry/teardrop/
