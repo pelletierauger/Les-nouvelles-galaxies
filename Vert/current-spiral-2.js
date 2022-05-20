@@ -1003,15 +1003,16 @@ drawAlligatorQuiet = function(selectedProgram) {
         vertices.push(x * (9 / 16), y, 15, al);
         num++;
     }
-        inc = (Math.PI * 2) / 250;
+    inc = (Math.PI * 2) / 250;
     for (let i = Math.PI * 0.5 ; i < Math.PI * 2.5; i += inc) {
-        let x = Math.cos(i) * 0.5;
+        let x = Math.cos(i) * ((i < Math.PI * 1.5) ? 1 : -0.75) * 0.5;
+        // let x = Math.cos(i) * 0.5;
         let y = Math.sin(i) * 0.5;
-        let xx = Math.min(x, -Math.abs(x * 0.75));
-        vertices.push(xx * (9 / 16) * 0.75 + 0.7, y * 0.75 + 0.75, 15, al);
+        let c = Math.cos(Math.PI * 0.65) * 0.8;
+        // x = (x * 2 > c) ? x : -x + c;
+        vertices.push(x * (9 / 16) * 0.75 + 0.7, y * 0.75 + 0.75, 15, al);
         num++;
-        xx = Math.min(x, -Math.abs(x * 0.75));
-        vertices.push(-xx * (9 / 16) * 0.75 - 0.7, y * 0.75 + 0.75, 15, al);
+        vertices.push(-x * (9 / 16) * 0.75 - 0.7, y * 0.75 + 0.75, 15, al);
         num++;
     }
     // aaa = 1000;
