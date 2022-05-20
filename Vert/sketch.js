@@ -159,8 +159,8 @@ draw = function() {
     gl.useProgram(currentProgram);
     drawBG(currentProgram);
     currentProgram = getProgram("new-flickering-dots-vert");
-    gl.useProgram(currentProgram);
-    drawAlligatorQuietVert(currentProgram);
+    // gl.useProgram(currentProgram);
+    // drawAlligatorQuietVert(currentProgram);
     currentProgram = getProgram("new-flickering-dots");
     gl.useProgram(currentProgram);
     drawAlligatorQuiet(currentProgram);

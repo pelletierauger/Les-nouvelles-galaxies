@@ -926,7 +926,7 @@ drawAlligatorQuiet = function(selectedProgram) {
     let t3 = drawCount * 1e7 * 0.5;
     let al = map(openSimplex.noise2D(t3, t3 + 10000), -1, 1, 0.001, 1.25);
     // al = 0.3;
-    let num = 0;
+    num = 0;
     let nnn = 1500;
     let sst = Math.PI * 2, iiin = (Math.PI * 4) / nnn;
     for (let i = sst; i < (Math.PI * 4) + sst; i += iiin) {
@@ -1054,7 +1054,7 @@ drawAlligatorQuiet = function(selectedProgram) {
         vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
         num++;
     }
-    
+    drawScratches();
     let nx = openSimplex.noise2D(0, drawCount * 5e-2);
     let ny = openSimplex.noise2D(0, drawCount * 5e-2 + 1e5);
     for (let i = 0; i < vertices.length; i += 4) {
@@ -1159,4 +1159,50 @@ drawAlligatorQuietVert = function(selectedProgram) {
     // gl.clear(gl.COLOR_BUFFER_BIT);
     // Draw the triangle
     gl.drawArrays(gl.POINTS, 0, 147456 * 1);
+}
+
+
+drawScratches = function() {
+    mS = 1;
+    amountOfScratches = Math.max(0, amountOfScratches);
+    if (drawCount % 100 == 0) {
+        mS = random(0.8, 1);
+    }
+    if (drawCount % 10 == 0) {
+        if (Math.random() > 0.9) {
+            amountOfScratches += random(20, 60);
+            // fluctuation = 4;
+        } else {
+            amountOfScratches += 12;
+            // fluctuation = 1;
+        }
+        // amountOfScratches = (Math.random() > 0.95) ? random(160, 60) : 3;
+        // fluctuation = (Math.random() > 0.95) ? 4 : 1;
+    }
+    amountOfScratches -= 5;
+    // vertices = [];
+    for (let i = 0; i < 50; i++) {
+        let v = Math.random();
+        let s = (v >  0.99) ? 10 : 1;
+        s = (v > 0.9995) ? s * random(1, 4) : s;
+        s *= mS;
+        vertices.push(Math.random() * 2.5 - 1, Math.random() * 2.5 - 1, s + Math.random() * 0.25 * s, Math.random());
+        num++;
+    }
+    let n = Math.PI * 1 / 100;
+    for (let m = 0; m < amountOfScratches; m++) {
+        let s = Math.random() * Math.PI * 2;
+        let sX = Math.random() * 2 - 1;
+        let sY = Math.random() * 2 - 1;
+        let sC = (Math.random() < 0.5) ? 0.01 : 1;
+        let osc = Math.sin(drawCount * m);
+        for (let i = s; i < Math.PI + s; i += n) {
+            //         let x = cos(i) * cos(i * osc) * 0.1 + sX;
+            //         let y = sin(i) * sin(i * osc) * 0.175 + sY;
+            let x = Math.cos(i * 0.1) * Math.tan(osc * 10) * Math.cos(i * osc) * 0.1 + sX;
+            let y = Math.sin(i * 0.1) * Math.tan(osc * 10) * Math.sin(i * osc) * 0.175 + sY;
+            vertices.push(x * 1.5, y * 1.5, random(2, 20) * sC * mS, Math.random());
+            num++;
+        }
+    }
 }

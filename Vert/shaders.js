@@ -286,6 +286,10 @@ newFlickering.vertText = `
         mix(rand(ip+vec2(0.0,1.0)),rand(ip+vec2(1.0,1.0)),u.x),u.y);
       return res*res;
     }
+    float roundedRectangle (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
+        float d = length(max(abs(uv - pos),size) - size) - radius;
+        return smoothstep(0.66, 0.33, d / thickness * 5.0);
+    }
 void main(void) {
         gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.0);
     gl_Position.xy *= 0.75;
@@ -298,7 +302,10 @@ void main(void) {
         myposition = vec2(gl_Position.x, gl_Position.y);
         alph = coordinates.w;
         gl_PointSize = (9. + coordinates.z / ((6.0 + alph) * 0.25)) * alph * 2.5;
-        // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
+        float vig = (roundedRectangle(gl_Position.xy, vec2(0.0, 0.0), vec2(0.905, 0.87) * 0.99, 0.05, 0.5) + 0.0);
+        // cols = mix(cols, cols * floor(vig), 1.);
+    gl_PointSize *= floor(vig);
+            // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
     }
     // endGLSL
@@ -782,6 +789,7 @@ void main() {
     // gl_FragColor.rgb *= 1.25;
     gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.1) * 2.1, 0.001, 0.25) * 1.2;
         // gl_FragColor = gl_FragColor.grra;
+    gl_FragColor.rgb -= 0.2;
         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
 }
 // endGLSL
@@ -1035,7 +1043,7 @@ void main() {
         gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 1.);
     vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
     vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
-    gl_FragColor.rgb = blend;
+    gl_FragColor.rgb = blend.gbr;
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.b += col.b * 0.25;
