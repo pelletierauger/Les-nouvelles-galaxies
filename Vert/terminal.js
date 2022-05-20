@@ -48,7 +48,7 @@ drawTerminal = function(selectedProgram) {
             for (let x = 8; x <= vt2.stringArray[0].length; x++) {
         for (let y = 0; y < 9; y++) {
             if (vt2.stringArray[y][x] == "1") {
-               vertices.push(x * (9 / 16) * 0.02 * sc - 0.39 + nx + (-y * 0.002), -y * 0.03 * sc - 0.39 - 0.05 + ny, 50.0 * sc * 0.9, 1);
+               vertices.push(x * (9 / 16) * 0.02 * sc - 0.43 + nx + (-y * 0.002), -y * 0.03 * sc - 0.39 - 0.08 + ny, 50.0 * sc * 0.9, 1);
             num++;
                 colors.push(0.65, 0.65, 0.65);
             }
@@ -603,6 +603,19 @@ getGlyph = function(g) {
         ch = [
             "0000000",
             "0000000",
+            "0100010",
+            "0100010",
+            "0100010",
+            "0100010",
+            "0011101",
+            "0000000",
+            "0000000",
+        ];
+        break;
+        case "û":
+        ch = [
+            "0001000",
+            "0010100",
             "0100010",
             "0100010",
             "0100010",
@@ -1784,5 +1797,5 @@ TerminalRecorder.prototype.stop = function() {
 
 
 let vt2 = new VirtualTerminal();
-vt2.text = "Le vent pleure et le ciel saigne"
+vt2.text = "Le vent s'alourdit et le ciel brûle"
 vt2.makeTerminalString();

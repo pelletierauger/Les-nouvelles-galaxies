@@ -996,7 +996,7 @@ drawAlligatorQuiet = function(selectedProgram) {
             num++;
         }
     }
-    inc = (Math.PI * 2) / 1000;
+    inc = (Math.PI * 2) / 500;
     for (let i = 0 ; i < Math.PI * 2; i += inc) {
         let x = Math.cos(i) * 0.5;
         let y = Math.sin(i) * 0.5;
