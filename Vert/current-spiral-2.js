@@ -1003,7 +1003,7 @@ drawAlligatorQuiet = function(selectedProgram) {
         vertices.push(x * (9 / 16), y, 15, al);
         num++;
     }
-        inc = (Math.PI * 2) / 1000;
+        inc = (Math.PI * 2) / 250;
     for (let i = Math.PI * 0.5 ; i < Math.PI * 2.5; i += inc) {
         let x = Math.cos(i) * 0.5;
         let y = Math.sin(i) * 0.5;
@@ -1017,7 +1017,7 @@ drawAlligatorQuiet = function(selectedProgram) {
     // aaa = 1000;
     // teardrop equation
     // http://paulbourke.net/geometry/teardrop/
-    inc = (Math.PI * 2) / 1000;
+    inc = (Math.PI * 2) / 250;
     for (let i = 0; i < Math.PI * 2; i += inc) {
         let sc = 0.25;
         let x = 0.5 * (4 * Math.cos(i * 0.5) * Math.pow(Math.sin(i * 0.5), 4)) * sc; 
@@ -1055,11 +1055,9 @@ drawAlligatorQuiet = function(selectedProgram) {
         num++;
     }
     drawScratches();
-    let nx = openSimplex.noise2D(0, drawCount * 5e-2);
-    let ny = openSimplex.noise2D(0, drawCount * 5e-2 + 1e5);
     for (let i = 0; i < vertices.length; i += 4) {
-        vertices[i] += nx * 0.02;
-        vertices[i + 1] += ny * 0.02;
+        vertices[i] += nx;
+        vertices[i + 1] += ny;
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();

@@ -2899,7 +2899,7 @@ newFlickeringVert.vertText = `
         gl_PointSize = 6. * sca;
         alph = 0.25 * 0.75;
         cols = vec3(0.65 + 0.5 / pos.z);
-       float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(1.82, 0.98) * 0.026 * 3.59, 0.001, 0.05) + 0.0);
+       float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(1.805, 0.97) * 0.026 * 3.59, 0.001, 0.05) + 0.0);
         cols = mix(cols, cols * floor(vig), 1.);
         gl_PointSize *= floor(vig);
     }

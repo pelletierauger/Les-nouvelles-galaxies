@@ -25,6 +25,7 @@ let texcoordShader;
 let dotsVBuf, termVBuf, dotsCBuf, bgVBuf;
 let texture, texture2, framebuf, framebuf2;
 let vb;
+let nx, ny;
 fvertices = [];
 for (let i = 0; i < 1000000; i++) {
     fvertices.push(i);
@@ -160,6 +161,8 @@ draw = function() {
     drawBG(currentProgram);
     currentProgram = getProgram("new-flickering-dots-vert");
     gl.useProgram(currentProgram);
+    nx = openSimplex.noise2D(0, drawCount * 5e-2) * 0.02;
+    ny = openSimplex.noise2D(0, drawCount * 5e-2 + 1e5) * 0.02;
     drawAlligatorQuietVert(currentProgram);
     currentProgram = getProgram("new-flickering-dots");
     gl.useProgram(currentProgram);
