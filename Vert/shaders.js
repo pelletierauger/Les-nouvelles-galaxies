@@ -787,7 +787,7 @@ void main() {
     // gl_FragColor.r += 0.05;
     // gl_FragColor.rgb = vec3(1.0);
     // gl_FragColor.rgb *= 1.25;
-    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.1) * 2.1, 0.001, 0.25) * 1.2;
+    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.1) * 2.1, 0.001, 0.25) * 1.6;
         // gl_FragColor = gl_FragColor.grra;
     gl_FragColor.rgb -= 0.2;
         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
@@ -1043,7 +1043,7 @@ void main() {
         gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 1.);
     vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
     vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
-    gl_FragColor.rgb = blend.gbr;
+    gl_FragColor.rgb = blend;
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.b += col.b * 0.25;
