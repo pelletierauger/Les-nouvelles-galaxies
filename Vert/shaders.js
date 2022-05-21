@@ -1043,8 +1043,8 @@ void main() {
         gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 1.);
     vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
     vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
-    gl_FragColor.rgb = blend;
-    // bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
+    gl_FragColor.rgb = blend.rbg * vec3(1.1, 1.25, 0.5);
+    // bw = vec3((gl_FragColor.r + gl_FragColor.g + gl1_FragColor.b) / 3.);
         // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 0.125);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
@@ -5444,8 +5444,8 @@ newFlickeringVert.vertText = `
         for (float i = 0.0; i < 25.0; i++) {
             float fi = i * 1e-1;
             float ts = 0.0005;
-            float xd = cos(distance(pos, vec2(cos(fi + t) * fi * cos(t * fi), sin(fi + t) * fi)) * 50.75) * ts;
-            float yd = sin(distance(pos, vec2(cos(fi + t) * fi * sin(t * fi), sin(fi + t) * fi)) * 50.75) * ts;
+            float xd = cos(distance(pos, vec2(cos(fi + t) * fi * cos(t * fi), sin(fi + t) * fi)) * 5.75) * ts;
+            float yd = sin(distance(pos, vec2(cos(fi + t) * fi * sin(t * fi), sin(fi + t) * fi)) * 5.75) * ts;
             xd += sin(pos.x * 1e4) * 0.0002;
             pos.x += xd;
             pos.y += yd;
@@ -5457,8 +5457,8 @@ newFlickeringVert.vertText = `
         pos.x = fx;
         pos.y = fy;
         // pos = cx_mul(pos, vec2(sin(xd * 1e-), sin(yd * 1e-)));
-        // pos.x /= tan(id / (512. * 288.) * 1e-1) * 40.5;
-        // pos.y /= tan(id / (512. * 288.) * 1e-1) * 40.5;
+        pos.x /= tan(id / (512. * 288.) * 1e-1) * 40.5;
+        pos.y /= tan(id / (512. * 288.) * 1e-1) * 40.5;
         // pos.x += sin(id * 1e-2 + time * 5e-3) * 0.01;
         // pos.y += cos(id * 1e-2 + time * 5e-3) * 0.01;
         // x = mix(x, px, 0.5);
@@ -5511,8 +5511,8 @@ newFlickeringVert.fragText = `
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph)) * 0.045 + alpha)) * 0.75;
         gl_FragColor.rgb = gl_FragColor.rbr;
-        gl_FragColor.rgb = cols;
-        gl_FragColor.b *= 0.75;
+        gl_FragColor.rgb = cols * 0.25;
+        // gl_FragColor.b *= 0.75;
         
     }
     // endGLSL
