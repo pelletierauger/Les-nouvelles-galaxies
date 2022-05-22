@@ -986,12 +986,12 @@ drawAlligatorQuiet = function(selectedProgram) {
             }
         }
     }
-    sides = 9;
+    sides = 7;
     inc = (Math.PI * 2) / sides;
     st = -drawCount * 1e-2 - Math.PI;
     for (let i = st; i <= (Math.PI * 2.001) - inc + st; i += inc) {
         let p0 = [Math.cos(i), Math.sin(i)];
-        let a1 = i + (inc * 2) % sides;
+        let a1 = i + (inc * 3) % sides;
         let p1 = [Math.cos(a1), Math.sin(a1)];
         for (let p = 0; p < 1; p += 0.01) {
             let d = dist(0, p, 0, 0.5) * 1;
