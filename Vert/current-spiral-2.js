@@ -989,7 +989,7 @@ drawAlligatorQuiet = function(selectedProgram) {
     sides = 9;
     inc = (Math.PI * 2) / sides;
     st = -drawCount * 1e-2 - Math.PI;
-    for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
+    for (let i = st; i <= (Math.PI * 2.001) - inc + st; i += inc) {
         let p0 = [Math.cos(i), Math.sin(i)];
         let a1 = i + (inc * 2) % sides;
         let p1 = [Math.cos(a1), Math.sin(a1)];
@@ -997,8 +997,11 @@ drawAlligatorQuiet = function(selectedProgram) {
             let d = dist(0, p, 0, 0.5) * 1;
             let x = lerp(p0[0], p1[0], p) * 0.5;
             let y = lerp(p0[1], p1[1], p) * 0.5;
-            vertices.push(x * (9 / 16), y, 15, al);
+            for (let m = 0; m < 4; m++) {
+                let sca = Math.pow(0.75, m);
+                vertices.push(x * (9 / 16) * sca, y * sca, 15, al);
             num++;
+            }
         }
     }
         sides = 3;
