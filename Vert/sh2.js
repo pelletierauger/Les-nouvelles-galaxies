@@ -3102,13 +3102,13 @@ newFlickeringVert.vertText = `
         pos.x = fx;
         pos.y = fy;
         // pos = cx_mul(pos, vec2(sin(xd * 1e-), sin(yd * 1e-)));
-        pos.x /= tan(id / (512. * 288.) * 1e-1) * 40.5;
-        pos.y /= tan(id / (512. * 288.) * 1e-1) * 40.5;
+        pos.x /= tan(id / (512. * 288.) * 1e-1) * 20.5;
+        pos.y /= tan(id / (512. * 288.) * 1e-1) * 20.5;
         // pos.x += sin(id * 1e-2 + time * 5e-3) * 0.01;
         // pos.y += cos(id * 1e-2 + time * 5e-3) * 0.01;
         // x = mix(x, px, 0.5);
         // y = mix(y, py, 0.5);
-         gl_Position = vec4(pos.x * 1.4, pos.y * 1.4, 0.0, 1.0);
+         gl_Position = vec4(pos.x * 1.4 * 1., pos.y * 1.4 * 1., 0.0, 1.0);
          // gl_Position = vec4((x - 0.25) * 4., (y - 0.25) * 4., 0.0, 1.0);
         // gl_Position = vec4(color.r * 0.25, color.r * 0.25, 0.0, 1.0);
         // gl_PointSize = 2. / color.x * 1e-2;
@@ -3118,7 +3118,7 @@ newFlickeringVert.vertText = `
         alph = 0.25 * 0.75;
         cols = vec3(turb * 2.);
         cols = vec3(sin(turb * 800.) * pow(pos.x, -2.5), cos(turb * 800.), cos(turb * 800.));
-       float vig = (roundedRectangle(pos * 1.67, vec2(0.0, 0.0), vec2(0.9, 0.88) * 1.2, 0.05, 0.5) + 0.0);
+       float vig = (roundedRectangle(pos * 1.67 * 1., vec2(0.0, 0.0), vec2(0.9, 0.88) * 1.2, 0.05, 0.5) + 0.0);
         cols = mix(cols, cols * floor(vig), 1.);
     }
     // endGLSL
