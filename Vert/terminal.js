@@ -48,7 +48,7 @@ drawTerminal = function(selectedProgram) {
             for (let x = 8; x <= vt2.stringArray[0].length; x++) {
         for (let y = 0; y < 9; y++) {
             if (vt2.stringArray[y][x] == "1") {
-               vertices.push(x * (9 / 16) * 0.02 * sc - 0.52 + nx + (-y * 0.002), -y * 0.03 * sc - 0.39 + 0.97 + ny, 50.0 * sc * 0.9, 1);
+               vertices.push(x * (9 / 16) * 0.02 * sc - 0.465 + nx + (-y * 0.002), -y * 0.03 * sc - 0.39 + 0.97 + ny, 50.0 * sc * 0.9, 1);
             num++;
                 colors.push(0.65, 0.65, 0.65);
             }
@@ -1797,5 +1797,5 @@ TerminalRecorder.prototype.stop = function() {
 
 
 let vt2 = new VirtualTerminal();
-vt2.text = "Tu ne réfléchis clairement que dans la boue"
+vt2.text = "Je ne réfléchis bien que dans la boue."
 vt2.makeTerminalString();
