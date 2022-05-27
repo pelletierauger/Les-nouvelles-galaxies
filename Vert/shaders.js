@@ -665,7 +665,7 @@ float fbm(vec2 p) {
     return  0.5 + 0.5 * h;
 }
 vec3 smokeEffect(vec2 uv) {
-    float time = 2.0;
+    float time = 12.0;
     vec3 col = vec3(0.0, 0.0, 0.0);
     // time scale
     float v = 0.0002;
@@ -761,9 +761,11 @@ void main() {
         gl_FragColor.b += 0.05;
     // gl_FragColor.r += 0.05;
     // gl_FragColor.rgb = vec3(1.0);
-    gl_FragColor.rgb += vec3(0.0, 0.0, 0.15);
-    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.099) * 2.0, 0.02, 0.25) * 0.9;
+    gl_FragColor.rgb += vec3(0.1, 0.0, 0.15);
+    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.1065 * (16./9.), 0.102) * 2.2, 0.0001, 0.125) * 0.9;
         // gl_FragColor = gl_FragColor.grra;
+    gl_FragColor.rgb = gl_FragColor.rgb * vec3(0.4, 0.1, 0.5) * 4.;
+    // gl_FragColor.a = 0.25;
         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
 }
 // endGLSL
@@ -1009,22 +1011,17 @@ void main() {
    gl_FragColor = texture2D(u_texture, v_texcoord);
    // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
    // gl_FragColor.r = gl_FragColor.r * 0.5;
-   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.04) - 0.025) * 1.2;
+   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.07 * 1.)) * 1.2;
     vec3 col = gl_FragColor.rgb;
         // vec3 levels = LevelsControlInputRange(gl_FragColor.rgb, 0.2, 0.95);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b)) / 3.;
             vec3 bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
-        // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 1.) * 1.1;
+        gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 0.9) * 1.1;
         vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
     // vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
     gl_FragColor.rgb = blender;
-    gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, -0.75);
-    // gl_FragColor.b += 0.125 * (0.5 / gl_FragColor.b);
-    // gl_FragColor.b += 1.;
-                bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
-        blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
-    gl_FragColor.rgb = blender;
-    gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, -0.75);
+        // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 0.35) * 1.3;
+    gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 2.9);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.b += col.b * 0.25;
@@ -8846,11 +8843,11 @@ newFlickeringVert.vertText = `
                 pos = yr * pos;
         pos = tm4 * pos;
         // pos = yyr * pos;
-        float sca = 1.0;
-        if (id < 7000.) {
-            float oid = id - 0.;
-            pos.x = sin(oid * 1e-1 + t * 5.) * oid * 4e-6;
-            pos.y = cos(oid * 1e-1 + t * 5.) * oid * 4e-6 + 0.05;
+        float sca = 2.0;
+        if (id < 15000.) {
+            float oid = id - 15000.;
+            pos.x = sin(oid * 1e-2 + t * 5.) * (1. - sin(id * 0.25) * 0.02) * oid * 4e-6;
+            pos.y = cos(oid * 1e-2 + t * 5.) * (1. - sin(id * 0.25) * 0.02) * oid * 4e-6 + 0.05;
             pos.z = 0.9;
             sca = 0.75;
         }
@@ -8859,7 +8856,7 @@ newFlickeringVert.vertText = `
         gl_PointSize = (29.5 - (60. * pos.z * 0.02)) * sca;
         alph = 0.25 * 0.75;
         cols = vec3(0.65 + 0.5 / pos.z);
-       float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(1.82, 0.98) * 0.026 * 3.59, 0.001, 0.05) + 0.0);
+       float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(1.82, 0.98) * 0.0255 * 3.59, 0.001, 0.05) + 0.0);
         cols = mix(cols, cols * floor(vig), 1.);
         gl_PointSize *= floor(vig);
     }
