@@ -47,23 +47,28 @@ drawTerminal = function(selectedProgram) {
     }
     for (let x = 0; x <= vt2.stringArray[0].length; x++) {
         for (let y = 0; y < 10; y++) {
-            let sc = 0.03;
-            let tr = {x: -0.54, y: 0.45};
-            let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
+            let sc = 0.025;
+            let tr = {x: -0.7605, y: 0.45 - 0.25};
+            let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.00125);
             if (vt2.stringArray[y][x] == 1) {
-                vertices.push(x * (9 / 16) * sc + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
+                // vertices.push(x * (9 / 16) * sc * 1.4 + tr.x, -y * sc * 1.7 + osc + tr.y + (Math.sin(x * 1e1 + drawCount * 1e-1) * 0.05), 1250.0 * sc * 0.9, 1);
+                // num++;
+                // colors.push(0, 0, 0);
+                                vertices.push(x * (9 / 16) * sc * 1.4 + tr.x, -y * sc * 1.7 + osc + tr.y + (Math.sin(x * 1e1 + drawCount * 1e-1) * 0.0), 1250.0 * sc * 0.9, 1);
                 num++;
-                colors.push(0, 0, 0);
-            }
+                colors.push(0, 0, 0);            }
         }
     }
     for (let x = 0; x <= vt2.stringArray[0].length; x++) {
         for (let y = 0; y < 10; y++) {
-            let sc = 0.03;
-            let tr = {x: -0.54, y: 0.5};
-            let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.005);
+            let sc = 0.025;
+            let tr = {x: -0.7605, y: 0.5 - 0.25};
+            let osc = 0 - (Math.sin(y * 0.5 + drawCount * 2e-1) * 0.00125);
             if (vt2.stringArray[y][x] == 1) {
-                vertices.push(x * (9 / 16) * sc + tr.x, -y * sc * 1.7 + osc + tr.y, 1250.0 * sc * 0.9, 1);
+                // vertices.push(x * (9 / 16) * sc * 1.4 + tr.x, -y * sc * 1.7 + osc + tr.y + (Math.sin(x * 1e1 + drawCount * 1e-1) * 0.05), 1250.0 * sc * 0.9, 1);
+                // num++;
+                // colors.push(0.75, 0.75, 0.75);
+                                vertices.push(x * (9 / 16) * sc * 1.4 + tr.x, -y * sc * 1.7 + osc + tr.y + (Math.sin(x * 1e1 + drawCount * 1e-1) * 0.0), 1250.0 * sc * 0.9, 1);
                 num++;
                 colors.push(0.75, 0.75, 0.75);
             }
@@ -223,8 +228,8 @@ roundedSquare.fragText = `
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;
-        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.24) * 4., 0.2, 0.12);
-        float rando = rand(uv * time) * 0.1;
+        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.19, 0.25) * 4., 0.2, 0.12);
+        float rando = rand(uv * time) * 0.05;
         gl_FragColor = vec4(cols, color - rando);
     }
     // endGLSL
@@ -1961,7 +1966,7 @@ vt2.makeTerminalString = function() {
     for (let y = 0; y < 10; y++) {
         a[y] = "";
         for (let i = 0; i < s.length; i++) {
-             a[y] = a[y] + getGlyphFT88(s[i])[y];
+             a[y] = a[y] + getGlyphFT88(s[i])[y] + "  ";
         }
     }
     this.stringArray = a;
