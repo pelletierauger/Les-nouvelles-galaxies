@@ -1,7 +1,7 @@
-let looping = true;
+let looping = false;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
-let fileName = "./frames/alligator/alligator";
+let fileName = "/Volumes/Volumina/frames/vt/test-01/test-01";
 let JSONs = [];
 let maxFrames = 15000;
 let gl;
@@ -9,7 +9,8 @@ let time;
 let positive = true;
 let intensity;
 let drawCount = 1110;
-drawCount = 125000;
+drawCount = 0;
+let exportCount = 0;
 let drawIncrement = 1;
 let vertexBuffer;
 let fvertices = [];
@@ -31,11 +32,80 @@ for (let i = 0; i < 1000000; i++) {
 }
 fvertices = new Float32Array(fvertices);
 
+var stop = false;
+var fps, fpsInterval, startTime, now, then, elapsed;
+var animationStart;
+var framesRendered = 0;
+var framesOfASecond = 0;
+var secondStart, secondFrames;
+var fps = 24;
+var envirLooping = false;
+
+
+function startAnimating() {
+    fpsInterval = 1000 / fps;
+    then = Date.now();
+    animationStart = Date.now();
+    secondStart = Date.now();
+    startTime = then;
+    envirLooping = true;
+    animate();
+}
+
+function queryFrameRate() {
+    let timeElapsed = Date.now() - animationStart;
+    let seconds = timeElapsed / 1000;
+    logJavaScriptConsole(framesRendered / seconds);
+    // logJavaScriptConsole(timeElapsed);
+}
+
+// the animation loop calculates time elapsed since the last loop
+// and only draws if your specified fps interval is achieved
+
+function animate() {
+
+    // request another frame
+    if (envirLooping) {
+
+        requestAnimationFrame(animate);
+
+
+        // calc elapsed time since last loop
+
+        now = Date.now();
+        elapsed = now - then;
+
+        // if enough time has elapsed, draw the next frame
+
+        if (elapsed > fpsInterval) {
+
+            // Get ready for next frame by setting then=now, but also adjust for your
+            // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
+            then = now - (elapsed % fpsInterval);
+            // Put your drawing code here
+            draw();
+            framesRendered++;
+            framesOfASecond++;
+            if (framesOfASecond == fps) {
+                secondFrames = fps / ((Date.now() - secondStart) * 0.001);
+                // logJavaScriptConsole(secondFrames);
+                framesOfASecond = 0;
+                secondStart = Date.now();
+            }
+        }
+    }
+}
+
+
 function setup() {
     socket = io.connect('http://localhost:8080');
     socket.on('pushJSONs', function(data) {
         JSONs = data;
+        vt.loadSession(JSONs[0].data);
+        vt.startPlayback();
+        socket.emit('interpretSuperCollider', 's.record;', "./");
         // draw();
+        tl();
     });
     socket.emit('pullJSONs', "/Users/guillaumepelletier/Desktop/Dropbox/Art/p5/Les-nouvelles-galaxies/Vert/sessions");
     // socket.on('receiveOSC', receiveOSC);
@@ -142,6 +212,22 @@ keysControl.addEventListener("mouseleave", function(event) {
     clearSelection();
 }, false);
 }, 1);
+    if (batchExport) {
+        exportCount = batchMin;
+        exporting = true;
+        redraw();
+        songPlay = false;
+        noLoop();
+        looping = false;
+    }
+    socket.on('getNextImage', function(data) {
+        if (drawCount <= batchMax) {
+            // redraw();
+            window.setTimeout(function() {
+                redraw();
+            }, 3000);
+        }
+    });
 }
 
 function clearSelection() {
@@ -160,7 +246,7 @@ draw = function() {
     // drawBG(currentProgram);
     currentProgram = getProgram("new-flickering-dots-vert");
     gl.useProgram(currentProgram);
-    drawAlligatorQuietVert(currentProgram);
+    // drawAlligatorQuietVert(currentProgram);
 // 
 // 
     currentProgram = getProgram("rounded-square");
@@ -356,11 +442,12 @@ draw = function() {
 // 
     gl.drawArrays(gl.TRIANGLES, 0, numItems);
 // 
-    drawCount += drawIncrement;
     // if (exporting && frameCount < maxFrames && drawCount > 1113) {
-    if (exporting && frameCount < maxFrames && drawCount > 1449) {
+    if (exporting && exportCount < maxFrames) {
         frameExport();
-    }
+    }    
+    drawCount += drawIncrement;
+    exportCount++;
 }
 
 // function keyPressed() {
@@ -437,6 +524,20 @@ tl = function(d = 0) {
 };
 
 
+
+tl = function(d = 0) {
+    setTimeout(function() {
+                if (envirLooping) {
+                // noLoop();
+                envirLooping = false;
+            } else {
+                envirLooping = true;
+                startAnimating();
+            }
+    }, d * 1e3);
+};
+
+
 keyDown = function() {
     if (keysActive) {
         if (vtActive) {
@@ -449,3 +550,11 @@ document.onkeydown = keyDown;
 
 
 
+
+
+function logLatency() {
+    let seconds = (exportCount / 24) - player.currentTime;
+    let frames = Math.floor(((exportCount / 24) - player.currentTime) * 24);
+    let frameWord = (frames > 1) ? "frames" : "frame";
+    logJavaScriptConsole(seconds + " seconds, or " + frames + " " + frameWord + ".");
+}

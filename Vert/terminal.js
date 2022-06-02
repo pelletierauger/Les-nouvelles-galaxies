@@ -1704,7 +1704,16 @@ VirtualTerminal.prototype.update = function(e) {
         var scTest = /(^s\s|^l\s)([\s\S]*)/;
         var scMatch = scTest.exec(this.text);
         if (scMatch) {
-            socket.emit('interpretSuperCollider', scMatch[2], "./");
+            if (exporting == false) {
+                let text = scMatch[2];
+                if (text == "s.freeAll;") {
+                    socket.emit('interpretSuperCollider', text, "./");
+                } else {
+                    text = text.replace(/s\.freeAll/g, `x.free`);
+                    text = text.replace(/\{/g, `x={`);
+                    socket.emit('interpretSuperCollider', text, "./");
+                }
+            }
         } else {
             eval(this.text);
         }

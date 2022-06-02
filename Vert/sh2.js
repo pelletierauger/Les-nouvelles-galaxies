@@ -2729,3 +2729,166 @@ newFlickeringVert.fragText = `
 newFlickeringVert.vertText = newFlickeringVert.vertText.replace(/[^\x00-\x7F]/g, "");
 newFlickeringVert.fragText = newFlickeringVert.fragText.replace(/[^\x00-\x7F]/g, "");
 newFlickeringVert.init();
+
+
+
+// radiator
+newFlickeringVert.vertText = `
+    // beginGLSL
+    attribute float vertexID;
+    uniform float time;
+    varying float alph;
+    varying float alsca;
+    varying vec3 cols;
+    #define cx_mul(a, b) vec2(a.x*b.x-a.y*b.y, a.x*b.y+a.y*b.x)
+    float roundedRectangle (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
+        float d = length(max(abs(uv - pos),size) - size) - radius;
+        return smoothstep(0.66, 0.33, d / thickness * 5.0);
+    }
+    void main(void) {
+        float t = time * 0.25e-2;
+        float ratio = 16.0 / 9.0;
+        float vertexCount = 147456.0;
+        float id = vertexID;
+       // float dist_squared = dot(vec2(x, y), vec2(0., 0.));
+        // x += (dist_squared) * 200.;
+        // float px = x;
+        // float py = y;
+        vec2 r = vec2(cos(t * 2.), sin(t * 2.));
+        vec3 tr = vec3(0.0, -1.0 / ratio, 18.9);
+        mat3 tm = mat3(
+            1.0, 0.0, 0.0,
+            0.0, 1.0, 0.0,
+            tr.x, tr.y, 1.0
+        );
+        mat3 rm = mat3(
+           r.x, r.y, 0.0, // first column 
+          -r.y, r.x, 0.0, // second column
+           0.0, 0.0, 1.0  // third column
+        );
+        mat3 sm = mat3(
+            1.5, 0.0, 0.0,
+            0.0, 1.5, 0.0,
+            0.0, 0.0, 1.0
+        );
+        mat3 m = tm * sm * rm;
+        mat4 tm4 = mat4(
+            1.0,  0.0,  0.0,  0.0,
+            0.0,  1.0,  0.0,  0.0,
+            0.0,  0.0,  1.0,  0.0,
+            tr.x, tr.y, tr.z, 1.0
+        );
+        float pro = 1. / tan((3.14159265 / 2.0) / 2.0);
+        mat4 xr = mat4(
+           1.0, 0.0, 0.0, 0.0,
+           0.0, r.x, -r.y, 0.0,
+           0.0, r.y, r.x, 0.0,
+           0.0, 0.0, 0.0, 1.0
+        );
+        mat4 yr = mat4(
+           r.x, 0.0, r.y, 0.0,
+           0.0, 1.0, 0.0, 0.0,
+           -r.y, 0.0, r.x, 0.0,
+           0.0, 0.0, 0.0, 1.0
+        );
+        mat4 zr = mat4(
+           r.x, -r.y, 0.0, 0.0, // first column 
+          r.y, r.x, 0.0, 0.0, // second column
+           0.0, 0.0, 1.0, 0.0,  // third column
+           0.0, 0.0, 0.0, 1.0
+        );
+        mat4 pm = mat4(
+            pro, 0.0, 0.0, 0.0,
+            0.0, pro, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0
+        );
+        // m = m * 4.0;
+        // rm = sm * rm;
+                // m = tm * m;
+        // vec2 pos = cx_mul(vec2(x, y), vec2(0.5, 0.5));
+        // pos = cx_mul(pos, vec2(0.75, 0.75));
+        float x0 = ((fract(id / 512.)) - 0.5);
+        float y0 = ((floor(id / 512.) / 512.) - 0.5 / ratio);
+        float x = cos(id * 1e1) * id * 5e-5;
+        float y = sin(id * 1e1) * id * 5e-5;
+        // x = mix(x, x0, 0.8);
+        // y = mix(y, y0, 0.8);
+        float z = 1.0 + sin(id * x * 5e-1 * t +  x * y * 0.2) * 0.5;
+        z = id / vertexCount * 40. * sin(x * id * 1e2 + tan(id * 1e8) * 1e-1) * 0.5;
+        z += tan(id * 1e-4) * id / vertexCount * 0.1;
+        // z = mix(z, 0.0, 0.85);
+        float d = distance(vec2(x, y), vec2(0.0, 0.0));
+        vec4 pos = vec4(x, y, z, 1.0);
+        // pos = pm * pos;
+        // pos.xyz = rotate(pos.xyz, vec3(0.0, 0.0, 0.0), t);
+        pos = zr * pos;
+        // pos = tm4 * pos;
+                pos = xr * pos;
+        pos = tm4 * pos;
+        // pos = m * pos;
+        gl_Position = vec4(pos.x / ratio * 3., pos.y * 3., 0.0, pos.z * 1.);
+        gl_PointSize = 25. - (60. * pos.z * 0.01);
+        alph = 0.25 * 0.75;
+        cols = vec3(0.65 + 0.5 / pos.z);
+       float vig = (roundedRectangle(pos.xy * 1.5 / pos.z, vec2(0.0, 0.0), vec2(1.82, 0.91) * 0.43, 0.05, 0.5) + 0.0);
+        cols = mix(cols, cols * floor(vig), 1.);
+        gl_PointSize *= floor(vig) * 1.2;
+        alsca = 1.0;
+        if ((sin((vertexID * 1e-5)) + 1.0) * 0.5 < (cos(time * 0.5e-2) + 1.) * 0.5) {
+            // cols = vec3(0.0);
+            gl_PointSize = 0.0;
+            alsca = 0.0;
+        }
+        // gl_PointSize = max(9.0, gl_PointSize) * gl_PointSize * 0.1;
+    if (gl_PointSize < 6.0) {
+        alsca = 0.0;
+    }
+    }
+    // endGLSL
+`;
+newFlickeringVert.fragText = `
+    // beginGLSL
+    precision mediump float;
+//     varying vec2 myposition;
+//     varying vec2 center;
+    varying float alph;
+    varying vec3 cols;
+    varying float alsca;
+    float rand(vec2 co){
+        return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(co.x)));
+    }
+    void main(void) {
+        // vec2 uv = gl_PointCoord.xy / vec2(1600, 1600);
+        // float d = length(uv - center);
+        // vec2 pos = myposition;
+        vec2 uv = gl_FragCoord.xy / vec2(2560, 1600);
+        // uv.x = uv.x + 1.0;
+        uv = uv * 2.0;
+        uv = uv + 0.5;
+        // uv = uv * 1.0;
+        float ALPHA = 0.75;
+        vec2 pos = gl_PointCoord - vec2(0.5, 0.5);
+                float dist_squared = dot(pos, pos);
+        float alpha;
+        if (dist_squared < 0.25) {
+            alpha = ALPHA;
+        } else {
+            alpha = 0.0;
+        }
+        alpha = smoothstep(0.05 / (0.9 + alph), 0.000125, dist_squared) * 0.49;
+        float rando = rand(pos);
+        // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
+        gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph)) * 0.045 + alpha)) * 0.5;
+        // gl_FragColor.rgb = gl_FragColor.rbr;
+        gl_FragColor.rgb = cols;
+        gl_FragColor.a *= alsca;
+        // gl_FragColor.b *= 0.75;
+        
+    }
+    // endGLSL
+`;
+// newFlickeringVert.init();
+newFlickeringVert.vertText = newFlickeringVert.vertText.replace(/[^\x00-\x7F]/g, "");
+newFlickeringVert.fragText = newFlickeringVert.fragText.replace(/[^\x00-\x7F]/g, "");
+newFlickeringVert.init();

@@ -1,0 +1,10 @@
+ffmpeg -f image2 -framerate 24 -i /Volumes/Volumina/frames/vt/test-01/test-01-%05d.png -c:v libx264 -pix_fmt yuv420p -shortest /Volumes/Volumina/video-renders/vt/test-01.mp4
+
+
+ffmpeg -i /Volumes/Volumina/video-renders/vt/test-01.mp4 \
+-i /Users/guillaumepelletier/Music/SuperCollider\ Recordings/SC_220530_024213.aiff  \
+-map 0:v -map 1:a -c:v copy \
+/Volumes/Volumina/video-renders/vt/test-01-son.mp4
+
+
+ffmpeg -i "movie.mp4" -itsoffset 3.84 -i "movie.mp4" -map 0:v -map 1:a -c copy "movie-audio-delayed.mp4"
