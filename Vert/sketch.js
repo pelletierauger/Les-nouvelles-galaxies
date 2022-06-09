@@ -158,7 +158,7 @@ draw = function() {
     // draw the scene, presumably on a framebuffer
     let currentProgram = getProgram("pulsar-fog");
     gl.useProgram(currentProgram);
-    drawBG(currentProgram);
+    // drawBG(currentProgram);
     currentProgram = getProgram("new-flickering-dots-vert");
     gl.useProgram(currentProgram);
     nx = openSimplex.noise2D(0, drawCount * 5e-2) * 0.02;
@@ -166,13 +166,13 @@ draw = function() {
     drawAlligatorQuietVert(currentProgram);
     currentProgram = getProgram("new-flickering-dots");
     gl.useProgram(currentProgram);
-    drawAlligatorQuiet(currentProgram);
+    // drawAlligatorQuiet(currentProgram);
 // 
 // 
     currentProgram = getProgram("rounded-square");
     time = gl.getUniformLocation(currentProgram, "time"); 
     gl.useProgram(currentProgram);
-    drawTerminal(currentProgram);
+    // drawTerminal(currentProgram);
     // drawSwirl(currentProgram);
     // drawPulsar(currentProgram);
 // 
