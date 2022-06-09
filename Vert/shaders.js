@@ -1018,7 +1018,12 @@ void main() {
         vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
     // vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
     gl_FragColor.rgb = blender;
-    gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 6.2);
+    vec3 blender2 = BlendSoftLight(gl_FragColor.rgb, vec3(1.0 * 0.5, 0.2 * 0.5, 0.0));
+    // vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
+    gl_FragColor.rgb = mix(gl_FragColor.rgb, blender2, 0.8);
+    // gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(0.45, 0.0, 0.0), 0.5);
+    
+    // gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 6.2);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.b += col.b * 0.25;
