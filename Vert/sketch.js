@@ -151,7 +151,7 @@ draw = function() {
     // draw the scene, presumably on a framebuffer
     let currentProgram = getProgram("pulsar-fog");
     gl.useProgram(currentProgram);
-    drawBG(currentProgram);
+    // drawBG(currentProgram);
     currentProgram = getProgram("new-flickering-dots-vert");
     gl.useProgram(currentProgram);
     drawAlligatorQuietVert(currentProgram);
