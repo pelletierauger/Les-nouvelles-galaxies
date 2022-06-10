@@ -764,6 +764,7 @@ void main() {
     gl_FragColor.rgb += vec3(0.0, 0.0, 0.15);
     gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.1095 * (16./9.), 0.1015) * 2.1, 0.02, 0.05) * 1.49;
         // gl_FragColor = gl_FragColor.grra;
+    // gl_FragColor.a *= 0.75;
         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
 }
 // endGLSL
@@ -1005,11 +1006,11 @@ float rand(vec2 co){
 ${blendingMath}
 void main() {
     vec2 uv = vec2(gl_FragCoord.xy) / vec2(1600, 1600);
-   float rando = rand(vec2(uv.x, uv.y));
    gl_FragColor = texture2D(u_texture, v_texcoord);
+   float rando = rand(vec2(uv.x, uv.y) * tan(gl_FragCoord.r * 1e3));
    // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
    // gl_FragColor.r = gl_FragColor.r * 0.5;
-   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.07)) * 1.2;
+   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.1)) * 1.2;
     vec3 col = gl_FragColor.rgb;
         // vec3 levels = LevelsControlInputRange(gl_FragColor.rgb, 0.2, 0.95);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b)) / 3.;

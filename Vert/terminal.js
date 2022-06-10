@@ -26,7 +26,8 @@ drawTerminal = function(selectedProgram) {
              num++;
              }
              if (p == "1") {
-                 colors.push(0, 0, 0);                 
+                 let c = Math.pow(y,2) * 0.00625 * 0.045 * 0.35;
+                 colors.push(c, c, c);
              } else if (p == "0") {
                 colors.push(0.75 + osc, 0.75 + osc, 0.75 + osc);
              } else if (p == "2") {
@@ -265,9 +266,9 @@ roundedSquare.fragText = `
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;
-        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.24) * 4., 0.001, 0.1);
+        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.13, 0.24) * 4., 0.001, 0.1);
         float rando = rand(uv * ttime) * 0.05;
-       float vig = (roundedRectangle(gl_FragCoord.xy, vec2(1280./ 2.0, 720./ 2.), vec2(0.761, 0.3965) * 772., 30.5, 70.5) + 0.0);
+       float vig = (roundedRectangle(gl_FragCoord.xy, vec2(1280./ 2.0, 720./ 2.), vec2(0.761, 0.396) * 772., 30.5, 70.5) + 0.0);
         gl_FragColor = vec4((cols - rando) * vig, color);
     }
     // endGLSL
