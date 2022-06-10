@@ -1023,6 +1023,7 @@ void main() {
     // gl_FragColor.rgb =  vec3(1.0, 0.2, 0.0);
     gl_FragColor.rgb = mix(gl_FragColor.rgb, blender2, 0.5);
     gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 1.25 * -uv.y);
+    gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 3.1);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.b += col.b * 0.25;
