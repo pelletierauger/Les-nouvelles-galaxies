@@ -48,7 +48,25 @@ drawTerminal = function(selectedProgram) {
             for (let x = 8; x <= vt2.stringArray[0].length; x++) {
         for (let y = 0; y < 9; y++) {
             if (vt2.stringArray[y][x] == "1") {
-               vertices.push(x * (9 / 16) * 0.02 * sc - 0.465 + nx + (-y * 0.002), -y * 0.03 * sc - 0.39 + 0.97 + ny, 50.0 * sc * 0.9, 1);
+               vertices.push(x * (9 / 16) * 0.02 * sc - 0.41 + nx + (-y * 0.002), -y * 0.04 * sc - 0.19 + 0.97 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0), 50.0 * sc * 0.9, 1);
+            num++;
+                colors.push(0.65, 0.65, 0.65);
+            }
+        }
+    }
+                for (let x = 8; x <= vt3.stringArray[0].length; x++) {
+        for (let y = 0; y < 9; y++) {
+            if (vt3.stringArray[y][x] == "1") {
+               vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.002), -y * 0.04 * sc - 0.39 + 0.97 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.075, 50.0 * sc * 0.9, 1);
+            num++;
+                colors.push(0.65, 0.65, 0.65);
+            }
+        }
+    }
+                    for (let x = 8; x <= vt4.stringArray[0].length; x++) {
+        for (let y = 0; y < 9; y++) {
+            if (vt4.stringArray[y][x] == "1") {
+               vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.002), -y * 0.04 * sc - 0.39 + 0.97 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) - 0.05, 50.0 * sc * 0.9, 1);
             num++;
                 colors.push(0.65, 0.65, 0.65);
             }
@@ -1797,5 +1815,18 @@ TerminalRecorder.prototype.stop = function() {
 
 
 let vt2 = new VirtualTerminal();
-vt2.text = "Je ne réfléchis bien que dans la boue."
+vt2.text = "A snowfall mutes the material world."
 vt2.makeTerminalString();
+
+let vt3 = new VirtualTerminal();
+vt3.text = "In the burnt out woods, I can hear";
+vt3.makeTerminalString();
+
+
+let vt4 = new VirtualTerminal();
+vt4.text = "my therapist peeling off layers of dead bark";
+vt4.makeTerminalString();
+
+
+vt.text = "slowly revealing the living pith inside, the wounded ghost.";
+vt.makeTerminalString();

@@ -1049,9 +1049,11 @@ void main() {
     vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
     vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
     gl_FragColor.rgb = blend.rbg * vec3(1.1, 1.25, 0.5);
-    gl_FragColor.rgb += roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.1025) * 2.1, 0.001, 0.25) * 0.075;
-    // bw = vec3((gl_FragColor.r + gl_FragColor.g + gl1_FragColor.b) / 3.);
-        // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 0.125);
+    bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
+        // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 1.);
+    // gl_FragColor.rgb = LevelsControlInput(gl_FragColor.rgb, 0., vec3(1.), 0.75);
+    // gl_FragColor.rgb = max(vec3(0.1), gl_FragColor.rgb);
+    gl_FragColor.rgb += roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.1025) * 2.1, 0.001, 0.25) * 0.12;
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.b += col.b * 0.25;
