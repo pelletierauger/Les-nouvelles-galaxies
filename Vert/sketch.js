@@ -32,7 +32,7 @@ for (let i = 0; i < 1000000; i++) {
 }
 fvertices = new Float32Array(fvertices);
 
-let resolutionScalar = 1;
+let resolutionScalar = 0.5;
 let resolutionBG;
 
 function setup() {
