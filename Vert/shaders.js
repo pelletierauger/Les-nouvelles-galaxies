@@ -271,6 +271,7 @@ let newFlickering = new ShaderProgram("new-flickering-dots");
 newFlickering.vertText = `
     // beginGLSL
     attribute vec4 coordinates;
+    uniform float resolution;
     varying vec2 myposition;
     varying vec2 center;
     varying float alph;
@@ -304,7 +305,7 @@ void main(void) {
         gl_PointSize = (9. + coordinates.z / ((6.0 + alph) * 0.25)) * alph * 2.5;
         float vig = (roundedRectangle(gl_Position.xy, vec2(0.0, 0.0), vec2(0.905, 0.87) * 0.99, 0.05, 0.5) + 0.0);
         // cols = mix(cols, cols * floor(vig), 1.);
-    gl_PointSize *= floor(vig);
+    gl_PointSize *= floor(vig) * resolution * 2.;
             // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
     }
@@ -658,6 +659,7 @@ pulsarFog.fragText = `
 precision lowp float;
 varying vec2 vTexCoord;
 uniform float time;
+uniform float resolution;
 const float TURBULENCE = 0.009;
 //noise function from iq: https://www.shadertoy.com/view/Msf3WH
 vec2 hash(vec2 p) {
@@ -739,12 +741,18 @@ float rand(vec2 co){
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(time)));
 }
     float roundedRectangle (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
+        // pos = pos * resolution * 2.;
+        // size = size * resolution;
+        // radius = radius * resolution;
+        // thickness = thickness * resolution;
         float d = length(max(abs(uv - pos),size) - size) - radius;
         return smoothstep(0.66, 0.33, d / thickness * 5.0);
     }
 void main() {
-    vec2 uv = gl_FragCoord.xy / vec2(1440., 1440.);
-    vec2 p = gl_FragCoord.xy/1000.0;
+    vec2 uv = gl_FragCoord.xy / vec2(2560, 1440) * 2. / resolution - 1.;
+    uv *= vec2(16. / 9., 1.0);
+    // uv *= resolution;
+    vec2 p = gl_FragCoord.xy / 1000.0 / resolution;
     p -= 0.5;
 //     p.x *= 2.0;
     p *= 1.0;
@@ -787,16 +795,20 @@ void main() {
     // gl_FragColor.r += 0.05;
     // gl_FragColor.rgb = vec3(1.0);
     // gl_FragColor.rgb *= 1.25;
-    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.1025) * 2.1, 0.001, 0.25) * 1.6;
+    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.1092 * (16./9.), 0.104) * 2.1 * 4.1, 0.01, 0.5) * 1.6;    
+    // gl_FragColor.rgb += roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.11, 0.11), 0.001, 0.25);
         // gl_FragColor = gl_FragColor.grra;
     gl_FragColor.rgb -= 0.2;
         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
 }
 // endGLSL
 `;
+pulsarFog.vertText = pulsarFog.vertText.replace(/[^\x00-\x7F]/g, "");
+pulsarFog.fragText = pulsarFog.fragText.replace(/[^\x00-\x7F]/g, "");
 pulsarFog.init();
 if (pulsarFog.initialized) {
     time = gl.getUniformLocation(getProgram("pulsar-fog"), "time");
+    resolutionBG = gl.getUniformLocation(getProgram("pulsar-fog"), "resolution");
 }
 
 
@@ -1022,6 +1034,7 @@ textureShader.fragText = `
 precision mediump float;
 // Passed in from the vertex shader.
 uniform float time;
+uniform float resolution;
 varying vec2 v_texcoord;
 // The texture.
 uniform sampler2D u_texture;
@@ -1035,7 +1048,7 @@ ${blendingMath}
     }
 void main() {
     // vec2 uv = vec2(gl_FragCoord.xy) / vec2(1600, 1600);
-    vec2 uv = gl_FragCoord.xy / vec2(1440., 1440.);
+    vec2 uv = gl_FragCoord.xy / vec2(1440., 1440.) * resolution;
    float rando = rand(vec2(uv.x, uv.y));
    gl_FragColor = texture2D(u_texture, v_texcoord);
    // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);

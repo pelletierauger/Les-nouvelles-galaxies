@@ -59,6 +59,7 @@ drawBG = function(sh) {
     ]);
     time = gl.getUniformLocation(sh, "time"); 
     gl.uniform1f(time, 602 + drawCount * 0.00025);
+    gl.uniform1f(resolutionBG, resolutionScalar);
     // let vbuffer = gl.createBuffer();
     // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     // gl.bindBuffer(gl.ARRAY_BUFFER, null);

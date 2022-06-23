@@ -128,6 +128,8 @@ drawTerminal = function(selectedProgram) {
     // Enable the attribute
     gl.enableVertexAttribArray(cols);
 // ----------
+    var scalar = gl.getUniformLocation(selectedProgram, "resolution");
+    gl.uniform1f(scalar, resolutionScalar);
     /*============= Drawing the primitive ===============*/
     // // Clear the canvas
     // gl.clearColor(0.5, 0.5, 0.5, 0.9);
@@ -148,8 +150,10 @@ let roundedSquare = new ShaderProgram("rounded-square");
 
 roundedSquare.vertText = `
     // beginGLSL
+    precision mediump float;
     attribute vec4 coordinates;
     attribute vec3 colors;
+    uniform float resolution;
     varying vec2 myposition;
     varying vec2 center;
     varying float alph;
@@ -161,7 +165,7 @@ roundedSquare.vertText = `
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
         alph = coordinates.w;
-        gl_PointSize = coordinates.z;
+        gl_PointSize = coordinates.z * resolution * 2.;
         size = gl_PointSize;
         cols = colors;
         // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
@@ -173,6 +177,7 @@ roundedSquare.fragText = `
     // beginGLSL
     precision mediump float;
     uniform float time;
+    uniform float resolution;
     varying vec2 myposition;
     varying vec2 center;
     varying float alph;
@@ -194,7 +199,7 @@ roundedSquare.fragText = `
         return smoothstep(0.66, 0.33, d / thickness * 5.0);
     }
     void main(void) {
-         float resolution = 1.0;
+         // float resolution = 1.0;
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;

@@ -1,7 +1,7 @@
 let looping = true;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
-let fileName = "./frames/alligator/alligator";
+let fileName = "/Users/guillaumepelletier/Desktop/alligator";
 let JSONs = [];
 let maxFrames = 15000;
 let gl;
@@ -32,6 +32,9 @@ for (let i = 0; i < 1000000; i++) {
 }
 fvertices = new Float32Array(fvertices);
 
+let resolutionScalar = 1;
+let resolutionBG;
+
 function setup() {
     socket = io.connect('http://localhost:8080');
     socket.on('pushJSONs', function(data) {
@@ -40,16 +43,38 @@ function setup() {
     });
     socket.emit('pullJSONs', "/Users/guillaumepelletier/Desktop/Dropbox/Art/p5/Les-nouvelles-galaxies/Vert/sessions");
     // socket.on('receiveOSC', receiveOSC);
-    pixelDensity(1);
-    cnvs = createCanvas(windowWidth, windowWidth * 9 / 16, WEBGL);
-    canvasDOM = document.getElementById('defaultCanvas0');
+    // pixelDensity(1);
+    // cnvs = createCanvas(windowWidth, windowWidth * 9 / 16, WEBGL);
+    // canvasDOM = document.getElementById('defaultCanvas0');
     // noCanvas();
     // cnvs = document.getElementById('my_Canvas');
-    gl = canvas.getContext('webgl');
+    // gl = canvas.getContext('webgl');
     // canvasDOM = document.getElementById('my_Canvas');
     // canvasDOM = document.getElementById('defaultCanvas0');
     // gl = canvasDOM.getContext('webgl');
     // gl = cnvs.drawingContext;
+
+    pixelDensity(1);
+    noCanvas();
+    // cnvs = createCanvas(windowWidth, windowWidth * 9 / 16, WEBGL);
+    // cnvs = createCanvas(1280, 1280 * 9 / 16, WEBGL);
+    cnvs = document.createElement('canvas');
+
+    cnvs.id = "defaultCanvas0";
+    cnvs.width = 2560 * resolutionScalar;
+    cnvs.height = 1440 * resolutionScalar;
+    var body = document.getElementsByTagName("body")[0];
+    body.appendChild(cnvs);
+    canvasDOM = document.getElementById('defaultCanvas0');
+
+    // noCanvas();
+    // cnvs = document.getElementById('my_Canvas');
+    // gl = canvas.getContext('webgl');
+    gl = cnvs.getContext('webgl');
+
+
+
+
 
     // gl = canvasDOM.getContext('webgl', { premultipliedAlpha: false });
 
@@ -76,7 +101,7 @@ function setup() {
     // gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
     // gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
     // Set the view port
-    gl.viewport(0, 0, cnvs.width * 1, cnvs.height * 1);
+    gl.viewport(0, 0, cnvs.width, cnvs.height);
     frameRate(20);
     // background(0);
     // fill(255, 50);
@@ -94,6 +119,7 @@ function setup() {
     initializeShaders();
     createWhiteDots();
     time = gl.getUniformLocation(getProgram("pulsar-fog"), "time");
+    resolutionBG = gl.getUniformLocation(getProgram("pulsar-fog"), "resolution");
     texture = createTexture();
     framebuf = createFrameBuffer(texture);
     texture2 = createTexture();
@@ -153,7 +179,7 @@ function clearSelection() {
 draw = function() {
     // We bind the framebuffer...
     bindFrameBuffer(texture, framebuf);
-    gl.viewport(0, 0, 1280, 720);
+    gl.viewport(0, 0, cnvs.width, cnvs.height);
     gl.clear(gl.COLOR_BUFFER_BIT);
     // draw the scene, presumably on a framebuffer
     let currentProgram = getProgram("pulsar-fog");
@@ -320,7 +346,7 @@ draw = function() {
 // 
     // unbind the buffer and draw the resulting texture....
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-    gl.viewport(0, 0, 1280, 720);
+    gl.viewport(0, 0, cnvs.width, cnvs.height);
 // 
     gl.bindTexture(gl.TEXTURE_2D, texture);
 // 
@@ -348,6 +374,9 @@ draw = function() {
     gl.uniform1i(textureLocation, 0);
     var timeLocation = gl.getUniformLocation(textureShader, "time");
     gl.uniform1f(timeLocation, frameCount * 0.01);
+// 
+    var scalar = gl.getUniformLocation(textureShader, "resolutionScalar");
+    gl.uniform1f(scalar, resolutionScalar);
 // 
     var texcoordLocation = gl.getAttribLocation(textureShader, "a_texcoord");
     gl.enableVertexAttribArray(texcoordLocation);
@@ -455,3 +484,19 @@ document.onkeydown = keyDown;
 
 
 
+
+function setResolutionScalar(sc) {
+    resolutionScalar = sc;
+    cnvs.width = 2560 * resolutionScalar;
+    cnvs.height = 1440 * resolutionScalar;
+    texture = createTexture();
+    framebuf = createFrameBuffer(texture);
+    texture2 = createTexture();
+    framebuf2 = createFrameBuffer(texture2);
+    drawCount--;
+    redraw();
+}
+
+function sr(sc) {
+    setResolutionScalar(sc);
+}

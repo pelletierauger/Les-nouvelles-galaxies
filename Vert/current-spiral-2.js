@@ -1097,6 +1097,10 @@ drawAlligatorQuiet = function(selectedProgram) {
     gl.vertexAttribPointer(coord, 4, gl.FLOAT, false, 0, 0);
     // Enable the attribute
     gl.enableVertexAttribArray(coord);
+        var scalar = gl.getUniformLocation(selectedProgram, "resolution");
+    // Point an attribute to the currently bound VBO
+    // gl.vertexAttribPointer(coord, 1, gl.FLOAT, false, 0, 0);
+    gl.uniform1f(scalar, resolutionScalar);
     /*============= Drawing the primitive ===============*/
     // // Clear the canvas
     // gl.clearColor(0.5, 0.5, 0.5, 0.9);
@@ -1169,7 +1173,11 @@ drawAlligatorQuietVert = function(selectedProgram) {
     var time = gl.getUniformLocation(selectedProgram, "time");
     // Point an attribute to the currently bound VBO
     // gl.vertexAttribPointer(coord, 1, gl.FLOAT, false, 0, 0);
-    gl.uniform1f(time, drawCount);
+    gl.uniform1f(time, drawCount);    
+    var scalar = gl.getUniformLocation(selectedProgram, "resolutionScalar");
+    // Point an attribute to the currently bound VBO
+    // gl.vertexAttribPointer(coord, 1, gl.FLOAT, false, 0, 0);
+    gl.uniform1f(scalar, resolutionScalar);
     // Enable the attribute
     // gl.enableVertexAttribArray(coord);
     /*============= Drawing the primitive ===============*/
