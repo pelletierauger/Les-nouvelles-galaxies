@@ -375,7 +375,7 @@ draw = function() {
     var timeLocation = gl.getUniformLocation(textureShader, "time");
     gl.uniform1f(timeLocation, frameCount * 0.01);
 // 
-    var scalar = gl.getUniformLocation(textureShader, "resolutionScalar");
+    var scalar = gl.getUniformLocation(textureShader, "resolution");
     gl.uniform1f(scalar, resolutionScalar);
 // 
     var texcoordLocation = gl.getAttribLocation(textureShader, "a_texcoord");
