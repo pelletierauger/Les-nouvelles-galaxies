@@ -500,3 +500,9 @@ function setResolutionScalar(sc) {
 function sr(sc) {
     setResolutionScalar(sc);
 }
+
+function exportOne() {
+    exporting = true;
+    redraw();
+    exporting = false;
+}

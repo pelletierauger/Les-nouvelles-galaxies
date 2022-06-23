@@ -1051,11 +1051,12 @@ void main() {
     // vec2 uv = gl_FragCoord.xy / vec2(1440., 1440.) * resolution;
     vec2 uv = gl_FragCoord.xy / vec2(2560, 1440) * 2. / resolution - 1.;
     uv *= vec2(16. / 9., 1.0);
-   float rando = rand(vec2(uv.x, uv.y));
-   gl_FragColor = texture2D(u_texture, v_texcoord);
+    // float rando = rand(vec2(uv.x, uv.y));
+    float rando = rand(vec2(floor(uv.x * 1280. * 0.75) * 1e-4, floor(uv.y * 720. * 0.75) * 1e-4) * 100.);
+    gl_FragColor = texture2D(u_texture, v_texcoord);
    // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
    // gl_FragColor.r = gl_FragColor.r * 0.5;
-   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.07)) * 1.2;
+   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.09)) * 1.;
     vec3 col = gl_FragColor.rgb;
         // vec3 levels = LevelsControlInputRange(gl_FragColor.rgb, 0.2, 0.95);
         // gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 3.75);
@@ -1072,6 +1073,7 @@ void main() {
     gl_FragColor.rgb += roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.1092 * (16./9.), 0.104) * 2.1 * 4.1, 0.01, 0.5) * 0.12;
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
+    // gl_FragColor.rgb *= 1.05;
     // gl_FragColor.b += col.b * 0.25;
 //gl_FragColor.rgb = gl_FragColor.rbg;
 }
