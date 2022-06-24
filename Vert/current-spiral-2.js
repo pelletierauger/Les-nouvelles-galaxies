@@ -1036,8 +1036,8 @@ drawAlligatorQuiet = function(selectedProgram) {
         x = (x * 2 > c) ? x : -x + c;
         let rotatedX = x * ay + y * ax;
             let rotatedY = y * ay - x * ax;
-        x = rotatedX * (1) * 1 + -0.56;
-        y = rotatedY * (1) * 1 + -0.56;
+        x = rotatedX * (1) * 1 + -1.36 + (Math.sin(aa));
+        y = rotatedY * (1) * 1 + -0.56 + (Math.sin(aa));
         vertices.push(x * (9 / 16) * 0.75 + 0.7 * 1.5 + 0.1, y * 0.75 + 0.5, 15, al);
         num++;
         vertices.push(-x * (9 / 16) * 0.75 - 0.7 * 1.5 - 0.1, y * 0.75 + 0.5, 15, al);
