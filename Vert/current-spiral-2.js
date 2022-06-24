@@ -1030,8 +1030,8 @@ drawAlligatorQuiet = function(selectedProgram) {
         let ay = Math.sin(aa * 0.5 + drawCount * 1e-1);
     for (let i = Math.PI * 0.5 ; i < Math.PI * 2.5; i += inc) {
         // let x = Math.cos(i) * ((i < Math.PI * 1.5) ? 1 : -0.5) * 0.5;
-        let x = Math.cos(i) * 0.5;
-        let y = Math.sin(i) * 0.5;
+        let x = Math.cos(i) * 0.25;
+        let y = Math.sin(i) * 0.25;
         let c = Math.cos(Math.PI * 0.65) * 0.8;
         x = (x * 2 > c) ? x : -x + c;
         let rotatedX = x * ay + y * ax;
