@@ -1026,8 +1026,8 @@ drawAlligatorQuiet = function(selectedProgram) {
     }
     inc = (Math.PI * 2) / 250;
     for (let aa = 0; aa < Math.PI * 2; aa += Math.PI * 2 / 6) {
-        let ax = Math.cos(aa * 0.25 + drawCount * 1e-1);
-        let ay = Math.sin(aa * 0.25 + drawCount * 1e-1);
+        let ax = Math.cos(aa * 0.75 * drawCount * 1e-2 * 1);
+        let ay = Math.sin(aa * 0.75 * drawCount * 1e-2 * 1);
     for (let i = Math.PI * 0.5 ; i < Math.PI * 2.5; i += inc) {
         // let x = Math.cos(i) * ((i < Math.PI * 1.5) ? 1 : -0.5) * 0.5;
         let x = Math.cos(i) * 0.5;
