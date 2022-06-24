@@ -1025,16 +1025,24 @@ drawAlligatorQuiet = function(selectedProgram) {
         num++;
     }
     inc = (Math.PI * 2) / 250;
+    for (let aa = 0; aa < Math.PI * 2; aa += Math.PI * 2 / 6) {
+        let ax = Math.cos(aa + drawCount * 1e-1);
+        let ay = Math.sin(aa + drawCount * 1e-1);
     for (let i = Math.PI * 0.5 ; i < Math.PI * 2.5; i += inc) {
         // let x = Math.cos(i) * ((i < Math.PI * 1.5) ? 1 : -0.5) * 0.5;
         let x = Math.cos(i) * 0.5;
         let y = Math.sin(i) * 0.5;
         let c = Math.cos(Math.PI * 0.65) * 0.8;
         x = (x * 2 > c) ? x : -x + c;
-        vertices.push(x * (9 / 16) * 0.75 + 0.7, y * 0.75 + 0.75, 15, al);
+        let rotatedX = x * ay + y * ax;
+            let rotatedY = y * ay - x * ax;
+        x = rotatedX * aa * 0.2 + aa * -0.21;
+        y = rotatedY * aa * 0.2 + aa * -0.21;
+        vertices.push(x * (9 / 16) * 0.75 + 0.7 * 1.5 + 0.1, y * 0.75 + 0.5, 15, al);
         num++;
-        vertices.push(-x * (9 / 16) * 0.75 - 0.7, y * 0.75 + 0.75, 15, al);
+        vertices.push(-x * (9 / 16) * 0.75 - 0.7 * 1.5 - 0.1, y * 0.75 + 0.5, 15, al);
         num++;
+    }
     }
     // aaa = 1000;
     // teardrop equation
@@ -1044,10 +1052,10 @@ drawAlligatorQuiet = function(selectedProgram) {
         let sc = 0.25;
         let x = 0.5 * (4 * Math.cos(i * 0.5) * Math.pow(Math.sin(i * 0.5), 4)) * sc; 
         let y = -Math.cos(i) * sc; 
-        vertices.push(x * (9 / 16) + 0.7, -y - (Math.cos(0) * sc) - 0.22, 15, al);
-        num++;
-                vertices.push(x * (9 / 16) - 0.7, -y - (Math.cos(0) * sc) - 0.22, 15, al);
-        num++;
+        // vertices.push(x * (9 / 16) + 0.7, -y - (Math.cos(0) * sc) - 0.22, 15, al);
+        // num++;
+                // vertices.push(x * (9 / 16) - 0.7, -y - (Math.cos(0) * sc) - 0.22, 15, al);
+        // num++;
     }
     inc = PI / 500;
      for (let i = Math.PI / 4; i < Math.PI / 4 * 3; i += inc) {
@@ -1056,14 +1064,14 @@ drawAlligatorQuiet = function(selectedProgram) {
     let y = (Math.sin(i) * sc) - Math.sin(Math.PI/4) * sc;
     // ellipse(x + 60, y, 1);
     // vertex(x + 60, y);
-         vertices.push(x * (9 / 16) - 0.7, y, 15, al);
-         num++;         
-         vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
-         num++;
-         vertices.push(x * (9 / 16) + 0.7, y, 15, al);
-         num++;         
-         vertices.push(x * (9 / 16) + 0.7, -y, 15, al);
-         num++;
+         // vertices.push(x * (9 / 16) - 0.7, y, 15, al);
+         // num++;         
+         // vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
+         // num++;
+         // vertices.push(x * (9 / 16) + 0.7, y, 15, al);
+         // num++;         
+         // vertices.push(x * (9 / 16) + 0.7, -y, 15, al);
+         // num++;
     // ellipse(x - 55, y, 1);
     // ellipse(x + 60, y * -1 + 300 - 17, 1);
     // ellipse(x - 55, y * -1 + 300 - 17, 1);
@@ -1071,10 +1079,10 @@ drawAlligatorQuiet = function(selectedProgram) {
     for (let i = 0; i < 1500; i++) {
         let x = Math.cos(i + drawCount) * i * 0.0001;
         let y = Math.sin(i + drawCount) * i * 0.0001;
-        vertices.push(x * (9 / 16) + 0.7, -y, 15, al);
-        num++;
-        vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
-        num++;
+        // vertices.push(x * (9 / 16) + 0.7, -y, 15, al);
+        // num++;
+        // vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
+        // num++;
     }
     drawScratches();
     for (let i = 0; i < vertices.length; i += 4) {
