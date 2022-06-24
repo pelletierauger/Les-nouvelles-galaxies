@@ -986,7 +986,7 @@ drawAlligatorQuiet = function(selectedProgram) {
             }
         }
     }
-    sides = 6;
+    sides = 5;
     inc = (Math.PI * 2) / sides;
     st = -drawCount * 1e-2 - Math.PI;
     for (let i = st; i <= (Math.PI * 2.001) - inc + st; i += inc) {
@@ -1026,18 +1026,18 @@ drawAlligatorQuiet = function(selectedProgram) {
     }
     inc = (Math.PI * 2) / 250;
     for (let aa = 0; aa < Math.PI * 2; aa += Math.PI * 2 / 6) {
-        let ax = Math.cos(aa * 0.5 + drawCount * 1e-1);
-        let ay = Math.sin(aa * 0.5 + drawCount * 1e-1);
+        let ax = Math.cos(aa * 0.25 + drawCount * 1e-1);
+        let ay = Math.sin(aa * 0.25 + drawCount * 1e-1);
     for (let i = Math.PI * 0.5 ; i < Math.PI * 2.5; i += inc) {
         // let x = Math.cos(i) * ((i < Math.PI * 1.5) ? 1 : -0.5) * 0.5;
-        let x = Math.cos(i) * 0.25;
-        let y = Math.sin(i) * 0.25;
+        let x = Math.cos(i) * 0.5;
+        let y = Math.sin(i) * 0.5;
         let c = Math.cos(Math.PI * 0.65) * 0.8;
         x = (x * 2 > c) ? x : -x + c;
         let rotatedX = x * ay + y * ax;
             let rotatedY = y * ay - x * ax;
-        x = rotatedX * (1) * 1 + -1.36 + (Math.sin(aa));
-        y = rotatedY * (1) * 1 + -0.56 + (Math.sin(aa));
+        x = rotatedX * 0.75 + -0.85 + (Math.sin(aa) * 0.5);
+        y = rotatedY * 0.75 + -0.56 + (Math.sin(aa));
         vertices.push(x * (9 / 16) * 0.75 + 0.7 * 1.5 + 0.1, y * 0.75 + 0.5, 15, al);
         num++;
         vertices.push(-x * (9 / 16) * 0.75 - 0.7 * 1.5 - 0.1, y * 0.75 + 0.5, 15, al);
