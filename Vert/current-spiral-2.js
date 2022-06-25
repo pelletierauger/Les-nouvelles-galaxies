@@ -1162,6 +1162,262 @@ drawAlligatorQuiet = function(selectedProgram) {
     gl.drawArrays(gl.POINTS, 0, num);
 }
 
+drawAlligatorQuiet = function(selectedProgram) {
+    vertices = [];
+    // let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
+    // let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
+    let shiftedDrawCount = drawCount + 588637 - 200;
+    let t = shiftedDrawCount * 0.000125 + 0.5 + 8000000;
+    let t2 = t * 1e-1;
+    let xOffset = openSimplex.noise2D(t2, t2 + 1000);
+    let yOffset = openSimplex.noise2D(t2 - 1000, t2 + 500);
+    t2 = (t2 + 5000) * 100;
+    let xOffset2 = openSimplex.noise2D(t2, t2 + 1000);
+    let yOffset2 = openSimplex.noise2D(t2 - 1000, t2 + 500);
+    let fx = 1;
+    let fy = 1;
+    let x = 1;
+    let y = 1;
+    let m = map(sin(t * 0.25e1), -1, 1, 1e-5, 1e-3);
+    let t3 = drawCount * 1e7 * 0.5;
+    let al = map(openSimplex.noise2D(t3, t3 + 10000), -1, 1, 0.001, 1.25);
+    // al = 0.3;
+    num = 0;
+    let nnn = 1500;
+    let sst = Math.PI * 2, iiin = (Math.PI * 4) / nnn;
+    for (let i = sst; i < (Math.PI * 4) + sst; i += iiin) {
+    let al = map(openSimplex.noise2D(t3, i), -1, 1, 0.001, 1.25);
+        let t = i;
+        let t2 = Math.abs(Math.cos(t * 1.5 * 1.5))
+        let y = Math.cos(t + drawCount * 1e-2 + 1.23) * Math.sqrt(t2) * 0.35;
+        let x = Math.sin(t + drawCount * 1e-2 + 1.23) * Math.sqrt(t2) * 0.35;
+        // vertices.push(x * (9 / 16), y, 15, al);
+        // num++;
+    }
+    //     for (let i = 0; i < 1500; i += 1) {
+    // let al = map(openSimplex.noise2D(t3, i), -1, 1, 0.001, 1.25);
+    //     let t = i;
+    //     let t2 = Math.abs(Math.cos(t * 1.75))
+    //     let sc = 0.49;
+    //     let y = Math.cos(t + drawCount * 1e-2) * Math.sqrt(t2) * 0.3;
+    //     let x = Math.sin(t + drawCount * 1e-2) * Math.sqrt(t2) * 0.3;
+    //     vertices.push(x * (9 / 16) - sc, -y + sc, 15, al);
+    //     num++;
+    //     vertices.push(x * (9 / 16) - sc, y - sc, 15, al);
+    //     num++;
+    //     y = Math.cos(t - drawCount * 1e-2) * Math.sqrt(t2) * 0.3;
+    //     x = Math.sin(t - drawCount * 1e-2) * Math.sqrt(t2) * 0.3;
+    //     vertices.push(x * (9 / 16) + sc, -y + sc, 15, al);
+    //     num++;
+    //     vertices.push(x * (9 / 16) + sc, y - sc, 15, al);
+    //     num++;
+    // }
+    let sides = 6;
+    let inc = (Math.PI * 2) / sides;
+    let st = -drawCount * 1e-2;
+    for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
+        let p0 = [Math.cos(i), Math.sin(i)];
+        let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
+        for (let p = 0; p < 1; p += 0.01) {
+    // let al = map(openSimplex.noise2D(t3, p * 1e6), -1, 1, 0.001, 1.25);
+            let x = lerp(p0[0], p1[0], p) * 0.5;
+            let y = lerp(p0[1], p1[1], p) * 0.5;
+            // vertices.push(x * (9 / 16), y, 15, al);
+            // num++;
+        }
+    }
+    sides = 5;
+    inc = (Math.PI * 2) / sides;
+    st = -drawCount * 1e-2;
+    for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
+        let p0 = [Math.cos(i), Math.sin(i)];
+        let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
+        for (let p = 0; p < 1; p += 0.01) {
+            for (let k = 0; k < 25; k += 5) {
+            let d = Math.pow(dist(0, p, 1, Math.sin(p * 1.5)), k) * 0.65;
+            let x = lerp(p0[0], p1[0], p) * 0.5 * d;
+            let y = lerp(p0[1], p1[1], p) * 0.5 * d;
+            // vertices.push(x * (9 / 16), y, 15, al);
+            // num++;
+            }
+        }
+    }
+    // sides = 5;
+    // inc = (Math.PI * 2) / sides;
+    // st = -drawCount * 1e-2 - Math.PI;
+    // for (let i = st; i <= (Math.PI * 2.001) - inc + st; i += inc) {
+    //     let p0 = [Math.cos(i), Math.sin(i)];
+    //     let a1 = i + (inc * 3 * Math.sin(drawCount * 0.5e-1)) % sides;
+    //     let p1 = [Math.cos(a1), Math.sin(a1)];
+    //     for (let p = 0; p < 1; p += 0.01) {
+    //         let d = dist(0, p, 0, 0.5) * 1;
+    //         let x = lerp(p0[0], p1[0], p) * 0.5;
+    //         let y = lerp(p0[1], p1[1], p) * 0.5;
+    //         for (let m = 0; m < 4; m++) {
+    //             let sca = Math.pow(0.75, m);
+    //             vertices.push(x * (9 / 16) * sca, y * sca, 15, al);
+    //         num++;
+    //         }
+    //     }
+    // }
+    //     sides = 3;
+    // inc = (Math.PI * 2) / sides;
+    // st = Math.PI * 0.5;
+    // for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
+    //     let p0 = [Math.cos(i), Math.sin(i)];
+    //     let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
+    //     for (let p = 0; p < 1; p += 0.005) {
+    //         let x = lerp(p0[0], p1[0], p) * 1;
+    //         let y = lerp(p0[1], p1[1], p) * 1;
+    //         vertices.push(x * (9 / 16), -y, 15, al);
+    //         num++;
+    //     }
+    // }
+    inc = (Math.PI * 2) / 500;
+    for (let i = 0 ; i < Math.PI * 2; i += inc) {
+        let x = Math.cos(i) * 0.5;
+        let y = Math.sin(i) * 0.5;
+        // vertices.push(x * (9 / 16), y, 15, al);
+        // num++;
+    }
+    inc = (Math.PI * 2) / 250;
+    let moonPhases = [];
+    for (let aa = 0; aa < Math.PI * 2; aa += Math.PI * 2 / 12) {
+        let ax = Math.cos((aa + Math.PI * 2 / 12) * 0.75 * -drawCount * 1e-2 * 8);
+        let ay = Math.sin((aa + Math.PI * 2 / 12) * 0.75 * -drawCount * 1e-2 * 8);
+        let ii = 0;
+    for (let i = Math.PI * 0.5 ; i < Math.PI * 2.5; i += inc) {
+        // ii++;
+        // let x = Math.cos(i) * ((i < Math.PI * 1.5) ? 1 : -0.5) * 0.5;
+        let x = Math.cos(i) * 0.5;
+        let y = Math.sin(i) * 0.5;
+        let c = Math.cos(Math.PI * 0.65) * 0.8;
+        x = (x * 2 > c) ? x : -x + c;
+        let px = x;
+        let rotatedX = x * ay + y * ax;
+        let rotatedY = y * ay - x * ax;
+        x = rotatedX * 1 + -3.1 + (aa * 0.8);
+        y = rotatedY * 1 + -0.66 + (Math.sin(aa) * 0);
+        vertices.push(x * (9 / 16) * 0.75 + 0.7 * 1.5 + 0.1 - 0.8, y * 0.75 + 0.5, 15, al);
+        num++;
+        // vertices.push(-x * (9 / 16) * 0.75 - 0.7 * 1.5 - 0.1, y * 0.75 + 0.5, 15, al);
+        // num++;
+        
+        // console.log(ii);
+        if (ii == 15 || ii == 249 - 15 * 9 - 5) {
+            // console.log("slops!");
+            x = rotatedX * 1.2 + -3.1 + (aa * 0.8);
+            y = rotatedY * 1.2 + -0.66 + (Math.sin(aa) * 0);
+            x = x * (9 / 16) * 0.75 + 0.7 * 1.5 + 0.1 - 0.8;
+            y = y * 0.75 + 0.5;
+            moonPhases.push([x, y]);
+            // vertices.push(x, y, 50, al);
+            // num++;
+        }
+        ii++;
+    }
+    }
+    for (let i = 0; i < moonPhases.length; i++) {
+        let m = moonPhases[i];
+        let size = 50;
+        let found = false;
+        for (let j = 0; j < moonPhases.length; j++) {
+            let n = moonPhases[j];
+            if (i !== j) {
+                let d = dist(m[0], m[1], n[0], n[1]);
+                if (d < 0.05 && !found) {
+                    found = true;
+                    size *= 4;
+                    var msgToSend = {
+                    address: "/moon",
+                    args: [{
+                        type: "f",
+                        value: random([0, 2, 4, 7, 11])
+                    }]
+                    };
+                    socket.emit('msgToSCD', msgToSend);
+                }
+            }
+        }
+        vertices.push(m[0], m[1], size, al);
+        num++;
+    }
+    // logJavaScriptConsole(moonPhases.length);
+    // console.log(moonPhases);
+    // aaa = 1000;
+    // teardrop equation
+    // http://paulbourke.net/geometry/teardrop/
+    inc = (Math.PI * 2) / 250;
+    for (let i = 0; i < Math.PI * 2; i += inc) {
+        let sc = 0.25;
+        let x = 0.5 * (4 * Math.cos(i * 0.5) * Math.pow(Math.sin(i * 0.5), 4)) * sc; 
+        let y = -Math.cos(i) * sc; 
+        // vertices.push(x * (9 / 16) + 0.7, -y - (Math.cos(0) * sc) - 0.22, 15, al);
+        // num++;
+                // vertices.push(x * (9 / 16) - 0.7, -y - (Math.cos(0) * sc) - 0.22, 15, al);
+        // num++;
+    }
+    inc = PI / 500;
+     for (let i = Math.PI / 4; i < Math.PI / 4 * 3; i += inc) {
+         let sc = 0.75;
+    let x = (Math.cos(i) * sc);
+    let y = (Math.sin(i) * sc) - Math.sin(Math.PI/4) * sc;
+    // ellipse(x + 60, y, 1);
+    // vertex(x + 60, y);
+         // vertices.push(x * (9 / 16) - 0.7, y, 15, al);
+         // num++;         
+         // vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
+         // num++;
+         // vertices.push(x * (9 / 16) + 0.7, y, 15, al);
+         // num++;         
+         // vertices.push(x * (9 / 16) + 0.7, -y, 15, al);
+         // num++;
+    // ellipse(x - 55, y, 1);
+    // ellipse(x + 60, y * -1 + 300 - 17, 1);
+    // ellipse(x - 55, y * -1 + 300 - 17, 1);
+  }
+    for (let i = 0; i < 1500; i++) {
+        let x = Math.cos(i + drawCount) * i * 0.0001;
+        let y = Math.sin(i + drawCount) * i * 0.0001;
+        // vertices.push(x * (9 / 16) + 0.7, -y, 15, al);
+        // num++;
+        // vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
+        // num++;
+    }
+    drawScratches();
+    for (let i = 0; i < vertices.length; i += 4) {
+        vertices[i] += nx;
+        vertices[i + 1] += ny;
+    }
+    // Create an empty buffer object to store the vertex buffer
+    // var vertex_buffer = gl.createBuffer();
+    //Bind appropriate array buffer to it
+    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // Pass the vertex data to the buffer
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    /*======== Associating shaders to buffer objects ========*/
+    // Bind vertex buffer object
+    gl.bindBuffer(gl.ARRAY_BUFFER, dotsVBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    // Get the attribute location
+    var coord = gl.getAttribLocation(selectedProgram, "coordinates");
+    // Point an attribute to the currently bound VBO
+    gl.vertexAttribPointer(coord, 4, gl.FLOAT, false, 0, 0);
+    // Enable the attribute
+    gl.enableVertexAttribArray(coord);
+        var scalar = gl.getUniformLocation(selectedProgram, "resolution");
+    // Point an attribute to the currently bound VBO
+    // gl.vertexAttribPointer(coord, 1, gl.FLOAT, false, 0, 0);
+    gl.uniform1f(scalar, resolutionScalar);
+    /*============= Drawing the primitive ===============*/
+    // // Clear the canvas
+    // gl.clearColor(0.5, 0.5, 0.5, 0.9);
+    // Clear the color buffer bit
+    // gl.clear(gl.COLOR_BUFFER_BIT);
+    // Draw the triangle
+    gl.drawArrays(gl.POINTS, 0, num);
+}
+
 
 drawAlligatorQuietVert = function(selectedProgram) {
     // vertices = [];
