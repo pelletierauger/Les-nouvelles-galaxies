@@ -986,64 +986,108 @@ drawAlligatorQuiet = function(selectedProgram) {
             }
         }
     }
-    sides = 5;
-    inc = (Math.PI * 2) / sides;
-    st = -drawCount * 1e-2 - Math.PI;
-    for (let i = st; i <= (Math.PI * 2.001) - inc + st; i += inc) {
-        let p0 = [Math.cos(i), Math.sin(i)];
-        let a1 = i + (inc * 3 * Math.sin(drawCount * 0.5e-1)) % sides;
-        let p1 = [Math.cos(a1), Math.sin(a1)];
-        for (let p = 0; p < 1; p += 0.01) {
-            let d = dist(0, p, 0, 0.5) * 1;
-            let x = lerp(p0[0], p1[0], p) * 0.5;
-            let y = lerp(p0[1], p1[1], p) * 0.5;
-            for (let m = 0; m < 4; m++) {
-                let sca = Math.pow(0.75, m);
-                vertices.push(x * (9 / 16) * sca, y * sca, 15, al);
-            num++;
-            }
-        }
-    }
-        sides = 3;
-    inc = (Math.PI * 2) / sides;
-    st = Math.PI * 0.5;
-    for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
-        let p0 = [Math.cos(i), Math.sin(i)];
-        let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
-        for (let p = 0; p < 1; p += 0.005) {
-            let x = lerp(p0[0], p1[0], p) * 1;
-            let y = lerp(p0[1], p1[1], p) * 1;
-            vertices.push(x * (9 / 16), -y, 15, al);
-            num++;
-        }
-    }
+    // sides = 5;
+    // inc = (Math.PI * 2) / sides;
+    // st = -drawCount * 1e-2 - Math.PI;
+    // for (let i = st; i <= (Math.PI * 2.001) - inc + st; i += inc) {
+    //     let p0 = [Math.cos(i), Math.sin(i)];
+    //     let a1 = i + (inc * 3 * Math.sin(drawCount * 0.5e-1)) % sides;
+    //     let p1 = [Math.cos(a1), Math.sin(a1)];
+    //     for (let p = 0; p < 1; p += 0.01) {
+    //         let d = dist(0, p, 0, 0.5) * 1;
+    //         let x = lerp(p0[0], p1[0], p) * 0.5;
+    //         let y = lerp(p0[1], p1[1], p) * 0.5;
+    //         for (let m = 0; m < 4; m++) {
+    //             let sca = Math.pow(0.75, m);
+    //             vertices.push(x * (9 / 16) * sca, y * sca, 15, al);
+    //         num++;
+    //         }
+    //     }
+    // }
+    //     sides = 3;
+    // inc = (Math.PI * 2) / sides;
+    // st = Math.PI * 0.5;
+    // for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
+    //     let p0 = [Math.cos(i), Math.sin(i)];
+    //     let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
+    //     for (let p = 0; p < 1; p += 0.005) {
+    //         let x = lerp(p0[0], p1[0], p) * 1;
+    //         let y = lerp(p0[1], p1[1], p) * 1;
+    //         vertices.push(x * (9 / 16), -y, 15, al);
+    //         num++;
+    //     }
+    // }
     inc = (Math.PI * 2) / 500;
     for (let i = 0 ; i < Math.PI * 2; i += inc) {
         let x = Math.cos(i) * 0.5;
         let y = Math.sin(i) * 0.5;
-        vertices.push(x * (9 / 16), y, 15, al);
-        num++;
+        // vertices.push(x * (9 / 16), y, 15, al);
+        // num++;
     }
     inc = (Math.PI * 2) / 250;
-    for (let aa = 0; aa < Math.PI * 2; aa += Math.PI * 2 / 6) {
-        let ax = Math.cos(aa * 0.75 * drawCount * 1e-2 * 1);
-        let ay = Math.sin(aa * 0.75 * drawCount * 1e-2 * 1);
+    let moonPhases = [];
+    for (let aa = 0; aa < Math.PI * 2; aa += Math.PI * 2 / 12) {
+        let ax = Math.cos((aa + Math.PI * 2 / 12) * 0.75 * -drawCount * 1e-2 * 1);
+        let ay = Math.sin((aa + Math.PI * 2 / 12) * 0.75 * -drawCount * 1e-2 * 1);
+        let ii = 0;
     for (let i = Math.PI * 0.5 ; i < Math.PI * 2.5; i += inc) {
+        // ii++;
         // let x = Math.cos(i) * ((i < Math.PI * 1.5) ? 1 : -0.5) * 0.5;
         let x = Math.cos(i) * 0.5;
         let y = Math.sin(i) * 0.5;
         let c = Math.cos(Math.PI * 0.65) * 0.8;
         x = (x * 2 > c) ? x : -x + c;
+        let px = x;
         let rotatedX = x * ay + y * ax;
-            let rotatedY = y * ay - x * ax;
+        let rotatedY = y * ay - x * ax;
         x = rotatedX * 1 + -0.85 + (Math.sin(aa) * 0.5 * 0);
         y = rotatedY * 1 + -0.66 + (Math.sin(aa) * 0);
-        vertices.push(x * (9 / 16) * 0.75 + 0.7 * 1.5 + 0.1, y * 0.75 + 0.5, 15, al);
+        vertices.push(x * (9 / 16) * 0.75 + 0.7 * 1.5 + 0.1 - 0.8, y * 0.75 + 0.5, 15, al);
         num++;
-        vertices.push(-x * (9 / 16) * 0.75 - 0.7 * 1.5 - 0.1, y * 0.75 + 0.5, 15, al);
-        num++;
+        // vertices.push(-x * (9 / 16) * 0.75 - 0.7 * 1.5 - 0.1, y * 0.75 + 0.5, 15, al);
+        // num++;
+        
+        // console.log(ii);
+        if (ii == 15 || ii == 249 - 15 * 9 - 5) {
+            // console.log("slops!");
+            x = rotatedX * 1.2 + -0.85 + (Math.sin(aa) * 0.5 * 0);
+            y = rotatedY * 1.2 + -0.66 + (Math.sin(aa) * 0);
+            x = x * (9 / 16) * 0.75 + 0.7 * 1.5 + 0.1 - 0.8;
+            y = y * 0.75 + 0.5;
+            moonPhases.push([x, y]);
+            // vertices.push(x, y, 50, al);
+            // num++;
+        }
+        ii++;
     }
     }
+    for (let i = 0; i < moonPhases.length; i++) {
+        let m = moonPhases[i];
+        let size = 50;
+        let found = false;
+        for (let j = 0; j < moonPhases.length; j++) {
+            let n = moonPhases[j];
+            if (i !== j) {
+                let d = dist(m[0], m[1], n[0], n[1]);
+                if (d < 0.01 && !found) {
+                    found = true;
+                    size *= 4;
+                    var msgToSend = {
+                    address: "/moon",
+                    args: [{
+                        type: "f",
+                        value: random([0, 2, 4, 7, 11])
+                    }]
+                    };
+                    socket.emit('msgToSCD', msgToSend);
+                }
+            }
+        }
+        vertices.push(m[0], m[1], size, al);
+        num++;
+    }
+    // logJavaScriptConsole(moonPhases.length);
+    // console.log(moonPhases);
     // aaa = 1000;
     // teardrop equation
     // http://paulbourke.net/geometry/teardrop/
