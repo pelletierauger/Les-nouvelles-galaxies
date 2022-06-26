@@ -11,7 +11,7 @@ canvas {
     left: 0;
     width: 100%;
     max-width: 1280px;
-    /*bottom: 0;*/
+    bottom: 0;
     right: 0;
 }
 

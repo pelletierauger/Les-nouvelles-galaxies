@@ -11,6 +11,7 @@ drawTerminal = function(selectedProgram) {
     let sx0 = vt.selectionBounds[0];
     let sx1 = vt.selectionBounds[1];
     let colors = [];
+    let sc2 = sc * 1.2;
     for (let x = 0; x <= vt.stringArray[0].length; x++) {
         let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
         for (let y = 0; y < 9; y++) {
@@ -19,7 +20,7 @@ drawTerminal = function(selectedProgram) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 45.0 * sc, 1);
-                vertices.push(x * (9 / 16) * 0.02 * sc - 0.87 - 0.03 + nx, (-y * 0.03 * sc - 0.7) - 0.02 - 0.05 + ny, 55.0 * sc * 0.9, 1.0);
+               vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.00) + 0.2 - 0.588, -y * 0.04 * sc - 0.39 + 0.85 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11 - 1.32 - 0.015, 50.0 * sc * 0.9, 1);
                 num++;
             }
         }
@@ -39,9 +40,9 @@ drawTerminal = function(selectedProgram) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 40.0 * sc, 1);
-                vertices.push(x * (9 / 16) * 0.02 * sc - 0.87 - 0.03 + nx, -y * 0.03 * sc - 0.7 - 0.05 + ny, 50.0 * sc * 0.9, 1);
-            num++;
-                colors.push(0.75, 0.75, 0.75);
+               vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.00) + 0.2 - 0.588, -y * 0.04 * sc - 0.39 + 0.85 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11 - 1.32, 50.0 * sc * 0.9, 1);
+                num++;
+                colors.push(0.65, 0.65, 0.65);
             }
         }
     }
