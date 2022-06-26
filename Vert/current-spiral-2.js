@@ -1419,6 +1419,60 @@ drawAlligatorQuiet = function(selectedProgram) {
 }
 
 
+
+
+drawAlligatorQuiet = function(selectedProgram) {
+    vertices = [];
+    let t3 = drawCount * 1e7 * 0.5;
+    let al = map(openSimplex.noise2D(t3, t3 + 10000), -1, 1, 0.001, 1.25);
+    num = 0;
+    inc = (Math.PI * 2) / 500;
+    for (let i = 0 ; i < Math.PI * 2; i += inc) {
+        let x = Math.cos(i) * fsizeR;
+        let y = Math.sin(i) * fsizeR;
+        vertices.push(x * (9 / 16), y, 15, al);
+        num++;
+    }
+    if (fsizeR !== fsize) {
+        fsizeR = lerp(fsizeR, fsize, 0.1);
+        if (Math.abs(fsize - fsizeR) < 0.0001) {
+            fsizeR = fsize;
+        }
+    }
+    // drawScratches();
+    for (let i = 0; i < vertices.length; i += 4) {
+        vertices[i] += nx;
+        vertices[i + 1] += ny;
+    }
+    // Create an empty buffer object to store the vertex buffer
+    // var vertex_buffer = gl.createBuffer();
+    //Bind appropriate array buffer to it
+    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // Pass the vertex data to the buffer
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    /*======== Associating shaders to buffer objects ========*/
+    // Bind vertex buffer object
+    gl.bindBuffer(gl.ARRAY_BUFFER, dotsVBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    // Get the attribute location
+    var coord = gl.getAttribLocation(selectedProgram, "coordinates");
+    // Point an attribute to the currently bound VBO
+    gl.vertexAttribPointer(coord, 4, gl.FLOAT, false, 0, 0);
+    // Enable the attribute
+    gl.enableVertexAttribArray(coord);
+        var scalar = gl.getUniformLocation(selectedProgram, "resolution");
+    // Point an attribute to the currently bound VBO
+    // gl.vertexAttribPointer(coord, 1, gl.FLOAT, false, 0, 0);
+    gl.uniform1f(scalar, resolutionScalar);
+    /*============= Drawing the primitive ===============*/
+    // // Clear the canvas
+    // gl.clearColor(0.5, 0.5, 0.5, 0.9);
+    // Clear the color buffer bit
+    // gl.clear(gl.COLOR_BUFFER_BIT);
+    // Draw the triangle
+    gl.drawArrays(gl.POINTS, 0, num);
+}
+
 drawAlligatorQuietVert = function(selectedProgram) {
     // vertices = [];
     // // let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
