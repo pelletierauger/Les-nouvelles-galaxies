@@ -1501,6 +1501,19 @@ getGlyph = function(g) {
             "0000000",
         ];
         break;
+        case "<":
+        ch = [
+            "0000010",
+            "0000100",
+            "0001000",
+            "0010000",
+            "0001000",
+            "0000100",
+            "0000010",
+            "0000000",
+            "0000000",
+        ];
+        break;
         default:
         ch = [
             "0000000",
@@ -1855,5 +1868,5 @@ vt4.text = "my therapist peeling off layers of dead bark";
 vt4.makeTerminalString();
 
 
-vt.text = "slowly revealing the living pith inside, the wounded ghost.";
+vt.text = "";
 vt.makeTerminalString();

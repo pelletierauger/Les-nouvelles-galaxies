@@ -1473,6 +1473,216 @@ drawAlligatorQuiet = function(selectedProgram) {
     gl.drawArrays(gl.POINTS, 0, num);
 }
 
+
+
+moonAngles = Array(12).fill(0);
+moonPos = Array(12).fill([0, 0]);
+moonPosR = Array(12).fill([0, 0]);
+speed = 1, speedR = 1;
+
+moonPos = [
+    [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0],
+    [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]
+];
+moonPosR = [
+    [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0],
+    [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]
+];
+
+moonAngles = Array(12).fill(0);
+var inc = Math.PI * 2 / 12 / 12;
+moonInc = Array.from(Array(12), (e, i) => (0 + 1) * 0.5 * inc * 1);
+
+// moonInc = Array(12).fill(0);
+// moonPos = Array.from(Array(12), (e, i) => [map(i, 0, 11, -1, 1) * 0, 0]);
+// moonPos = Array.from(Array(12), (e, i) => [map(i, 0, 11, -1, 1) * 0.9, i * 0.025]);
+
+spread = function(u = 0.9) {
+    moonPos = Array.from(Array(12), (e, i) => [map(i, 0, 11, -1, 1) * u * 0.95, 0]);
+}
+
+moonSize = 1;
+moonSizeR = 1;
+moonVox = Array(12).fill(0);
+
+if (false) {
+
+moonAngles = Array(12).fill(0)
+moonInc = Array.from(Array(12), (e, i) => (i + 1) * 0 + inc * 1);
+moonInc = moonInc.map((x,i) => inc * 0.5 + i * 0);
+moonInc = moonInc.map((x,i) => x + i * 0.0005);
+moonAngles = Array(12).fill(0); moonInc = Array(12).fill(inc);
+// The best combo
+moonInc = moonInc.map((x,i) => inc);
+moonInc = moonInc.map((x,i) => x - (i + 1) * 0.001);
+
+moonPos = [
+    [-1.2, 0], [-1.2, 0], [0, 0.5], [0, 0.5], [1.2, 0], [1.2, 0],
+    [0, -0.5], [0, -0.5], [-0.5, 0], [-0.5, 0], [0.5, 0], [0.5, 0]
+];
+
+moonPos = [
+    [-0.5, 0], [-0.5, 0], [0, 0.25], [0, 0.25], [0.5, 0], [0.5, 0],
+    [0, -0.25], [0, -0.25], [-0.25, 0], [-0.25, 0], [0.25, 0], [0.25, 0]
+];
+
+moonPos = [
+    [-1, 0.5], [-1, 0.5], [-0.5, 0], [-0.5, 0], [-1, -0.5], [-1, -0.5], 
+    [1, 0.5], [1, 0.5], [1, -0.5], [1, -0.5], [0.5, 0], [0.5, 0]
+];
+moonVox = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1];
+
+moonInc = moonInc.map((e,i) => i>5 ? 0 : 0.125 * (i + 1));
+moonInc = moonInc.map((e,i) => i<6 ? 0 : 0.125 * (i + 1));
+    
+    
+moonInc = moonInc.map((e,i) => inc * 2 - (i * 1e-4));
+moonInc = moonInc.map((e,i) => inc * 2);
+
+vt.text = "moonAngles = Array(12).fill(0)";
+moonInc = moonInc.map((e,i) => i>5 ? 0 : 0.5 * (i + 1));
+moonInc = moonInc.map((e,i) => i<6 ? 0 : 0.5 * (i + 1));
+moonInc = rotate(moonInc, 2); moonPos = rotate(moonPos, 2);
+
+rotate = function(arr, n = 1) {
+  // if (reverse) arr.unshift(arr.pop());
+for (let i = 0; i < n; i++) {
+  arr.push(arr.shift());
+}
+  return arr;
+}
+
+}
+
+// moonInc = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; 
+drawAlligatorQuiet = function(selectedProgram) {
+    vertices = [];
+    let t3 = drawCount * 0.5e7;
+    let al = map(openSimplex.noise2D(t3, t3 + 10000), -1, 1, 0.001, 1.25);
+    num = 0;
+    inc = (Math.PI * 2) / 250;
+    let moonPhases = [];
+    for (let aa = 0; aa < 12; aa++) {
+        let p = moonPosR[aa];
+        // if(aa==0){console.log("deb " + moonPosR[aa][0]);}
+        let a = moonAngles[aa];
+        let ax = Math.cos(-a);
+        let ay = Math.sin(-a);
+        let ii = 0;
+        for (let i = Math.PI * 0.5 ; i < Math.PI * 2.5; i += inc) {
+            let x = Math.cos(i) * 0.5 * moonSizeR;
+            let y = Math.sin(i) * 0.5 * moonSizeR;
+            let c = Math.cos(Math.PI * 0.65) * 0.8 * moonSizeR;
+            x = (x * 2 > c) ? x : -x + c;
+            let rotatedX = x * ay + y * ax;
+            let rotatedY = y * ay - x * ax;
+            x = rotatedX * (9 / 16) + p[0] * (9 / 16);
+            y = rotatedY + p[1];
+            vertices.push(x, y, 15, al);
+            num++;
+            if (ii == 15 || ii == 110) {
+                x = rotatedX * (9 / 16) * 1.15 + p[0] * (9 / 16);
+                y = rotatedY * 1.15 + p[1];
+                moonPhases.push([x, y, aa]);
+            }
+            ii++;
+        }
+    }
+    for (let i = 0; i < moonPhases.length; i++) {
+        let m = moonPhases[i];
+        let size = 50;
+        let found = false;
+        for (let j = 0; j < moonPhases.length; j++) {
+            let n = moonPhases[j];
+            if (i !== j) {
+                let d = dist(m[0], m[1], n[0], n[1]);
+                if (d < 0.01 * speedR && !found) {
+                    found = true;
+                    size *= 4;
+                    var msgToSend = {
+                    address: "/moon",
+                    args: [{
+                        type: "f",
+                        value: moonVox[m[2]]
+                    }]
+                    };
+                    socket.emit('msgToSCD', msgToSend);
+                }
+            }
+        }
+        vertices.push(m[0], m[1], size, al);
+        num++;
+    }
+    for (let i = 0; i < 12; i++) {
+        moonAngles[i] += moonInc[i] * speedR % (Math.PI * 2);
+    }
+    if (speedR !== speed) {
+        speedR = lerp(speedR, speed, 0.1);
+        if (Math.abs(speed - speedR) < 0.0001) {
+            speedR = speed;
+        }
+    }
+    if (moonSizeR !== moonSize) {
+        moonSizeR = lerp(moonSizeR, moonSize, 0.1);
+        if (Math.abs(moonSize - moonSizeR) < 0.0001) {
+            moonSizeR = moonSize;
+        }
+    }
+    for (let i = 0; i < 12; i++) {
+    // {
+        // let i = 0;
+        if (moonPosR[i][0] !== moonPos[i][0]) {
+            // console.log("faaa");
+            // console.log(moonPosR[i][0], moonPos[i][0]);
+            // if(i==0){console.log(moonPosR[0][0]);}
+            moonPosR[i][0] = lerp(moonPosR[i][0], moonPos[i][0], 0.05);
+            // if(i==0){console.log("aaa " + moonPosR[0][0]);}
+            if (Math.abs(moonPos[i][0] - moonPosR[i][0]) < 0.0001) {
+                moonPosR[i][0] = moonPos[i][0];
+            }
+        }
+        if (moonPosR[i][1] !== moonPos[i][1]) {
+            moonPosR[i][1] = lerp(moonPosR[i][1], moonPos[i][1], 0.05);
+            if (Math.abs(moonPos[i][1] - moonPosR[i][1]) < 0.0001) {
+                moonPosR[i][1] = moonPos[i][1];
+            }
+        }
+    }
+    // console.log("after " + moonPosR[0][0]);
+    // drawScratches();
+    for (let i = 0; i < vertices.length; i += 4) {
+        vertices[i] += nx;
+        vertices[i + 1] += ny;
+    }
+    // Create an empty buffer object to store the vertex buffer
+    // var vertex_buffer = gl.createBuffer();
+    //Bind appropriate array buffer to it
+    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    // Pass the vertex data to the buffer
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    /*======== Associating shaders to buffer objects ========*/
+    // Bind vertex buffer object
+    gl.bindBuffer(gl.ARRAY_BUFFER, dotsVBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    // Get the attribute location
+    var coord = gl.getAttribLocation(selectedProgram, "coordinates");
+    // Point an attribute to the currently bound VBO
+    gl.vertexAttribPointer(coord, 4, gl.FLOAT, false, 0, 0);
+    // Enable the attribute
+    gl.enableVertexAttribArray(coord);
+        var scalar = gl.getUniformLocation(selectedProgram, "resolution");
+    // Point an attribute to the currently bound VBO
+    // gl.vertexAttribPointer(coord, 1, gl.FLOAT, false, 0, 0);
+    gl.uniform1f(scalar, resolutionScalar);
+    /*============= Drawing the primitive ===============*/
+    // // Clear the canvas
+    // gl.clearColor(0.5, 0.5, 0.5, 0.9);
+    // Clear the color buffer bit
+    // gl.clear(gl.COLOR_BUFFER_BIT);
+    // Draw the triangle
+    gl.drawArrays(gl.POINTS, 0, num);
+}
+
 drawAlligatorQuietVert = function(selectedProgram) {
     // vertices = [];
     // // let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
