@@ -1532,17 +1532,33 @@ moonPos = [
 ];
 moonVox = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1];
 
+antiphon = function() {
+    moonPos = [
+        [-1, 0.5], [-1, 0.5], [-0.5, 0], [-0.5, 0], [-1, -0.5], [-1, -0.5], 
+        [1, 0.5], [1, 0.5], [1, -0.5], [1, -0.5], [0.5, 0], [0.5, 0]
+    ];
+    moonVox = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1];
+}
+
 moonInc = moonInc.map((e,i) => i>5 ? 0 : 0.125 * (i + 1));
 moonInc = moonInc.map((e,i) => i<6 ? 0 : 0.125 * (i + 1));
     
     
-moonInc = moonInc.map((e,i) => inc * 2 - (i * 1e-4));
+moonInc = moonInc.map((e,i) => inc * 2 - (i * 1e-3));
 moonInc = moonInc.map((e,i) => inc * 2);
+vt.add("moonInc = moonInc.map((e,i) => inc * 2 - (i * 1e-3));");
+vt.add("moonInc = moonInc.map((e,i) => inc * 2);");
+
+vt.add("moonInc = moonInc.map((e,i) => i>5 ? 0 : 0.5 * (i + 1))");
+vt.add("moonInc = moonInc.map((e,i) => i<6 ? 0 : 0.5 * (i + 1))");
 
 vt.text = "moonAngles = Array(12).fill(0)";
 moonInc = moonInc.map((e,i) => i>5 ? 0 : 0.5 * (i + 1));
 moonInc = moonInc.map((e,i) => i<6 ? 0 : 0.5 * (i + 1));
 moonInc = rotate(moonInc, 2); moonPos = rotate(moonPos, 2);
+
+vt.add("moonInc = rotate(moonInc, 2); moonPos = rotate(moonPos, 2);");
+
 
 rotate = function(arr, n = 1) {
   // if (reverse) arr.unshift(arr.pop());
@@ -1553,6 +1569,23 @@ for (let i = 0; i < n; i++) {
 }
 
 }
+
+
+
+Array.prototype.rotate = (function() {
+    // save references to array functions to make lookup faster
+    var push = Array.prototype.push,
+        splice = Array.prototype.splice;
+    return function(count) {
+        var len = this.length >>> 0, // convert to uint
+            count = count >> 0; // convert to int
+        // convert count to value in range [0, len)
+        count = ((count % len) + len) % len;
+        // use splice.call() instead of this.splice() to make function generic
+        push.apply(this, splice.call(this, 0, count));
+        return this;
+    };
+})();
 
 // moonInc = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; 
 drawAlligatorQuiet = function(selectedProgram) {
@@ -1596,7 +1629,7 @@ drawAlligatorQuiet = function(selectedProgram) {
             let n = moonPhases[j];
             if (i !== j) {
                 let d = dist(m[0], m[1], n[0], n[1]);
-                if (d < 0.01 * speedR && !found) {
+                if (d < 0.01 * speedR && !found && (m[0] !== n[0] && m[1] !== n[1])) {
                     found = true;
                     size *= 4;
                     var msgToSend = {

@@ -1791,6 +1791,14 @@ VirtualTerminal.prototype.update = function(e) {
     this.makeTerminalString();
 };
 
+VirtualTerminal.prototype.add = function(t) {
+    this.commands.push(t);
+    this.commandID = this.commands.length - 1;
+    this.text = t;
+    this.makeTerminalString();
+};
+
+
 VirtualTerminal.prototype.clear = function(s) {
     this.caretPosition = 0;
     this.text = "";
