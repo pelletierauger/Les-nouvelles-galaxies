@@ -1779,7 +1779,7 @@ drawAlligatorQuietVert = function(selectedProgram) {
     // Point an attribute to the currently bound VBO
     // gl.vertexAttribPointer(coord, 1, gl.FLOAT, false, 0, 0);
     gl.uniform1f(time, drawCount);    
-    var scalar = gl.getUniformLocation(selectedProgram, "resolutionScalar");
+    var scalar = gl.getUniformLocation(selectedProgram, "resolution");
     // Point an attribute to the currently bound VBO
     // gl.vertexAttribPointer(coord, 1, gl.FLOAT, false, 0, 0);
     gl.uniform1f(scalar, resolutionScalar);
