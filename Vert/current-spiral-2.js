@@ -1593,7 +1593,9 @@ drawAlligatorQuiet = function(selectedProgram) {
     let t3 = drawCount * 0.5e7;
     let al = map(openSimplex.noise2D(t3, t3 + 10000), -1, 1, 0.001, 1.25);
     num = 0;
-    inc = (Math.PI * 2) / 250;
+    // inc = (Math.PI * 2) / (350 * moonSizeR);
+    inc = (Math.PI * 2) / Math.max(250, 350 * moonSizeR);
+    // inc = (Math.PI * 2) / (250);
     let moonPhases = [];
     for (let aa = 0; aa < 12; aa++) {
         let p = moonPosR[aa];
@@ -1614,8 +1616,21 @@ drawAlligatorQuiet = function(selectedProgram) {
             vertices.push(x, y, 15, al);
             num++;
             if (ii == 15 || ii == 110) {
-                x = rotatedX * (9 / 16) * 1.15 + p[0] * (9 / 16);
-                y = rotatedY * 1.15 + p[1];
+                // x = rotatedX * (9 / 16) * 1.15 + p[0] * (9 / 16);
+                // y = rotatedY * 1.15 + p[1];
+                x = Math.cos(Math.PI * 0.65 * 0.95) * 0.55 * moonSizeR;
+                y = Math.sin(Math.PI * 0.65 * 0.95) * 0.55 * moonSizeR;
+                let rotatedX = x * ay + y * ax;
+                let rotatedY = y * ay - x * ax;
+                x = rotatedX * (9 / 16) * 1 + p[0] * (9 / 16);
+                y = rotatedY * 1 + p[1];
+                moonPhases.push([x, y, aa]);
+                x = Math.cos(Math.PI * 0.65 * 0.95) * 0.55 * moonSizeR;
+                y = Math.sin(Math.PI * -0.65 * 0.95) * 0.55 * moonSizeR;
+                rotatedX = x * ay + y * ax;
+                rotatedY = y * ay - x * ax;
+                x = rotatedX * (9 / 16) * 1 + p[0] * (9 / 16);
+                y = rotatedY * 1 + p[1];
                 moonPhases.push([x, y, aa]);
             }
             ii++;
@@ -1682,7 +1697,7 @@ drawAlligatorQuiet = function(selectedProgram) {
         }
     }
     // console.log("after " + moonPosR[0][0]);
-    // drawScratches();
+    drawScratches();
     for (let i = 0; i < vertices.length; i += 4) {
         vertices[i] += nx;
         vertices[i + 1] += ny;
