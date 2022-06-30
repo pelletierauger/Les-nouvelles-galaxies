@@ -1,5 +1,7 @@
 
 Safety(s).disable
+~nT = TempoClock.new(1.39).permanent_(true);
+
 (
 var f = 220 * 9.midiratio;
 var ff = 54 + -12;

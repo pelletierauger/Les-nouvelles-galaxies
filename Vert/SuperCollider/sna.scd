@@ -79,7 +79,7 @@ SynthDef(\samplerAbsLPF, {
             bits: 6,
             ws: 1
         ) * env;
-        sig * 0.125;
+        sig * 0.25;
     }.play.register;
 });
 )
@@ -418,9 +418,9 @@ var ff = 54 + -12;
     ~billes0 = {
         | trigGate = 1 |
         var trig = Impulse.ar(~nT.tempo * 4) * trigGate;
-        var ddd = Demand.ar(trig, 0, Dseq([1, 9, 6, 4, 2].stutter(16) * -1, inf));
-        // var ddd = Demand.ar(trig, 0, Dseq([1, 2].stutter(16) * -1, inf));
-        var sig = MiPlaits.ar(31 + 28 + -1 + 4 + 0 - ddd + [0, 0.1],
+        // var ddd = Demand.ar(trig, 0, Dseq([1, 9, 6, 4, 2].stutter(16) * -1, inf));
+        var ddd = Demand.ar(trig, 0, Dseq([1, 2, 1, -1].stutter(16) * -1, inf));
+        var sig = MiPlaits.ar(31 + 28 + -1 + 4 + 24 - ddd + [0, 0.1],
             engine: 11,
             harm: 0.25,
             timbre: 0.125,
@@ -444,7 +444,7 @@ var ff = 54 + -12;
             decay: 1,
             lpg_colour: 1,
             mul: 1.25);
-        HPF.ar(sig, 5000) * 0.2;
+        HPF.ar(sig, 5000) * 0.8;
     }.play.register;
 });
 )
