@@ -796,7 +796,7 @@ void main() {
     // gl_FragColor.r += 0.05;
     // gl_FragColor.rgb = vec3(1.0);
     // gl_FragColor.rgb *= 1.25;
-    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.1092 * (16./9.), 0.104) * 2.1 * 4.1, 0.01, 0.5) * 1.6;    
+    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.1092 * (16./9.), 0.104) * 2.1 * 4.1, 0.01, 0.5) * 1.6 * 1.;    
     // gl_FragColor.rgb += roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.11, 0.11), 0.001, 0.25);
         // gl_FragColor = gl_FragColor.grra;
     gl_FragColor.rgb -= 0.2;
@@ -1216,10 +1216,10 @@ void main() {
         gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 1.);
     vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0).brg.gbr);
     vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
-    gl_FragColor.rgb = blend.rbg * vec3(1.1, 1.25, 0.5);
-    bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
+    // gl_FragColor.rgb = blend.rbg * vec3(1.1, 1.25, 0.5);
+    // bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
         // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 1.);
-    // gl_FragColor.rgb = LevelsControlInput(gl_FragColor.rgb, 0., vec3(1.), 0.75);
+    gl_FragColor.rgb = LevelsControlInput(gl_FragColor.rgb, 0., vec3(1.), 0.75);
     // gl_FragColor.rgb = max(vec3(0.1), gl_FragColor.rgb);
     // gl_FragColor.rgb += roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.1025) * 2.1, 0.001, 0.25) * 0.12;
     gl_FragColor.rgb += roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.1092 * (16./9.), 0.104) * 2.1 * 4.1, 0.01, 0.5) * 0.12;
@@ -5592,7 +5592,7 @@ newFlickeringVert.vertText = newFlickeringVert.vertText.replace(/[^\x00-\x7F]/g,
 newFlickeringVert.fragText = newFlickeringVert.fragText.replace(/[^\x00-\x7F]/g, "");
 newFlickeringVert.init();
 
-
+// wool
 newFlickeringVert.vertText = `
     // beginGLSL
     attribute float vertexID;
@@ -5623,8 +5623,8 @@ newFlickeringVert.vertText = `
         for (float i = 0.0; i < 25.0; i++) {
             float fi = i * 1e-1;
             float ts = 0.002;
-            float xd = cos(distance(pos, vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 30.75) * ts;
-            float yd = sin(distance(pos, vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 30.75) * ts;
+            float xd = cos(distance(pos * 1., vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 30.75) * ts;
+            float yd = sin(distance(pos * 1., vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 30.75) * ts;
             yd += sin(pos.y * 1e4) * 0.0001;
             pos.x += xd;
             pos.y += yd;
@@ -5654,7 +5654,7 @@ newFlickeringVert.vertText = `
         cols = vec3(sin(turb * 800.) * pow(pos.x, -2.5), cos(turb * 800.), cos(turb * 800.));
        float vig = (roundedRectangle(pos * 1.67, vec2(0.0, 0.0), vec2(0.9, 0.88) * 1.2, 0.05, 0.5) + 0.0);
         cols = mix(cols, cols * floor(vig), 1.);
-            gl_PointSize *= floor(vig);
+            gl_PointSize *= floor(vig) * 2.;
     }
     // endGLSL
 `;
