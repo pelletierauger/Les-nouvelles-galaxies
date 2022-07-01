@@ -60,7 +60,7 @@ function setup() {
     cnvs = document.createElement('canvas');
 
     cnvs.id = "defaultCanvas0";
-    cnvs.width = 2560 * resolutionScalar;
+    cnvs.width = 1000 * resolutionScalar;
     cnvs.height = 1440 * resolutionScalar;
     var body = document.getElementsByTagName("body")[0];
     body.appendChild(cnvs);
@@ -486,7 +486,7 @@ document.onkeydown = keyDown;
 
 function setResolutionScalar(sc) {
     resolutionScalar = sc;
-    cnvs.width = 2560 * resolutionScalar;
+    cnvs.width = 1000 * resolutionScalar;
     cnvs.height = 1440 * resolutionScalar;
     texture = createTexture();
     framebuf = createFrameBuffer(texture);

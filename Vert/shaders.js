@@ -693,7 +693,7 @@ float fbm(vec2 p) {
     return  0.5 + 0.5 * h;
 }
 vec3 smokeEffect(vec2 uv) {
-    float time = 2.0;
+    float time = 7.0;
     vec3 col = vec3(0.0, 0.0, 0.0);
     // time scale
     float v = 0.0002;
@@ -796,7 +796,7 @@ void main() {
     // gl_FragColor.r += 0.05;
     // gl_FragColor.rgb = vec3(1.0);
     // gl_FragColor.rgb *= 1.25;
-    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.1092 * (16./9.), 0.104) * 2.1 * 4.1, 0.01, 0.5) * 1.6 * 1.;    
+    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0. * (16./ 9.) + -1.09, 0.), vec2(0.075 * (16./9.), 0.205) * 1.1 * 4.1, 0.01, 0.5) * 1.6 * 2.;    
     // gl_FragColor.rgb += roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.11, 0.11), 0.001, 0.25);
         // gl_FragColor = gl_FragColor.grra;
     gl_FragColor.rgb -= 0.2;
@@ -1222,7 +1222,7 @@ void main() {
     gl_FragColor.rgb = LevelsControlInput(gl_FragColor.rgb, 0., vec3(1.), 0.75);
     // gl_FragColor.rgb = max(vec3(0.1), gl_FragColor.rgb);
     // gl_FragColor.rgb += roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.1025) * 2.1, 0.001, 0.25) * 0.12;
-    gl_FragColor.rgb += roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.1092 * (16./9.), 0.104) * 2.1 * 4.1, 0.01, 0.5) * 0.12;
+    gl_FragColor.rgb += roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.1092 * (16./9.), 0.104) * 3.1 * 4.1, 0.01, 0.5) * 0.12;
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.rgb *= 1.05;
@@ -5623,8 +5623,8 @@ newFlickeringVert.vertText = `
         for (float i = 0.0; i < 25.0; i++) {
             float fi = i * 1e-1;
             float ts = 0.002;
-            float xd = cos(distance(pos * 1., vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 30.75) * ts;
-            float yd = sin(distance(pos * 1., vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 30.75) * ts;
+            float xd = cos(distance(0.5 * pos + vec2(-1.0, 2.), vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 30.75) * ts;
+            float yd = sin(distance(0.5 * pos * 1., vec2(cos(fi + t) * fi, sin(fi + t) * fi)) * 30.75) * ts;
             yd += sin(pos.y * 1e4) * 0.0001;
             pos.x += xd;
             pos.y += yd;
@@ -5693,6 +5693,7 @@ newFlickeringVert.fragText = `
         gl_FragColor.rgb = gl_FragColor.rbr;
         gl_FragColor.rgb = cols;
         gl_FragColor.b *= 0.75;
+        gl_FragColor.a *= 0.25;
          
     }
     // endGLSL
