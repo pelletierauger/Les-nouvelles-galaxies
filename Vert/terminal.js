@@ -7,7 +7,7 @@ drawTerminal = function(selectedProgram) {
         // vertices.push(x * (9 / 16), y, 40.0, 1);
     }
     num = 0;
-    let sc = 0.3;
+    let sc = 0.27;
     let sx0 = vt.selectionBounds[0];
     let sx1 = vt.selectionBounds[1];
     let colors = [];
@@ -20,8 +20,12 @@ drawTerminal = function(selectedProgram) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 45.0 * sc, 1);
-               vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.00) + 0.2 - 0.588, -y * 0.04 * sc - 0.39 + 0.85 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11 - 1.32 - 0.018, 50.0 * sc * 0.9, 1);
+   for (let yy = 0; yy < 18; yy++) {
+       let yyy = y + (yy * 9) - 144;
+                vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.00) + 0.2 - 0.6, -yyy * 0.04 * sc - 0.34 + 0.85 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11 - 1.32 - 0.014, 50.0 * sc * 0.9, 1);
                 num++;
+                colors.push(0, 0, 0);
+   }
             }
         }
     }
@@ -30,7 +34,7 @@ drawTerminal = function(selectedProgram) {
         let r = Math.random();
         let g = Math.random();
         let b = Math.random();
-        colors.push(0, 0, 0);
+        // colors.push(0, 0, 0);
     }
         for (let x = 0; x <= vt.stringArray[0].length; x++) {
         let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
@@ -40,9 +44,12 @@ drawTerminal = function(selectedProgram) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 40.0 * sc, 1);
-               vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.00) + 0.2 - 0.588, -y * 0.04 * sc - 0.39 + 0.85 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11 - 1.32, 50.0 * sc * 0.9, 1);
+   for (let yy = 0; yy < 18; yy++) {
+       let yyy = y + (yy * 9) - 144;
+                vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.00) + 0.2 - 0.6, -yyy * 0.04 * sc - 0.34 + 0.85 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11 - 1.32, 50.0 * sc * 0.9, 1);
                 num++;
                 colors.push(0.65, 0.65, 0.65);
+   }
             }
         }
     }
@@ -50,9 +57,9 @@ drawTerminal = function(selectedProgram) {
         for (let y = 0; y < 9; y++) {
             if (vt2.stringArray[y][x] == "1") {
                 let scz = sc * 1.5;
-               vertices.push(x * (9 / 16) * 0.02 * scz - 0.41 + nx + (-y * 0) + 0.161 - 0.6, -y * 0.04 * scz - 0.19 + 0.9 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) - 0.02 + 0.05, 50.0 * scz * 0.7, 1);
-            num++;
-                colors.push(0, 0, 0);
+               // vertices.push(x * (9 / 16) * 0.02 * scz - 0.41 + nx + (-y * 0) + 0.161 - 0.6, -y * 0.04 * scz - 0.19 + 0.9 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) - 0.02 + 0.05, 50.0 * scz * 0.7, 1);
+            // num++;
+                // colors.push(0, 0, 0);
             }
         }
     }
@@ -60,27 +67,27 @@ drawTerminal = function(selectedProgram) {
         for (let y = 0; y < 9; y++) {
             if (vt2.stringArray[y][x] == "1") {
                 let scz = sc * 1.5;
-               vertices.push(x * (9 / 16) * 0.02 * scz - 0.41 + nx + (-y * 0) + 0.161 - 0.6, -y * 0.04 * scz - 0.19 + 0.9 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.05, 50.0 * scz * 0.7, 1);
-            num++;
-                colors.push(0.65, 0.65, 0.65);
+               // vertices.push(x * (9 / 16) * 0.02 * scz - 0.41 + nx + (-y * 0) + 0.161 - 0.6, -y * 0.04 * scz - 0.19 + 0.9 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.05, 50.0 * scz * 0.7, 1);
+            // num++;
+                // colors.push(0.65, 0.65, 0.65);
             }
         }
     }
     for (let x = 8; x <= vt3.stringArray[0].length; x++) {
         for (let y = 0; y < 9; y++) {
             if (vt3.stringArray[y][x] == "1") {
-               vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.00) + 0.26 - 0.588, -y * 0.04 * sc - 0.39 + 0.85 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11 - 0.02, 50.0 * sc * 0.9, 1);
-            num++;
-                colors.push(0, 0, 0);
+               // vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.00) + 0.26 - 0.588, -y * 0.04 * sc - 0.39 + 0.85 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11 - 0.02, 50.0 * sc * 0.9, 1);
+            // num++;
+                // colors.push(0, 0, 0);
             }
         }
     }
     for (let x = 8; x <= vt3.stringArray[0].length; x++) {
         for (let y = 0; y < 9; y++) {
             if (vt3.stringArray[y][x] == "1") {
-               vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.00) + 0.26 - 0.588, -y * 0.04 * sc - 0.39 + 0.85 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11, 50.0 * sc * 0.9, 1);
-            num++;
-                colors.push(0.65, 0.65, 0.65);
+               // vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.00) + 0.26 - 0.588, -y * 0.04 * sc - 0.39 + 0.85 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11, 50.0 * sc * 0.9, 1);
+            // num++;
+                // colors.push(0.65, 0.65, 0.65);
             }
         }
     }
