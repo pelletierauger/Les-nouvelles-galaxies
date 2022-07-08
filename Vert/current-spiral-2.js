@@ -1702,6 +1702,10 @@ drawAlligatorQuiet = function(selectedProgram) {
         vertices[i] += nx;
         vertices[i + 1] += ny;
     }
+    // vertices = [];
+    // num = 0;
+    // vertices.push(mx, my, 100, 1);
+    // num++;
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
     //Bind appropriate array buffer to it

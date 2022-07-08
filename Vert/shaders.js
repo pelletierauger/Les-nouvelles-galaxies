@@ -292,9 +292,9 @@ newFlickering.vertText = `
         return smoothstep(0.66, 0.33, d / thickness * 5.0);
     }
 void main(void) {
-        gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.0);
-    gl_Position.xy *= 0.75;
-        float n = noise(gl_Position.xy * 1.1);
+        gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.);
+    // gl_Position.xy *= 0.75;
+        float n = noise(gl_Position.xy);
         // gl_Position.y += tan(n * 100. * 1e2 + alph) * 0.0009 * 2.;
         // gl_Position.x += tan(alph * 1e4) * 10.5;
     // gl_Position.xy += vec2(cos(n * 1.), sin(n * 1.)) * 0.1;
@@ -343,6 +343,7 @@ newFlickering.fragText = `
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.2 - dist_squared, 0.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 4.1)) * 0.045 + alpha)) * 1.25;
+        // gl_FragColor = vec4(1.0);
         // gl_FragColor.b = 0.5;
         
         
