@@ -60,6 +60,24 @@ drawTerminal = function(selectedProgram) {
             }
         }
     }
+    // for (let y = 0; y < face.length; y++) {
+    //     for (let x = 0; x < face[y].length; x++) {
+    //         let c = face[y][x];
+    //         let g = getGlyph(c);
+    //         for (let yy = 0; yy < g.length; yy++) {
+    //             for (let xx = 0; xx < g[yy].length; xx++) {
+    //                 if (g[yy][xx] == "1" || (x == fmouse[0] && y == fmouse[1])) {
+    //                     let tx = 0, ty = 0;
+    //                     tx = openSimplex.noise3D(x + (xx * 1e-1), y + (yy * 1e-1), drawCount * 1e-1) * 0.002;
+    //                     ty = openSimplex.noise3D(x + (xx * 1e-1), y + (yy * 1e-1), drawCount * 1e-1 + 1e4) * 0.002;
+    //                     vertices.push((x * 7 + xx) * 0.0054 * (9/16) - 1 + 0.081 + tx, (y * 9 + yy) * -0.0108 + 0.855 + ty - 0.015, 12, 1);
+    //                     num++;
+    //                     colors.push(0, 0, 0);   
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
     for (let y = 0; y < face.length; y++) {
         for (let x = 0; x < face[y].length; x++) {
             let c = face[y][x];
@@ -68,9 +86,9 @@ drawTerminal = function(selectedProgram) {
                 for (let xx = 0; xx < g[yy].length; xx++) {
                     if (g[yy][xx] == "1" || (x == fmouse[0] && y == fmouse[1])) {
                         let tx = 0, ty = 0;
-                        tx = openSimplex.noise3D(x + (xx * 1e-1), y + (yy * 1e-1), drawCount * 1e-1) * 0.002;
-                        ty = openSimplex.noise3D(x + (xx * 1e-1), y + (yy * 1e-1), drawCount * 1e-1 + 1e4) * 0.002;
-                        vertices.push((x * 7 + xx) * 0.0054 * (9/16) - 1 + 0.081 + tx, (y * 9 + yy) * -0.0108 + 0.855 + ty, 12, 1);
+                        // tx = openSimplex.noise3D(x + (xx * 1e-1), y + (yy * 1e-1), drawCount * 1e-1) * 0.002;
+                        // ty = openSimplex.noise3D(x + (xx * 1e-1), y + (yy * 1e-1), drawCount * 1e-1 + 1e4) * 0.002;
+                        vertices.push((x * 7 + xx) * 0.0054 * (9/16) - 1 + 0.081 + tx + nx, (y * 9 + yy) * -0.0108 + 0.855 + ty + ny, 12, 1);
                         num++;
                         colors.push(0.65, 0.65, 0.65);   
                     }
