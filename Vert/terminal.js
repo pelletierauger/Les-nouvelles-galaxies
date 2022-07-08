@@ -47,16 +47,17 @@ drawTerminal = function(selectedProgram) {
         let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
         for (let y = 0; y < 9; y++) {
             let caret = (vt.caretPosition - 0) * 7 + 7;
-            if (vt.stringArray[y][x] == sel || (x == caret && drawCount / 20 % 1 < 0.5) || (x / 7 >= fmouse[0] && x / 7 <= fmouse[0] + 1)) {
+            // if (vt.stringArray[y][x] == sel || (x == caret && drawCount / 20 % 1 < 0.5) || (x / 7 >= fmouse[0] && x / 7 <= fmouse[0] + 1)) {           
+                if (vt.stringArray[y][x] == sel || (x == caret && drawCount / 20 % 1 < 0.5)) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 40.0 * sc, 1);
-   for (let yy = 0; yy < 18; yy++) {
-       let yyy = y + (yy * 9) - 144;
-                // vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx * 0 + (-y * 0.00) + 0.2 - 0.61, -yyy * 0.04 * sc - 0.34 + 0.85 + ny * 0 + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11 - 1.32, 50.0 * sc * 0.9, 1);
-                // num++;
-                // colors.push(0.65, 0.65, 0.65);
-   }
+   // for (let yy = 0; yy < 18; yy++) {
+       // let yyy = y + (yy * 9) - 144;
+                // vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx * 1 + (-y * 0.00) + 0.2 - 0.6, -y * 0.04 * sc - 0.34 + 0.85 + ny * 1 + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11 - 1.42, 50.0 * sc * 0.9, 1);
+                        vertices.push((x) * 0.0054 * (9/16) - 1 + 0.081 + nx, (y) * -0.0108 + 0.855 + ny - 1.65, 12, 1);                num++;
+                colors.push(0.65, 0.65, 0.65);
+   // }
             }
         }
     }
@@ -78,7 +79,7 @@ drawTerminal = function(selectedProgram) {
     //         }
     //     }
     // }
-    for (let y = 0; y < face.length; y++) {
+    for (let y = 0; y < face.length - 1; y++) {
         for (let x = 0; x < face[y].length; x++) {
             let c = face[y][x];
             let g = getGlyph(c);
