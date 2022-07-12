@@ -3,7 +3,7 @@ let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
 let fileName = "/Users/guillaumepelletier/Desktop/alligator";
 let JSONs = [];
-let maxFrames = 15000;
+let maxFrames = Infinity;
 let gl;
 let time;
 let positive = true;
@@ -394,7 +394,7 @@ draw = function() {
 // 
     drawCount += drawIncrement;
     // if (exporting && frameCount < maxFrames && drawCount > 1113) {
-    if (exporting && frameCount < maxFrames && drawCount > 1449) {
+    if (exporting && frameCount < maxFrames) {
         frameExport();
     }
 }
