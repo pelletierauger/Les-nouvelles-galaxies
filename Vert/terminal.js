@@ -90,7 +90,7 @@ drawTerminal = function(selectedProgram) {
                         let sc = 0.75;
                         tx = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1) * 0.02;
                         ty = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1 + 1e4) * 0.02;
-                        vertices.push(((x * 7 + xx) * 0.0054 * (9/16) - 1 + 0.081 + tx + nx) * sc, ((y * 9 + yy) * -0.0108 + 0.855 + ty + ny) * sc, 10, 1);
+                        vertices.push(((x * 7 + xx) * 0.0054 * (9/16) - 1 + 0.081 + tx + nx) * sc, ((y * 9 + yy) * -0.0108 + 0.855 + ty + ny) * sc, 11 + tx * 500, 1);
                         num++;
                         colors.push(0.65, 0.65, 0.65);   
                     }
