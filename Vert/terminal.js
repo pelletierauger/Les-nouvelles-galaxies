@@ -1,10 +1,10 @@
 drawTerminal = function(selectedProgram) {
-    let canH = cnvs.height / resolutionScalar / 2;
-    let hh = (window.innerHeight - canH) * 0.5;
-    let mx = map(mouse.x, 0, document.body.clientWidth, -1, 1);
-    let my = map(mouse.y, hh, canH + hh, 1, -1);
-    fmouse[0] = constrain(Math.floor(map(mouse.x, 51, 1235, 0, 87)), 0, 86);
-    fmouse[1] = constrain(Math.floor(map(mouse.y, 90, 715, 0, 18)), 0, 18);
+    // let canH = cnvs.height / resolutionScalar / 2;
+    // let hh = (window.innerHeight - canH) * 0.5;
+    // let mx = map(mouse.x, 0, document.body.clientWidth, -1, 1);
+    // let my = map(mouse.y, hh, canH + hh, 1, -1);
+    fmouse[0] = constrain(Math.floor(map(mouse.x, 50, 1235, 0, 87)), 0, 86);
+    fmouse[1] = constrain(Math.floor(map(mouse.y, 96, 740, 0, 19)), 0, 18);
     
     vertices = [];
     let num = 150;
@@ -82,15 +82,15 @@ drawTerminal = function(selectedProgram) {
     for (let y = 0; y < face.length - 1; y++) {
         for (let x = 0; x < face[y].length; x++) {
             let c = face[y][x];
-            let g = getGlyph(c);
+            let g = (x == fmouse[0] && y == fmouse[1]) ? getGlyph(pchar) : getGlyph(c);
             for (let yy = 0; yy < g.length; yy++) {
                 for (let xx = 0; xx < g[yy].length; xx++) {
-                    if (g[yy][xx] == "1" || (x == fmouse[0] && y == fmouse[1])) {
+                    if (g[yy][xx] == "1") {
                         let tx = 0, ty = 0;
-                        let sc = 0.75;
-                        tx = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1) * 0.02;
-                        ty = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1 + 1e4) * 0.02;
-                        vertices.push(((x * 7 + xx) * 0.0054 * (9/16) - 1 + 0.081 + tx + nx) * sc, ((y * 9 + yy) * -0.0108 + 0.855 + ty + ny) * sc, 11 + tx * 500, 1);
+                        let sc = 1;
+                        tx = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1) * 0.0;
+                        ty = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1 + 1e4) * 0.0;
+                        vertices.push(((x * 7 + xx) * 0.0054 * (9/16) - 1 + 0.081 + tx + nx * 0) * sc, ((y * 9 + yy) * -0.0108 + 0.855 + ty + ny * 0) * sc, 11 + tx * 500, 1);
                         num++;
                         colors.push(0.65, 0.65, 0.65);   
                     }
