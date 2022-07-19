@@ -235,6 +235,8 @@ roundedSquare.vertText = `
     varying vec3 cols;
     void main(void) {
         gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.0);
+        // CRT curve
+        gl_Position.xy *= (1.0 - distance(gl_Position.xy, vec2(0,0)) * 0.1) * 1.05;
         center = vec2(gl_Position.x, gl_Position.y);
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
