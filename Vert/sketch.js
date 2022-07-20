@@ -61,7 +61,7 @@ function setup() {
 
     cnvs.id = "defaultCanvas0";
     cnvs.width = 1000 * resolutionScalar;
-    cnvs.height = 1440 * resolutionScalar;
+    cnvs.height = 1500 * resolutionScalar;
     var body = document.getElementsByTagName("body")[0];
     body.appendChild(cnvs);
     canvasDOM = document.getElementById('defaultCanvas0');
@@ -392,7 +392,7 @@ draw = function() {
 // 
     drawCount += drawIncrement;
     // if (exporting && frameCount < maxFrames && drawCount > 1113) {
-    if (exporting && frameCount < maxFrames && drawCount > 1449) {
+    if (exporting && frameCount < maxFrames) {
         frameExport();
     }
 }
@@ -487,7 +487,7 @@ document.onkeydown = keyDown;
 function setResolutionScalar(sc) {
     resolutionScalar = sc;
     cnvs.width = 1000 * resolutionScalar;
-    cnvs.height = 1440 * resolutionScalar;
+    cnvs.height = 1500 * resolutionScalar;
     texture = createTexture();
     framebuf = createFrameBuffer(texture);
     texture2 = createTexture();

@@ -796,9 +796,9 @@ void main() {
     // gl_FragColor.r += 0.05;
     // gl_FragColor.rgb = vec3(1.0);
     // gl_FragColor.rgb *= 1.25;
-    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0. * (16./ 9.) + -1.09, 0.), vec2(0.075 * (16./9.), 0.205) * 1.1 * 4.1, 0.01, 0.5) * 1.6 * 2.;    
+    // gl_FragColor.rgb *= roundedRectangle(uv, vec2(0. * (16./ 9.) + -1.09, 0.), vec2(0.075 * (16./9.), 0.205) * 1.1 * 4.1, 0.01, 0.5) * 1.6 * 2.;    
     // gl_FragColor.rgb += roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.11, 0.11), 0.001, 0.25);
-        // gl_FragColor = gl_FragColor.grra;
+        gl_FragColor.rgb *= 4.;
     gl_FragColor.rgb -= 0.2;
         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
 }
