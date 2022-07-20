@@ -9,8 +9,10 @@ canvas {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    max-width: 1280px;
+    /*width: 100%;*/
+    /*max-width: 1280px;*/
+
+    max-height: 720px;
     bottom: 0;
     right: 0;
 }
