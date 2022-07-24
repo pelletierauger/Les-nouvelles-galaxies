@@ -264,11 +264,13 @@ roundedSquare.fragText = `
     }
     float roundedRectangleFlicker (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
         // vec2 uv = gl_PointCoord.xy;
-        float t = time * 0.05;
-        t = 100. + (t * 1e-4);
+        float t = mod(time * 0.125, 3.14159 * 2.) * 1.;
+        // t = 100. + (t * 1e-4);
         float w = 0.15 + (sin(t * 1e-2 * tan(t * 2e-2)) + 1.0) * 0.25;
         float d = length(max(abs(uv - pos), size * 0.5) - size * 0.5) * w - radius * 0.01;
-        return smoothstep(1.99 + ((sin(t * 10. * tan(t * 1e1)) + 1.0) * 0.5), 0.11, d * 10. / thickness * 5.0 * 0.125 * 1.5);
+        float oscFull = (sin(t) * 0.5 + 0.5) * 3.75 * 0.;
+        float oscScanning = (sin(gl_FragCoord.y * 1e-2 + t) * 0.5 + 0.5) * 4.;
+        return smoothstep(2.99 + oscFull + oscScanning, 0.11, d * 10. / thickness * 5.0 * 0.125 * 1.5);
     }
     float roundedRectangle (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
         float d = length(max(abs(uv - pos), size) - size) - radius;
