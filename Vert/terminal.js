@@ -2041,11 +2041,17 @@ face = [
 ];
 
 pchar = "a";
-mouseClicked = function() {
-  // logJavaScriptConsole("click!");  
+mouseClicked = function(e) {
+  // logJavaScriptConsole("click!"); 
+    console.log(e);
     // face[fmouse[1]][fmouse[0]] = "a";
-    let y = face[fmouse[1]];
-    face[fmouse[1]] = y.substring(0, fmouse[0]) + pchar + y.substr(fmouse[0] + pchar.length);
+    if (!e.shiftKey){
+        let y = face[fmouse[1]];
+        face[fmouse[1]] = y.substring(0, fmouse[0]) + pchar + y.substr(fmouse[0] + pchar.length);
+    } else {
+        console.log(face[fmouse[1]][fmouse[0]]);
+        pchar = face[fmouse[1]][fmouse[0]];
+    }
 };
 mouseDragged = function() {
   // logJavaScriptConsole("click!");  
