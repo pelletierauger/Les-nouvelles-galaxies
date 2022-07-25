@@ -240,8 +240,10 @@ roundedSquare.vertText = `
         // CRT curve
         // gl_Position.x += floor(sin(gl_Position.y * 1e2 + time)) * 0.1
         float disturbance = (floor(sin(gl_Position.y * 5. + time * 0.25 + tan(gl_Position.y * 1e3) * 0.125) * 2.)) * 0.125 * 0.125;
-        // disturbance *= (floor(sin(gl_Position.y * 1e-7 + time * 0.125 + tan(gl_Position.y * 2.) * 0.5) * 0.01)) * 100.1;
-        gl_Position.x += disturbance * 0.1;
+        float fluctuate = floor(mod(time * 1e5, 100.)/50.);
+        float distr2 = (floor(sin(gl_Position.y * 1e-7 + time * 0.125 + tan(gl_Position.y * 2. + gl_Position.x * 1e-1) * 0.5) * 0.01)) * 10.1 * fluctuate;
+        distr2 *= 0.;
+        gl_Position.x += disturbance * 0.1 * (1. + distr2);
         // gl_Position.x += tan(floor(sin(gl_Position.y * 1e3))) * 0.1;
         gl_Position.xy *= (1.0 - distance(gl_Position.xy, vec2(0,0)) * 0.1) * 1.05;
         center = vec2(gl_Position.x, gl_Position.y);

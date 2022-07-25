@@ -9112,6 +9112,11 @@ newFlickeringVert.vertText = `
         }
         // pos = m * pos;
         gl_Position = vec4(pos.x / ratio * 15., pos.y * 15., 0.0, pos.z * 1.);
+        float disturbance = (floor(sin(gl_Position.y * 5. + time * 0.25 + tan(gl_Position.y * 1e3) * 0.125) * 2.)) * 0.125 * 0.125;
+        float fluctuate = floor(mod(time * 1e5, 100.)/50.);
+        float distr2 = (floor(sin(gl_Position.y * 1e-7 + time * 0.125 + tan(gl_Position.y * 2e-1 + gl_Position.x * 1e-3) * 0.5) * 0.01)) * 10.1 * fluctuate;
+        // distr2 *= 0.;
+        gl_Position.y += disturbance * 0.1 * sin(time) * (1. + distr2 * 5.);
         gl_PointSize = (29.5 - (60. * pos.z * 0.02)) * sca;
         gl_PointSize = 6. * sca;
         alph = 0.25 * 0.75;
