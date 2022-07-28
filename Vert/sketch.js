@@ -199,10 +199,12 @@ draw = function() {
     // drawAlligatorQuiet(currentProgram);
 // 
 // 
-    currentProgram = getProgram("rounded-square");
-    time = gl.getUniformLocation(currentProgram, "time"); 
-    gl.useProgram(currentProgram);
-    drawTerminal(currentProgram);
+    if (griArr) {
+        currentProgram = getProgram("rounded-square");
+        time = gl.getUniformLocation(currentProgram, "time"); 
+        gl.useProgram(currentProgram);
+        drawTerminal(currentProgram);
+    }
     // drawSwirl(currentProgram);
     // drawPulsar(currentProgram);
 // 
