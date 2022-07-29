@@ -2671,18 +2671,21 @@ face = [
 ];
 
 pchar = "a";
+
 mouseClicked = function(e) {
-  // logJavaScriptConsole("click!"); 
-    console.log(e);
+    // logJavaScriptConsole("click!"); 
+    // console.log(e);
     // face[fmouse[1]][fmouse[0]] = "a";
     if (!e.shiftKey){
-        let y = griArr[fmouse[1] + griY];
-        let add = pchar;
-        if (y.length < fmouse[0]) {
-            let n = fmouse[0] - y.length;
-            for (let i = 0; i < n; i++) {add = " " + add};
+        if (grimoire && fmouse[1] < 20) {
+            let y = griArr[fmouse[1] + griY];
+            let add = pchar;
+            if (y.length < fmouse[0]) {
+                let n = fmouse[0] - y.length;
+                for (let i = 0; i < n; i++) {add = " " + add};
+            }
+            griArr[fmouse[1] + griY] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
         }
-        griArr[fmouse[1] + griY] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
     } else {
         // console.log(face[fmouse[1]][fmouse[0]]);
         console.log(swatchesArr[fmouse[0]]);
@@ -2698,8 +2701,9 @@ mouseClicked = function(e) {
     }
 };
 mouseDragged = function() {
-  // logJavaScriptConsole("click!");  
+    // logJavaScriptConsole("click!");  
     // face[fmouse[1]][fmouse[0]] = "a";
+    if (grimoire && fmouse[1] < 20) {
         let y = griArr[fmouse[1] + griY];
         let add = pchar;
         if (y.length < fmouse[0]) {
@@ -2707,6 +2711,7 @@ mouseDragged = function() {
             for (let i = 0; i < n; i++) {add = " " + add};
         }
         griArr[fmouse[1] + griY] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
+    }
 };
 
 

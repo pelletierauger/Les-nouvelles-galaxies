@@ -14,12 +14,12 @@ fasterDots.vertText = `
         gl_PointSize = 15.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 2.;
         alph = coordinates.w;
         // gl_PointSize = coordinates.z;
-    }
-    // endGLSL
-    `;
-fasterDots.fragText = `
-    // beginGLSL
-    precision mediump float;
+    }         
+    // endGLSL 
+`;
+fasterDots.fragtext = ` 
+    // beginGLSL 
+    precision mediump float; 
     varying vec2 myposition;
     varying vec2 center;
     varying float alph;
@@ -869,26 +869,26 @@ gold.fragText = `
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(0.3 + alpha2 * 40.0, 0.1 + alpha * 1.0, 0.25 + alpha * 0., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 1.5;        
     }
-    // endGLSL
-`;
-gold.init();
-
-
-
-let textureShader = new ShaderProgram("textu");
-
-
-// Bloody dawn over the mountains
-textureShader.vertText = `
-    // beginGLSL
-attribute vec3 a_position;
-attribute vec2 a_texcoord;
-varying vec2 v_texcoord;
-void main() {
-  // Multiply the position by the matrix.
-  vec4 positionVec4 = vec4(a_position, 1.0);
-  // gl_Position = a_position;
-  positionVec4.xy = positionVec4.xy * 2.0 - 1.0;
+    // endGLSL                      //                       ▄   ▄▄   ▄   ▄    ▄    ▄▄
+`;                              //                        ▄▄▀▄▀▀▀▄▄▀▀▀▄▀▀▀▄▀▀▀▀▄▀▀▀▀▄▄▀▄▄
+gold.init();                   //                       ▄▀▀▄▀▀▀▄▀▄▄▀▄▀▀▀▄▀▀▀▄▀▀▄▀▀▄▀▄▄▀▄▀▀▄
+                              //      A               ▄▀███████████████████████████████████▀▄
+                             //      AAA       A    ▄▀▄▀█ ┌────┬────────┬─────────┬─────┐ █▀▄▀▄      A
+                           //       AAAAA     AAA  ▀▄▀▄▀█ │░░░░│░░░░┌─░─┴─░─┐░░░░░│░░░░░│ █▀▄▀▄▀    AAA
+let textureShader = new ShaderProgram("textu");//A   ▀▄▀█ │────│────│───────│─────│─────│ █▀▄▀     AAAAA
+                           //      AAAAAAA  AAAAAAA    ▀█ │────│────│───────│─────│─────│ █▀      AAAAAAA
+                           //  █████████████████████████████████████████████████████████████████████████████
+// Bloody dawn over the mountains                         ░░█░░░ ░ ░░█ ░░░ █ ░░░█  █  ███ █ ░░░█░█░ ░ ░██░█░
+textureShader.vertText = `   //                            ░ ░░░█░███  ░░░█  ░░░░██ █ ███ █ ░░  █░░ ░█░░ ░ ░
+    // beginGLSL                                           ░ ░░░ ░ ░░░░░ ░ █ ░░░█    █████  ░░ █░░░█░ ░░ ░ ░
+attribute vec3 a_position;         //                        ░ ░ ░  ░ ░░ ░░░░░░ ░     ███   ░  ░░░░░░░░░░░ ░
+attribute vec2 a_texcoord;                   //               ░░    ░ ░░  ░  ██████   ███   █ █  █ ░░░ ░ ░ ░
+varying vec2 v_texcoord;                      //              ░░    ░ ░░  ░   ░░ ░ █  ███    █  █    ░ ░ ░
+void main() {                                  //             ░     ░░ ░  ░    ░ ░  █ ███   ████       ░ ░
+  // Multiply the position by the matrix.                     ░      ░ ░             ████  █           ░ ░
+  vec4 positionVec4 = vec4(a_position, 1.0)          //              ░ ░              ███ █              ░   ▄
+  // gl_Position = a_position;                                                        ████
+  positionVec4.xy = positionVec4.xy * 2.0 - 1.0;       //                             ████
   gl_Position = positionVec4;
   // Pass the texcoord to the fragment shader.
   v_texcoord = a_texcoord;
@@ -1371,6 +1371,12 @@ void main() {
     vec2 pos = gl_FragCoord.xy / (vec2(1280, 720) * resolution * 2.);
     float edge = pow(0.26, 4.);
     gl_FragColor.rgb *= smoothstep(edge * 0.7, edge, pos.x * pos.y * (1. - pos.x) * (1. - pos.y));
+    float vig2 = smoothstep(pow(0.26, 4.), pow(0.26, 3.), pos.x * pos.y * (1. - pos.x) * (1. - pos.y));
+    float vig3 = smoothstep(pow(0.26, 4.), pow(0.26, 3.5), pos.x * pos.y * (1. - pos.x) * (1. - pos.y));
+    float vig4 = smoothstep(pow(0.26, 4.), pow(0.26, 2.), pos.x * pos.y * (1. - pos.x) * (1. - pos.y));
+    gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb * vig2, 0.25 * 0.85);
+    gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb * vig3, 0.125 * 0.85);
+    gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb * vig4, 0.125 * 0.85);
     // gl_FragColor.rgb *= 1.05;
     // gl_FragColor.b += col.b * 0.25;
 //gl_FragColor.rgb = gl_FragColor.rbg;
