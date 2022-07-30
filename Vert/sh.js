@@ -869,7 +869,7 @@ gold.fragText = `
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(0.3 + alpha2 * 40.0, 0.1 + alpha * 1.0, 0.25 + alpha * 0., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 1.5;        
     }
-    // endGLSL                      //                       ▄   ▄▄   ▄   ▄    ▄    ▄▄
+    // endGLSL                                               ▄   ▄▄   ▄   ▄    ▄    ▄▄
 `;                              //                        ▄▄▀▄▀▀▀▄▄▀▀▀▄▀▀▀▄▀▀▀▀▄▀▀▀▀▄▄▀▄▄
 gold.init();                   //                       ▄▀▀▄▀▀▀▄▀▄▄▀▄▀▀▀▄▀▀▀▄▀▀▄▀▀▄▀▄▄▀▄▀▀▄
                               //      A               ▄▀███████████████████████████████████▀▄
@@ -1155,6 +1155,15 @@ void main() {
     gl_FragColor.rgb += roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.1092 * (16./9.), 0.104) * 2.1 * 4.1, 0.01, 0.5) * 0.1;
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 2.75);
+    vec2 pos = gl_FragCoord.xy / (vec2(1280, 720) * resolution * 2.);
+    float edge = pow(0.26, 4.);
+    gl_FragColor.rgb *= smoothstep(edge * 0.7, edge, pos.x * pos.y * (1. - pos.x) * (1. - pos.y));
+    float vig2 = smoothstep(pow(0.26, 4.), pow(0.26, 3.), pos.x * pos.y * (1. - pos.x) * (1. - pos.y));
+    float vig3 = smoothstep(pow(0.26, 4.), pow(0.26, 3.5), pos.x * pos.y * (1. - pos.x) * (1. - pos.y));
+    float vig4 = smoothstep(pow(0.26, 4.), pow(0.26, 2.), pos.x * pos.y * (1. - pos.x) * (1. - pos.y));
+    gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb * vig2, 0.25 * 0.85);
+    gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb * vig3, 0.125 * 0.85);
+    gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb * vig4, 0.125 * 0.85);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.rgb *= 1.05;
     // gl_FragColor.b += col.b * 0.25;
@@ -5089,7 +5098,7 @@ newFlickeringVert.fragText = `
         gl_FragColor.rgb = cols;
         gl_FragColor.b *= 0.75;
         vec3 bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
-        gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 0.7);
+        gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 0.7) * 0.5;
         
     }
     // endGLSL
