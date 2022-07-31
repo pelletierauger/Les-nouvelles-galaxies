@@ -79,11 +79,16 @@ drawTerminal = function(selectedProgram) {
     //         }
     //     }
     // }
+    
+    // ———————————————————————————————————————————————————————————————
+    //  Grimoire drawing algorithm
+    // ———————————————————————————————————————————————————————————————
+
     for (let y = 0; y < 22; y++) {
         // for (let x = 0; x < griArr[y].length; x++) {
-        let maxW = griArr[y + griY].length;
-        if (y == 20) {maxW = 109};
-        if (y == 21) {maxW = vt.text.length + 2};
+        // let maxW = griArr[y + griY].length;
+        // if (y == 20) {maxW = 109};
+        // if (y == 21) {maxW = vt.text.length + 2};
         for (let x = 0; x < 109; x++) {
             let c;
             if (y == 21 && x >= vt.text.length + 2) {
@@ -93,10 +98,17 @@ drawTerminal = function(selectedProgram) {
             } else if (y == 20) {
                 c = "-";
                 c = swatchesArr[x];
-            } else if (x >= griArr[y + griY].length) {
-                c = " ";
             } else {
-                c = griArr[y + griY][x];
+                if (griEditor.activeTab !== null) {
+                    let t = griEditor.activeTab;
+                    if (x >= t.data[y + t.scroll.y].length) {
+                        c = " ";
+                    } else {
+                        c = t.data[y + t.scroll.y][x];
+                    }
+                } else {
+                    c = " ";
+                }
             }
             let cur = (x == fmouse[0] && y == fmouse[1]);
             let g = cur ? getGlyph(pchar) : getGlyph(c);
@@ -2689,25 +2701,34 @@ mouseClicked = function(e) {
     // logJavaScriptConsole("click!"); 
     // console.log(e);
     // face[fmouse[1]][fmouse[0]] = "a";
+    let t = griEditor.activeTab;
     if (!e.shiftKey){
         if (grimoire && fmouse[1] < 20) {
-            let y = griArr[fmouse[1] + griY];
+            let y = t.data[fmouse[1] + t.scroll.y];
             let add = pchar;
             if (y.length < fmouse[0]) {
                 let n = fmouse[0] - y.length;
                 for (let i = 0; i < n; i++) {add = " " + add};
             }
-            griArr[fmouse[1] + griY] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
+            t.data[fmouse[1] + t.scroll.y] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
         }
     } else {
         // console.log(face[fmouse[1]][fmouse[0]]);
         console.log(swatchesArr[fmouse[0]]);
-        let newChar = (fmouse[1] == 20) ? swatchesArr[fmouse[0]] : griArr[fmouse[1] + griY][fmouse[0]];
-        if (fmouse[1] == 21) {
+        let newChar;
+        if (fmouse[1] == 20) {
+            newChar = swatchesArr[fmouse[0]];
+        } else if (fmouse[1] == 21) {
             if (fmouse[0] < vt.text.length + 2) {
                 newChar = vt.text[fmouse[0] - 2];
             } else {
                 newChar = " ";
+            }
+        } else {
+            if (fmouse[0] > t.data[fmouse[1] + t.scroll.y].length) {
+                newChar = " ";
+            } else {
+                newChar = t.data[fmouse[1] + t.scroll.y][fmouse[0]];
             }
         }
         pchar = newChar;
@@ -2717,13 +2738,14 @@ mouseDragged = function() {
     // logJavaScriptConsole("click!");  
     // face[fmouse[1]][fmouse[0]] = "a";
     if (grimoire && fmouse[1] < 20) {
-        let y = griArr[fmouse[1] + griY];
+        let t = griEditor.activeTab;
+        let y = t.data[fmouse[1] + t.scroll.y];
         let add = pchar;
         if (y.length < fmouse[0]) {
             let n = fmouse[0] - y.length;
             for (let i = 0; i < n; i++) {add = " " + add};
         }
-        griArr[fmouse[1] + griY] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
+        t.data[fmouse[1] + t.scroll.y] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
     }
 };
 

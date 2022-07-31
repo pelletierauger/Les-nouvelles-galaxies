@@ -8,3 +8,24 @@ swatchesArr = "░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─�
 swatchesArr = "░▒▓█▀▄▌▐┌─┬┐│┤┘┴└├┼╔═╦╗║╣╝╩╚╠╬╒╤╕╡╛╧╘╞╓╥╖╢╜╨╙╟╫╪αßΓπΣσµτΦΘΩδ∞φε∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■";
 
 // files.js[8].data = griArr.join("\n")
+
+
+
+
+tab = function(s) {
+    if (s == null) {
+        griEditor.activeTab = null;
+        return;
+    }
+    for (let i = 0; i < griFiles.scd.length; i++) {
+        if (griFiles.scd[i].name == s) {
+            griEditor.activeTab = griFiles.scd[i];
+        }
+    }
+    for (let i = 0; i < griFiles.js.length; i++) {
+        logJavaScriptConsole(griFiles.js[i]);
+        if (griFiles.js[i].name == s) {
+            griEditor.activeTab = griFiles.js[i];
+        }
+    }
+}
