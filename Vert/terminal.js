@@ -79,44 +79,60 @@ drawTerminal = function(selectedProgram) {
     //         }
     //     }
     // }
-    
+                // let caret = (vt.caretPosition - 0) * 7 + 7;
+            // if (vt.stringArray[y][x] == sel || (x == caret && drawCount / 20 % 1 < 0.5)) {
+
     // ———————————————————————————————————————————————————————————————
     //  Grimoire drawing algorithm
     // ———————————————————————————————————————————————————————————————
 
+    // let sx0 = vt.selectionBounds[0];
+    // let sx1 = vt.selectionBounds[1];
+    // let colors = [];
+    // let sc2 = sc * 1.2;
+    // for (let x = 0; x <= vt.stringArray[0].length; x++) {
+    //     let sel = ((x > sx0 * 7 && x < sx1 * 7)
+
+
+
     for (let y = 0; y < 22; y++) {
-        // for (let x = 0; x < griArr[y].length; x++) {
-        // let maxW = griArr[y + griY].length;
-        // if (y == 20) {maxW = 109};
-        // if (y == 21) {maxW = vt.text.length + 2};
         for (let x = 0; x < 109; x++) {
-            let c;
-            if (y == 21 && x >= vt.text.length + 2) {
-                c = " ";
-            } else if (y == 21 && x < vt.text.length + 2) {
-                c = ("> " + vt.text)[x];
+            let char;
+            let caret = false;
+            let selection;
+            if (y == 21) {
+                char = (x >= vt.text.length + 1) ? " " : (">" + vt.text)[x];
+                caret = (x == vt.caretPosition);
+                let sx0 = vt.selectionBounds[0];
+                let sx1 = vt.selectionBounds[1];
+                selection = x >= sx0 && x < sx1;
+                selection = (vt.enter && x < vt.text.length + 1) ? true : selection;
             } else if (y == 20) {
-                c = "-";
-                c = swatchesArr[x];
+                char = "-";
+                char = swatchesArr[x];
             } else {
                 if (griEditor.activeTab !== null) {
                     let t = griEditor.activeTab;
                     if (x >= t.data[y + t.scroll.y].length) {
-                        c = " ";
+                        char = " ";
                     } else {
-                        c = t.data[y + t.scroll.y][x];
+                        char = t.data[y + t.scroll.y][x];
                     }
                 } else {
-                    c = " ";
+                    char = " ";
                 }
             }
             let cur = (x == fmouse[0] && y == fmouse[1]);
-            let g = cur ? getGlyph(pchar) : getGlyph(c);
-            // g = (y == 20) && !cur ? getGlyph("-") : g;
-            // g = (y == 21) && !cur ? getGlyph(("> " + vt.text)[x]) : g;
+            let g = cur ? getGlyph(pchar) : getGlyph(char);
+            if (caret) {
+                caret = caret && drawCount / 20 % 1 < 0.5;
+            }
             for (let yy = 0; yy < g.length; yy++) {
                 for (let xx = 0; xx < g[yy].length; xx++) {
-                    if (g[yy][xx] == "1") {
+                    let test = !selection;
+                    test = ((xx == 6) && caret) ? !test : test
+                    test = (test) ? "1" : "0";
+                    if (g[yy][xx] == test) {
                         let tx = 0, ty = 0;
                         let sc = 0.8;
                         // tx = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1) * 0.0;
