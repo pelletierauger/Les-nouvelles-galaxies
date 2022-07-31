@@ -126,7 +126,7 @@ drawTerminal = function(selectedProgram) {
                 }
             }
             let cur = (x == fmouse[0] && y == fmouse[1]);
-            let g = cur ? getGlyph(pchar) : getGlyph(char);
+            let g = cur ? (mode == 1 ? getGlyph("caret") : getGlyph(pchar)) : getGlyph(char);
             if (caret) {
                 caret = caret && ((drawCount / 20 % 1 < 0.5) || !blink);
             }
@@ -2293,6 +2293,19 @@ getGlyph = function(g) {
             "0000000",
             "0000000",
             "0000000",
+        ];
+        break;
+        case "caret":
+        ch = [
+            "0110110",
+            "0001000",
+            "0001000",
+            "0001000",
+            "0011100",
+            "0001000",
+            "0001000",
+            "0110110",
+            "0000000"
         ];
         break;
         default:

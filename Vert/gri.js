@@ -54,6 +54,12 @@ GrimoireEditor.prototype.update = function(e) {
             for (let i = 0; i < t.carets.length; i++) {
                 t.carets[i].y++;
             }
+        } else if (s == "ArrowDown" && e.metaKey && t.scroll.y + 20 < t.data.length) {
+            t.scroll.y+=20;
+            console.log("lamb");
+            for (let i = 0; i < t.carets.length; i++) {
+                t.carets[i].y += 20;
+            }
         } else if (s == "ArrowUp" && e.altKey && t.scroll.y > 0) {
             t.scroll.y--;
             for (let i = 0; i < t.carets.length; i++) {
@@ -82,26 +88,27 @@ for (let y = 0; y < 25; y++) {
     }
 }
 updateHole = function() {
-    for (let i = 0; i < 40; i++) {
-        let x = Math.cos(i * 0.5 + drawCount * 0.125e2) * i / 40;
-        let y = Math.sin(i * 0.5 + drawCount * 0.125e2) * i / 40;
-        x = Math.floor(map(x, -1, 1, 0, 80) + 15);
-        y = Math.floor(map(y, -1, 1, 0, 25));
-        marr[y][x] = 10;
-    }
-    let g = ge.activeTab;
-    for (let y = 0; y < 25; y++) {
-        let padding = "";
-        let row = [];
-        for (let x = 0; x < 110; x++) {
-            marr[y][x] = Math.max(0, marr[y][x] - Math.abs(Math.sin(drawCount * 1e-2)) * 0.25);
-            let str = " .;jO0░▒▓█";
-            row.push(str[Math.floor(marr[y][x])]);
-            // g.data[y + 2 + g.scroll.y][x + 25] = str[marr[y][x]];
-            // let yS = g.data[y + 2 + g.scroll.y];
-            // g.data[y + 2 + g.scroll.y] = yS.substring(0, x) + str[marr[y][x]] + yS.substr(x);
-          
+    if (ge.activeTab !== null) {
+        for (let i = 0; i < 40; i++) {
+            let x = Math.cos(i * 0.5 + drawCount * 0.125e2) * i / 40;
+            let y = Math.sin(i * 0.5 + drawCount * 0.125e2) * i / 40;
+            x = Math.floor(map(x, -1, 1, 0, 80) + 15);
+            y = Math.floor(map(y, -1, 1, 0, 25));
+            marr[y][x] = 10;
         }
-        g.data[y] = padding + row.join("") + padding;
+        let g = ge.activeTab;
+        for (let y = 0; y < 25; y++) {
+            let padding = "";
+            let row = [];
+            for (let x = 0; x < 110; x++) {
+                marr[y][x] = Math.max(0, marr[y][x] - Math.abs(Math.sin(drawCount * 1e-2)) * 0.25);
+                let str = " .;jO0░▒▓█";
+                row.push(str[Math.floor(marr[y][x])]);
+                // g.data[y + 2 + g.scroll.y][x + 25] = str[marr[y][x]];
+                // let yS = g.data[y + 2 + g.scroll.y];
+                // g.data[y + 2 + g.scroll.y] = yS.substring(0, x) + str[marr[y][x]] + yS.substr(x);
+            }
+            g.data[y] = padding + row.join("") + padding;
+        }
     }
-}
+};
