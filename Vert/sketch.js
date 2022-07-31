@@ -1,5 +1,6 @@
 let looping = true;
 let grimoire = false;
+let mode = 0;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
 let fileName = "/Users/guillaumepelletier/Desktop/alligator";
@@ -480,10 +481,18 @@ tl = function(d = 0) {
 
 keyDown = function() {
     if (keysActive) {
-        if (vtActive) {
-            vt.update(event);
-            // ljs(event.keyCode);
+        console.log(event.keyCode);
+        if (event.keyCode == 27) {
+            mode = (mode + 1) % 3;
         }
+        if (mode == 0 || mode == 2) {
+                if (vtActive) {
+                    vt.update(event);
+                    // ljs(event.keyCode);
+                }
+        } else if (mode == 1) {
+            ge.update(event);
+        } 
     }
 }
 document.onkeydown = keyDown;       

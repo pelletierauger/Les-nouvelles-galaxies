@@ -81,42 +81,45 @@ drawTerminal = function(selectedProgram) {
     // }
                 // let caret = (vt.caretPosition - 0) * 7 + 7;
             // if (vt.stringArray[y][x] == sel || (x == caret && drawCount / 20 % 1 < 0.5)) {
-
     // ———————————————————————————————————————————————————————————————
     //  Grimoire drawing algorithm
     // ———————————————————————————————————————————————————————————————
-
     // let sx0 = vt.selectionBounds[0];
     // let sx1 = vt.selectionBounds[1];
     // let colors = [];
     // let sc2 = sc * 1.2;
     // for (let x = 0; x <= vt.stringArray[0].length; x++) {
     //     let sel = ((x > sx0 * 7 && x < sx1 * 7)
-
-
-
     for (let y = 0; y < 22; y++) {
         for (let x = 0; x < 109; x++) {
             let char;
             let caret = false;
             let selection;
+            let blink;
             if (y == 21) {
                 char = (x >= vt.text.length + 1) ? " " : (">" + vt.text)[x];
-                caret = (x == vt.caretPosition);
+                caret = (x == vt.caretPosition + 1);
                 let sx0 = vt.selectionBounds[0];
                 let sx1 = vt.selectionBounds[1];
                 selection = x >= sx0 && x < sx1;
                 selection = (vt.enter && x < vt.text.length + 1) ? true : selection;
+                blink = (mode == 0);
             } else if (y == 20) {
-                char = "-";
-                char = swatchesArr[x];
+                // char = "-";
+                char = (mode == 2) ? swatchesArr[x] : " ";
             } else {
-                if (griEditor.activeTab !== null) {
-                    let t = griEditor.activeTab;
+                if (ge.activeTab !== null) {
+                    let t = ge.activeTab;
                     if (x >= t.data[y + t.scroll.y].length) {
                         char = " ";
                     } else {
                         char = t.data[y + t.scroll.y][x];
+                    }
+                    for (let i = 0; i < t.carets.length; i++) {
+                        if ((x + t.scroll.x) == t.carets[i].x && (y + t.scroll.y) == t.carets[i].y) {
+                            caret = true;
+                            blink = (mode == 1);
+                        }
                     }
                 } else {
                     char = " ";
@@ -125,12 +128,12 @@ drawTerminal = function(selectedProgram) {
             let cur = (x == fmouse[0] && y == fmouse[1]);
             let g = cur ? getGlyph(pchar) : getGlyph(char);
             if (caret) {
-                caret = caret && drawCount / 20 % 1 < 0.5;
+                caret = caret && ((drawCount / 20 % 1 < 0.5) || !blink);
             }
             for (let yy = 0; yy < g.length; yy++) {
                 for (let xx = 0; xx < g[yy].length; xx++) {
                     let test = !selection;
-                    test = ((xx == 6) && caret) ? !test : test
+                    test = ((xx == 0) && caret) ? !test : test
                     test = (test) ? "1" : "0";
                     if (g[yy][xx] == test) {
                         let tx = 0, ty = 0;
@@ -2714,12 +2717,51 @@ face = [
 pchar = "a";
 
 mouseClicked = function(e) {
-    // logJavaScriptConsole("click!"); 
-    // console.log(e);
-    // face[fmouse[1]][fmouse[0]] = "a";
-    let t = griEditor.activeTab;
-    if (!e.shiftKey){
+    //  drawing
+    if (mode == 2) {
+        let t = ge.activeTab;
+        if (!e.shiftKey){
+            if (grimoire && fmouse[1] < 20) {
+                let y = t.data[fmouse[1] + t.scroll.y];
+                let add = pchar;
+                if (y.length < fmouse[0]) {
+                    let n = fmouse[0] - y.length;
+                    for (let i = 0; i < n; i++) {add = " " + add};
+                }
+                t.data[fmouse[1] + t.scroll.y] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
+            }
+        } else {
+            // console.log(face[fmouse[1]][fmouse[0]]);
+            console.log(swatchesArr[fmouse[0]]);
+            let newChar;
+            if (fmouse[1] == 20) {
+                newChar = swatchesArr[fmouse[0]];
+            } else if (fmouse[1] == 21) {
+                if (fmouse[0] < vt.text.length + 2) {
+                    newChar = vt.text[fmouse[0] - 2];
+                } else {
+                    newChar = " ";
+                }
+            } else {
+                if (fmouse[0] > t.data[fmouse[1] + t.scroll.y].length) {
+                    newChar = " ";
+                } else {
+                    newChar = t.data[fmouse[1] + t.scroll.y][fmouse[0]];
+                }
+            }
+            pchar = newChar;
+        }
+        if (e.altKey) {
+            if (fmouse[1] == 20) {
+                vt.update({key: swatchesArr[fmouse[0]]});
+            }
+        }
+    }
+};
+mouseDragged = function() {
+    if (mode == 2) {
         if (grimoire && fmouse[1] < 20) {
+            let t = ge.activeTab;
             let y = t.data[fmouse[1] + t.scroll.y];
             let add = pchar;
             if (y.length < fmouse[0]) {
@@ -2728,40 +2770,6 @@ mouseClicked = function(e) {
             }
             t.data[fmouse[1] + t.scroll.y] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
         }
-    } else {
-        // console.log(face[fmouse[1]][fmouse[0]]);
-        console.log(swatchesArr[fmouse[0]]);
-        let newChar;
-        if (fmouse[1] == 20) {
-            newChar = swatchesArr[fmouse[0]];
-        } else if (fmouse[1] == 21) {
-            if (fmouse[0] < vt.text.length + 2) {
-                newChar = vt.text[fmouse[0] - 2];
-            } else {
-                newChar = " ";
-            }
-        } else {
-            if (fmouse[0] > t.data[fmouse[1] + t.scroll.y].length) {
-                newChar = " ";
-            } else {
-                newChar = t.data[fmouse[1] + t.scroll.y][fmouse[0]];
-            }
-        }
-        pchar = newChar;
-    }
-};
-mouseDragged = function() {
-    // logJavaScriptConsole("click!");  
-    // face[fmouse[1]][fmouse[0]] = "a";
-    if (grimoire && fmouse[1] < 20) {
-        let t = griEditor.activeTab;
-        let y = t.data[fmouse[1] + t.scroll.y];
-        let add = pchar;
-        if (y.length < fmouse[0]) {
-            let n = fmouse[0] - y.length;
-            for (let i = 0; i < n; i++) {add = " " + add};
-        }
-        t.data[fmouse[1] + t.scroll.y] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
     }
 };
 
