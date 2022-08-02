@@ -112,3 +112,23 @@ updateHole = function() {
         }
     }
 };
+
+
+
+search = function(s) {
+    var re = new RegExp(s, 'g')
+    for (let y = ge.activeTab.scroll.y + 1; y < ge.activeTab.data.length; y++) {
+        let text = ge.activeTab.data[y];
+        let t = text.match(re);
+        if (t) {
+            text.replace(re, function(a, x) {
+                // console.log("x" + x);
+                ge.activeTab.scroll.y = y;
+                ge.activeTab.carets[0].y = y;
+                ge.activeTab.carets[0].x = x + s.length;
+            });
+            break;
+            // console.log(t);
+        }
+    }
+}
