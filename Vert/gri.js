@@ -5,7 +5,7 @@ ps = "        // we will assign the attribute texcoords to the varying texcoords
 
 swatchesArr = "░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αßΓπΣσµτΦΘΩδ∞φε∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■";
 
-swatchesArr = "░▒▓█▀▄▌▐┌─┬┐│┤┘┴└├┼╔═╦╗║╣╝╩╚╠╬╒╤╕╡╛╧╘╞╓╥╖╢╜╨╙╟╫╪αßΓπΣσµτΦΘΩδ∞φε∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■";
+swatchesArr = "░▒▓█▀▄▌▐┌─┬┐│┤┘┴└├┼╔═╦╗║╣╝╩╚╠╬╒╤╕╡╛╧╘╞╓╥╖╢╜╨╙╟╫╪•◘☼►◄▲▼▬↑↓↨→←≡±≥≤αßΓπΣσµτΦΘΩδ∞φε∩⌠⌡÷≈°∙·√ⁿ²■";
 
 // files.js[8].data = griArr.join("\n")
 
@@ -92,7 +92,7 @@ updateHole = function() {
         for (let i = 0; i < 40; i++) {
             let x = Math.cos(i * 0.5 + drawCount * 0.125e2) * i / 40;
             let y = Math.sin(i * 0.5 + drawCount * 0.125e2) * i / 40;
-            x = Math.floor(map(x, -1, 1, 0, 80) + 15);
+            x = Math.floor(map(x, -1, 1, 0, 70) + 18);
             y = Math.floor(map(y, -1, 1, 0, 25));
             marr[y][x] = 10;
         }
