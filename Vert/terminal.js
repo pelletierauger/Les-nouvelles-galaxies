@@ -130,19 +130,21 @@ drawTerminal = function(selectedProgram) {
             if (caret) {
                 caret = caret && ((drawCount / 20 % 1 < 0.5) || !blink);
             }
-            for (let yy = 0; yy < g.length; yy++) {
-                for (let xx = 0; xx < g[yy].length; xx++) {
-                    let test = !selection;
-                    test = ((xx == 0) && caret) ? !test : test
-                    test = (test) ? "1" : "0";
-                    if (g[yy][xx] == test) {
-                        let tx = 0, ty = 0;
-                        let sc = 0.8;
-                        // tx = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1) * 0.0;
-                        // ty = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1 + 1e4) * 0.0;
-                        vertices.push(((x * 7 + xx) * 0.0054 * (9/16) - 1 + -0.155 + tx + nx * 0.5) * sc, ((y * 9 + yy) * -0.0108 + 1.05 + ty + ny * 0.5) * sc, (11 + tx * 500) * sc, 1);
-                        num++;
-                        colors.push(0.65, 0.65, 0.65);   
+            if (char !== " " || caret == true || cur || selection) {
+                for (let yy = 0; yy < g.length; yy++) {
+                    for (let xx = 0; xx < g[yy].length; xx++) {
+                        let test = !selection;
+                        test = ((xx == 0) && caret) ? !test : test
+                        test = (test) ? "1" : "0";
+                        if (g[yy][xx] == test) {
+                            let tx = 0, ty = 0;
+                            let sc = 0.8;
+                            // tx = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1) * 0.0;
+                            // ty = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1 + 1e4) * 0.0;
+                            vertices.push(((x * 7 + xx) * 0.0054 * (9/16) - 1 + -0.155 + tx + nx * 0.5) * sc, ((y * 9 + yy) * -0.0108 + 1.05 + ty + ny * 0.5) * sc, (11 + tx * 500) * sc, 1);
+                            num++;
+                            colors.push(0.65, 0.65, 0.65);   
+                        }
                     }
                 }
             }
