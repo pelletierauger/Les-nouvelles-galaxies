@@ -47,7 +47,7 @@ drawTerminal = function(selectedProgram) {
         let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
         for (let y = 0; y < 9; y++) {
             let caret = (vt.caretPosition - 0) * 7 + 7;
-            // if (vt.stringArray[y][x] == sel || (x == caret && drawCount / 20 % 1 < 0.5) || (x / 7 >= fmouse[0] && x / 7 <= fmouse[0] + 1)) {           
+            // if (vt.stringArray[y][x] == sel || (x == caret && drawCount / g % 1 < 0.5) || (x / 7 >= fmouse[0] && x / 7 <= fmouse[0] + 1)) {           
                 if (vt.stringArray[y][x] == sel || (x == caret && drawCount / 20 % 1 < 0.5)) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
@@ -96,15 +96,15 @@ drawTerminal = function(selectedProgram) {
             let caret = false;
             let selection;
             let blink;
-            if (y == 21) {
+            if (y == 21 && mode !== 1) {
                 char = (x >= vt.text.length + 1) ? " " : (">" + vt.text)[x];
                 caret = (x == vt.caretPosition + 1);
                 let sx0 = vt.selectionBounds[0];
                 let sx1 = vt.selectionBounds[1];
                 selection = x >= sx0 && x < sx1;
                 selection = (vt.enter && x < vt.text.length + 1) ? true : selection;
-                blink = (mode == 0);
-            } else if (y == 20) {
+                blink = (mode !== 1);
+            } else if (y == 20 && mode !== 1) {
                 // char = "-";
                 char = (mode == 2) ? swatchesArr[x] : " ";
             } else {
