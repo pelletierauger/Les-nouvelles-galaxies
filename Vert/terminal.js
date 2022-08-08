@@ -127,6 +127,10 @@ drawTerminal = function(selectedProgram) {
             }
             let cur = (x == fmouse[0] && y == fmouse[1]);
             let g = cur ? (mode == 1 ? getGlyph("caret") : getGlyph(pchar)) : getGlyph(char);
+            if (mode == 2 && x >= fmouse[0] && (x - fmouse[0]) < pchar.length && y == fmouse[1]) {
+                char = pchar[x - fmouse[0]];
+                g = getGlyph(char);
+            }
             if (caret) {
                 caret = caret && ((drawCount / 20 % 1 < 0.5) || !blink);
             }
