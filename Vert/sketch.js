@@ -481,7 +481,7 @@ tl = function(d = 0) {
 
 keyDown = function() {
     if (keysActive) {
-        console.log(event.keyCode);
+        // console.log(event.keyCode);
         if (event.keyCode == 27) {
             mode = (mode + 1) % 3;
         }

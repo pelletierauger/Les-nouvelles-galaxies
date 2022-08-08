@@ -40,6 +40,57 @@ let GrimoireTab = function(o) {
     this.carets = o.carets;
     this.selections = o.selections;
     this.data = o.data;
+    this.history = [];
+    this.historyIndex = 0;
+    this.lastEdited = null;
+    this.headState = null;
+    this.attachedHeadState = true;
+};
+
+GrimoireTab.prototype.applyHistoryState = function(n) {
+    let h = this.history[n];
+    this.data = [];
+    for (let i = 0; i < h.data.length; i++) {
+        this.data.push(h.data[i]);
+    }
+    this.carets = [];
+    for (let i = 0; i < h.carets.length; i++) {
+        this.carets.push(h.carets[i]);
+    }
+    this.scroll = {x: h.scroll.x, y: h.scroll.y};
+    this.historyIndex = n;
+};
+
+GrimoireTab.prototype.applyHeadState = function() {
+    let h = this.headState;
+    this.data = [];
+    for (let i = 0; i < h.data.length; i++) {
+        this.data.push(h.data[i]);
+    }
+    this.carets = [];
+    for (let i = 0; i < h.carets.length; i++) {
+        this.carets.push(h.carets[i]);
+    }
+    this.scroll = {x: h.scroll.x, y: h.scroll.y};
+    this.historyIndex = this.history.length;
+};
+
+GrimoireTab.prototype.prepareHistoryState = function() {
+    let data = [];
+    for (let i = 0; i < this.data.length; i++) {
+        data.push(this.data[i]);
+    }
+    let carets = [];
+    for (let i = 0; i < this.carets.length; i++) {
+        let c = this.carets[i]
+        carets.push({x: c.x, y: c.y, dir: c.dir, curXRef: c.curXRef});
+    }
+    let scroll = {x: this.scroll.x, y: this.scroll.y};
+    return {scroll: scroll, carets: carets, data: data};
+};
+
+GrimoireTab.prototype.logHistory = function(h) {
+    this.history.push(h);
 };
 
 GrimoireTab.prototype.moveCaretsX = function(x) {
@@ -157,6 +208,22 @@ GrimoireEditor.prototype.update = function(e) {
     let s = e.key;
     let t = this.activeTab;
     if (t !== null) {
+        let updated = true;
+        let updateDate = new Date();
+        let historyState;
+        let history = false;
+        if (t.lastEdited == null) {
+            historyState = t.prepareHistoryState();
+            history = true;
+        } else {
+            let editDelta = updateDate.getTime() - t.lastEdited.getTime();
+            console.log(editDelta);
+            if (editDelta > 5000) {
+                historyState = t.prepareHistoryState();
+                history = true;
+            }
+        };
+    
         if (s == "ArrowRight") {
             t.moveCaretsX(1);
         } else if (s == "ArrowLeft") {
@@ -191,8 +258,40 @@ GrimoireEditor.prototype.update = function(e) {
             for (let i = 0; i < t.carets.length; i++) {
                 t.carets[i].y+=20;
             }
+        } else if (s == "z" && e.metaKey && e.shiftKey) {
+            if (t.historyIndex < t.history.length - 1){
+                t.applyHistoryState(t.historyIndex + 1);
+            } else if (t.historyIndex == t.history.length - 1) {
+                t.applyHeadState();
+                t.attachedHeadState = true;
+            }
+            updated = false;
+        } else if (s == "z" && e.metaKey) {
+            if (t.attachedHeadState) {
+                t.logHistory(t.prepareHistoryState());
+                t.historyIndex++;
+                t.lastEdited = updateDate;
+                t.attachedHeadState = false;
+            }
+            if (!t.attachedHeadState) {
+                if (t.historyIndex > 0) {
+                    t.applyHistoryState(t.historyIndex - 1);
+                }
+            }
+            updated = false;
         } else if (s.length == 1) {
             t.update(s);
+        } else {
+            updated = false;
+        }
+        if (updated && t.historyIndex < t.history.length) {
+            t.history.length = t.historyIndex;
+        }
+        if (updated && history) {
+            t.logHistory(historyState);
+            t.historyIndex++;
+            t.lastEdited = updateDate;
+            t.headState = t.prepareHistoryState();
         }
     }
 };
