@@ -217,7 +217,7 @@ GrimoireEditor.prototype.update = function(e) {
             updateHistory = true;
         } else {
             let editDelta = updateDate.getTime() - t.lastEdited.getTime();
-            console.log(editDelta);
+            // console.log(editDelta);
             if (editDelta > 3000) {
                 historyState = t.prepareHistoryState();
                 updateHistory = true;
@@ -354,6 +354,37 @@ search = function(s) {
             });
             break;
             // console.log(t);
+        }
+    }
+}
+
+
+updateDrawing = function(e) {
+        let s = e.key;
+    let t = ge.activeTab;
+    if (t !== null) {
+        if (s == "z" && e.metaKey && e.shiftKey) {
+            if (t.historyIndex < t.history.length - 1){
+                t.applyHistoryState(t.historyIndex + 1);
+            } else if (t.historyIndex == t.history.length - 1) {
+                t.applyHeadState();
+                t.attachedHeadState = true;
+            }
+            // updated = false;
+        } else if (s == "z" && e.metaKey) {
+            if (t.attachedHeadState) {
+                // t.logHistory(t.prepareHistoryState());
+                // t.historyIndex++;
+                // t.lastEdited = updateDate;
+                t.headState = t.prepareHistoryState();
+                t.attachedHeadState = false;
+            }
+            if (!t.attachedHeadState) {
+                if (t.historyIndex > 0) {
+                    t.applyHistoryState(t.historyIndex - 1);
+                }
+            }
+            // updated = false;
         }
     }
 }

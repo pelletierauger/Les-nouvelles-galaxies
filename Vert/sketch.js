@@ -493,6 +493,9 @@ keyDown = function() {
         } else if (mode == 1) {
             ge.update(event);
         } 
+        if (mode == 2) {
+            updateDrawing(event);
+        }
     }
 }
 document.onkeydown = keyDown;       

@@ -2742,8 +2742,8 @@ VirtualTerminal.prototype.update = function(e) {
         this.commandDecID();
     } else if (s == "ArrowDown") {
         this.commandIncID();
-    } else if (s.length == "1") {
-        console.log("WHat?????");
+    } else if (s.length == "1" && !e.metaKey) {
+        // console.log("WHat?????");
         if (sel) {
               this.text = this.text.slice(0, this.selectionBounds[0] - 1) + s + this.text.slice(this.selectionBounds[1] - 1);
               this.caretPosition = this.selectionBounds[0];
@@ -2950,6 +2950,19 @@ mouseClicked = function(e) {
                     let n = fmouse[0] - y.length;
                     for (let i = 0; i < n; i++) {add = " " + add};
                 }
+                if (!t.attachedHeadState) {
+                    t.history.length = t.historyIndex;
+                    t.historyIndex = t.history.length;
+                    t.attachedHeadState = true;
+                }
+                let updateDate = new Date();
+                let editDelta = updateDate.getTime() - t.lastEdited.getTime();
+                if (editDelta > 3000 && t.data[fmouse[1]][fmouse[0]] !== pchar) {
+                    t.logHistory(t.prepareHistoryState());
+                    t.historyIndex++;
+                    t.lastEdited = updateDate;
+                    t.headState = t.prepareHistoryState();
+                }
                 t.data[fmouse[1] + t.scroll.y] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
             }
         } else {
@@ -2990,7 +3003,20 @@ mouseDragged = function() {
                 let n = fmouse[0] - y.length;
                 for (let i = 0; i < n; i++) {add = " " + add};
             }
-            t.data[fmouse[1] + t.scroll.y] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
+                if (!t.attachedHeadState) {
+                    t.history.length = t.historyIndex;
+                    t.historyIndex = t.history.length;
+                    t.attachedHeadState = true;
+                }
+                let updateDate = new Date();
+                let editDelta = updateDate.getTime() - t.lastEdited.getTime();
+                if (editDelta > 3000 && t.data[fmouse[1]][fmouse[0]] !== pchar) {
+                    t.logHistory(t.prepareHistoryState());
+                    t.historyIndex++;
+                    t.lastEdited = updateDate;
+                    t.headState = t.prepareHistoryState();
+                }
+                t.data[fmouse[1] + t.scroll.y] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
         }
     }
 };
