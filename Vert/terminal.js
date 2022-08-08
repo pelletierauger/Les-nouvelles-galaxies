@@ -2919,11 +2919,24 @@ mouseClicked = function(e) {
     if (mode == 1) {
         let t = ge.activeTab;
         if (grimoire && fmouse[1] < 22) {
-            if (!e.metaKey) {
-                t.carets = [];
+            let caret = false;
+            let caretAt;
+            for (let i = 0; i < t.carets.length; i++) {
+                let c = t.carets[i];
+                if (c.x == fmouse[0] && c.y == fmouse[1] + t.scroll.y) {
+                    caret = true;
+                    caretAt = i;
+                }
             }
-            let x = Math.min(t.data[fmouse[1] + t.scroll.y].length, fmouse[0]);
-            t.carets.push({x: x, y: fmouse[1] + t.scroll.y, dir: 0, curXRef: 0});
+            if (caret && e.metaKey) {
+                t.carets.splice(caretAt, 1)
+            } else if (!caret) {
+                if (!e.metaKey) {
+                    t.carets = [];
+                }
+                let x = Math.min(t.data[fmouse[1] + t.scroll.y].length, fmouse[0]);
+                t.carets.push({x: x, y: fmouse[1] + t.scroll.y, dir: 0, curXRef: 0});
+            }
         }
     }
     //  drawing
