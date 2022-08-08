@@ -2743,6 +2743,7 @@ VirtualTerminal.prototype.update = function(e) {
     } else if (s == "ArrowDown") {
         this.commandIncID();
     } else if (s.length == "1") {
+        console.log("WHat?????");
         if (sel) {
               this.text = this.text.slice(0, this.selectionBounds[0] - 1) + s + this.text.slice(this.selectionBounds[1] - 1);
               this.caretPosition = this.selectionBounds[0];
@@ -2914,6 +2915,17 @@ face = [
 pchar = "a";
 
 mouseClicked = function(e) {
+    // editing
+    if (mode == 1) {
+        let t = ge.activeTab;
+        if (grimoire && fmouse[1] < 22) {
+            if (!e.metaKey) {
+                t.carets = [];
+            }
+            let x = Math.min(t.data[fmouse[1] + t.scroll.y].length, fmouse[0]);
+            t.carets.push({x: x, y: fmouse[1] + t.scroll.y, dir: 0, curXRef: 0});
+        }
+    }
     //  drawing
     if (mode == 2) {
         let t = ge.activeTab;

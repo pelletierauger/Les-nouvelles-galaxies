@@ -34,21 +34,137 @@ let GrimoireEditor = function() {
     this.activeTab = null;
 };
 
+let GrimoireTab = function(o) {
+    this.name = o.name,
+    this.scroll = o.scroll;
+    this.carets = o.carets;
+    this.selections = o.selections;
+    this.data = o.data;
+};
+
+GrimoireTab.prototype.moveCaretsX = function(x) {
+    let t = this;
+    for (let i = 0; i < t.carets.length; i++) {
+        t.carets[i].dir = 0;
+    }
+    if (x == 1) {
+        for (let i = 0; i < t.carets.length; i++) {
+            let c = t.carets[i];
+            if (c.x == t.data[c.y].length
+                &&
+                c.x < t.data.length
+                ) {
+                c.x = 0;
+                c.y++;
+            } else if (c.x < t.data[c.y].length) {
+                c.x += x;
+            }
+        }
+    } else if (x == -1) {
+        for (let i = 0; i < t.carets.length; i++) {
+            let c = t.carets[i];
+            if (c.x == 0 && c.y > 0) {
+                c.y--;
+                c.x = t.data[c.y].length;
+                // c.x = 0;
+            } else if (c.x > 0) {
+                c.x += x;
+            }
+        }
+    }
+};
+
+GrimoireTab.prototype.moveCaretsY = function(y) {
+    let t = this;
+    for (let i = 0; i < t.carets.length; i++) {
+        let c = t.carets[i];
+        if (c.dir == 0) {
+            c.dir = 1;
+            c.curXRef = c.x;
+        }
+    }
+    if (y == 1) {
+        for (let i = 0; i < t.carets.length; i++) {
+            let c = t.carets[i];
+            if (c.y < t.data.length) {
+                c.y++;
+                c.x = Math.min(t.data[c.y].length, c.curXRef);
+            }
+        }
+    } else if (y == -1) {
+        for (let i = 0; i < t.carets.length; i++) {
+            let c = t.carets[i];
+            if (c.y > 0) {
+                c.y--;
+                c.x = Math.min(t.data[c.y].length, c.curXRef);
+            }
+        }
+    }
+    for (let i = 0; i < t.carets.length; i++) {
+         let c = t.carets[i];
+        if (c.y < t.scroll.y) {
+            t.scroll.y--;
+            break;
+        } else if (c.y > t.scroll.y + 21) {
+            t.scroll.y++;
+            break;
+        }
+    }
+};
+
+GrimoireTab.prototype.scroll = function(x, y) {
+
+};
+
+GrimoireTab.prototype.addLine = function() {
+
+};
+
+GrimoireTab.prototype.deleteLine = function() {
+
+};
+
+
+GrimoireTab.prototype.updateSelection = function() {
+
+};
+
+
+GrimoireTab.prototype.evaluate = function() {
+
+};
+
+
+GrimoireTab.prototype.update = function(s) {
+    let t = this;
+        for (let i = 0; i < t.carets.length; i++) {
+            let c = t.carets[i];
+            // let line = t.data[c.y];
+            t.data[c.y] = t.data[c.y].slice(0, c.x) + s + t.data[c.y].slice(c.x);
+            let y = c.y;
+            let x = c.x;
+            for (let j = 0; j < t.carets.length; j++) {
+               let d = t.carets[j];
+               if (d.y == y && d.x >= x) {
+                   d.x++;
+               }
+           }
+            // c.x++;
+        }
+};
+
 GrimoireEditor.prototype.update = function(e) {
     let s = e.key;
     let t = this.activeTab;
     if (t !== null) {
         if (s == "ArrowRight") {
-            for (let i = 0; i < t.carets.length; i++) {
-                let c = t.carets[i];
-                if (c.x == t.data[c.y].length) {
-                    c.x = 0;
-                    c.y++;
-                } else {
-                    c.x++;
-                }
-                // t.carets[i].x++;                
-            }
+            t.moveCaretsX(1);
+        } else if (s == "ArrowLeft") {
+            t.moveCaretsX(-1);
+        } else if (s == "ArrowUp") {
+            t.moveCaretsY(-1);
+        } else if (s == "ArrowDown") {
+            t.moveCaretsY(1);
         } else if (s == "ArrowDown" && e.altKey && t.scroll.y < t.data.length) {
             t.scroll.y++;
             for (let i = 0; i < t.carets.length; i++) {
@@ -75,6 +191,8 @@ GrimoireEditor.prototype.update = function(e) {
             for (let i = 0; i < t.carets.length; i++) {
                 t.carets[i].y+=20;
             }
+        } else if (s.length == 1) {
+            t.update(s);
         }
     }
 };
