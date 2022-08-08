@@ -211,27 +211,31 @@ GrimoireEditor.prototype.update = function(e) {
         let updated = true;
         let updateDate = new Date();
         let historyState;
-        let history = false;
+        let updateHistory = false;
         if (t.lastEdited == null) {
             historyState = t.prepareHistoryState();
-            history = true;
+            updateHistory = true;
         } else {
             let editDelta = updateDate.getTime() - t.lastEdited.getTime();
             console.log(editDelta);
-            if (editDelta > 5000) {
+            if (editDelta > 3000) {
                 historyState = t.prepareHistoryState();
-                history = true;
+                updateHistory = true;
             }
         };
     
         if (s == "ArrowRight") {
             t.moveCaretsX(1);
+            updateHistory = false;
         } else if (s == "ArrowLeft") {
             t.moveCaretsX(-1);
+            updateHistory = false;
         } else if (s == "ArrowUp") {
             t.moveCaretsY(-1);
+            updateHistory = false;
         } else if (s == "ArrowDown") {
             t.moveCaretsY(1);
+            updateHistory = false;
         } else if (s == "ArrowDown" && e.altKey && t.scroll.y < t.data.length) {
             t.scroll.y++;
             for (let i = 0; i < t.carets.length; i++) {
@@ -268,9 +272,10 @@ GrimoireEditor.prototype.update = function(e) {
             updated = false;
         } else if (s == "z" && e.metaKey) {
             if (t.attachedHeadState) {
-                t.logHistory(t.prepareHistoryState());
-                t.historyIndex++;
-                t.lastEdited = updateDate;
+                // t.logHistory(t.prepareHistoryState());
+                // t.historyIndex++;
+                // t.lastEdited = updateDate;
+                t.headState = t.prepareHistoryState();
                 t.attachedHeadState = false;
             }
             if (!t.attachedHeadState) {
@@ -284,10 +289,13 @@ GrimoireEditor.prototype.update = function(e) {
         } else {
             updated = false;
         }
-        if (updated && t.historyIndex < t.history.length) {
+        // if (updated && t.historyIndex < t.history.length) {
+        if (updated && !t.attachedHeadState) {
             t.history.length = t.historyIndex;
+            t.historyIndex = t.history.length;
+            t.attachedHeadState = true;
         }
-        if (updated && history) {
+        if (updated && updateHistory) {
             t.logHistory(historyState);
             t.historyIndex++;
             t.lastEdited = updateDate;
