@@ -418,3 +418,50 @@ window.addEventListener('mousemove', e => {
         paint();
     }
 });
+
+// socket.emit('saveFile', {path: "/Users/guillaumepelletier/Desktop/grimoirePainting.json", data: JSON.stringify(gc.data).replace(/null/g, "0")});
+
+
+
+
+savePainting2 = function() {
+    let path = "/Users/guillaumepelletier/Desktop/grimoirePaintingNotOptimized.json";
+    // let data = JSON.stringify(gc.data).replace(/null/g, "0").replace(/0,/g, "2").replace(/1,/g, "3");
+    let data = JSON.stringify(gc.data).replace(/null/g, "0");
+    // data = data.replace(/(2)(\1*)/g, (a, b, c) => {
+    //     // console.log(a);
+    //     if (a.length > 3) {
+    //         return "<" + a.length + ">"
+    //     } else {
+    //         return a;
+    //     }
+    // });
+    // data = data.replace(/23/g, ".");
+    // data = data.replace(/32/g, "-");
+    // data = data.replace(/2\./g, "_");
+    // data = data.replace(/33/g, "+");
+    // data = data.replace(/33/g, "+");
+    // data = data.replace(/\.\./g, "=");
+    // data = data.replace(/\+\+/g, "/");
+    socket.emit('saveFile', {path: path, data: data});
+}
+
+
+savePainting = function() {
+    let path = "/Users/guillaumepelletier/Desktop/grimoirePainting2.json";
+    let data = [];
+    for (let y = 0; y < gc.data.length; y++){
+        if (gc.data[y]) {
+            for (let x = 0; x < gc.data[y].length; x++){
+                if (gc.data[y][x]) {
+                    for (let xy = 0; xy < gc.data[y][x].length; xy++) {
+                        if (gc.data[y][x][xy]) {
+                            data.push([y, x, xy]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    socket.emit('saveFile', {path: path, data: JSON.stringify(data)});
+};
