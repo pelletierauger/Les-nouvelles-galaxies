@@ -410,3 +410,11 @@ GrimoireCanvas.prototype.addBlankGlyph = function(x, y) {
 
 gc = new GrimoireCanvas();
 
+
+
+
+window.addEventListener('mousemove', e => {
+    if (e.altKey && ge.activeTab && mode == 3) {
+        paint();
+    }
+});
