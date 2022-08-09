@@ -388,3 +388,25 @@ updateDrawing = function(e) {
         }
     }
 }
+
+
+
+let GrimoireCanvas = function() {
+    this.data = [];
+};
+
+GrimoireCanvas.prototype.addBlankLine = function(n) {
+    // let a = [];
+    // for (let i = 0; i < 109; i++) {
+    //     a[i] = 0;
+    // }
+    this.data[n] = [];    
+};
+GrimoireCanvas.prototype.addBlankGlyph = function(x, y) {
+    if (this.data[y]) {
+        this.data[y][x] = [];            
+    }
+};
+
+gc = new GrimoireCanvas();
+

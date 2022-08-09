@@ -37,6 +37,8 @@ let resolutionScalar = 0.5;
 let resolutionBG;
 
 let fmouse = [0, 0];
+let pmouse = [0, 0];
+let smouse = [0, 0];
 
 function setup() {
     socket = io.connect('http://localhost:8080');

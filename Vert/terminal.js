@@ -5,6 +5,10 @@ drawTerminal = function(selectedProgram) {
     // let my = map(mouse.y, hh, canH + hh, 1, -1);
     fmouse[0] = constrain(Math.floor(map(mouse.x, 78, 1190, 0, 108)), 0, 109);
     fmouse[1] = constrain(Math.floor(map(mouse.y, 96, 695, 0, 22)), 0, 21);
+    pmouse[0] = constrain(Math.floor(map(mouse.x, 78, 1190, 0, 108 * 7)), 0, 109 * 7);
+    pmouse[1] = constrain(Math.floor(map(mouse.y, 96, 695, 0, 22 * 9)), 0, 21 * 9);
+    smouse[0] = Math.floor(pmouse[0] % 7);
+    smouse[1] = Math.floor(pmouse[1] % 9);
     
     vertices = [];
     let num = 150;
@@ -126,7 +130,9 @@ drawTerminal = function(selectedProgram) {
                 }
             }
             let cur = (x == fmouse[0] && y == fmouse[1]);
-            let g = cur ? (mode == 1 ? getGlyph("caret") : getGlyph(pchar)) : getGlyph(char);
+            // let curP = (x == fmouse[0] && y == fmouse[1]);
+            // cur = (mode == 3) ? false : cur;
+            let g = (cur && mode !== 3) ? (mode == 1 ? getGlyph("caret") : getGlyph(pchar)) : getGlyph(char);
             if (mode == 2 && x >= fmouse[0] && (x - fmouse[0]) < pchar.length && y == fmouse[1]) {
                 char = pchar[x - fmouse[0]];
                 g = getGlyph(char);
@@ -134,13 +140,29 @@ drawTerminal = function(selectedProgram) {
             if (caret) {
                 caret = caret && ((drawCount / 20 % 1 < 0.5) || !blink);
             }
-            if (char !== " " || caret == true || cur || selection) {
+            let paint = false;
+            let canvas = gc.data;
+            if (ge.activeTab !== null) {
+                if (canvas[y + ge.activeTab.scroll.y]) {
+                    if (canvas[y + ge.activeTab.scroll.y][x]) {
+                        paint = true;
+                    }
+                }
+            }
+            // if (mode == 3 && cur) {
+            //     char = " "
+            //     // g = getGlyph(char);
+            // };
+            if (char !== " " || caret == true || cur || selection || paint) {
                 for (let yy = 0; yy < g.length; yy++) {
                     for (let xx = 0; xx < g[yy].length; xx++) {
                         let test = !selection;
                         test = ((xx == 0) && caret) ? !test : test
                         test = (test) ? "1" : "0";
-                        if (g[yy][xx] == test) {
+                        let paintTest = (paint) ? canvas[y + ge.activeTab.scroll.y][x][xx + (yy * 7)] : false;
+                        let curPSub = (xx == smouse[0] || yy == smouse[1]);
+                        paintTest = (cur && curPSub && mode == 3) ? true : paintTest;
+                        if (g[yy][xx] == test || paintTest) {
                             let tx = 0, ty = 0;
                             let sc = 0.8;
                             // tx = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1) * 0.0;
@@ -3005,6 +3027,9 @@ mouseClicked = function(e) {
             }
         }
     }
+    if (mode == 3) {
+        paint();
+    }
 };
 mouseDragged = function() {
     if (mode == 2) {
@@ -3041,8 +3066,29 @@ mouseDragged = function() {
             }
         }
     }
+    if (mode == 3) {
+        paint();
+    }
 };
 
+
+paint = function() {
+    let c = gc.data;
+    let y = fmouse[1] + ge.activeTab.scroll.y;
+    let xy = smouse[0] + (smouse[1] * 7);
+    if (c[y]) {
+        if (c[y][fmouse[0]]) {
+            c[y][fmouse[0]][xy] = 1;
+        } else {
+            c[y][fmouse[0]] = [];
+            c[y][fmouse[0]][xy] = 1;
+        }
+    } else {
+        c[y] = [];
+        c[y][fmouse[0]] = [];
+        c[y][fmouse[0]][xy] = 1;
+    }
+}
 
 
 
