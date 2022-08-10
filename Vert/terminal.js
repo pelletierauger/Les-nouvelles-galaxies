@@ -94,6 +94,9 @@ drawTerminal = function(selectedProgram) {
     // let sc2 = sc * 1.2;
     // for (let x = 0; x <= vt.stringArray[0].length; x++) {
     //     let sel = ((x > sx0 * 7 && x < sx1 * 7)
+//     
+//     
+//     
     for (let y = 0; y < 22; y++) {
         for (let x = 0; x < 109; x++) {
             let char;
@@ -142,7 +145,7 @@ drawTerminal = function(selectedProgram) {
             }
             let paint = false;
             let canvas = gc.data;
-            if (ge.activeTab !== null) {
+            if (ge.activeTab !== null && (y < 20 || mode == 1)) {
                 if (canvas[y + ge.activeTab.scroll.y]) {
                     if (canvas[y + ge.activeTab.scroll.y][x]) {
                         paint = true;
@@ -153,16 +156,21 @@ drawTerminal = function(selectedProgram) {
             //     char = " "
             //     // g = getGlyph(char);
             // };
-            if (char !== " " || caret == true || cur || selection || paint) {
+            let maxloopy = 0;
+            if (char !== " " || caret == true || cur || selection || paint || mode == 3) {
                 for (let yy = 0; yy < g.length; yy++) {
                     for (let xx = 0; xx < g[yy].length; xx++) {
+                        let brush = false;
+                        if (ge.brushPositions) {
+                            brush = ge.brushPositions[(y * 9) + yy][(x * 7) + xx];
+                        }
                         let test = !selection;
                         test = ((xx == 0) && caret) ? !test : test
                         test = (test) ? "1" : "0";
                         let paintTest = (paint) ? canvas[y + ge.activeTab.scroll.y][x][xx + (yy * 7)] : false;
                         let curPSub = (xx == smouse[0] && yy == smouse[1]);
                         paintTest = (cur && curPSub && mode == 3) ? true : paintTest;
-                        if (g[yy][xx] == test || paintTest) {
+                        if (g[yy][xx] == test || paintTest || (brush && mode == 3)) {
                             let tx = 0, ty = 0;
                             let sc = 0.8;
                             // tx = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1) * 0.0;
@@ -174,6 +182,7 @@ drawTerminal = function(selectedProgram) {
                     }
                 }
             }
+            // console.log(maxloopy);
         }
     }
     
@@ -2912,9 +2921,15 @@ files["js"][0].data.replace(/(ansi = `)([^`]*)(`)/g, function(a, b, c, d, e) {
 
 }
 
-    mouse= {x: 0, y: 0};
+    mouse = {x: 0, y: 0};
 
-onmousemove = function(e){mouse.x = e.clientX; mouse.y = e.clientY};
+onmousemove = function(e){
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    if (mode == 3 && ge.activeTab !== null) {
+        resetBrushPositions();
+    }
+};
 
 
 face = [
@@ -3028,10 +3043,12 @@ mouseClicked = function(e) {
         }
     }
     if (mode == 3) {
-        paint();
+        let val = (e.shiftKey) ? 0 : 1;
+        // paint(fmouse[0], fmouse[1], smouse[0], smouse[1], val);
+        paint(val);
     }
 };
-mouseDragged = function() {
+mouseDragged = function(e) {
     if (mode == 2) {
         if (grimoire && fmouse[1] < 20) {
             let t = ge.activeTab;
@@ -3067,7 +3084,9 @@ mouseDragged = function() {
         }
     }
     if (mode == 3) {
-        paint();
+        let val = (e.shiftKey) ? 0 : 1;
+        // paint(fmouse[0], fmouse[1], smouse[0], smouse[1], val);
+        paint(val);
     }
 };
 
@@ -3090,6 +3109,37 @@ paint = function() {
     }
 }
 
+
+
+paintUnit = function(fx, fy, sx, sy, val = 1) {
+    let c = gc.data;
+    let y = fy + ge.activeTab.scroll.y;
+    let xy = sx + (sy * 7);
+    if (c[y]) {
+        if (c[y][fx]) {
+            c[y][fx][xy] = val;
+        } else {
+            c[y][fx] = [];
+            c[y][fx][xy] = val;
+        }
+    } else {
+        c[y] = [];
+        c[y][fx] = [];
+        c[y][fx][xy] = val;
+    }
+}
+
+
+paint = function(val = 1) {
+    for (let y = 0; y < ge.brushPositions.length; y++) {
+        for (let x = 0; x < ge.brushPositions[y].length; x++) {
+            if (ge.brushPositions[y][x]) {
+                let rand = Math.round(Math.random() - Math.random());
+                paintUnit(Math.floor(x/7),Math.floor(y/9), x%7,y%9, val * 1);
+            }
+        }
+    }
+}
 
 
 visage = [

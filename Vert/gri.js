@@ -415,7 +415,9 @@ gc = new GrimoireCanvas();
 
 window.addEventListener('mousemove', e => {
     if (e.altKey && ge.activeTab && mode == 3) {
-        paint();
+        let val = (e.shiftKey) ? 0 : 1;
+        // paint(fmouse[0], fmouse[1], smouse[0], smouse[1], val);
+        paint(val);
     }
 });
 
@@ -465,3 +467,107 @@ savePainting = function() {
     }
     socket.emit('saveFile', {path: path, data: JSON.stringify(data)});
 };
+
+if (false) {
+
+ge.activeBrush = {
+    anchor: [3, 3],
+    data: [
+        [1, 0, 0, 0, 0, 0, 0, 1],
+        [0, 1, 0, 0, 0, 0, 1, 0],
+        [0, 0, 1, 0, 0, 1, 0, 0],
+        [0, 0, 0, 1, 1, 0, 0, 0],
+        [0, 0, 1, 0, 0, 1, 0, 0],
+        [0, 1, 0, 0, 0, 0, 1, 0],
+        [1, 0, 0, 0, 0, 0, 0, 1]
+    ]
+};
+
+ge.activeBrush = {
+    anchor: [0, 0],
+    data: [
+        [1]
+    ]
+};
+
+
+ge.activeBrush = {
+    anchor: [7, 7],
+    data: [
+        [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+        [0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+        [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+        [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+        [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+        [0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+        [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+        [0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+        [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+        [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+        [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+        [0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+        [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1]
+    ]
+};
+
+
+
+ge.activeBrush = {
+    anchor: [6, 6],
+    data: [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]
+};
+resetBrushPositions = function() {
+    ge.brushPositions = [];
+    for (let y = 0; y < 22 * 9; y++) {
+        ge.brushPositions[y] = [];
+        for (let x = 0; x < 109 * 7; x++) {
+            ge.brushPositions[y][x] = 0;
+        }
+    }
+    // console.log("reset!");
+    let b = ge.activeBrush;
+    let tx = (fmouse[0] * 7) + smouse[0];
+    let tox = Math.max(0, tx - b.anchor[0]);
+    let bix = (tx - tox) - b.anchor[0];
+    // let fox = Math.floor(tox / 7);
+    // let sox = tox % 7;
+    let bixmax = Math.min(b.data[0].length, 763 - (tox + b.data[0].length));
+    let ty = (fmouse[1] * 9) + smouse[1];
+    let toy = Math.max(0, ty - b.anchor[1]);
+    let biy = ((ty - toy) - b.anchor[1]);
+    // biy = Math.max(0, b.anchor[1] - ty);
+    // biy = (b.anchor[1] > ty) ? b.anchor[1] - ty : 0;
+    // let foy = Math.floor(toy / 9);
+    // let soy = toy % 9;
+    let biymax = Math.min(b.data.length, 198 - (toy + b.data.length));
+    logJavaScriptConsole("ty: " + ty + " ,  b.anchor[1] :" +  b.anchor[1] + " , biy: " + biy + ", biymax: " + biymax);
+    for (let y = biy; y < biymax; y++) {
+        for (let x = bix; x < bixmax; x++) {
+                 // console.log("x: " + x + ", y: " + y);
+            let brush = b.data[y][x];
+            if (brush) {
+                // console.log("A brush with greatness!");
+                ge.brushPositions[toy + y - b.anchor[1] * 0][tox + x - b.anchor[0] * 0] = 1;
+            }
+        }
+    }
+}
+resetBrushPositions();
+
+}
