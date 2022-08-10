@@ -489,6 +489,33 @@ ge.activeBrush = {
         [1]
     ]
 };
+    
+
+    ge.activeBrush = {
+    anchor: [2, 1],
+    data: [
+        [0, 0, 0, 1, 1],
+        [0, 0, 1, 1, 0],
+        [0, 1, 1, 0, 0],
+        [1, 1, 0, 0, 0]
+    ]
+};
+    
+
+        ge.activeBrush = {
+    anchor: [2, 1],
+    data: getGlyph("O")
+};
+
+        ge.activeBrush = {
+    anchor: [2, 1],
+    data: [
+        [1, 1, 0, 0, 0],
+        [0, 1, 1, 0, 0],
+        [0, 0, 1, 1, 0],
+        [0, 0, 0, 1, 1]
+    ]
+};
 
 
 ge.activeBrush = {
@@ -561,7 +588,7 @@ resetBrushPositions = function() {
         for (let x = bix; x < bixmax; x++) {
                  // console.log("x: " + x + ", y: " + y);
             let brush = b.data[y][x];
-            if (brush) {
+            if (brush == 1 || brush == "1") {
                 // console.log("A brush with greatness!");
                 ge.brushPositions[toy + y - b.anchor[1] * 0][tox + x - b.anchor[0] * 0] = 1;
             }
