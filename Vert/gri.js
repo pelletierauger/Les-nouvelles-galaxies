@@ -543,20 +543,20 @@ ge.activeBrush = {
 ge.activeBrush = {
     anchor: [6, 6],
     data: [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
 };
 resetBrushPositions = function() {
@@ -583,7 +583,7 @@ resetBrushPositions = function() {
     // let foy = Math.floor(toy / 9);
     // let soy = toy % 9;
     let biymax = Math.min(b.data.length, 198 - (toy + b.data.length));
-    logJavaScriptConsole("ty: " + ty + " ,  b.anchor[1] :" +  b.anchor[1] + " , biy: " + biy + ", biymax: " + biymax);
+    // logJavaScriptConsole("ty: " + ty + " ,  b.anchor[1] :" +  b.anchor[1] + " , biy: " + biy + ", biymax: " + biymax);
     for (let y = biy; y < biymax; y++) {
         for (let x = bix; x < bixmax; x++) {
                  // console.log("x: " + x + ", y: " + y);
@@ -597,4 +597,21 @@ resetBrushPositions = function() {
 }
 resetBrushPositions();
 
+ge.activePattern = diagonal0;
+
+
 }
+
+paintingKeys = function(e) {
+    let s = e.key;
+    let t = ge.activeTab;
+    if (s == "ArrowDown") {
+        t.moveCaretsY(1);
+        t.scroll.y++;
+    } else if (s == "ArrowUp") {
+        t.moveCaretsY(-1);
+        t.scroll.y = Math.max(0, t.scroll.y - 1);
+    }
+};
+
+

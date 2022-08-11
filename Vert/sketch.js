@@ -485,7 +485,7 @@ keyDown = function() {
     if (keysActive) {
         // console.log(event.keyCode);
         if (event.keyCode == 27) {
-            mode = (mode + 1) % 3;
+            mode = (mode + 1) % 4;
         }
         if (mode == 0 || mode == 2) {
                 if (vtActive) {
@@ -497,6 +497,9 @@ keyDown = function() {
         } 
         if (mode == 2) {
             updateDrawing(event);
+        }
+        if (mode == 3) {
+            paintingKeys(event);
         }
     }
 }
