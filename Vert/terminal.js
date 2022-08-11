@@ -3172,7 +3172,7 @@ paint = function(val = 1) {
                 let rand = Math.round(Math.random() - Math.random());
                 let pattern = ge.activePattern.grid;
                 let pdim = [pattern[0].length, pattern.length];
-                let vv = pattern[y % pdim[1]][x % pdim[0]];
+                let vv = pattern[((ge.activeTab.scroll.y * 9 ) + y) % pdim[1]][x % pdim[0]];
                 if (val == 0) {vv = 1 - vv};
                 paintUnit(Math.floor(x/7),Math.floor(y/9), x%7,y%9, vv);
             }
