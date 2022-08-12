@@ -123,6 +123,15 @@ GrimoireTab.prototype.moveCaretsX = function(x) {
             }
         }
     }
+    for (let i = 0; i < t.carets.length; i++) {
+        let c = t.carets[i];
+        for (let j = t.carets.length -1; j > i; j--) {
+            let c2 = t.carets[j];
+            if (c.x == c2.x && c.y == c2.y) {
+                t.carets.splice(j, 1);
+            }
+        }
+    }
 };
 
 GrimoireTab.prototype.moveCaretsY = function(y) {
@@ -159,6 +168,15 @@ GrimoireTab.prototype.moveCaretsY = function(y) {
         } else if (c.y > t.scroll.y + 21) {
             t.scroll.y++;
             break;
+        }
+    }
+    for (let i = 0; i < t.carets.length; i++) {
+        let c = t.carets[i];
+        for (let j = t.carets.length -1; j > i; j--) {
+            let c2 = t.carets[j];
+            if (c.x == c2.x && c.y == c2.y) {
+                t.carets.splice(j, 1);
+            }
         }
     }
 };
