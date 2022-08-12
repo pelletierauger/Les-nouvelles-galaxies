@@ -242,7 +242,21 @@ GrimoireEditor.prototype.update = function(e) {
             }
         };
     
-        if (s == "ArrowRight") {
+        if (s == "ArrowDown" && e.altKey && t.scroll.y < t.data.length) {
+            t.scroll.y++;
+            t.moveCaretsY(1);
+            updateHistory = false;
+        } else if (s == "ArrowDown" && e.metaKey && t.scroll.y + 20 < t.data.length) {
+            t.scroll.y += 20;
+            for (let i = 0; i < t.carets.length; i++) {
+                t.carets[i].y += 20;
+            }
+            updateHistory = false;
+        } else if (s == "ArrowUp" && e.altKey && t.scroll.y > 0) {
+            t.scroll.y--;
+            t.moveCaretsY(-1);
+            updateHistory = false;
+        } else if (s == "ArrowRight") {
             t.moveCaretsX(1);
             updateHistory = false;
         } else if (s == "ArrowLeft") {
@@ -254,22 +268,6 @@ GrimoireEditor.prototype.update = function(e) {
         } else if (s == "ArrowDown") {
             t.moveCaretsY(1);
             updateHistory = false;
-        } else if (s == "ArrowDown" && e.altKey && t.scroll.y < t.data.length) {
-            t.scroll.y++;
-            for (let i = 0; i < t.carets.length; i++) {
-                t.carets[i].y++;
-            }
-        } else if (s == "ArrowDown" && e.metaKey && t.scroll.y + 20 < t.data.length) {
-            t.scroll.y+=20;
-            console.log("lamb");
-            for (let i = 0; i < t.carets.length; i++) {
-                t.carets[i].y += 20;
-            }
-        } else if (s == "ArrowUp" && e.altKey && t.scroll.y > 0) {
-            t.scroll.y--;
-            for (let i = 0; i < t.carets.length; i++) {
-                t.carets[i].y--;
-            }
         } else if (s == "PageUp") {
             t.scroll.y = Math.max(0, t.scroll.y - 20);
             for (let i = 0; i < t.carets.length; i++) {
