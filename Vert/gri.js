@@ -612,12 +612,12 @@ resetBrushPositions = function() {
     }
 }
 resetBrushPositions();
-
 ge.activePattern = diagonal0;
 
 
 }
 
+patternScale = 1;
 paintingKeys = function(e) {
     let s = e.key;
     let t = ge.activeTab;
@@ -627,6 +627,12 @@ paintingKeys = function(e) {
     } else if (s == "ArrowUp") {
         t.moveCaretsY(-1);
         t.scroll.y = Math.max(0, t.scroll.y - 1);
+    } else if (s == "s") {
+        switch(patternScale) {
+            case 1: patternScale = 0.5; break;
+            case 0.5: patternScale = 0.25; break;
+            case 0.25: patternScale = 1; break;
+        }
     }
 };
 
