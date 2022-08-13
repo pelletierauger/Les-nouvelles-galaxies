@@ -105,7 +105,7 @@ GrimoireTab.prototype.moveCaretsX = function(x, sel = false) {
             let c = t.carets[i];
             if (c.x == t.data[c.y].length
                 &&
-                c.x < t.data.length
+                c.y < t.data.length - 1
                 ) {
                 c.x = 0;
                 c.y++;
@@ -154,6 +154,8 @@ GrimoireTab.prototype.moveCaretsY = function(y, sel = false) {
             if (c.y < t.data.length - 1) {
                 c.y++;
                 c.x = Math.min(t.data[c.y].length, c.curXRef);
+            } else if (c.y == t.data.length - 1) {
+                c.x = t.data[c.y].length;
             }
         }
     } else if (y == -1) {
@@ -162,6 +164,8 @@ GrimoireTab.prototype.moveCaretsY = function(y, sel = false) {
             if (c.y > 0) {
                 c.y--;
                 c.x = Math.min(t.data[c.y].length, c.curXRef);
+            } else if (c.y == 0) {
+                c.x = 0;
             }
         }
     }
@@ -259,11 +263,12 @@ GrimoireTab.prototype.update = function(s) {
                 let baseX = (anchor) ? c.sel[0] : c.x;
                 let baseY = (anchor) ? c.sel[1] : c.y;
                 t.data[baseY] = t.data[baseY].slice(0, baseX) + s + t.data[baseY + yOffset].slice(xOffset);
-                for (let i = 0; i < yOffset; i++) {
-                    t.data.splice(baseY + 1, yOffset);
-                }
+                // for (let i = 0; i < yOffset; i++) {
+                t.data.splice(baseY + 1, yOffset);
+                // }
                 c.x = (anchor) ? c.sel[0] + s.length : c.x + s.length;
                 c.y = (anchor) ? c.sel[1] : c.y;
+                // console.log(yOffset);
                 c.sel = null;
                 for (let j = 0; j < t.carets.length; j++) {
                     let d = t.carets[j];

@@ -181,7 +181,7 @@ drawTerminal = function(selectedProgram) {
             } else {
                 if (ge.activeTab !== null) {
                     let t = ge.activeTab;
-                    if (x >= t.data[y + t.scroll.y].length) {
+                    if (y + t.scroll.y >= t.data.length || x >= t.data[y + t.scroll.y].length) {
                         char = " ";
                     } else {
                         char = t.data[y + t.scroll.y][x];
