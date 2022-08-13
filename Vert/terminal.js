@@ -123,6 +123,32 @@ drawTerminal = function(selectedProgram) {
              }
          }
     }   
+// 
+    let editorSelection = false;
+    let selections = null;
+    let oneD = function(x, y) {return x + (y * 109)};
+    if (ge.activeTab !== null) {
+    if (ge.activeTab.carets[0].sel !== null) {
+        // ctt++;
+        selections = [];
+        for (let y = 0; y < 22; y++) {
+            selections[y] = [];
+            for (let x = 0; x < 109; x++) {
+                selections[y][x] = 0;
+                for (let i = 0; i < ge.activeTab.carets.length; i++) {
+                    let c = ge.activeTab.carets[i];
+                    let oy = ge.activeTab.scroll.y + y;
+                    let span = [oneD(c.x, c.y), oneD(c.sel[0], c.sel[1])].sort(function(a, b) {
+                        return a - b;
+                    });
+                    if (oneD(x, oy) >= span[0] && oneD(x, oy) < span[1]) {
+                        selections[y][x] = 1;
+                    }
+                }
+            }
+        }
+    }
+}
 //     
     for (let y = 0; y < 22; y++) {
         for (let x = 0; x < 109; x++) {
@@ -184,6 +210,9 @@ drawTerminal = function(selectedProgram) {
             //     char = " "
             //     // g = getGlyph(char);
             // };
+            if (selections !== null) {
+                selection = (selections[y][x] && x < ge.activeTab.data[y+ge.activeTab.scroll.y].length) ? true : selection;
+            }
             let maxloopy = 0;
             if (char !== " " || caret == true || cur || selection || paint || mode == 3) {
                 for (let yy = 0; yy < g.length; yy++) {
@@ -3004,7 +3033,7 @@ mouseClicked = function(e) {
                     t.carets = [];
                 }
                 let x = Math.min(t.data[fmouse[1] + t.scroll.y].length, fmouse[0]);
-                t.carets.push({x: x, y: fmouse[1] + t.scroll.y, dir: 0, curXRef: 0});
+                t.carets.push({x: x, y: fmouse[1] + t.scroll.y, dir: 0, curXRef: 0, sel: null});
             }
         }
     }
@@ -3491,6 +3520,24 @@ haloEyeMod.grid = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
+haloEyeMod2 = new Pattern("haloEyeMod-2");
+haloEyeMod2.grid = [
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 ],
+[ 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0 ],
+[ 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0 ],
+[ 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0 ],
+[ 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+]
+
 
 fence4 = new Pattern("fence4");
 
@@ -3547,7 +3594,7 @@ patterns = [
     horizontal1, horizontal0,
     vertical0, vertical1,
     diagonal0, diagonal1, 
-    haloEyeMod, fence1, fence0, fence2, fence3,
+    haloEyeMod, haloEyeMod2, fence1, fence0, fence2, fence3,
     fence4, fence5
 ];
 

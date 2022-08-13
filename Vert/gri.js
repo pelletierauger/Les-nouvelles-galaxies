@@ -59,6 +59,7 @@ GrimoireTab.prototype.applyHistoryState = function(n) {
     }
     this.scroll = {x: h.scroll.x, y: h.scroll.y};
     this.historyIndex = n;
+    this.sel = h.sel;
 };
 
 GrimoireTab.prototype.applyHeadState = function() {
@@ -73,6 +74,7 @@ GrimoireTab.prototype.applyHeadState = function() {
     }
     this.scroll = {x: h.scroll.x, y: h.scroll.y};
     this.historyIndex = this.history.length;
+    this.sel = h.sel;
 };
 
 GrimoireTab.prototype.prepareHistoryState = function() {
@@ -83,7 +85,7 @@ GrimoireTab.prototype.prepareHistoryState = function() {
     let carets = [];
     for (let i = 0; i < this.carets.length; i++) {
         let c = this.carets[i]
-        carets.push({x: c.x, y: c.y, dir: c.dir, curXRef: c.curXRef});
+        carets.push({x: c.x, y: c.y, dir: c.dir, curXRef: c.curXRef, sel: c.sel});
     }
     let scroll = {x: this.scroll.x, y: this.scroll.y};
     return {scroll: scroll, carets: carets, data: data};
@@ -93,7 +95,7 @@ GrimoireTab.prototype.logHistory = function(h) {
     this.history.push(h);
 };
 
-GrimoireTab.prototype.moveCaretsX = function(x) {
+GrimoireTab.prototype.moveCaretsX = function(x, sel = false) {
     let t = this;
     for (let i = 0; i < t.carets.length; i++) {
         t.carets[i].dir = 0;
@@ -131,10 +133,13 @@ GrimoireTab.prototype.moveCaretsX = function(x) {
                 t.carets.splice(j, 1);
             }
         }
+        if (sel == false) {
+            c.sel = null;
+        }
     }
 };
 
-GrimoireTab.prototype.moveCaretsY = function(y) {
+GrimoireTab.prototype.moveCaretsY = function(y, sel = false) {
     let t = this;
     for (let i = 0; i < t.carets.length; i++) {
         let c = t.carets[i];
@@ -178,7 +183,10 @@ GrimoireTab.prototype.moveCaretsY = function(y) {
                 t.carets.splice(j, 1);
             }
         }
-    }
+        if (sel == false) {
+            c.sel = null;
+        }
+    }    
 };
 
 GrimoireTab.prototype.scroll = function(x, y) {
@@ -194,9 +202,9 @@ GrimoireTab.prototype.deleteLine = function() {
 };
 
 
-GrimoireTab.prototype.updateSelection = function() {
+// GrimoireTab.prototype.updateSelection = function() {
 
-};
+// };
 
 
 GrimoireTab.prototype.evaluate = function() {
@@ -220,6 +228,85 @@ GrimoireTab.prototype.update = function(s) {
            }
             // c.x++;
         }
+};
+
+// GrimoireTab.prototype.getGridPosition = function(x, y, mx, my) {
+//     let g = this.data;
+//     let nx = x;
+//     let ny = y;
+//     if (x == 0) {
+//         if (y == 0) {
+//             if (mx == 1) {
+//                 if (g[y].length == 0) {
+//                     ny++;
+//                 } else {
+//                     nx++;
+//                 }
+//             } else if (my == 1) {
+//                 if (g.length > 1) {
+//                     ny++;
+//                 }
+//             }
+//         } else {
+//             if (mx == -1) {
+//                 ny--;
+//                 nx = g[ny].length;
+//             } else if (mx == 1) {
+//                 if (x < g[y].length) {
+//                     nx++;
+//                 } else {
+//                     ny++;
+//                 }
+//             } else if (my == -1) {
+//                 ny--;
+//             } else if (my == 1) {
+//                 ny = Math.min(ny + 1, g[y].length - 1);
+//             }
+//         }
+//     } else {
+//         if (x < g[y])
+//     }
+//     return [nx, ny];
+// };
+
+
+GrimoireTab.prototype.select = function() {
+    let t = this;
+    // // if (t.selections.length == 0) {
+    // //     for (let i = 0; i < t.carets.length; i++) {
+    // //         let c = t.carets[i];
+    // //         let sel = true;
+    // //         if (c.x == 0 && c.y == 0 && (x == -1 || y == -1)) {
+    // //             sel = false;               
+    // //         }
+    // //         if (c.x == t.data[c.y].length - 1 &&
+    // //             c.y == t.data.length - 1 &&
+    // //             (x == 1 || y == 1)
+    // //             ) {
+    // //             sel = false;
+    // //         }
+    // //         if (sel) {
+    // //             // c.sel = []
+    // //         }
+    // //     }
+    // // }
+    // for (let i = 0; i < t.carets.length; i++) {
+    //     let c = t.carets[i];
+    //     if (x == -1 || y == -1) {
+    //         if (c.sel == null) {c.sel == []}
+    //     } else if (x == 1 || y == 1) {
+
+    //     }
+    //     // c.sel = [];
+    //     // c.sel[0] = c.x;
+    //     // c.sel[1] = 
+    // }
+    for (let i = 0; i < t.carets.length; i++) {
+        let c = t.carets[i];
+        if (c.sel == null) {
+            c.sel = [c.x, c.y];
+        }
+    }
 };
 
 GrimoireEditor.prototype.update = function(e) {
@@ -256,14 +343,30 @@ GrimoireEditor.prototype.update = function(e) {
             t.scroll.y--;
             t.moveCaretsY(-1);
             updateHistory = false;
+        } else if (s == "ArrowRight" && e.shiftKey) {
+            t.select();
+            t.moveCaretsX(1, true);
+            updateHistory = false;
         } else if (s == "ArrowRight") {
             t.moveCaretsX(1);
+            updateHistory = false;
+        } else if (s == "ArrowLeft" && e.shiftKey) {
+            t.select();
+            t.moveCaretsX(-1, true);
             updateHistory = false;
         } else if (s == "ArrowLeft") {
             t.moveCaretsX(-1);
             updateHistory = false;
+        } else if (s == "ArrowUp" && e.shiftKey) {
+            t.select();
+            t.moveCaretsY(-1, true);
+            updateHistory = false;
         } else if (s == "ArrowUp") {
             t.moveCaretsY(-1);
+            updateHistory = false;
+        } else if (s == "ArrowDown" && e.shiftKey) {
+            t.select();
+            t.moveCaretsY(1, true);
             updateHistory = false;
         } else if (s == "ArrowDown") {
             t.moveCaretsY(1);
