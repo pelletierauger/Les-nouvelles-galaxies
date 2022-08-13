@@ -265,10 +265,22 @@ GrimoireTab.prototype.update = function(s) {
                 c.x = (anchor) ? c.sel[0] + s.length : c.x + s.length;
                 c.y = (anchor) ? c.sel[1] : c.y;
                 c.sel = null;
+                for (let j = 0; j < t.carets.length; j++) {
+                    let d = t.carets[j];
+                    if (c !== d && c.y == d.y) {
+                        if (d.x > c.x) {
+                            // console.log(xOffset);
+                            d.x -= xOffset - s.length;
+                            if (d.sel !== null) {d.sel[0] -= xOffset - s.length};
+                            d.y -= yOffset;
+                            if (d.sel !== null) {d.sel[1] -= yOffset};
+                        }
+                    }
+                }
             }
         }   
     }
-    if (s.length == 1 && !sel)
+    if (s.length == 1 && !sel) {
         for (let i = 0; i < t.carets.length; i++) {
             let c = t.carets[i];
             // let line = t.data[c.y];
@@ -281,7 +293,22 @@ GrimoireTab.prototype.update = function(s) {
                    d.x++;
                }
            }
+         }
             // c.x++;
+        } else if (s == "" && !sel) {
+            for (let i = 0; i < t.carets.length; i++) {
+            let c = t.carets[i];
+            // let line = t.data[c.y];
+            t.data[c.y] = t.data[c.y].slice(0, c.x - 1) + t.data[c.y].slice(c.x);
+            let y = c.y;
+            let x = c.x;
+            for (let j = 0; j < t.carets.length; j++) {
+               let d = t.carets[j];
+               if (d.y == y && d.x >= x) {
+                   d.x--;
+               }
+           }
+         }
         }
 };
 
