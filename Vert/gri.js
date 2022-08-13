@@ -151,7 +151,7 @@ GrimoireTab.prototype.moveCaretsY = function(y, sel = false) {
     if (y == 1) {
         for (let i = 0; i < t.carets.length; i++) {
             let c = t.carets[i];
-            if (c.y < t.data.length) {
+            if (c.y < t.data.length - 1) {
                 c.y++;
                 c.x = Math.min(t.data[c.y].length, c.curXRef);
             }
@@ -333,11 +333,11 @@ GrimoireEditor.prototype.update = function(e) {
             t.scroll.y++;
             t.moveCaretsY(1);
             updateHistory = false;
-        } else if (s == "ArrowDown" && e.metaKey && t.scroll.y + 20 < t.data.length) {
-            t.scroll.y += 20;
-            for (let i = 0; i < t.carets.length; i++) {
-                t.carets[i].y += 20;
-            }
+        } else if (s == "ArrowDown" && e.metaKey) {
+            for (let i = 0; i < 23; i++) {t.moveCaretsY(1);}
+            updateHistory = false;
+        } else if (s == "ArrowUp" && e.metaKey) {
+            for (let i = 0; i < 23; i++) {t.moveCaretsY(-1);}
             updateHistory = false;
         } else if (s == "ArrowUp" && e.altKey && t.scroll.y > 0) {
             t.scroll.y--;
@@ -372,15 +372,11 @@ GrimoireEditor.prototype.update = function(e) {
             t.moveCaretsY(1);
             updateHistory = false;
         } else if (s == "PageUp") {
-            t.scroll.y = Math.max(0, t.scroll.y - 20);
-            for (let i = 0; i < t.carets.length; i++) {
-                t.carets[i].y = Math.max(0, t.carets[i].y - 20);
-            }
+            for (let i = 0; i < 23; i++) {t.moveCaretsY(-1);}
+            updateHistory = false;
         } else if (s == "PageDown") {
-            t.scroll.y+=20;
-            for (let i = 0; i < t.carets.length; i++) {
-                t.carets[i].y+=20;
-            }
+            for (let i = 0; i < 23; i++) {t.moveCaretsY(1);}
+            updateHistory = false;
         } else if (s == "z" && e.metaKey && e.shiftKey) {
             if (t.historyIndex < t.history.length - 1){
                 t.applyHistoryState(t.historyIndex + 1);
@@ -539,6 +535,25 @@ window.addEventListener('mousemove', e => {
         paint(val);
     }
 });
+
+// window.addEventListener('dragstart', e => {
+//     if (mode == 1) {
+//         let t = ge.activeTab;
+//         t.carets = [];
+//         let x = Math.min(t.data[fmouse[1] + t.scroll.y].length, fmouse[0]);
+//         t.carets.push({x: x, y: fmouse[1] + t.scroll.y, dir: 0, curXRef: 0, sel: [x, fmouse[1] + t.scroll.y]});
+//     }
+// });
+// window.addEventListener('dragend', e => {
+//     if (mode == 1) {
+//         let t = ge.activeTab;
+//         // t.carets = [];
+//         let x = Math.min(t.data[fmouse[1] + t.scroll.y].length, fmouse[0]);
+//         t.carets[0].x = x;
+//         t.carets[0].y = fmouse[1] + t.scroll.y;
+//             // .push({x: x, y: fmouse[1] + t.scroll.y, dir: 0, curXRef: 0, sel: [x, fmouse[1] + t.scroll.y]});
+//     }
+// });
 
 // socket.emit('saveFile', {path: "/Users/guillaumepelletier/Desktop/grimoirePainting.json", data: JSON.stringify(gc.data).replace(/null/g, "0")});
 

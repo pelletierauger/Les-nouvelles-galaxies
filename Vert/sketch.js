@@ -1,5 +1,6 @@
 let looping = true;
 let grimoire = false;
+let gr;
 let mode = 0;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
@@ -528,4 +529,8 @@ function exportOne() {
     exporting = true;
     redraw();
     exporting = false;
+}
+
+gr = function() {
+    grimoire = !grimoire;
 }

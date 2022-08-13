@@ -3012,8 +3012,10 @@ face = [
 
 pchar = "a";
 
-mouseClicked = function(e) {
+// mouseClicked = function(e) {
     // editing
+window.addEventListener('mousedown', e => {
+    // console.log(e);
     if (mode == 1) {
         let t = ge.activeTab;
         if (grimoire && fmouse[1] < 22) {
@@ -3111,7 +3113,7 @@ mouseClicked = function(e) {
             
         }
     }
-};
+});
 mouseDragged = function(e) {
     if (mode == 2) {
         if (grimoire && fmouse[1] < 20) {
@@ -3151,6 +3153,17 @@ mouseDragged = function(e) {
         let val = (e.shiftKey) ? 0 : 1;
         // paint(fmouse[0], fmouse[1], smouse[0], smouse[1], val);
         paint(val);
+    }
+    if (mode == 1) {
+        let t = ge.activeTab;
+        if (t.carets[0].sel == null) {
+            t.carets[0].sel = [t.carets[0].x, t.carets[0].y];
+        }
+        // t.carets = [];
+        let x = Math.min(t.data[fmouse[1] + t.scroll.y].length, fmouse[0]);
+        t.carets[0].x = x;
+        t.carets[0].y = fmouse[1] + t.scroll.y;
+            // .push({x: x, y: fmouse[1] + t.scroll.y, dir: 0, curXRef: 0, sel: [x, fmouse[1] + t.scroll.y]});
     }
 };
 
