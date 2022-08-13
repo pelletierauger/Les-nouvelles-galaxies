@@ -210,7 +210,7 @@ drawTerminal = function(selectedProgram) {
             //     char = " "
             //     // g = getGlyph(char);
             // };
-            if (selections !== null) {
+            if (selections !== null && (y < ((mode == 1) ? 22 : 20))) {
                 selection = (selections[y][x] && x < ge.activeTab.data[y+ge.activeTab.scroll.y].length) ? true : selection;
             }
             let maxloopy = 0;
@@ -3156,6 +3156,11 @@ mouseDragged = function(e) {
     }
     if (mode == 1) {
         let t = ge.activeTab;
+        if (fmouse[1] == 21 && (drawCount % 2 == 0)) {
+            t.moveCaretsY(1, true);
+        } else if (fmouse[1] == 0 && (drawCount % 2 == 0)) {
+            t.moveCaretsY(-1, true);
+        }
         if (t.carets[0].sel == null) {
             t.carets[0].sel = [t.carets[0].x, t.carets[0].y];
         }

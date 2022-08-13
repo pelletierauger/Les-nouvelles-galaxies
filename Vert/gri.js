@@ -755,3 +755,15 @@ paintingKeys = function(e) {
 };
 
 
+
+
+window.addEventListener('wheel', (e) => {
+    // logJavaScriptConsole(e.deltaY);
+    if (ge.activeTab !== null) {
+        if (e.deltaY > 0) {
+            ge.activeTab.scroll.y = Math.min(ge.activeTab.scroll.y + 1, ge.activeTab.data.length - 22);
+        } else if (e.deltaY < 0) {
+            ge.activeTab.scroll.y = Math.max(ge.activeTab.scroll.y - 1, 0);
+        }
+    }
+});
