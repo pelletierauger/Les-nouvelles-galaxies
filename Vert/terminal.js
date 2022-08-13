@@ -3264,6 +3264,13 @@ paint = function(val = 1) {
     }
 }
 
+brushes = [];
+
+let Brush = function(o) {
+    this.anchor = o.anchor;
+    this.data = o.data;
+    brushes.push(this);
+}
 
 patterns = [];
 

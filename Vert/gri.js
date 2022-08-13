@@ -20,25 +20,40 @@ tab = function(s) {
     for (let i = 0; i < ge.files.scd.length; i++) {
         if (ge.files.scd[i].name == s) {
             ge.activeTab = ge.files.scd[i];
+            if (ge.activeBrush == null) {
+                ge.activeBrush = brushes[0];
+            }
+            if (ge.activePattern == null) {
+                ge.activePattern = patterns[0];
+            }
+            resetBrushPositions();
         }
     }
     for (let i = 0; i < ge.files.js.length; i++) {
         // logJavaScriptConsole(griFiles.js[i]);
         if (ge.files.js[i].name == s) {
             ge.activeTab = ge.files.js[i];
+            if (ge.activeBrush == null) {
+                ge.activeBrush = brushes[0];
+            }
+            if (ge.activePattern == null) {
+                ge.activePattern = patterns[0];
+            }
+            resetBrushPositions();
         }
     }
 }
 
 let GrimoireEditor = function() {
     this.activeTab = null;
+    this.activeBrush = null;
+    this.activePattern = null;
 };
 
 let GrimoireTab = function(o) {
     this.name = o.name,
     this.scroll = o.scroll;
     this.carets = o.carets;
-    this.selections = o.selections;
     this.data = o.data;
     this.history = [];
     this.historyIndex = 0;
@@ -691,79 +706,79 @@ savePainting = function() {
     socket.emit('saveFile', {path: path, data: JSON.stringify(data)});
 };
 
-if (false) {
+// if (false) {
 
-ge.activeBrush = {
-    anchor: [3, 3],
-    data: [
-        [1, 0, 0, 0, 0, 0, 0, 1],
-        [0, 1, 0, 0, 0, 0, 1, 0],
-        [0, 0, 1, 0, 0, 1, 0, 0],
-        [0, 0, 0, 1, 1, 0, 0, 0],
-        [0, 0, 1, 0, 0, 1, 0, 0],
-        [0, 1, 0, 0, 0, 0, 1, 0],
-        [1, 0, 0, 0, 0, 0, 0, 1]
-    ]
-};
+// ge.activeBrush = {
+//     anchor: [3, 3],
+//     data: [
+//         [1, 0, 0, 0, 0, 0, 0, 1],
+//         [0, 1, 0, 0, 0, 0, 1, 0],
+//         [0, 0, 1, 0, 0, 1, 0, 0],
+//         [0, 0, 0, 1, 1, 0, 0, 0],
+//         [0, 0, 1, 0, 0, 1, 0, 0],
+//         [0, 1, 0, 0, 0, 0, 1, 0],
+//         [1, 0, 0, 0, 0, 0, 0, 1]
+//     ]
+// };
 
-ge.activeBrush = {
-    anchor: [0, 0],
-    data: [
-        [1]
-    ]
-};
+// ge.activeBrush = {
+//     anchor: [0, 0],
+//     data: [
+//         [1]
+//     ]
+// };
     
 
-    ge.activeBrush = {
-    anchor: [2, 1],
-    data: [
-        [0, 0, 0, 1, 1],
-        [0, 0, 1, 1, 0],
-        [0, 1, 1, 0, 0],
-        [1, 1, 0, 0, 0]
-    ]
-};
+//     ge.activeBrush = {
+//     anchor: [2, 1],
+//     data: [
+//         [0, 0, 0, 1, 1],
+//         [0, 0, 1, 1, 0],
+//         [0, 1, 1, 0, 0],
+//         [1, 1, 0, 0, 0]
+//     ]
+// };
     
 
-        ge.activeBrush = {
-    anchor: [2, 1],
-    data: getGlyph("O")
-};
+//         ge.activeBrush = {
+//     anchor: [2, 1],
+//     data: getGlyph("O")
+// };
 
-        ge.activeBrush = {
-    anchor: [2, 1],
-    data: [
-        [1, 1, 0, 0, 0],
-        [0, 1, 1, 0, 0],
-        [0, 0, 1, 1, 0],
-        [0, 0, 0, 1, 1]
-    ]
-};
-
-
-ge.activeBrush = {
-    anchor: [7, 7],
-    data: [
-        [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
-        [0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
-        [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
-        [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
-        [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
-        [0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
-        [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
-        [0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
-        [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
-        [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
-        [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
-        [0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
-        [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1]
-    ]
-};
+//         ge.activeBrush = {
+//     anchor: [2, 1],
+//     data: [
+//         [1, 1, 0, 0, 0],
+//         [0, 1, 1, 0, 0],
+//         [0, 0, 1, 1, 0],
+//         [0, 0, 0, 1, 1]
+//     ]
+// };
 
 
+// ge.activeBrush = {
+//     anchor: [7, 7],
+//     data: [
+//         [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+//         [0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+//         [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+//         [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+//         [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+//         [0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+//         [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+//         [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+//         [0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+//         [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+//         [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+//         [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+//         [0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+//         [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1]
+//     ]
+// };
 
-ge.activeBrush = {
+
+
+let quill = new Brush({
     anchor: [6, 6],
     data: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
@@ -781,7 +796,7 @@ ge.activeBrush = {
         [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
-};
+});
 resetBrushPositions = function() {
     ge.brushPositions = [];
     for (let y = 0; y < 22 * 9; y++) {
@@ -818,11 +833,10 @@ resetBrushPositions = function() {
         }
     }
 }
-resetBrushPositions();
-ge.activePattern = diagonal0;
+// resetBrushPositions();
 
 
-}
+// }
 
 patternScale = 1;
 paintingKeys = function(e) {
