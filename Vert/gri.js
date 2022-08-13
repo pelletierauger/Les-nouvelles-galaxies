@@ -229,7 +229,7 @@ GrimoireTab.prototype.update = function(s) {
             let yOffset = 0;
             let xOffset = 0;
             let anchor = false;
-            if (c.y < c.sel[1]) {
+            if (c.y > c.sel[1]) {
                 anchor = true;
             } else if (c.y == c.sel[1]) {
                 anchor = c.x > c.sel[0];
@@ -252,6 +252,19 @@ GrimoireTab.prototype.update = function(s) {
                         }
                     }
                 }
+            } else {
+                // Multi-line selections
+                xOffset = (anchor) ? c.x : c.sel[0];
+                yOffset = (anchor) ? c.y - c.sel[1] : c.sel[1] - c.y;
+                let baseX = (anchor) ? c.sel[0] : c.x;
+                let baseY = (anchor) ? c.sel[1] : c.y;
+                t.data[baseY] = t.data[baseY].slice(0, baseX) + s + t.data[baseY + yOffset].slice(xOffset);
+                for (let i = 0; i < yOffset; i++) {
+                    t.data.splice(baseY + 1, yOffset);
+                }
+                c.x = (anchor) ? c.sel[0] + s.length : c.x + s.length;
+                c.y = (anchor) ? c.sel[1] : c.y;
+                c.sel = null;
             }
         }   
     }
