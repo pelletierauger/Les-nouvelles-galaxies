@@ -128,7 +128,16 @@ drawTerminal = function(selectedProgram) {
     let selections = null;
     let oneD = function(x, y) {return x + (y * 109)};
     if (ge.activeTab !== null) {
-    if (ge.activeTab.carets[0].sel !== null) {
+        let t = ge.activeTab;
+            let sel = false;
+    for (let i = 0; i < t.carets.length; i++) {
+        let c = t.carets[i];
+        // console.log(c);
+        if (c.sel !== null) {
+            sel = true;
+        }
+    }
+    if (sel) {
         // ctt++;
         selections = [];
         for (let y = 0; y < 22; y++) {
@@ -137,12 +146,14 @@ drawTerminal = function(selectedProgram) {
                 selections[y][x] = 0;
                 for (let i = 0; i < ge.activeTab.carets.length; i++) {
                     let c = ge.activeTab.carets[i];
-                    let oy = ge.activeTab.scroll.y + y;
-                    let span = [oneD(c.x, c.y), oneD(c.sel[0], c.sel[1])].sort(function(a, b) {
-                        return a - b;
-                    });
-                    if (oneD(x, oy) >= span[0] && oneD(x, oy) < span[1]) {
-                        selections[y][x] = 1;
+                    if (c.sel !== null) {
+                        let oy = ge.activeTab.scroll.y + y;
+                        let span = [oneD(c.x, c.y), oneD(c.sel[0], c.sel[1])].sort(function(a, b) {
+                            return a - b;
+                        });
+                        if (oneD(x, oy) >= span[0] && oneD(x, oy) < span[1]) {
+                            selections[y][x] = 1;
+                        }
                     }
                 }
             }

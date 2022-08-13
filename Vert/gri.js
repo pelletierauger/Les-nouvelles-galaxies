@@ -214,6 +214,48 @@ GrimoireTab.prototype.evaluate = function() {
 
 GrimoireTab.prototype.update = function(s) {
     let t = this;
+    let sel = false;
+    for (let i = 0; i < t.carets.length; i++) {
+        let c = t.carets[i];
+        if (c.sel !== null) {
+            sel = true;
+        }
+    }
+    if (sel) {
+        // console.log(sel);
+        for (let i = 0; i < t.carets.length; i++) {
+        // for (let i = 0; i < 1; i++) {
+            let c = t.carets[i];
+            let yOffset = 0;
+            let xOffset = 0;
+            let anchor = false;
+            if (c.y < c.sel[1]) {
+                anchor = true;
+            } else if (c.y == c.sel[1]) {
+                anchor = c.x > c.sel[0];
+            }
+            // console.log(c);
+            if (c.y == c.sel[1]) {
+                xOffset = (anchor) ? c.x - c.sel[0] : c.sel[0] - c.x;
+                let baseX = (anchor) ? c.sel[0] : c.x;
+                let endX = baseX + xOffset;
+                t.data[c.y] = t.data[c.y].slice(0, baseX) + s + t.data[c.y].slice(endX);
+                c.x = (anchor) ? c.sel[0] + s.length : c.x + s.length;
+                c.sel = null;
+                for (let j = 0; j < t.carets.length; j++) {
+                    let d = t.carets[j];
+                    if (c !== d && c.y == d.y) {
+                        if (d.x > c.x) {
+                            // console.log(xOffset);
+                            d.x -= xOffset - s.length;
+                            if (d.sel !== null) {d.sel[0] -= xOffset - s.length};
+                        }
+                    }
+                }
+            }
+        }   
+    }
+    if (s.length == 1 && !sel)
         for (let i = 0; i < t.carets.length; i++) {
             let c = t.carets[i];
             // let line = t.data[c.y];
@@ -346,28 +388,28 @@ GrimoireEditor.prototype.update = function(e) {
         } else if (s == "ArrowRight" && e.shiftKey) {
             t.select();
             t.moveCaretsX(1, true);
-            updateHistory = false;
+            // updateHistory = false;
         } else if (s == "ArrowRight") {
             t.moveCaretsX(1);
             updateHistory = false;
         } else if (s == "ArrowLeft" && e.shiftKey) {
             t.select();
             t.moveCaretsX(-1, true);
-            updateHistory = false;
+            // updateHistory = false;
         } else if (s == "ArrowLeft") {
             t.moveCaretsX(-1);
             updateHistory = false;
         } else if (s == "ArrowUp" && e.shiftKey) {
             t.select();
             t.moveCaretsY(-1, true);
-            updateHistory = false;
+            // updateHistory = false;
         } else if (s == "ArrowUp") {
             t.moveCaretsY(-1);
             updateHistory = false;
         } else if (s == "ArrowDown" && e.shiftKey) {
             t.select();
             t.moveCaretsY(1, true);
-            updateHistory = false;
+            // updateHistory = false;
         } else if (s == "ArrowDown") {
             t.moveCaretsY(1);
             updateHistory = false;
@@ -401,6 +443,8 @@ GrimoireEditor.prototype.update = function(e) {
             updated = false;
         } else if (s.length == 1) {
             t.update(s);
+        } else if (s == "Backspace") {
+            t.update("");
         } else {
             updated = false;
         }
