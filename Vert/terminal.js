@@ -211,7 +211,7 @@ drawTerminal = function(selectedProgram) {
             //     // g = getGlyph(char);
             // };
             if (selections !== null && (y < ((mode == 1) ? 22 : 20))) {
-                selection = (selections[y][x] && x < ge.activeTab.data[y+ge.activeTab.scroll.y].length) ? true : selection;
+                selection = (selections[y][x] && x < ge.activeTab.data[y+ge.activeTab.scroll.y].length + 1) ? true : selection;
             }
             let maxloopy = 0;
             if (char !== " " || caret == true || cur || selection || paint || mode == 3) {
