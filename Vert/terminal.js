@@ -3252,7 +3252,8 @@ paintUnit = function(fx, fy, sx, sy, val = 1) {
 paint = function(val = 1) {
     for (let y = 0; y < ge.brushPositions.length - (2 * 9); y++) {
         for (let x = 0; x < ge.brushPositions[y].length; x++) {
-            if (ge.brushPositions[y][x]) {
+            let r = (brushRandom) ? Math.round(Math.random()) : true;
+            if (ge.brushPositions[y][x] && r) {
                 let rand = Math.round(Math.random() - Math.random());
                 let pattern = ge.activePattern.grid;
                 let pdim = [pattern[0].length, pattern.length];
@@ -3264,12 +3265,23 @@ paint = function(val = 1) {
     }
 }
 
+typeIndex = 0;
+brushIndex = 0;
+quill = [];
+pebble = [];
+nib = [];
+spray = [];
+types = [quill, pebble, nib, spray];
+brushRandom = false;
+
+
 brushes = [];
 
 let Brush = function(o) {
     this.anchor = o.anchor;
     this.data = o.data;
-    brushes.push(this);
+    this.type = o.type;
+    this.type.push(this);
 }
 
 patterns = [];
