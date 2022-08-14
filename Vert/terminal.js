@@ -236,8 +236,8 @@ drawTerminal = function(selectedProgram) {
                         test = ((xx == 0) && caret) ? !test : test
                         test = (test) ? "1" : "0";
                         let paintTest = (paint) ? canvas[y + ge.activeTab.scroll.y][x][xx + (yy * 7)] : false;
-                        let curPSub = (xx == smouse[0] && yy == smouse[1]);
-                        paintTest = (cur && curPSub && mode == 3) ? true : paintTest;
+                        // let curPSub = (xx == smouse[0] && yy == smouse[1]);
+                        // paintTest = (cur && curPSub && mode == 3) ? true : paintTest;
                         if (g[yy][xx] == test || paintTest || (brush && mode == 3)) {
                             let tx = 0, ty = 0;
                             let sc = 0.8;
