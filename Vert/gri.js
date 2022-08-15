@@ -665,7 +665,7 @@ window.addEventListener('mousemove', e => {
 
 
 savePainting2 = function() {
-    let path = "/Users/guillaumepelletier/Desktop/grimoirePaintingNotOptimized.json";
+    let path = "/Users/guillaumepelletier/Desktop/grimoirePaintingTest.json";
     // let data = JSON.stringify(gc.data).replace(/null/g, "0").replace(/0,/g, "2").replace(/1,/g, "3");
     let data = JSON.stringify(gc.data).replace(/null/g, "0");
     // data = data.replace(/(2)(\1*)/g, (a, b, c) => {
@@ -685,6 +685,131 @@ savePainting2 = function() {
     // data = data.replace(/\+\+/g, "/");
     socket.emit('saveFile', {path: path, data: data});
 }
+
+
+savePainting3 = function() {
+    let path = "/Users/guillaumepelletier/Desktop/grimoirePaintingWork.txt";
+    // let data = JSON.stringify(gc.data).replace(/null/g, "0").replace(/0,/g, "2").replace(/1,/g, "3");
+    // let data = JSON.stringify(gc.data).replace(/null/g, "0");
+    let data = "";
+    for (let i = 0; i < gc.data.length; i++) {
+        for (let j = 0; j < 109; j++) {
+            for (let k = 0; k < 63; k++) {
+                if (gc.data[i] && gc.data[i][j] && gc.data[i][j][k]) {
+                    data = data + "1";
+                } else {
+                    data = data + "0"
+                }
+                // data = data + ((gc.data[i][j][k] == 1) ? "1" : "0");
+            }
+        }
+    }
+    asciiString = "";
+    for (let i = 0; i < data.length; i += 7) {
+        let ss = data.substring(i, Math.min(i + 7, data.length));
+        // ss = ss.padStart(7, "0");
+        let n = parseInt(ss, 2);
+        if (n < 32) {
+            ascii = "éÉèÈêÊëËçÇàÀùÙÇüÜäÄöÖÿŸćńóśźĄąĘę"[n];
+        } else if (n == 127) {
+            ascii = "Ż";
+        } else {
+            ascii = String.fromCharCode(n);
+        }
+        // let ascii = String.fromCharCode(parseInt(ss,2));
+        asciiString = asciiString + ascii;
+        // console.log (ss + ", " + ascii);
+    }
+    // console.log(asciiString.length);
+    
+    asciiString = asciiString.replace(/(é)(\1*)/g, (a, b, c) => {
+        return (a.length > 3) ? "é" + a.length + "é" : a;
+    });
+    asciiString = asciiString.replace(/(Ż)(\1*)/g, (a, b, c) => {
+        return (a.length > 3) ? "Ż" + a.length + "Ż" : a;
+    });
+    // console.log(asciiString.length);
+    console.log(data.length);
+    socket.emit('saveFile', {path: path, data: asciiString});
+}
+// savePainting3();
+
+decodeAsciiString = function(s) {
+    let str = "";
+    str = s.replace(/(é)(\d+)(é)/g, (a, b, c) => {
+        let mid = "";
+        for (let i = 0; i < parseInt(c); i++) {mid = mid + "é";}
+        return mid;
+    });
+    str = str.replace(/(Ż)(\d+)(Ż)/g, (a, b, c) => {
+        let mid = "";
+        for (let i = 0; i < parseInt(c); i++) {mid = mid + "Ż";}
+        return mid;
+    });
+    console.log(str.length);
+    let bin = "";
+    for (let i = 0; i < str.length; i++) {
+        let match = false, matchIndex = null;
+        let ref = "éÉèÈêÊëËçÇàÀùÙÇüÜäÄöÖÿŸćńóśźĄąĘę";
+        for (let j = 0; j < ref.length; j++) {
+            if (str[i] == ref[j]) {match = true; matchIndex = j;}
+        }
+        if (str[i] == "Ż") {
+            bin = bin + (127).toString(2).padStart(7, "0");
+        } else if (match) {
+            if (i == (str.length - 1) && false) {
+                bin = bin + matchIndex.toString(2);
+            } else {
+                bin = bin + matchIndex.toString(2).padStart(7, "0");
+            }
+                // (match ? ).charCodeAt(0).toString(2)
+        } else {
+            if (i == (str.length - 1) && false) {
+                bin = bin + str[i].charCodeAt(0).toString(2);
+            } else {
+                bin = bin + str[i].charCodeAt(0).toString(2).padStart(7, "0");
+            }
+        }
+    }
+    console.log(bin.length);
+    newGC = [];
+    for (let h = 0; h < (bin.length/63/109); h += 1) {
+        newGC.push([]);
+        for (let i = 0; i < 109; i++) {
+            newGC[h].push([]);
+            for (let j = 0; j < 63; j++) {
+                newGC[h][i][j] = parseInt(bin[j + (i * 63) + (h * 63 * 109)]);
+            }
+        }
+    }
+}
+// decodeAsciiString(asciiString)
+
+
+makeFlatCanvas = function() {
+    // let path = "/Users/guillaumepelletier/Desktop/grimoirePaintingFakerAscii.txt";
+    // let data = JSON.stringify(gc.data).replace(/null/g, "0").replace(/0,/g, "2").replace(/1,/g, "3");
+    // let data = JSON.stringify(gc.data).replace(/null/g, "0");
+    let data = "";
+    flatCanvas = [];
+    for (let i = 0; i < gc.data.length; i++) {
+        for (let j = 0; j < 109; j++) {
+            for (let k = 0; k < 63; k++) {
+                if (gc.data[i] && gc.data[i][j] && gc.data[i][j][k]) {
+                    // data = data + "1";
+                    flatCanvas.push(1);
+                } else {
+                    flatCanvas.push(0);
+                    // data = data + "0"
+                }
+           }
+        }
+    }
+   //  console.log(asciiString);
+    // socket.emit('saveFile', {path: path, data: asciiString});
+}
+// makeFlatCanvas();
+
 
 
 savePainting = function() {
