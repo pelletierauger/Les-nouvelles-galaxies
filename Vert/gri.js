@@ -20,6 +20,9 @@ tab = function(s) {
     for (let i = 0; i < ge.files.scd.length; i++) {
         if (ge.files.scd[i].name == s) {
             ge.activeTab = ge.files.scd[i];
+            if (ge.activeTab.canvas == null) {
+                ge.activeTab.canvas = new GrimoireCanvas();
+            }
             if (ge.activeBrush == null) {
                 ge.activeBrush = types[typeIndex][brushIndex];
             }
@@ -33,6 +36,9 @@ tab = function(s) {
         // logJavaScriptConsole(griFiles.js[i]);
         if (ge.files.js[i].name == s) {
             ge.activeTab = ge.files.js[i];
+            if (ge.activeTab.canvas == null) {
+                ge.activeTab.canvas = new GrimoireCanvas();
+            }
             if (ge.activeBrush == null) {
                 ge.activeBrush = types[typeIndex][brushIndex];
             }
@@ -50,17 +56,76 @@ let GrimoireEditor = function() {
     this.activePattern = null;
 };
 
+GrimoireEditor.prototype.saveCanvas = function() {
+    if (this.activeTab !== null) {
+        this.activeTab.saveCanvas();
+    }
+};
+
 let GrimoireTab = function(o) {
     this.name = o.name,
     this.scroll = o.scroll;
     this.carets = o.carets;
     this.data = o.data;
+    this.canvasData = o.canvasData;
+    this.canvasPath = o.canvasPath;
+    if (this.canvasData !== null && this.canvasPath !== null) {
+        this.canvas = new GrimoireCanvas();
+        this.canvas.data = decodeAsciiString(this.canvasData);
+    }
     this.history = [];
     this.historyIndex = 0;
     this.lastEdited = null;
     this.headState = null;
     this.attachedHeadState = true;
 };
+
+GrimoireTab.prototype.saveCanvas = function() {
+    let data = "";
+    let gc = this.canvas;
+    if (gc.data.length > 0) {
+        for (let i = 0; i < gc.data.length; i++) {
+            for (let j = 0; j < 109; j++) {
+                for (let k = 0; k < 63; k++) {
+                    if (gc.data[i] && gc.data[i][j] && gc.data[i][j][k]) {
+                        data = data + "1";
+                    } else {
+                        data = data + "0"
+                    }
+                    // data = data + ((gc.data[i][j][k] == 1) ? "1" : "0");
+                }
+            }
+        }
+        let asciiString = "";
+        for (let i = 0; i < data.length; i += 7) {
+            let ss = data.substring(i, Math.min(i + 7, data.length));
+            // ss = ss.padStart(7, "0");
+            let n = parseInt(ss, 2);
+            if (n < 32) {
+                ascii = "éÉèÈêÊëËçÇàÀùÙÇüÜäÄöÖÿŸćńóśźĄąĘę"[n];
+            } else if (n == 127) {
+                ascii = "Ż";
+            } else {
+                ascii = String.fromCharCode(n);
+            }
+            // let ascii = String.fromCharCode(parseInt(ss,2));
+            asciiString = asciiString + ascii;
+            // console.log (ss + ", " + ascii);
+        }
+        // console.log(asciiString.length);
+        
+        asciiString = asciiString.replace(/(é)(\1*)/g, (a, b, c) => {
+            return (a.length > 3) ? "é" + a.length + "é" : a;
+        });
+        asciiString = asciiString.replace(/(Ż)(\1*)/g, (a, b, c) => {
+            return (a.length > 3) ? "Ż" + a.length + "Ż" : a;
+        });
+        // console.log(asciiString.length);
+        // console.log(data.length);
+        socket.emit('saveFile', {path: this.canvasPath, data: asciiString});
+    }
+};
+
 
 GrimoireTab.prototype.applyHistoryState = function(n) {
     let h = this.history[n];
@@ -746,7 +811,7 @@ decodeAsciiString = function(s) {
         for (let i = 0; i < parseInt(c); i++) {mid = mid + "Ż";}
         return mid;
     });
-    console.log(str.length);
+    // console.log(str.length);
     let bin = "";
     for (let i = 0; i < str.length; i++) {
         let match = false, matchIndex = null;
@@ -771,8 +836,8 @@ decodeAsciiString = function(s) {
             }
         }
     }
-    console.log(bin.length);
-    newGC = [];
+    // console.log(bin.length);
+    let newGC = [];
     for (let h = 0; h < (bin.length/63/109); h += 1) {
         newGC.push([]);
         for (let i = 0; i < 109; i++) {
@@ -782,6 +847,7 @@ decodeAsciiString = function(s) {
             }
         }
     }
+    return newGC;
 }
 // decodeAsciiString(asciiString)
 

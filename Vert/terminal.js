@@ -209,11 +209,14 @@ drawTerminal = function(selectedProgram) {
                 caret = caret && ((drawCount / 20 % 1 < 0.5) || !blink);
             }
             let paint = false;
-            let canvas = gc.data;
+            let canvas = null;
             if (ge.activeTab !== null && (y < 20 || mode == 1)) {
-                if (canvas[y + ge.activeTab.scroll.y]) {
-                    if (canvas[y + ge.activeTab.scroll.y][x]) {
-                        paint = true;
+                if (ge.activeTab.canvas !== null) {
+                    canvas = ge.activeTab.canvas.data;
+                    if (canvas[y + ge.activeTab.scroll.y]) {
+                        if (canvas[y + ge.activeTab.scroll.y][x]) {
+                            paint = true;
+                        }
                     }
                 }
             }
@@ -3211,7 +3214,7 @@ mouseDragged = function(e) {
 
 
 paint = function() {
-    let c = gc.data;
+    let c = ge.activeTab.canvas.data;
     let y = fmouse[1] + ge.activeTab.scroll.y;
     let xy = smouse[0] + (smouse[1] * 7);
     if (c[y]) {
@@ -3231,7 +3234,7 @@ paint = function() {
 
 
 paintUnit = function(fx, fy, sx, sy, val = 1) {
-    let c = gc.data;
+    let c = ge.activeTab.canvas.data;
     let y = fy + ge.activeTab.scroll.y;
     let xy = sx + (sy * 7);
     if (c[y]) {
