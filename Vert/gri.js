@@ -1589,36 +1589,38 @@ resetBrushPositions = function() {
         }
     }
     // console.log("reset!");
-    let b = ge.activeBrush;
-    let tx = (fmouse[0] * 7) + smouse[0];
-    let tox = Math.max(0, tx - b.anchor[0]);
-    // let bix = (tx - tox) - b.anchor[0];
-    let bix = Math.max(0, b.anchor[0] - tx);
-    // let fox = Math.floor(tox / 7);
-    // let sox = tox % 7;
-    // let bixmax = Math.min(b.data[0].length, 763 - (tox + b.data[0].length));
-    let bixmax = b.data[0].length - (Math.max((tx - b.anchor[0] + b.data[0].length) - 763, 0));
-    // logJavaScriptConsole(bixmax);
-    let ty = (fmouse[1] * 9) + smouse[1];
-    let toy = Math.max(0, ty - b.anchor[1]);
-    // let biy = ((ty - toy) - b.anchor[1]);
-    let biy = Math.max(0, b.anchor[1] - ty);
-    // logJavaScriptConsole(biy);
-    // biy = Math.max(0, b.anchor[1] - ty);
-    // biy = (b.anchor[1] > ty) ? b.anchor[1] - ty : 0;
-    // let foy = Math.floor(toy / 9);
-    // let soy = toy % 9;
-    // let biymax = Math.min(b.data.length, 180 - (toy + b.data.length));
-    let biymax = b.data.length - (Math.max((ty - b.anchor[1] + b.data.length) - 180, 0));
-    // logJavaScriptConsole(biymax);
-    // logJavaScriptConsole("ty: " + ty + " ,  b.anchor[1] :" +  b.anchor[1] + " , biy: " + biy + ", biymax: " + biymax);
-    for (let y = biy; y < biymax; y++) {
-        for (let x = bix; x < bixmax; x++) {
-                 // console.log("x: " + x + ", y: " + y);
-            let brush = b.data[y][x];
-            if (brush == 1 || brush == "1") {
-                // if (y == biy) {logJavaScriptConsole(toy + y - b.anchor[1]);}
-                ge.brushPositions[toy + y - biy][tox + x - b.anchor[0]] = 1;
+    if (fmouse[1] < 20) {
+        let b = ge.activeBrush;
+        let tx = (fmouse[0] * 7) + smouse[0];
+        let tox = Math.max(0, tx - b.anchor[0]);
+        // let bix = (tx - tox) - b.anchor[0];
+        let bix = Math.max(0, b.anchor[0] - tx);
+        // let fox = Math.floor(tox / 7);
+        // let sox = tox % 7;
+        // let bixmax = Math.min(b.data[0].length, 763 - (tox + b.data[0].length));
+        let bixmax = b.data[0].length - (Math.max((tx - b.anchor[0] + b.data[0].length) - 763, 0));
+        // logJavaScriptConsole(bixmax);
+        let ty = (fmouse[1] * 9) + smouse[1];
+        let toy = Math.max(0, ty - b.anchor[1]);
+        // let biy = ((ty - toy) - b.anchor[1]);
+        let biy = Math.max(0, b.anchor[1] - ty);
+        // logJavaScriptConsole(biy);
+        // biy = Math.max(0, b.anchor[1] - ty);
+        // biy = (b.anchor[1] > ty) ? b.anchor[1] - ty : 0;
+        // let foy = Math.floor(toy / 9);
+        // let soy = toy % 9;
+        // let biymax = Math.min(b.data.length, 180 - (toy + b.data.length));
+        let biymax = b.data.length - (Math.max((ty - b.anchor[1] + b.data.length) - 180, 0));
+        // logJavaScriptConsole(biymax);
+        // logJavaScriptConsole("ty: " + ty + " ,  b.anchor[1] :" +  b.anchor[1] + " , biy: " + biy + ", biymax: " + biymax);
+        for (let y = biy; y < biymax; y++) {
+            for (let x = bix; x < bixmax; x++) {
+                     // console.log("x: " + x + ", y: " + y);
+                let brush = b.data[y][x];
+                if (brush == 1 || brush == "1") {
+                    // if (y == biy) {logJavaScriptConsole(toy + y - b.anchor[1]);}
+                    ge.brushPositions[toy + y - biy][tox + x - b.anchor[0]] = 1;
+                }
             }
         }
     }
