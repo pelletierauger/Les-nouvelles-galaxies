@@ -3189,7 +3189,7 @@ mouseDragged = function(e) {
             }
         }
     }
-    if (mode == 3) {
+    if (mode == 3 && fmouse[1] < 20) {
         let val = (e.shiftKey) ? 0 : 1;
         // paint(fmouse[0], fmouse[1], smouse[0], smouse[1], val);
         paint(val);
