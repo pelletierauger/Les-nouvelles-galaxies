@@ -1592,24 +1592,24 @@ resetBrushPositions = function() {
     let b = ge.activeBrush;
     let tx = (fmouse[0] * 7) + smouse[0];
     let tox = Math.max(0, tx - b.anchor[0]);
-    let bix = (tx - tox) - b.anchor[0];
-    bix = Math.max(0, b.anchor[0] - tx);
+    // let bix = (tx - tox) - b.anchor[0];
+    let bix = Math.max(0, b.anchor[0] - tx);
     // let fox = Math.floor(tox / 7);
     // let sox = tox % 7;
-    let bixmax = Math.min(b.data[0].length, 763 - (tox + b.data[0].length));
-    bixmax = b.data[0].length - (Math.max((tx - b.anchor[0] + b.data[0].length) - 763, 0));
+    // let bixmax = Math.min(b.data[0].length, 763 - (tox + b.data[0].length));
+    let bixmax = b.data[0].length - (Math.max((tx - b.anchor[0] + b.data[0].length) - 763, 0));
     // logJavaScriptConsole(bixmax);
     let ty = (fmouse[1] * 9) + smouse[1];
     let toy = Math.max(0, ty - b.anchor[1]);
-    let biy = ((ty - toy) - b.anchor[1]);
-    biy = Math.max(0, b.anchor[1] - ty);
+    // let biy = ((ty - toy) - b.anchor[1]);
+    let biy = Math.max(0, b.anchor[1] - ty);
     // logJavaScriptConsole(biy);
     // biy = Math.max(0, b.anchor[1] - ty);
     // biy = (b.anchor[1] > ty) ? b.anchor[1] - ty : 0;
     // let foy = Math.floor(toy / 9);
     // let soy = toy % 9;
-    let biymax = Math.min(b.data.length, 180 - (toy + b.data.length));
-    biymax = b.data.length - (Math.max((ty - b.anchor[1] + b.data.length) - 180, 0));
+    // let biymax = Math.min(b.data.length, 180 - (toy + b.data.length));
+    let biymax = b.data.length - (Math.max((ty - b.anchor[1] + b.data.length) - 180, 0));
     // logJavaScriptConsole(biymax);
     // logJavaScriptConsole("ty: " + ty + " ,  b.anchor[1] :" +  b.anchor[1] + " , biy: " + biy + ", biymax: " + biymax);
     for (let y = biy; y < biymax; y++) {
@@ -1619,6 +1619,65 @@ resetBrushPositions = function() {
             if (brush == 1 || brush == "1") {
                 // if (y == biy) {logJavaScriptConsole(toy + y - b.anchor[1]);}
                 ge.brushPositions[toy + y - biy][tox + x - b.anchor[0]] = 1;
+            }
+        }
+    }
+}
+
+
+
+applyPointer = function() {
+    // console.log("reset!");
+    let b = [
+        [2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 0, 1, 1, 0, 2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 0, 1, 1, 0, 2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 0, 1, 1, 0, 2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 0, 1, 1, 0, 2, 2, 2, 2, 2, 2],
+        [2, 0, 0, 2, 2, 0, 1, 1, 0, 0, 0, 0, 2, 2, 2],
+        [0, 1, 1, 0, 2, 0, 1, 1, 0, 1, 0, 1, 0, 0, 2],
+        [2, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0],
+        [2, 2, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0],
+        [2, 2, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [2, 2, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [2, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [2, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2],
+        [2, 2, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1, 1, 0, 2],
+        [2, 2, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1, 1, 0, 2]
+    ];
+    let tx = (fmouse[0] * 7) + smouse[0];
+    // let tox = Math.max(0, tx - b.anchor[0]);
+    // let bix = (tx - tox) - b.anchor[0];
+    // let bix = Math.max(0, b.anchor[0] - tx);
+    bix = 0;
+    // let fox = Math.floor(tox / 7);
+    // let sox = tox % 7;
+    // let bixmax = Math.min(b.data[0].length, 763 - (tox + b.data[0].length));
+    let bixmax = b[0].length - (Math.max((tx + b[0].length) - 763, 0));
+    // logJavaScriptConsole(bixmax);
+    let ty = (fmouse[1] * 9) + smouse[1];
+    // let toy = Math.max(0, ty - b.anchor[1]);
+    // let biy = ((ty - toy) - b.anchor[1]);
+    // let biy = Math.max(0, b.anchor[1] - ty);
+    let biy = 0;
+    // logJavaScriptConsole(biy);
+    // biy = Math.max(0, b.anchor[1] - ty);
+    // biy = (b.anchor[1] > ty) ? b.anchor[1] - ty : 0;
+    // let foy = Math.floor(toy / 9);
+    // let soy = toy % 9;
+    // let biymax = Math.min(b.data.length, 180 - (toy + b.data.length));
+    let biymax = b.length - (Math.max((ty + b.length) - 198, 0));
+    // logJavaScriptConsole(biymax);
+    // logJavaScriptConsole("ty: " + ty + " ,  b.anchor[1] :" +  b.anchor[1] + " , biy: " + biy + ", biymax: " + biymax);
+    for (let y = biy; y < biymax; y++) {
+        for (let x = bix; x < bixmax; x++) {
+                 // console.log("x: " + x + ", y: " + y);
+            let brush = b[y][x];
+            if (brush == 1) {
+                ge.brushPositions[ty + y][tx + x - 8] = 0;
+            } else if (brush == 0) {
+                // console.log("Bruh");
+                ge.brushPositions[ty + y][tx + x - 8] = 1;
             }
         }
     }

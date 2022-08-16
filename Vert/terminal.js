@@ -122,6 +122,9 @@ drawTerminal = function(selectedProgram) {
                  }
              }
          }
+        if (fmouse[1] > 19) {
+            applyPointer();
+        }
     }   
 // 
     let editorSelection = false;
