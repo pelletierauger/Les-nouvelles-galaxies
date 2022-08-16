@@ -1734,3 +1734,106 @@ window.addEventListener('wheel', (e) => {
         }
     }
 });
+
+
+let GrimoireControl = function(o) {
+    this.tab = o.tab;
+    this.spanX = [40, 60];
+    this.spanY = [250, 260];
+    this.active = true;
+}
+
+GrimoireControl.prototype.click = function(fx, fy, sx, sy) {
+};
+
+GrimoireControl.prototype.deactivate = function() {
+};
+
+GrimoireControl.prototype.activate = function() {
+};
+
+
+BrushFromString = function(s = "a", x = 1, y = 1) {
+    let data = [];
+    for (let i = 0; i < (y * 9); i++) {
+        data.push([]);
+        for (let j = 0; j < (x * 7) * s.length; j++) {
+            let g = getGlyph(s[Math.floor(j/(x * 7))]);
+            data[i][j] = g[Math.floor(i/y)][Math.floor(j/x) - Math.floor(j/(x * 7))*7];
+        }
+    }
+    let o = {
+        anchor: [0, y * 7 - 1],
+        type: spray,
+        data: data
+    };
+    new Brush(o);
+};
+
+
+BrushFromString2 = function(s = "a", x = [1, 1, 1, 1, 1, 1, 1], y = [1, 1, 1, 1, 1, 1, 1, 1, 1]) {
+    let data = [];
+    for (let i = 0; i < 9; i++) {
+        data.push([]);
+        for (let j = 0; j < 7 * s.length; j++) {
+            let g = getGlyph(s[Math.floor(j / 7)]);
+            data[i][j] = g[i][j % 7];
+        }
+    }
+    for (let i = data.length - 1; i >= 0; i--) {
+        for (let m = 1; m < y[i]; m++) {
+            data.splice(i, 0, data[i].slice());
+        }
+    }
+    for (let i = 0; i < data.length; i++) {
+        for (let j = data[i].length - 1; j >= 0; j--) {
+            for (let m = 1; m < x[j % 7]; m++) {
+                data[i].splice(j, 0, data[i][j]);
+            }
+        }
+    }
+    let o = {
+        anchor: [0, data.length - 1],
+        type: spray,
+        data: data
+    };
+    new Brush(o);
+};
+
+
+BrushFromString3 = function(s = "a", x = [1, 1, 1, 1, 1, 1, 1], y = [1, 1, 1, 1, 1, 1, 1, 1, 1]) {
+    let data = [];
+    for (let i = 0; i < 9; i++) {
+        data.push([]);
+        for (let j = 0; j < 7 * s.length; j++) {
+            let g = getGlyph(s[Math.floor(j / 7)]);
+            data[i][j] = g[i][j % 7];
+        }
+    }
+    for (let i = data.length - 1; i >= 0; i--) {
+        for (let m = 1; m < y[i]; m++) {
+            data.splice(i, 0, data[i].slice());
+        }
+    }
+    for (let i = 0; i < data.length; i++) {
+        for (let j = data[i].length - 1; j >= 0; j--) {
+            for (let m = 1; m < x[j % 7]; m++) {
+                data[i].splice(j, 0, data[i][j]);
+            }
+        }
+    }
+    for (let i = 0; i < data.length; i++) {
+        arrayRotate(data[i], Math.floor(Math.sin(i * 1) * 10 * i));
+    }
+    function arrayRotate(arr, count) {
+        count -= arr.length * Math.floor(count / arr.length);
+        arr.push.apply(arr, arr.splice(0, count));
+        return arr;
+    }
+    let o = {
+        anchor: [0, data.length - 1],
+        type: spray,
+        data: data
+    };
+    new Brush(o);
+};
