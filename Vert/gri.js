@@ -115,10 +115,10 @@ GrimoireTab.prototype.saveCanvas = function() {
         // console.log(asciiString.length);
         
         asciiString = asciiString.replace(/(é)(\1*)/g, (a, b, c) => {
-            return (a.length > 3) ? "é" + a.length + "é" : a;
+            return (a.length > 3) ? "Ć" + a.length + "Ć" : a;
         });
         asciiString = asciiString.replace(/(Ż)(\1*)/g, (a, b, c) => {
-            return (a.length > 3) ? "Ż" + a.length + "Ż" : a;
+            return (a.length > 3) ? "Ł" + a.length + "Ł" : a;
         });
         // console.log(asciiString.length);
         // console.log(data.length);
@@ -801,12 +801,12 @@ savePainting3 = function() {
 
 decodeAsciiString = function(s) {
     let str = "";
-    str = s.replace(/(é)(\d+)(é)/g, (a, b, c) => {
+    str = s.replace(/(Ć)(\d+)(Ć)/g, (a, b, c) => {
         let mid = "";
         for (let i = 0; i < parseInt(c); i++) {mid = mid + "é";}
         return mid;
     });
-    str = str.replace(/(Ż)(\d+)(Ż)/g, (a, b, c) => {
+    str = str.replace(/(Ł)(\d+)(Ł)/g, (a, b, c) => {
         let mid = "";
         for (let i = 0; i < parseInt(c); i++) {mid = mid + "Ż";}
         return mid;
