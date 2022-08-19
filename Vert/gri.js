@@ -1801,7 +1801,7 @@ BrushFromString2 = function(s = "a", x = [1, 1, 1, 1, 1, 1, 1], y = [1, 1, 1, 1,
 };
 
 
-BrushFromString3 = function(s = "a", x = [1, 1, 1, 1, 1, 1, 1], y = [1, 1, 1, 1, 1, 1, 1, 1, 1]) {
+BrushFromString3 = function(s = "a", x = [1, 1, 1, 1, 1, 1, 1], y = [1, 1, 1, 1, 1, 1, 1, 1, 1], freq = 1, amp = 1) {
     let data = [];
     for (let i = 0; i < 9; i++) {
         data.push([]);
@@ -1823,7 +1823,7 @@ BrushFromString3 = function(s = "a", x = [1, 1, 1, 1, 1, 1, 1], y = [1, 1, 1, 1,
         }
     }
     for (let i = 0; i < data.length; i++) {
-        arrayRotate(data[i], Math.floor(Math.sin(i * 1) * 10 * i));
+        arrayRotate(data[i], Math.floor(Math.sin(i * freq) * amp));
     }
     function arrayRotate(arr, count) {
         count -= arr.length * Math.floor(count / arr.length);
