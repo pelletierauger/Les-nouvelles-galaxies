@@ -596,6 +596,17 @@ getGlyph = function(g) {
             "0000000",
             "0000000",
         ];
+        // ch = [
+        //     "0001000",
+        //     "0010100",
+        //     "0000000",
+        //     "0011100",
+        //     "0000010",
+        //     "0111110",
+        //     "0011111",
+        //     "0000000",
+        //     "0000000",
+        // ];
         break;
         case "ä":
         ch = [
@@ -2810,6 +2821,7 @@ let VirtualTerminal = function() {
     this.recordingSession = [];
     this.commands = [];
     this.commandID = 0;
+    this.modifier = null;
 };
 
 VirtualTerminal.prototype.commandDecID = function() {
@@ -2955,7 +2967,7 @@ VirtualTerminal.prototype.update = function(e) {
         this.recordingSession.push([this.recordingFrame, e]);
     }
     let s = e.key;
-    console.log(e);
+    // console.log(e);
     let c = this.caretPosition;
     let sel = this.selectionBounds[1] - this.selectionBounds[0] !== 0;
     if (s == "Backspace") {
