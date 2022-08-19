@@ -586,6 +586,19 @@ getGlyph = function(g) {
             "0000000",
         ];
         break;
+        case "ä":
+        ch = [
+            "0100010",
+            "0000000",
+            "0011100",
+            "0000010",
+            "0011110",
+            "0100010",
+            "0011101",
+            "0000000",
+            "0000000",
+        ];
+        break;
         case "b": 
         ch = [
             "0110000",
@@ -677,6 +690,32 @@ getGlyph = function(g) {
             "0000000",
         ];
         break;
+        case "ê":
+        ch = [
+            "0001000",
+            "0010100",
+            "0011100",
+            "0100010",
+            "0111110",
+            "0100000",
+            "0011100",
+            "0000000",
+            "0000000",
+        ];
+        break;
+        case "ë":
+        ch = [
+            "1000010",
+            "0000000",
+            "0011100",
+            "0100010",
+            "0111110",
+            "0100000",
+            "0011100",
+            "0000000",
+            "0000000",
+        ];
+        break;
         case "f":
         ch = [
             "0001100",
@@ -720,6 +759,32 @@ getGlyph = function(g) {
         ch = [
             "0000000",
             "0001000",
+            "0000000",
+            "0011000",
+            "0001000",
+            "0001000",
+            "0011100",
+            "0000000",
+            "0000000",
+        ];
+        break;
+        case "î":
+        ch = [
+            "0001000",
+            "0010100",
+            "0000000",
+            "0011000",
+            "0001000",
+            "0001000",
+            "0011100",
+            "0000000",
+            "0000000",
+        ];
+        break;
+        case "ï":
+        ch = [
+            "0000000",
+            "0100010",
             "0000000",
             "0011000",
             "0001000",
@@ -800,6 +865,19 @@ getGlyph = function(g) {
             "0000000",
             "0011100",
             "0100010",
+            "0100010",
+            "0100010",
+            "0011100",
+            "0000000",
+            "0000000",
+        ];
+        break;
+        case "ô":
+        ch = [
+            "0001000",
+            "0010100",
+            "0000000",
+            "0011100",
             "0100010",
             "0100010",
             "0011100",
@@ -2856,6 +2934,7 @@ VirtualTerminal.prototype.update = function(e) {
         this.recordingSession.push([this.recordingFrame, e]);
     }
     let s = e.key;
+    console.log(e);
     let c = this.caretPosition;
     let sel = this.selectionBounds[1] - this.selectionBounds[0] !== 0;
     if (s == "Backspace") {
@@ -2929,8 +3008,24 @@ VirtualTerminal.prototype.update = function(e) {
         this.commandDecID();
     } else if (s == "ArrowDown") {
         this.commandIncID();
-    } else if (s.length == "1" && !e.metaKey) {
+    } else if (s.length == 1 && !e.metaKey) {
         // console.log("WHat?????");
+        if (this.modifier == "circ") {
+            if (s == "a") {s = "â"};
+            if (s == "e") {s = "ê"};
+            if (s == "i") {s = "î"};
+            if (s == "o") {s = "ô"};
+            if (s == "u") {s = "û"};
+            this.modifier = null;
+        }
+        if (this.modifier == "trema") {
+            if (s == "a") {s = "ä"};
+            if (s == "e") {s = "ë"};
+            if (s == "i") {s = "ï"};
+            if (s == "o") {s = "ö"};
+            if (s == "u") {s = "ü"};
+            this.modifier = null;
+        }
         if (sel) {
               this.text = this.text.slice(0, this.selectionBounds[0] - 1) + s + this.text.slice(this.selectionBounds[1] - 1);
               this.caretPosition = this.selectionBounds[0];
@@ -2940,6 +3035,8 @@ VirtualTerminal.prototype.update = function(e) {
         // this.text += s;
               this.caretPosition++;
           }
+    } else if (s == "Dead" && e.code == "BracketLeft") {
+        this.modifier = (e.shiftKey) ? "trema" : "circ";
     } else if (s == "Enter") {
         if (this.text !== this.commands[this.commands.length - 1]) {
             this.commands.push(this.text);
