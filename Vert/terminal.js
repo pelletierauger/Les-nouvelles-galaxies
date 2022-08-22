@@ -3486,6 +3486,23 @@ let Brush = function(o) {
     this.type.push(this);
 }
 
+Brush.prototype.skew = function(offset = 32, rate = 0.5) {
+    for (let i = offset, fi = 0; i > 0, fi < this.data.length; i -= rate, fi++) {
+       for (let j = 0; j < i; j++) {
+           this.data[fi].unshift(0);
+       }
+    }
+}
+
+Brush.prototype.skew2 = function(offset = 32, rate = 0.5, ratedif = 0) {
+    for (let i = offset, fi = 0; i > 0, fi < this.data.length; i -= rate, fi++) {
+       for (let j = 0; j < i; j++) {
+           this.data[fi].unshift(0);
+       }
+        rate = rate + ratedif;
+    }
+}
+
 patterns = [];
 
 let Pattern = function(name) {

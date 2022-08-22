@@ -2476,11 +2476,12 @@ BrushFromString = function(s = "a", x = 1, y = 1) {
         type: spray,
         data: data
     };
-    new Brush(o);
+    let br = new Brush(o);
+    return br;
 };
 
 
-BrushFromString2 = function(s = "a", x = [1, 1, 1, 1, 1, 1, 1], y = [1, 1, 1, 1, 1, 1, 1, 1, 1]) {
+BrushFromString2 = function(s = "a", xs = 1, ys = 1, x = [1, 1, 1, 1, 1, 1, 1], y = [1, 1, 1, 1, 1, 1, 1, 1, 1]) {
     let data = [];
     for (let i = 0; i < 9; i++) {
         data.push([]);
@@ -2490,13 +2491,13 @@ BrushFromString2 = function(s = "a", x = [1, 1, 1, 1, 1, 1, 1], y = [1, 1, 1, 1,
         }
     }
     for (let i = data.length - 1; i >= 0; i--) {
-        for (let m = 1; m < y[i]; m++) {
+        for (let m = 1; m < (y[i] * ys); m++) {
             data.splice(i, 0, data[i].slice());
         }
     }
     for (let i = 0; i < data.length; i++) {
         for (let j = data[i].length - 1; j >= 0; j--) {
-            for (let m = 1; m < x[j % 7]; m++) {
+            for (let m = 1; m < (x[j % 7] * xs); m++) {
                 data[i].splice(j, 0, data[i][j]);
             }
         }
@@ -2506,7 +2507,8 @@ BrushFromString2 = function(s = "a", x = [1, 1, 1, 1, 1, 1, 1], y = [1, 1, 1, 1,
         type: spray,
         data: data
     };
-    new Brush(o);
+    let br = new Brush(o);
+    return br;
 };
 
 
@@ -2544,5 +2546,6 @@ BrushFromString3 = function(s = "a", x = [1, 1, 1, 1, 1, 1, 1], y = [1, 1, 1, 1,
         type: spray,
         data: data
     };
-    new Brush(o);
+    let br = new Brush(o);
+    return br;
 };
