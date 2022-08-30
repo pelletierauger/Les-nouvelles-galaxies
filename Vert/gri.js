@@ -65,6 +65,7 @@ GrimoireEditor.prototype.record = function() {
 
 let GrimoireTab = function(o) {
     this.name = o.name,
+    this.lang = o.lang;
     this.scroll = o.scroll;
     this.carets = o.carets;
     this.data = o.data;
@@ -292,8 +293,74 @@ GrimoireTab.prototype.deleteLine = function() {
 // };
 
 
-GrimoireTab.prototype.evaluate = function() {
+GrimoireTab.prototype.evaluateLine = function() {
+    let t = this;
+    let line = t.data[t.carets[0].y];
+    if (t.lang == "scd") {
+        socket.emit('interpretSuperCollider', line, t.canvasPath);
+    } else if (t.lang == "js") {
+        eval(line);
+    }
+};
 
+GrimoireTab.prototype.evaluateBlock = function() {
+    let t = this;
+    if (t.lang == "scd") {
+        let openBracket = "(";
+        let closeBracket = ")";
+        let curLine = t.carets[0].y;
+        let lineNow = curLine;
+        let lineRem = lineNow;
+        let codeBracket = "";
+        let curLineContent;
+        let checkOpen = 1;
+        let checkClose = 1;
+        let countBrackets = 0;
+        let countBracketsClose = 0;
+        let bracketFound = 0;
+        while (lineNow > 0) {
+            lineNow = lineNow - 1;
+            // curLineContent = String(superColliderEditor.getLine(lineNow));
+            curLineContent = t.data[lineNow];
+            checkClose = curLineContent.localeCompare(closeBracket);
+            if (checkClose === 0) {
+                countBracketsClose += 1;
+            }
+            checkOpen = curLineContent.localeCompare(openBracket);
+            if (checkOpen === 0) {
+                bracketFound = 1;
+                if (countBracketsClose === 0) {
+                    countBrackets += 1;
+                    lineRem = lineNow + 1;
+                } else {
+                    countBracketsClose -= 1;
+                }
+            }
+        }
+        lineNow = lineRem;
+        if (bracketFound !== 0 && countBrackets > 0) {
+            while (countBrackets !== 0) {
+                // checkClose = String(superColliderEditor.getLine(lineNow)).localeCompare(closeBracket)
+                checkClose = t.data[lineNow].localeCompare(closeBracket)
+                if (checkClose === 0 && lineNow >= curLine) {
+                    countBrackets -= 1;
+                }
+                // checkOpen = String(superColliderEditor.getLine(lineNow)).localeCompare(openBracket)
+                checkOpen = t.data[lineNow].localeCompare(openBracket)
+                if (checkOpen === 0 && lineNow >= curLine) {
+                    countBrackets += 1;
+                }
+                if (countBrackets === 0) break;
+                codeBracket += `\n` + t.data[lineNow];
+                lineNow += 1;
+            }
+            // interpret(codeBracket);
+            socket.emit('interpretSuperCollider', codeBracket, t.canvasPath);
+        } else {
+            // interpret(t.data[lineNow]);
+            socket.emit('interpretSuperCollider', t.data[lineNow], t.canvasPath);
+        }
+    }
 };
 
 
@@ -568,6 +635,10 @@ GrimoireEditor.prototype.update = function(e) {
                 }
             }
             updated = false;
+        } else if (s == "Enter" && e.shiftKey) {
+            t.evaluateLine();
+        } else if (s == "Enter" && e.metaKey) {
+            t.evaluateBlock();
         } else if (s.length == 1) {
             t.update(s);
         } else if (s == "Backspace") {
