@@ -360,6 +360,25 @@ GrimoireTab.prototype.evaluateBlock = function() {
             // interpret(t.data[lineNow]);
             socket.emit('interpretSuperCollider', t.data[lineNow], t.canvasPath);
         }
+    } else if (t.lang == "js") {
+        // var pos = editor.getCursor()
+        var startline = t.carets[0].y;
+        var endline = t.carets[0].y;
+        while (startline > 0 && t.data[startline] !== '') {
+            startline--
+        }
+        while (endline < t.data.length && t.data[endline] !== '') {
+            endline++
+        }
+                console.log(startline);
+        console.log(endline);
+        // startline, endline;
+        let block = "";
+        for (let i = startline; i < endline; i++) {
+            block = block + "\n" + t.data[i];
+        }
+        console.log(block);
+        eval(block);
     }
 };
 
@@ -639,6 +658,10 @@ GrimoireEditor.prototype.update = function(e) {
             t.evaluateLine();
         } else if (s == "Enter" && e.metaKey) {
             t.evaluateBlock();
+        } else if (s == "." && e.metaKey) {
+            if (t.lang == "scd") {
+                socket.emit('interpretSuperCollider', 'CmdPeriod.run;', t.canvasPath)
+            }
         } else if (s.length == 1) {
             t.update(s);
         } else if (s == "Backspace") {
