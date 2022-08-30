@@ -313,6 +313,7 @@ GrimoireTab.prototype.update = function(s) {
             let yOffset = 0;
             let xOffset = 0;
             let anchor = false;
+            // A selection is "anchored" when the caret is at its end.
             if (c.y > c.sel[1]) {
                 anchor = true;
             } else if (c.y == c.sel[1]) {
