@@ -9,91 +9,15 @@ drawTerminal = function(selectedProgram) {
     pmouse[1] = constrain(Math.floor(map(mouse.y, 96, 695, 0, 22 * 9)), 0, 21 * 9);
     smouse[0] = Math.floor(pmouse[0] % 7);
     smouse[1] = Math.floor(pmouse[1] % 9);
-    
-    vertices = [];
-    let num = 150;
-    for (let i = 0; i < num; i++) {
-        let x = Math.cos(i) * i * 1e-2;
-        let y = Math.sin(i) * i * 1e-2;
-        // vertices.push(x * (9 / 16), y, 40.0, 1);
-    }
-    num = 0;
-    let sc = 0.27;
-    let sx0 = vt.selectionBounds[0];
-    let sx1 = vt.selectionBounds[1];
-    let colors = [];
-    let sc2 = sc * 1.2;
-    for (let x = 0; x <= vt.stringArray[0].length; x++) {
-        let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
-        for (let y = 0; y < 9; y++) {
-            let caret = (vt.caretPosition - 0) * 7 + 7;
-            if (vt.stringArray[y][x] == sel || (x == caret && drawCount / 20 % 1 < 0.5)) {
-            // if (Math.sin(x * y) > 0.5) {
-            // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
-            // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 45.0 * sc, 1);
-   for (let yy = 0; yy < 18; yy++) {
-       let yyy = y + (yy * 9) - 144;
-                // vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx * 0 + (-y * 0.00) + 0.2 - 0.61, -yyy * 0.04 * sc - 0.34 + 0.85 + ny * 0 + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11 - 1.32 - 0.014, 50.0 * sc * 0.9, 1);
-                // num++;
-                // colors.push(0, 0, 0);
-   }
-            }
-        }
-    }
-    // ljs(num);
-    for (let i = 0; i < num; i++) {
-        let r = Math.random();
-        let g = Math.random();
-        let b = Math.random();
-        // colors.push(0, 0, 0);
-    }
-        for (let x = 0; x <= vt.stringArray[0].length; x++) {
-        let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
-        for (let y = 0; y < 9; y++) {
-            let caret = (vt.caretPosition - 0) * 7 + 7;
-            // if (vt.stringArray[y][x] == sel || (x == caret && drawCount / g % 1 < 0.5) || (x / 7 >= fmouse[0] && x / 7 <= fmouse[0] + 1)) {           
-                if (vt.stringArray[y][x] == sel || (x == caret && drawCount / 20 % 1 < 0.5)) {
-            // if (Math.sin(x * y) > 0.5) {
-            // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
-            // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 40.0 * sc, 1);
-   // for (let yy = 0; yy < 18; yy++) {
-       // let yyy = y + (yy * 9) - 144;
-                // vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx * 1 + (-y * 0.00) + 0.2 - 0.6, -y * 0.04 * sc - 0.34 + 0.85 + ny * 1 + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11 - 1.42, 50.0 * sc * 0.9, 1);
-                        // vertices.push((x) * 0.0054 * (9/16) - 1 + 0.081 + nx, (y) * -0.0108 + 0.855 + ny - 1.65, 12, 1);                num++;
-                // colors.push(0.65, 0.65, 0.65);
-   // }
-            }
-        }
-    }
-    // for (let y = 0; y < face.length; y++) {
-    //     for (let x = 0; x < face[y].length; x++) {
-    //         let c = face[y][x];
-    //         let g = getGlyph(c);
-    //         for (let yy = 0; yy < g.length; yy++) {
-    //             for (let xx = 0; xx < g[yy].length; xx++) {
-    //                 if (g[yy][xx] == "1" || (x == fmouse[0] && y == fmouse[1])) {
-    //                     let tx = 0, ty = 0;
-    //                     tx = openSimplex.noise3D(x + (xx * 1e-1), y + (yy * 1e-1), drawCount * 1e-1) * 0.002;
-    //                     ty = openSimplex.noise3D(x + (xx * 1e-1), y + (yy * 1e-1), drawCount * 1e-1 + 1e4) * 0.002;
-    //                     vertices.push((x * 7 + xx) * 0.0054 * (9/16) - 1 + 0.081 + tx, (y * 9 + yy) * -0.0108 + 0.855 + ty - 0.015, 12, 1);
-    //                     num++;
-    //                     colors.push(0, 0, 0);   
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-                // let caret = (vt.caretPosition - 0) * 7 + 7;
-            // if (vt.stringArray[y][x] == sel || (x == caret && drawCount / 20 % 1 < 0.5)) {
+
     // ———————————————————————————————————————————————————————————————
     //  Grimoire drawing algorithm
     // ———————————————————————————————————————————————————————————————
-    // let sx0 = vt.selectionBounds[0];
-    // let sx1 = vt.selectionBounds[1];
-    // let colors = [];
-    // let sc2 = sc * 1.2;
-    // for (let x = 0; x <= vt.stringArray[0].length; x++) {
-    //     let sel = ((x > sx0 * 7 && x < sx1 * 7)
+    
+    vertices = [];
+    let num = 0;
+    let colors = [];
+
     if (ge.brushPositions && mode == 3) {
         for (let i = 0; i < patterns.length; i++) {
             for (let y = 0; y < 18; y++) {
@@ -259,62 +183,6 @@ drawTerminal = function(selectedProgram) {
             // console.log(maxloopy);
         }
     }
-    
-    for (let x = 8; x <= vt2.stringArray[0].length; x++) {
-        for (let y = 0; y < 9; y++) {
-            if (vt2.stringArray[y][x] == "1") {
-                let scz = sc * 1.5;
-               // vertices.push(x * (9 / 16) * 0.02 * scz - 0.41 + nx + (-y * 0) + 0.161 - 0.6, -y * 0.04 * scz - 0.19 + 0.9 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) - 0.02 + 0.05, 50.0 * scz * 0.7, 1);
-            // num++;
-                // colors.push(0, 0, 0);
-            }
-        }
-    }
-    for (let x = 8; x <= vt2.stringArray[0].length; x++) {
-        for (let y = 0; y < 9; y++) {
-            if (vt2.stringArray[y][x] == "1") {
-                let scz = sc * 1.5;
-               // vertices.push(x * (9 / 16) * 0.02 * scz - 0.41 + nx + (-y * 0) + 0.161 - 0.6, -y * 0.04 * scz - 0.19 + 0.9 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.05, 50.0 * scz * 0.7, 1);
-            // num++;
-                // colors.push(0.65, 0.65, 0.65);
-            }
-        }
-    }
-    for (let x = 8; x <= vt3.stringArray[0].length; x++) {
-        for (let y = 0; y < 9; y++) {
-            if (vt3.stringArray[y][x] == "1") {
-               // vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.00) + 0.26 - 0.588, -y * 0.04 * sc - 0.39 + 0.85 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11 - 0.02, 50.0 * sc * 0.9, 1);
-            // num++;
-                // colors.push(0, 0, 0);
-            }
-        }
-    }
-    for (let x = 8; x <= vt3.stringArray[0].length; x++) {
-        for (let y = 0; y < 9; y++) {
-            if (vt3.stringArray[y][x] == "1") {
-               // vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.00) + 0.26 - 0.588, -y * 0.04 * sc - 0.39 + 0.85 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) + 0.11, 50.0 * sc * 0.9, 1);
-            // num++;
-                // colors.push(0.65, 0.65, 0.65);
-            }
-        }
-    }
-                    for (let x = 8; x <= vt4.stringArray[0].length; x++) {
-        for (let y = 0; y < 9; y++) {
-            if (vt4.stringArray[y][x] == "1") {
-               // vertices.push(x * (9 / 16) * 0.02 * sc - 0.51 + nx + (-y * 0.002), -y * 0.04 * sc - 0.39 + 0.97 + ny + ((Math.sin(x * 0.05) * 0.5 + 0.5) * 0.0) - 0.05, 50.0 * sc * 0.9, 1);
-            // num++;
-                // colors.push(0.65, 0.65, 0.65);
-            }
-        }
-    }
-    for (let i = 0; i < num; i++) {
-        let r = Math.random();
-        let g = Math.random();
-        let b = Math.random();
-        // colors.push(1, 0.65, 0.45);
-    }
-    
-    
     // First idea for visualizing some data
     // for (let x = 0; x < 30; x++) {
     //      for (let y = 0; y < 15; y++) {
@@ -331,7 +199,6 @@ drawTerminal = function(selectedProgram) {
     //          }
     //     }
     // }
-    
     if (vt.enter > 0) {vt.enter--};
     // logJavaScriptConsole(colors.length);
     // Create an empty buffer object to store the vertex buffer

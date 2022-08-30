@@ -1,15 +1,10 @@
 // griArr = files.js[8].data.split("\n");
-griY = 0;
-
-ps = "        // we will assign the attribute texcoords to the varying texcoords to move them from the vert shader to "
 
 swatchesArr = "░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αßΓπΣσµτΦΘΩδ∞φε∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■";
 
 swatchesArr = "░▒▓█▀▄▌▐┌─┬┐│┤┘┴└├┼╔═╦╗║╣╝╩╚╠╬╒╤╕╡╛╧╘╞╓╥╖╢╜╨╙╟╫╪•◘☼►◄▲▼▬↑↓↨→←≡±≥≤αßΓπΣσµτΦΘΩδ∞φε∩⌠⌡÷≈°∙·√ⁿ²■";
 
 // files.js[8].data = griArr.join("\n")
-
-
 
 
 tab = function(s) {
@@ -57,6 +52,12 @@ let GrimoireEditor = function() {
 };
 
 GrimoireEditor.prototype.saveCanvas = function() {
+    if (this.activeTab !== null) {
+        this.activeTab.saveCanvas();
+    }
+};
+
+GrimoireEditor.prototype.record = function() {
     if (this.activeTab !== null) {
         this.activeTab.saveCanvas();
     }
