@@ -534,3 +534,88 @@ function exportOne() {
 gr = function() {
     grimoire = !grimoire;
 }
+
+if (false) {
+
+receiveOSC = function(s) {
+    // console.log(s);
+    // logJavaScriptConsole(s);
+    if (s.address == "/eval") {
+        eval(s.args[0].value);
+    }
+}
+
+socket.off('receiveOSC', receiveOSC);
+socket.on('receiveOSC', receiveOSC);
+
+
+buzz = 0.1;
+scdDisplay = function() {
+    let c = ge.activeTab.canvas.data;
+    for (let y = 20; y < 25; y++) {
+        for (let x = 65; x < 105; x++)  {
+            if (c[y] == null) {c[y] = []};
+            let v = Math.round(Math.random());
+            if (c[y][x] == null) {c[y][x] = []};
+            for (let i = 0; i < 63; i++) {
+                let xx = x * 7 + (i % 7);
+                let yy = y * 9 + (i / 7);
+                let d = dist(xx, yy, 0, 0);
+                let v = Math.round(Math.sin(d + drawCount * Math.cos(xx * buzz)) * 0.5 + 0.5);
+                c[y][x][i] = v;
+            }
+        }
+    }
+}
+
+buzz = 0.1;
+buzzY = 1;
+    scdDisplay = function() {
+    let c = ge.activeTab.canvas.data;
+        let t = drawCount;
+    for (let y = 19; y < 25; y++) {
+        for (let x = 65; x < 105; x++)  {
+            if (c[y] == null) {c[y] = []};
+            let v = Math.round(Math.random());
+            if (c[y][x] == null) {c[y][x] = []};
+            for (let i = 0; i < 63; i++) {
+                let xx = x * 7 + (i % 7);
+                let yy = y * 9 + (i / 7);
+                let d = dist(xx, yy, 0, buzzY);
+                let v = Math.round(usin(d + drawCount * Math.cos(xx * 0.1)));
+                v = Math.round(usin(Math.tan(d * buzz + t)));
+                c[y][x][i] = v;
+            }
+        }
+    }
+    function usin(t) {
+        return Math.sin(t) * 0.5 + 0.5;
+    }
+}
+
+scdDisplay = function() {
+    let c = ge.activeTab.canvas.data;
+    for (let y = 20; y < 25; y++) {
+        for (let x = 65; x < 105; x++)  {
+            if (c[y] == null) {c[y] = []};
+            let v = Math.round(Math.random());
+            if (c[y][x] == null) {c[y][x] = []};
+            for (let i = 0; i < 63; i++) {
+                let xx = x * 7 + (i % 7);
+                let yy = y * 9 + (i / 7);
+                let d = dist(xx, yy, 0, 0);
+                let v = Math.round(usin(d + drawCount * 0.5 + Math.sin(xx)));
+                v *= Math.round(usin(d * 50 + drawCount * 1e-1));
+                c[y][x][i] = v;
+            }
+        }
+    }
+    function usin(t) {
+        return Math.sin(t) * 0.5 + 0.5;
+    }
+}
+
+scdDisplay();
+
+
+}

@@ -4,12 +4,12 @@ drawTerminal = function(selectedProgram) {
     // let mx = map(mouse.x, 0, document.body.clientWidth, -1, 1);
     // let my = map(mouse.y, hh, canH + hh, 1, -1);
     fmouse[0] = constrain(Math.floor(map(mouse.x, 78, 1190, 0, 108)), 0, 109);
-    fmouse[1] = constrain(Math.floor(map(mouse.y, 96, 695, 0, 22)), 0, 21);
+    fmouse[1] = constrain(Math.floor(map(mouse.y, 96, 695, 0, 25)), 0, 24);
     pmouse[0] = constrain(Math.floor(map(mouse.x, 78, 1190, 0, 108 * 7)), 0, 109 * 7);
-    pmouse[1] = constrain(Math.floor(map(mouse.y, 96, 695, 0, 22 * 9)), 0, 21 * 9);
+    pmouse[1] = constrain(Math.floor(map(mouse.y, 96, 695, 0, 25 * 9)), 0, 24 * 9);
     smouse[0] = Math.floor(pmouse[0] % 7);
     smouse[1] = Math.floor(pmouse[1] % 9);
-
+    // scdDisplay();
     // ———————————————————————————————————————————————————————————————
     //  Grimoire drawing algorithm
     // ———————————————————————————————————————————————————————————————
@@ -17,7 +17,6 @@ drawTerminal = function(selectedProgram) {
     vertices = [];
     let num = 0;
     let colors = [];
-
     if (ge.brushPositions && mode == 3) {
         for (let i = 0; i < patterns.length; i++) {
             for (let y = 0; y < 18; y++) {
@@ -41,12 +40,12 @@ drawTerminal = function(selectedProgram) {
                          }
                      }
                      if ((vv || sel) && !contour) {
-                         ge.brushPositions[20 * 9 + y][x] = 1;
+                         ge.brushPositions[23 * 9 + y][x] = 1;
                      }
                  }
              }
          }
-        if (fmouse[1] > 19) {
+        if (fmouse[1] > 19 + 3) {
             applyPointer();
         }
     }   
@@ -67,7 +66,7 @@ drawTerminal = function(selectedProgram) {
     if (sel) {
         // ctt++;
         selections = [];
-        for (let y = 0; y < 22; y++) {
+        for (let y = 0; y < 22 + 3; y++) {
             selections[y] = [];
             for (let x = 0; x < 109; x++) {
                 selections[y][x] = 0;
@@ -88,13 +87,13 @@ drawTerminal = function(selectedProgram) {
     }
 }
 //     
-    for (let y = 0; y < 22; y++) {
+    for (let y = 0; y < 22 + 3; y++) {
         for (let x = 0; x < 109; x++) {
             let char;
             let caret = false;
             let selection;
             let blink;
-            if (y == 21 && mode !== 1) {
+            if (y == 21 + 3 && mode !== 1 && mode !== 3) {
                 char = (x >= vt.text.length + 1) ? " " : (">" + vt.text)[x];
                 caret = (x == vt.caretPosition + 1);
                 let sx0 = vt.selectionBounds[0];
@@ -102,7 +101,7 @@ drawTerminal = function(selectedProgram) {
                 selection = x >= sx0 && x < sx1;
                 selection = (vt.enter && x < vt.text.length + 1) ? true : selection;
                 blink = (mode !== 1);
-            } else if (y == 20 && mode !== 1) {
+            } else if (y == 20 + 3 && mode !== 1) {
                 // char = "-";
                 char = (mode == 2) ? swatchesArr[x] : " ";
             } else {
@@ -123,7 +122,7 @@ drawTerminal = function(selectedProgram) {
                     char = " ";
                 }
             }
-            if (mode == 3 && y > 19) {char = " "; caret = false;};
+            if (mode == 3 && y > 19 + 3) {char = " "; caret = false;};
             let cur = (x == fmouse[0] && y == fmouse[1]);
             // let curP = (x == fmouse[0] && y == fmouse[1]);
             // cur = (mode == 3) ? false : cur;
@@ -137,7 +136,7 @@ drawTerminal = function(selectedProgram) {
             }
             let paint = false;
             let canvas = null;
-            if (ge.activeTab !== null && (y < 20 || mode == 1)) {
+            if (ge.activeTab !== null && (y < 20 + 3 || mode == 1)) {
                 if (ge.activeTab.canvas !== null) {
                     canvas = ge.activeTab.canvas.data;
                     if (canvas[y + ge.activeTab.scroll.y]) {
@@ -151,7 +150,7 @@ drawTerminal = function(selectedProgram) {
             //     char = " "
             //     // g = getGlyph(char);
             // };
-            if (selections !== null && (y < ((mode == 1) ? 22 : 20))) {
+            if (selections !== null && (y < ((mode == 1) ? 22 + 3 : 20 + 3))) {
                 selection = (selections[y][x] && x < ge.activeTab.data[y+ge.activeTab.scroll.y].length + 1) ? true : selection;
             }
             let maxloopy = 0;
@@ -173,7 +172,7 @@ drawTerminal = function(selectedProgram) {
                             let sc = 0.8;
                             // tx = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1) * 0.0;
                             // ty = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1 + 1e4) * 0.0;
-                            vertices.push(((x * 7 + xx) * 0.0054 * (9/16) - 1 + -0.155 + tx + nx * 0.5) * sc, ((y * 9 + yy) * -0.0108 + 1.05 + ty + ny * 0.5) * sc, (11 + tx * 500) * sc, 1);
+                            vertices.push(((x * 7 + xx) * 0.0054 * (9/16) - 1 + -0.155 + tx + nx * 0.5) * sc, ((y * 9 + yy) * -0.0095 + 1.062 + ty + ny * 0.5) * sc, 11 * sc, 1);
                             num++;
                             colors.push(0.65, 0.65, 0.65);   
                         }
@@ -273,7 +272,7 @@ roundedSquare.vertText = `
         distr2 *= 0.;
         // gl_Position.x += disturbance * 0.1 * (1. + distr2);
         // gl_Position.x += tan(floor(sin(gl_Position.y * 1e3))) * 0.1;
-        gl_Position.xy *= (1.0 - distance(gl_Position.xy, vec2(0,0)) * 0.1) * 1.05;
+        // gl_Position.xy *= (1.0 - distance(gl_Position.xy, vec2(0,0)) * 0.1) * 1.05;
         center = vec2(gl_Position.x, gl_Position.y);
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
@@ -3138,7 +3137,7 @@ window.addEventListener('mousedown', e => {
     // console.log(e);
     if (mode == 1) {
         let t = ge.activeTab;
-        if (grimoire && fmouse[1] < 22) {
+        if (grimoire && fmouse[1] < 25) {
             let caret = false;
             let caretAt;
             for (let i = 0; i < t.carets.length; i++) {
@@ -3164,7 +3163,7 @@ window.addEventListener('mousedown', e => {
         let t = ge.activeTab;
         if (t !== null) {
             if (!e.shiftKey) {
-                if (grimoire && fmouse[1] < 20) {
+                if (grimoire && fmouse[1] < 23) {
                     let y = t.data[fmouse[1] + t.scroll.y];
                     let add = pchar;
                     if (y.length < fmouse[0]) {
@@ -3197,9 +3196,9 @@ window.addEventListener('mousedown', e => {
                 // console.log(face[fmouse[1]][fmouse[0]]);
                 console.log(swatchesArr[fmouse[0]]);
                 let newChar;
-                if (fmouse[1] == 20) {
+                if (fmouse[1] == 23) {
                     newChar = swatchesArr[fmouse[0]];
-                } else if (fmouse[1] == 21) {
+                } else if (fmouse[1] == 24) {
                     if (fmouse[0] < vt.text.length + 2) {
                         newChar = vt.text[fmouse[0] - 2];
                     } else {
@@ -3216,13 +3215,13 @@ window.addEventListener('mousedown', e => {
             }
         }
         if (e.altKey) {
-            if (fmouse[1] == 20) {
+            if (fmouse[1] == 23) {
                 vt.update({key: swatchesArr[fmouse[0]]});
             }
         }
     }
     if (mode == 3) {
-        if (fmouse[1] >= 20) {
+        if (fmouse[1] >= 23) {
             ge.activePattern = patterns[Math.floor(fmouse[0] / 5)]; 
             resetBrushPositions();
         }
@@ -3236,7 +3235,7 @@ window.addEventListener('mousedown', e => {
 });
 mouseDragged = function(e) {
     if (mode == 2) {
-        if (grimoire && fmouse[1] < 20) {
+        if (grimoire && fmouse[1] < 23) {
             let t = ge.activeTab;
             if (t !== null) {
                 let y = t.data[fmouse[1] + t.scroll.y];
@@ -3269,14 +3268,14 @@ mouseDragged = function(e) {
             }
         }
     }
-    if (mode == 3 && fmouse[1] < 20) {
+    if (mode == 3 && fmouse[1] < 23) {
         let val = (e.shiftKey) ? 0 : 1;
         // paint(fmouse[0], fmouse[1], smouse[0], smouse[1], val);
         paint(val);
     }
     if (mode == 1) {
         let t = ge.activeTab;
-        if (fmouse[1] == 21 && (drawCount % 2 == 0)) {
+        if (fmouse[1] == 24 && (drawCount % 2 == 0)) {
             t.moveCaretsY(1, true);
         } else if (fmouse[1] == 0 && (drawCount % 2 == 0)) {
             t.moveCaretsY(-1, true);

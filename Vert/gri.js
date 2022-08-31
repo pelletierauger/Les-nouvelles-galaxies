@@ -1261,7 +1261,7 @@ let hw = w/2;
 for (let y = 0; y < w; y++) {
     a[y] = [];
     for (let x = 0; x < w; x++) {
-        let v = dist(x, y * 1.9, hw, hw * 1.9);
+        let v = dist(x, y * 1.75, hw, hw * 1.75);
         // let xx = Math.cos(v) * v * 0.01, yy = Math.sin(v) * v * 0.01;
         // v = dist(xx, yy * 1.9, hw, hw * 1.9);
          // 46.5, 36.5, 26.9, 17.85, 18.2, 11.95, 5
@@ -2387,14 +2387,14 @@ let airBrush1 = new Brush({
 
 resetBrushPositions = function() {
     ge.brushPositions = [];
-    for (let y = 0; y < 22 * 9; y++) {
+    for (let y = 0; y < 25 * 9; y++) {
         ge.brushPositions[y] = [];
         for (let x = 0; x < 109 * 7; x++) {
             ge.brushPositions[y][x] = 0;
         }
     }
     // console.log("reset!");
-    if (fmouse[1] < 20) {
+    if (fmouse[1] < 23) {
         let b = ge.activeBrush;
         let tx = (fmouse[0] * 7) + smouse[0];
         let tox = Math.max(0, tx - b.anchor[0]);
@@ -2415,7 +2415,7 @@ resetBrushPositions = function() {
         // let foy = Math.floor(toy / 9);
         // let soy = toy % 9;
         // let biymax = Math.min(b.data.length, 180 - (toy + b.data.length));
-        let biymax = b.data.length - (Math.max((ty - b.anchor[1] + b.data.length) - 180, 0));
+        let biymax = b.data.length - (Math.max((ty - b.anchor[1] + b.data.length) - 207, 0));
         // logJavaScriptConsole(biymax);
         // logJavaScriptConsole("ty: " + ty + " ,  b.anchor[1] :" +  b.anchor[1] + " , biy: " + biy + ", biymax: " + biymax);
         for (let y = biy; y < biymax; y++) {
@@ -2473,7 +2473,7 @@ applyPointer = function() {
     // let foy = Math.floor(toy / 9);
     // let soy = toy % 9;
     // let biymax = Math.min(b.data.length, 180 - (toy + b.data.length));
-    let biymax = b.length - (Math.max((ty + b.length) - 198, 0));
+    let biymax = b.length - (Math.max((ty + b.length) - 225, 0));
     // logJavaScriptConsole(biymax);
     // logJavaScriptConsole("ty: " + ty + " ,  b.anchor[1] :" +  b.anchor[1] + " , biy: " + biy + ", biymax: " + biymax);
     for (let y = biy; y < biymax; y++) {
@@ -2533,7 +2533,7 @@ window.addEventListener('wheel', (e) => {
     if (ge.activeTab !== null && grimoire) {
         let delta = Math.floor(e.deltaY * 0.5);
         if (e.deltaY > 0) {
-            ge.activeTab.scroll.y = Math.min(ge.activeTab.scroll.y + delta, ge.activeTab.data.length - 22);
+            ge.activeTab.scroll.y = Math.min(ge.activeTab.scroll.y + delta, ge.activeTab.data.length - 25);
         } else if (e.deltaY < 0) {
             ge.activeTab.scroll.y = Math.max(ge.activeTab.scroll.y + delta, 0);
         }
