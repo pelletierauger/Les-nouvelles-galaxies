@@ -9,7 +9,7 @@ drawTerminal = function(selectedProgram) {
     pmouse[1] = constrain(Math.floor(map(mouse.y, 96, 695, 0, 25 * 9)), 0, 24 * 9);
     smouse[0] = Math.floor(pmouse[0] % 7);
     smouse[1] = Math.floor(pmouse[1] % 9);
-    // scdDisplay();
+    //scdDisplay();
     // ———————————————————————————————————————————————————————————————
     //  Grimoire drawing algorithm
     // ———————————————————————————————————————————————————————————————
@@ -84,6 +84,25 @@ drawTerminal = function(selectedProgram) {
                 }
             }
         }
+    }
+    if (ge.evaluated) {
+        if (selections == null) {selections = []};
+        for (let y = 0; y < 22 + 3; y++) {
+            selections[y] = [];
+            for (let x = 0; x < 109; x++) {
+                let sy = y + ge.activeTab.scroll.y;
+                if (sy >= ge.evaluatedLines[0] && sy < ge.evaluatedLines[1]) {
+                    if (x < ge.activeTab.data[sy].length) {
+                        selections[y][x] = 1;
+                    } else {
+                        selections[y][x] = 0;
+                    }
+                } else {
+                    selections[y][x] = 0;
+                }
+            }
+        }
+        if (ge.evaluated > 0) {ge.evaluated--};
     }
 }
 //     
@@ -168,11 +187,11 @@ drawTerminal = function(selectedProgram) {
                         // let curPSub = (xx == smouse[0] && yy == smouse[1]);
                         // paintTest = (cur && curPSub && mode == 3) ? true : paintTest;
                         if (g[yy][xx] == test || paintTest || (brush && mode == 3)) {
-                            let tx = 0, ty = 0;
+                            // let tx = 0, ty = 0;
                             let sc = 0.8;
                             // tx = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1) * 0.0;
                             // ty = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1 + 1e4) * 0.0;
-                            vertices.push(((x * 7 + xx) * 0.0054 * (9/16) - 1 + -0.155 + tx + nx * 0.5) * sc, ((y * 9 + yy) * -0.0095 + 1.062 + ty + ny * 0.5) * sc, 11 * sc, 1);
+                            vertices.push(((x * 7 + xx) * 0.00303 - 1.155 + nx) * sc, ((y * 9 + yy) * -0.0095 + 1.062 + ny) * sc, 11 * sc, 1);
                             num++;
                             colors.push(0.65, 0.65, 0.65);   
                         }

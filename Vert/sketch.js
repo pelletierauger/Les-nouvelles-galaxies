@@ -195,8 +195,8 @@ draw = function() {
     // drawBG(currentProgram);
     currentProgram = getProgram("new-flickering-dots-vert");
     gl.useProgram(currentProgram);
-    nx = openSimplex.noise2D(0, drawCount * 5e-2) * 0.02;
-    ny = openSimplex.noise2D(0, drawCount * 5e-2 + 1e5) * 0.02;
+    nx = openSimplex.noise2D(0, drawCount * 5e-2) * 0.01;
+    ny = openSimplex.noise2D(0, drawCount * 5e-2 + 1e5) * 0.01;
     drawAlligatorQuietVert(currentProgram);
     currentProgram = getProgram("new-flickering-dots");
     gl.useProgram(currentProgram);
@@ -573,7 +573,7 @@ buzzY = 1;
     scdDisplay = function() {
     let c = ge.activeTab.canvas.data;
         let t = drawCount;
-    for (let y = 19; y < 25; y++) {
+    for (let y = 20; y < 28; y++) {
         for (let x = 65; x < 105; x++)  {
             if (c[y] == null) {c[y] = []};
             let v = Math.round(Math.random());

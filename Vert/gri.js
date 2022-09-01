@@ -45,10 +45,17 @@ tab = function(s) {
     }
 }
 
+tb = function(s) {
+    tab(s);
+    mode = 1;
+};
+
 let GrimoireEditor = function() {
     this.activeTab = null;
     this.activeBrush = null;
     this.activePattern = null;
+    this.evaluated = 0;
+    this.evaluatedLines = [0, 0];
 };
 
 GrimoireEditor.prototype.saveCanvas = function() {
@@ -301,6 +308,8 @@ GrimoireTab.prototype.evaluateLine = function() {
     } else if (t.lang == "js") {
         eval(line);
     }
+    ge.evaluated = 5;
+    ge.evaluatedLines = [t.carets[0].y, t.carets[0].y + 1];
 };
 
 GrimoireTab.prototype.evaluateBlock = function() {
@@ -356,9 +365,13 @@ GrimoireTab.prototype.evaluateBlock = function() {
             }
             // interpret(codeBracket);
             socket.emit('interpretSuperCollider', codeBracket, t.canvasPath);
+            ge.evaluated = 5;
+            ge.evaluatedLines = [lineRem - 1, lineNow + 1];
         } else {
             // interpret(t.data[lineNow]);
             socket.emit('interpretSuperCollider', t.data[lineNow], t.canvasPath);
+            ge.evaluated = 5;
+            ge.evaluatedLines = [lineNow, lineNow + 1];
         }
     } else if (t.lang == "js") {
         // var pos = editor.getCursor()
@@ -370,15 +383,17 @@ GrimoireTab.prototype.evaluateBlock = function() {
         while (endline < t.data.length && t.data[endline] !== '') {
             endline++
         }
-                console.log(startline);
-        console.log(endline);
+                // console.log(startline);
+        // console.log(endline);
         // startline, endline;
         let block = "";
         for (let i = startline; i < endline; i++) {
             block = block + "\n" + t.data[i];
         }
-        console.log(block);
+        // console.log(block);
         eval(block);
+        ge.evaluated = 5;
+        ge.evaluatedLines = [startline, endline];
     }
 };
 
@@ -656,12 +671,15 @@ GrimoireEditor.prototype.update = function(e) {
             updated = false;
         } else if (s == "Enter" && e.shiftKey) {
             t.evaluateLine();
+            updated = false;
         } else if (s == "Enter" && e.metaKey) {
             t.evaluateBlock();
+            updated = false;
         } else if (s == "." && e.metaKey) {
-            if (t.lang == "scd") {
+            // if (t.lang == "scd") {
                 socket.emit('interpretSuperCollider', 'CmdPeriod.run;', t.canvasPath)
-            }
+            // }
+            updated = false;
         } else if (s.length == 1) {
             t.update(s);
         } else if (s == "Backspace") {
