@@ -1387,7 +1387,7 @@ void main() {
     // gl_FragColor.rgb = LevelsControlInput(gl_FragColor.rgb, 0., vec3(1.), 0.75);
     // gl_FragColor.rgb = max(vec3(0.1), gl_FragColor.rgb);
     // gl_FragColor.rgb += roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.1025) * 2.1, 0.001, 0.25) * 0.12;
-    gl_FragColor.rgb += roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.1092 * (16./9.), 0.104) * 2.1 * 4.1, 0.01, 0.5) * 0.12;
+    gl_FragColor.rgb += roundedRectangle(uv, vec2(0. * (16./ 9.), 0.), vec2(0.11025 * (16./9.), 0.105) * 2.1 * 4.1, 0.01, 0.5) * 0.12;
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.rgb *= 1.05;
@@ -9135,7 +9135,7 @@ newFlickeringVert.vertText = `
         float fluctuate = floor(mod(time * 1e5, 100.)/50.);
         float distr2 = (floor(sin(gl_Position.y * 1e-7 + time * 0.125 + tan(gl_Position.y * 2e-1 + gl_Position.x * 1e-3) * 0.5) * 0.01)) * 10.1 * fluctuate;
         // distr2 *= 0.;
-        gl_Position.y += disturbance * 0.1 * sin(time) * (1. + distr2 * 5.);
+        //gl_Position.y += disturbance * 0.1 * sin(time) * (1. + distr2 * 5.);
         gl_PointSize = (29.5 - (60. * pos.z * 0.02)) * sca;
         gl_PointSize = 6. * sca;
         alph = 0.25 * 0.75;
