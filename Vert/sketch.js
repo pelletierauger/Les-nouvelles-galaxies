@@ -1,4 +1,4 @@
-let looping = true;
+let looping = false;
 let grimoire = false;
 let gr;
 let mode = 0;
@@ -40,6 +40,79 @@ let resolutionBG;
 let fmouse = [0, 0];
 let pmouse = [0, 0];
 let smouse = [0, 0];
+
+
+// ------------------------------------------------------------
+// Grimoire Animate
+// ------------------------------------------------------------
+
+var stop = false;
+var fps, fpsInterval, startTime, now, then, elapsed;
+var animationStart;
+var framesRendered = 0;
+var framesOfASecond = 0;
+var secondStart, secondFrames;
+var fps = 24;
+var envirLooping = false;
+
+
+startAnimating = function() {
+    fpsInterval = 1000 / fps;
+    then = Date.now();
+    animationStart = Date.now();
+    secondStart = Date.now();
+    startTime = then;
+    framesRendered = 0;
+    envirLooping = true;
+    animate();
+}
+
+function queryFrameRate() {
+    let timeElapsed = Date.now() - animationStart;
+    let seconds = timeElapsed / 1000;
+    logJavaScriptConsole(framesRendered / seconds);
+    // logJavaScriptConsole(timeElapsed);
+}
+
+// the animation loop calculates time elapsed since the last loop
+// and only draws if your specified fps interval is achieved
+
+function animate() {
+
+    // request another frame
+    if (envirLooping) {
+
+        requestAnimationFrame(animate);
+
+
+        // calc elapsed time since last loop
+
+        now = Date.now();
+        elapsed = now - then;
+
+        // if enough time has elapsed, draw the next frame
+
+        if (elapsed > fpsInterval) {
+
+            // Get ready for next frame by setting then=now, but also adjust for your
+            // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
+            then = now - (elapsed % fpsInterval);
+            // Put your drawing code here
+            draw();
+            framesRendered++;
+            framesOfASecond++;
+            if (framesOfASecond == fps) {
+                secondFrames = fps / ((Date.now() - secondStart) * 0.001);
+                // logJavaScriptConsole(secondFrames);
+                framesOfASecond = 0;
+                secondStart = Date.now();
+            }
+        }
+    }
+}
+
+// ------------------------------------------------------------
+
 
 function setup() {
     socket = io.connect('http://localhost:8080');
@@ -383,7 +456,7 @@ draw = function() {
     var textureLocation = gl.getUniformLocation(textureShader, "u_texture");
     gl.uniform1i(textureLocation, 0);
     var timeLocation = gl.getUniformLocation(textureShader, "time");
-    gl.uniform1f(timeLocation, frameCount * 0.01);
+    gl.uniform1f(timeLocation, drawCount * 0.01);
 // 
     var scalar = gl.getUniformLocation(textureShader, "resolution");
     gl.uniform1f(scalar, resolutionScalar);
@@ -477,6 +550,32 @@ tl = function(d = 0) {
             } else {
                 loop();
                 looping = true;
+            }
+    }, d * 1e3);
+};
+
+
+tl = function(d = 0) {
+    setTimeout(function() {
+                if (envirLooping) {
+                // noLoop();
+                envirLooping = false;
+            } else {
+                envirLooping = true;
+                startAnimating();
+            }
+    }, d * 1e3);
+};
+
+tl0 = function(d = 0) {
+    setTimeout(function() {
+                if (envirLooping) {
+                // noLoop();
+                envirLooping = false;
+            } else {
+                drawCount = 0;
+                envirLooping = true;
+                startAnimating();
             }
     }, d * 1e3);
 };
@@ -618,4 +717,9 @@ scdDisplay = function() {
 scdDisplay();
 
 
+}
+
+
+logLatency = function() {
+    logJavaScriptConsole((Date.now() - animationStart)/1000 - (drawCount/24));
 }
