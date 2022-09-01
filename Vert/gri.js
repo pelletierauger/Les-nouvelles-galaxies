@@ -289,7 +289,19 @@ GrimoireTab.prototype.scroll = function(x, y) {
 };
 
 GrimoireTab.prototype.addLine = function() {
-
+    let t = this;
+    if (t.carets.length == 1) {
+        let c = t.carets[0];
+        let bef = t.data[c.y].substring(0, c.x);
+        let aft = t.data[c.y].substring(c.x);
+        t.data[c.y] = bef;
+        t.data.splice(c.y + 1, 0, aft);
+        c.y++;
+        c.x = 0;
+        // if (c.x == 0) {
+            // t.data.splice(c.y, 0, "");
+        // }
+    }
 };
 
 GrimoireTab.prototype.deleteLine = function() {
@@ -682,6 +694,9 @@ GrimoireEditor.prototype.update = function(e) {
                 socket.emit('interpretSuperCollider', 'CmdPeriod.run;', t.canvasPath)
             // }
             updated = false;
+        } else if (s == "Enter") {
+            t.addLine();
+            // updated = false;
         } else if (s.length == 1) {
             t.update(s);
         } else if (s == "Backspace") {

@@ -20,7 +20,7 @@ drawTerminal = function(selectedProgram) {
     if (ge.brushPositions && mode == 3) {
         for (let i = 0; i < patterns.length; i++) {
             for (let y = 0; y < 18; y++) {
-                let r = 7 * 5;
+                let r = 7 * 5 - 2;
                  for (let x = i * r; x < r + (i * r); x++) {
                      let p = patterns[i].grid;
                      let pdim = [p[0].length, p.length];
@@ -3241,7 +3241,8 @@ window.addEventListener('mousedown', e => {
     }
     if (mode == 3) {
         if (fmouse[1] >= 23) {
-            ge.activePattern = patterns[Math.floor(fmouse[0] / 5)]; 
+            // ge.activePattern = patterns[Math.floor(fmouse[0] / 5)]; 
+            ge.activePattern = patterns[Math.floor(pmouse[0] / (7*5-2))]; 
             resetBrushPositions();
         }
         else {
@@ -3420,6 +3421,27 @@ polka2 = new Pattern("polka2");
 polka2.grid = [
   [1, 0, 0, 0, 1, 0, 0, 0],
   [0, 0, 1, 0, 0, 0, 1, 0]
+];
+
+polka15 = new Pattern("polka15");
+polka15.grid = [
+  [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+  [0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0]
+];
+
+polka12 = new Pattern("polka12");
+
+polka12.grid = [
+  [1, 0, 0, 0],
+  [0, 0, 0, 0],
+  [0, 0, 1, 0],
+  [0, 0, 0, 0]
+];
+
+polka25 = new Pattern("polka25");
+polka25.grid = [
+  [1, 0],
+  [0, 1]
 ];
 
 
@@ -3820,9 +3842,10 @@ for (let y=0;y<fence5.grid.length;y++){
 full = new Pattern("full");
 full.grid = [[1]];
 
+// polka25
 
 patterns = [
-    polka0, polka1, polka2, full, 
+    polka0, polka1, polka12, polka15, polka2, full, 
     horizontal1, horizontal0,
     vertical0, vertical1,
     diagonal0, diagonal1, 
