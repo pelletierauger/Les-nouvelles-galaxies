@@ -89,7 +89,7 @@ drawTerminal = function(selectedProgram) {
         if (selections == null) {selections = []};
         for (let y = 0; y < 22 + 3; y++) {
             selections[y] = [];
-            for (let x = 0; x < 109; x++) {
+            for (let x = ge.evaluatedLines[2]; x < 109; x++) {
                 let sy = y + ge.activeTab.scroll.y;
                 if (sy >= ge.evaluatedLines[0] && sy < ge.evaluatedLines[1]) {
                     if (x == 0 || x < ge.activeTab.data[sy].length) {
