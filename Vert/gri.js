@@ -295,12 +295,31 @@ GrimoireTab.prototype.addLine = function() {
         let bef = t.data[c.y].substring(0, c.x);
         let aft = t.data[c.y].substring(c.x);
         t.data[c.y] = bef;
-        t.data.splice(c.y + 1, 0, aft);
+        let whitespace = "";
+        t.data[c.y].replace(/^\s*/, function(a, b, c) {whitespace = a});
+        t.data.splice(c.y + 1, 0, whitespace + aft);
         c.y++;
-        c.x = 0;
-        // if (c.x == 0) {
-            // t.data.splice(c.y, 0, "");
-        // }
+        c.x = whitespace.length;
+        if (c.y - t.scroll.y > 24) {
+            t.scroll.y++;
+        }
+    }
+};
+
+
+GrimoireTab.prototype.saveTab = function() {
+    let t = this;
+    let f = files[t.lang];
+    for (let i = 0; i < f.length; i++) {
+        let ff = f[i];
+        if (t.name == ff.name) {
+            ff.data = t.data.join("\n");
+            if (t.lang == "scd") {
+                checkIfScdSaved(i);
+            } else {
+                checkIfJsSaved(i);
+            }
+        }
     }
 };
 
@@ -592,6 +611,11 @@ GrimoireTab.prototype.select = function() {
         }
     }
 };
+
+GrimoireEditor.prototype.saveTab = function() {
+    this.activeTab.saveTab();
+};
+
 
 GrimoireEditor.prototype.update = function(e) {
     let s = e.key;
