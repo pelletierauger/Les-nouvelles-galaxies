@@ -3445,6 +3445,20 @@ polka25.grid = [
 ];
 
 
+polka2b = new Pattern("polka2b");
+
+polka2b.grid = [
+  [1, 0, 0, 0, 1, 0, 0, 0],
+  [1, 0, 1, 0, 0, 0, 1, 0],
+  [1, 1, 0, 0, 1, 0, 0, 1],
+  [1, 0, 1, 0, 0, 0, 1, 0],
+  [1, 0, 0, 0, 1, 0, 0, 0],
+  [0, 0, 1, 0, 1, 0, 1, 0],
+  [1, 0, 0, 1, 1, 1, 0, 0],
+  [0, 0, 1, 0, 1, 0, 1, 0]
+];
+
+
 pattern = [
   [1, 0, 0, 1, 0, 0],
   [1, 0, 0, 1, 0, 0]
@@ -3850,7 +3864,7 @@ patterns = [
     vertical0, vertical1,
     diagonal0, diagonal1, 
     haloEyeMod, haloEyeMod2, fence1, fence0, fence2, fence3,
-    fence4, fence5
+    fence4, fence5, polka2b
 ];
 
 visage = [
