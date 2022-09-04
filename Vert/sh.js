@@ -5100,6 +5100,7 @@ newFlickeringVert.vertText = `
     // beginGLSL
     attribute float vertexID;
     uniform float time;
+    uniform float resolution;
     varying float alph;
     varying vec3 cols;
     #define cx_mul(a, b) vec2(a.x*b.x-a.y*b.y, a.x*b.y+a.y*b.x)
@@ -5143,7 +5144,7 @@ void main(void) {
          // gl_Position = vec4((x - 0.25) * 4., (y - 0.25) * 4., 0.0, 1.0);
         // gl_Position = vec4(color.r * 0.25, color.r * 0.25, 0.0, 1.0);
         // gl_PointSize = 2. / color.x * 1e-2;
-        gl_PointSize = 6.;
+        gl_PointSize = 6. * 2. * resolution;
         // gl_PointSize = dist_squared * 10.;
         // gl_PointSize = 8. - ((color.z) * 2e-1) + 0.;
         alph = 0.25 * 0.75;
