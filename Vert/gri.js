@@ -45,6 +45,7 @@ tab = function(s) {
             resetBrushPositions();
         }
     }
+    ge.t = ge.activeTab;
 }
 
 tb = function(s) {
@@ -53,11 +54,23 @@ tb = function(s) {
 };
 
 let GrimoireEditor = function() {
+    this.tabs = [];
     this.activeTab = null;
+    this.t = null;
     this.activeBrush = null;
     this.activePattern = null;
     this.evaluated = 0;
     this.evaluatedLines = [0, 0, 0];
+};
+
+GrimoireEditor.prototype.getTab = function(name) {
+    let tab = null;
+    for (let i = 0; i < this.tabs.length; i++) {
+        if (name == this.tabs[i].name) {
+            tab = this.tabs[i];
+        }
+    }
+    return tab;
 };
 
 GrimoireEditor.prototype.saveCanvas = function() {
@@ -89,6 +102,7 @@ let GrimoireTab = function(o) {
     this.lastEdited = null;
     this.headState = null;
     this.attachedHeadState = true;
+    ge.tabs.push(this);
 };
 
 GrimoireTab.prototype.saveCanvas = function() {
