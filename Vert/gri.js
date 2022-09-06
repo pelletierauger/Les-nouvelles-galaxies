@@ -87,7 +87,7 @@ GrimoireEditor.prototype.record = function() {
 };
 
 
-newtab = function(name, lang) {
+newTab = function(name, lang) {
     new GrimoireTab({
         name: name,
         lang: lang,
