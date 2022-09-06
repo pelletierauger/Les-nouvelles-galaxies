@@ -581,25 +581,36 @@ tl0 = function(d = 0) {
 };
 
 
-keyDown = function() {
+keyDown = function(e) {
     if (keysActive) {
+        if (ge.recording) {
+            ge.recordingSession.push([drawCount, {
+                name: "keyDown",
+                key: e.key,
+                keyCode: e.keyCode,
+                altKey: e.altKey,
+                metaKey: e.metaKey,
+                shiftKey: e.shiftKey
+            }]);
+        }
         // console.log(event.keyCode);
-        if (event.keyCode == 27 && ge.activeTab !== null) {
+        if (e.keyCode == 27 && ge.activeTab !== null) {
             mode = (mode + 1) % 3;
         }
         if (mode == 0) {
                 if (vtActive) {
-                    vt.update(event);
+                    vt.update(e);
                     // ljs(event.keyCode);
                 }
-            updateDrawing(event);
+            updateDrawing(e);
         } else if (mode == 1) {
-            ge.update(event);
+            ge.update(e);
         } else if (mode == 2) {
-            paintingKeys(event);
+            paintingKeys(e);
         }
     }
 }
+
 document.onkeydown = keyDown;       
 
 

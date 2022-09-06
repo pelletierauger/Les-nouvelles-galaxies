@@ -51,7 +51,9 @@ tab = function(s) {
 
 tb = function(s) {
     tab(s);
-    mode = 1;
+    if (s !== null) {
+        mode = 1;
+    }
 };
 
 let GrimoireEditor = function() {
@@ -62,6 +64,71 @@ let GrimoireEditor = function() {
     this.activePattern = null;
     this.evaluated = 0;
     this.evaluatedLines = [0, 0, 0];
+    this.playback = false;
+    this.recording = false;
+};
+
+
+GrimoireEditor.prototype.record = function() {
+    // this.recordingFrame = 0;
+    drawCount = 0;
+    this.recordingSession = [];
+    this.recording = true;
+    vt.clear();
+};
+
+GrimoireEditor.prototype.r = function() {
+    this.record();
+};
+
+GrimoireEditor.prototype.stopRecord = function() {
+    this.recording = false;
+};
+
+GrimoireEditor.prototype.sr = function() {
+    this.stopRecord();
+};
+
+GrimoireEditor.prototype.startPlayback = function() {
+    this.playback = true;
+    drawCount = 0;
+    vt.clear();
+};
+
+GrimoireEditor.prototype.p = function() {
+    this.startPlayback();
+};
+
+GrimoireEditor.prototype.play = function() {
+    for (let i = 0; i < this.recordingSession.length; i++) {
+        let e = this.recordingSession[i];
+        if (drawCount == e[0]) {
+            if (e[1].name == "mousemove") {
+                movemouse(e[1]);
+            } else if (e[1].name == "keyDown") {
+                keyDown(e[1]);
+            } else if (e[1].name == "dragmouse") {
+                mouseDragged(e[1]);
+            } else if (e[1].name == "downmouse") {
+                downmouse(e[1]);
+            } else if (e[1].name == "wheel") {
+                wheelY(e[1]);
+            }
+        }
+    }
+    let l = this.recordingSession.length - 1;
+    let last = this.recordingSession[l][0];
+    if (drawCount > last) {
+        this.stopPlayback();
+    };
+};
+
+GrimoireEditor.prototype.stopPlayback = function() {
+    this.playback = false;
+};
+
+GrimoireEditor.prototype.sp = function() {
+    this.stopPlayback();
 };
 
 GrimoireEditor.prototype.getTab = function(name) {
@@ -80,11 +147,6 @@ GrimoireEditor.prototype.saveCanvas = function() {
     }
 };
 
-GrimoireEditor.prototype.record = function() {
-    if (this.activeTab !== null) {
-        this.activeTab.saveCanvas();
-    }
-};
 
 
 newTab = function(name, lang) {
@@ -853,13 +915,13 @@ gc = new GrimoireCanvas();
 
 
 
-window.addEventListener('mousemove', e => {
-    if (e.altKey && ge.activeTab && mode == 2) {
-        let val = (e.shiftKey) ? 0 : 1;
-        // paint(fmouse[0], fmouse[1], smouse[0], smouse[1], val);
-        paint(val);
-    }
-});
+// window.addEventListener('mousemove', e => {
+//     if (e.altKey && ge.activeTab && mode == 2) {
+//         let val = (e.shiftKey) ? 0 : 1;
+//         // paint(fmouse[0], fmouse[1], smouse[0], smouse[1], val);
+//         paint(val);
+//     }
+// });
 
 // window.addEventListener('dragstart', e => {
 //     if (mode == 1) {
@@ -2587,9 +2649,13 @@ paintingKeys = function(e) {
 
 
 
-
-window.addEventListener('wheel', (e) => {
-    // logJavaScriptConsole(e.deltaY);
+wheelY = function(e) {
+   if (ge.recording) {
+        ge.recordingSession.push([drawCount, {
+            name: "wheel",
+            deltaY: e.deltaY
+        }]);
+    }
     if (ge.activeTab !== null && grimoire) {
         let delta = Math.floor(e.deltaY * 0.5);
         if (e.deltaY > 0) {
@@ -2598,8 +2664,9 @@ window.addEventListener('wheel', (e) => {
             ge.activeTab.scroll.y = Math.max(ge.activeTab.scroll.y + delta, 0);
         }
     }
-});
+};
 
+window.addEventListener('wheel', wheelY);
 
 let GrimoireControl = function(o) {
     this.tab = o.tab;

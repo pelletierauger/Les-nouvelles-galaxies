@@ -3,6 +3,9 @@ drawTerminal = function(selectedProgram) {
     // let hh = (window.innerHeight - canH) * 0.5;
     // let mx = map(mouse.x, 0, document.body.clientWidth, -1, 1);
     // let my = map(mouse.y, hh, canH + hh, 1, -1);
+    if (ge.playback) {
+        ge.play();
+    }
     fmouse[0] = constrain(Math.floor(map(mouse.x, 78, 1190, 0, 108)), 0, 109);
     fmouse[1] = constrain(Math.floor(map(mouse.y, 96, 695, 0, 25)), 0, 24);
     pmouse[0] = constrain(Math.floor(map(mouse.x, 78, 1190, 0, 108 * 7)), 0, 109 * 7);
@@ -3116,15 +3119,31 @@ files["js"][0].data.replace(/(ansi = `)([^`]*)(`)/g, function(a, b, c, d, e) {
 
 }
 
-    mouse = {x: 0, y: 0};
+mouse = {x: 0, y: 0};
 
-onmousemove = function(e){
+movemouse = function(e) {
+    if (ge.recording) {
+        ge.recordingSession.push([drawCount, {
+            name: "mousemove",
+            altKey: e.altKey,
+            metaKey: e.metaKey,
+            shiftKey: e.shiftKey,
+            clientX: e.clientX,
+            clientY: e.clientY
+        }]);
+    }
     mouse.x = e.clientX;
     mouse.y = e.clientY;
     if (mode == 2 && ge.activeTab !== null) {
         resetBrushPositions();
+        if (e.altKey) {
+            let val = (e.shiftKey) ? 0 : 1;
+            paint(val);
+        }
     }
 };
+
+window.addEventListener('mousemove', movemouse);
 
 
 face = [
@@ -3152,7 +3171,15 @@ pchar = "↨";
 
 // mouseClicked = function(e) {
     // editing
-window.addEventListener('mousedown', e => {
+downmouse = function(e) {
+    if (ge.recording) {
+        ge.recordingSession.push([drawCount, {
+            name: "downmouse",
+            altKey: e.altKey,
+            metaKey: e.metaKey,
+            shiftKey: e.shiftKey
+        }]);
+    }
     // console.log(e);
     if (mode == 1) {
         let t = ge.activeTab;
@@ -3254,8 +3281,18 @@ window.addEventListener('mousedown', e => {
             
         }
     }
-});
+};
+window.addEventListener('mousedown', downmouse);
+
 mouseDragged = function(e) {
+   if (ge.recording) {
+        ge.recordingSession.push([drawCount, {
+            name: "dragmouse",
+            altKey: e.altKey,
+            metaKey: e.metaKey,
+            shiftKey: e.shiftKey
+        }]);
+    }
     if (mode == 0) {
         if (grimoire && fmouse[1] < 23) {
             let t = ge.activeTab;
