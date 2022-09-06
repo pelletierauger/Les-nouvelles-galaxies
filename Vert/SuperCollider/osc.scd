@@ -8,6 +8,20 @@
 }
 )
 
+(
+~tab = {
+    | s |
+    ~toOSC.sendMsg("/eval", "tab('" ++ s ++ "');");
+}
+)
+
+(
+~tb = {
+    | s |
+    ~toOSC.sendMsg("/eval", "tb('" ++ s ++ "');");
+}
+)
+
 ~js.("tl()")
 
 

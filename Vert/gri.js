@@ -15,9 +15,9 @@ tab = function(s) {
         mode = 0;
         return;
     }
-    for (let i = 0; i < ge.files.scd.length; i++) {
-        if (ge.files.scd[i].name == s) {
-            ge.activeTab = ge.files.scd[i];
+    for (let i = 0; i < ge.tabs.length; i++) {
+        if (ge.tabs[i].name == s) {
+            ge.activeTab = ge.tabs[i];
             if (ge.activeTab.canvas == null) {
                 ge.activeTab.canvas = new GrimoireCanvas();
             }
@@ -30,22 +30,22 @@ tab = function(s) {
             resetBrushPositions();
         }
     }
-    for (let i = 0; i < ge.files.js.length; i++) {
-        // logJavaScriptConsole(griFiles.js[i]);
-        if (ge.files.js[i].name == s) {
-            ge.activeTab = ge.files.js[i];
-            if (ge.activeTab.canvas == null) {
-                ge.activeTab.canvas = new GrimoireCanvas();
-            }
-            if (ge.activeBrush == null) {
-                ge.activeBrush = types[typeIndex][brushIndex];
-            }
-            if (ge.activePattern == null) {
-                ge.activePattern = patterns[5];
-            }
-            resetBrushPositions();
-        }
-    }
+    // for (let i = 0; i < ge.files.js.length; i++) {
+    //     // logJavaScriptConsole(griFiles.js[i]);
+    //     if (ge.files.js[i].name == s) {
+    //         ge.activeTab = ge.files.js[i];
+    //         if (ge.activeTab.canvas == null) {
+    //             ge.activeTab.canvas = new GrimoireCanvas();
+    //         }
+    //         if (ge.activeBrush == null) {
+    //             ge.activeBrush = types[typeIndex][brushIndex];
+    //         }
+    //         if (ge.activePattern == null) {
+    //             ge.activePattern = patterns[5];
+    //         }
+    //         resetBrushPositions();
+    //     }
+    // }
     ge.t = ge.activeTab;
 }
 
@@ -85,6 +85,19 @@ GrimoireEditor.prototype.record = function() {
         this.activeTab.saveCanvas();
     }
 };
+
+
+newtab = function(name, lang) {
+    new GrimoireTab({
+        name: name,
+        lang: lang,
+        scroll: {x: 0, y: 0},
+        carets: [{x: 0, y: 0, dir: 0, curXRef: 0, sel: null}],
+        data: [[]],
+        canvasData: null,
+        canvasPath: null
+    });
+}
 
 let GrimoireTab = function(o) {
     this.name = o.name,
