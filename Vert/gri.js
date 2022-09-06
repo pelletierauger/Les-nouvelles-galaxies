@@ -51,7 +51,7 @@ tab = function(s) {
 
 tb = function(s) {
     tab(s);
-    if (s !== null) {
+    if (s !== null && ge.activeTab !== null) {
         mode = 1;
     }
 };
@@ -129,6 +129,26 @@ GrimoireEditor.prototype.stopPlayback = function() {
 
 GrimoireEditor.prototype.sp = function() {
     this.stopPlayback();
+};
+
+GrimoireEditor.prototype.saveSession = function(name) {
+    let file = {
+        path: "/Users/guillaumepelletier/Desktop/Dropbox/Art/p5/Les-nouvelles-galaxies/Vert/sessions/" + name + ".json",
+        data: JSON.stringify(this.recordingSession)
+    };
+    socket.emit('saveFile', file);
+};
+
+GrimoireEditor.prototype.loadSession = function(s) {
+    for (let i = 0; i < JSONs.length; i++) {
+        if (JSONs[i].name == s) {
+            this.recordingSession = JSONs[i].data.slice();
+        }
+    }
+};
+
+GrimoireEditor.prototype.ls = function(s) {
+    this.loadSession(s);
 };
 
 GrimoireEditor.prototype.getTab = function(name) {
@@ -910,7 +930,7 @@ GrimoireCanvas.prototype.addBlankGlyph = function(x, y) {
     }
 };
 
-gc = new GrimoireCanvas();
+// gc = new GrimoireCanvas();
 
 
 
