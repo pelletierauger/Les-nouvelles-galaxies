@@ -365,70 +365,30 @@ GrimoireTab.prototype.evaluateLine = function() {
 GrimoireTab.prototype.evaluateBlock = function() {
     let t = this;
     if (t.lang == "scd") {
-        let openBracket = "(";
-        let closeBracket = ")";
-        let curLine = t.carets[0].y;
-        let lineNow = curLine;
-        let lineRem = lineNow;
-        let codeBracket = "";
-        let curLineContent;
-        let checkOpen = 1;
-        let checkClose = 1;
-        let countBrackets = 0;
-        let countBracketsClose = 0;
-        let bracketFound = 0;
-        while (lineNow > 0) {
-            lineNow = lineNow - 1;
-            // curLineContent = String(superColliderEditor.getLine(lineNow));
-            curLineContent = t.data[lineNow];
-            
-            checkClose = curLineContent.replace(/^\s*/,'').localeCompare(closeBracket);
-            if (checkClose === 0) {
-                countBracketsClose += 1;
-            }
-            checkOpen = curLineContent.replace(/^\s*/,'').localeCompare(openBracket);
-            if (checkOpen === 0) {
-                bracketFound = 1;
-                if (countBracketsClose === 0) {
-                    countBrackets += 1;
-                    lineRem = lineNow + 1;
-                } else {
-                    countBracketsClose -= 1;
-                }
-            }
+        let line = t.carets[0].y;
+        let up = false, down = false;
+        while (line >= 0 && !up) {
+            up = t.data[line].replace(/^\s*/,'') == "(";
+            if (!up) {line--};
         }
-        lineNow = lineRem;
-        if (bracketFound !== 0 && countBrackets > 0) {
-            while (countBrackets !== 0) {
-                // checkClose = String(superColliderEditor.getLine(lineNow)).localeCompare(closeBracket)
-                checkClose = t.data[lineNow].replace(/^\s*/,'').localeCompare(closeBracket)
-                if (checkClose === 0 && lineNow >= curLine) {
-                    countBrackets -= 1;
-                }
-                // checkOpen = String(superColliderEditor.getLine(lineNow)).localeCompare(openBracket)
-                checkOpen = t.data[lineNow].replace(/^\s*/,'').localeCompare(openBracket)
-                if (checkOpen === 0 && lineNow >= curLine) {
-                    countBrackets += 1;
-                }
-                if (countBrackets === 0) break;
-                codeBracket += `\n` + t.data[lineNow];
-                lineNow += 1;
+        if (up) {
+            up = line;
+            while (line < t.data.length && !down) {
+                down = t.data[line].replace(/^\s*/,'') == ")";
+                if (!down) {line++};
             }
-            // interpret(codeBracket);
-            let firstX = Infinity;
-            for (let i = lineRem - 1; i < lineNow + 1; i++) {
-                t.data[i].replace(/^\s*/,function(a){firstX = Math.min(firstX, a.length)});
+            if (line >= t.carets[0].y && down) {
+                down = line + 1;
+                let firstX = Infinity;
+                let block = "";
+                for (let i = up; i < down; i++) {
+                    t.data[i].replace(/^\s*/,function(a){firstX = Math.min(firstX, a.length)});
+                    block += t.data[i] + "\n";
+                }
+                socket.emit('interpretSuperCollider', block, t.canvasPath);
+                ge.evaluated = 5;
+                ge.evaluatedLines = [up, down, firstX];
             }
-            socket.emit('interpretSuperCollider', codeBracket, t.canvasPath);
-            ge.evaluated = 5;
-            ge.evaluatedLines = [lineRem - 1, lineNow + 1, firstX];
-        } else {
-            // interpret(t.data[lineNow]);
-            socket.emit('interpretSuperCollider', t.data[lineNow], t.canvasPath);
-            ge.evaluated = 5;
-            let firstX = Infinity;
-            t.data[lineNow].replace(/^\s*/,function(a){firstX = Math.min(firstX, a.length)});
-            ge.evaluatedLines = [lineNow, lineNow + 1, firstX];
         }
     } else if (t.lang == "js") {
         // var pos = editor.getCursor()
