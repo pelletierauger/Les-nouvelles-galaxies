@@ -17,7 +17,7 @@ drawTerminal = function(selectedProgram) {
     vertices = [];
     let num = 0;
     let colors = [];
-    if (ge.brushPositions && mode == 3) {
+    if (ge.brushPositions && mode == 2) {
         for (let i = 0; i < patterns.length; i++) {
             for (let y = 0; y < 18; y++) {
                 let r = 7 * 5 - 2;
@@ -112,17 +112,17 @@ drawTerminal = function(selectedProgram) {
             let caret = false;
             let selection;
             let blink;
-            if (y == 21 + 3 && mode !== 1 && mode !== 3) {
+            if (y == 21 + 3 && mode == 0) {
                 char = (x >= vt.text.length + 1) ? " " : (">" + vt.text)[x];
                 caret = (x == vt.caretPosition + 1);
                 let sx0 = vt.selectionBounds[0];
                 let sx1 = vt.selectionBounds[1];
                 selection = x >= sx0 && x < sx1;
                 selection = (vt.enter && x < vt.text.length + 1) ? true : selection;
-                blink = (mode !== 1);
-            } else if (y == 20 + 3 && mode !== 1) {
+                blink = (mode == 0);
+            } else if (y == 20 + 3 && mode == 0) {
                 // char = "-";
-                char = (mode == 2 && x < swatchesArr.length) ? swatchesArr[x] : " ";
+                char = (x < swatchesArr.length) ? swatchesArr[x] : " ";
             } else {
                 if (ge.activeTab !== null) {
                     let t = ge.activeTab;
@@ -141,12 +141,12 @@ drawTerminal = function(selectedProgram) {
                     char = " ";
                 }
             }
-            if (mode == 3 && y > 19 + 3) {char = " "; caret = false;};
+            if (mode == 2 && y > 19 + 3) {char = " "; caret = false;};
             let cur = (x == fmouse[0] && y == fmouse[1]);
             // let curP = (x == fmouse[0] && y == fmouse[1]);
             // cur = (mode == 3) ? false : cur;
-            let g = (cur && mode !== 3) ? (mode == 1 ? getGlyph("caret") : getGlyph(pchar)) : getGlyph(char);
-            if (mode == 2 && x >= fmouse[0] && (x - fmouse[0]) < pchar.length && y == fmouse[1]) {
+            let g = (cur && mode !== 2) ? (mode == 1 ? getGlyph("caret") : getGlyph(pchar)) : getGlyph(char);
+            if (mode == 0 && x >= fmouse[0] && (x - fmouse[0]) < pchar.length && y == fmouse[1]) {
                 char = pchar[x - fmouse[0]];
                 g = getGlyph(char);
             }
@@ -173,7 +173,7 @@ drawTerminal = function(selectedProgram) {
                 selection = (selections[y][x] && x < ge.activeTab.data[y+ge.activeTab.scroll.y].length + 1) ? true : selection;
             }
             let maxloopy = 0;
-            if (char !== " " || caret == true || cur || selection || paint || mode == 3) {
+            if (char !== " " || caret == true || cur || selection || paint || mode == 2) {
                 for (let yy = 0; yy < g.length; yy++) {
                     for (let xx = 0; xx < g[yy].length; xx++) {
                         let brush = false;
@@ -186,7 +186,7 @@ drawTerminal = function(selectedProgram) {
                         let paintTest = (paint) ? canvas[y + ge.activeTab.scroll.y][x][xx + (yy * 7)] : false;
                         // let curPSub = (xx == smouse[0] && yy == smouse[1]);
                         // paintTest = (cur && curPSub && mode == 3) ? true : paintTest;
-                        if (g[yy][xx] == test || paintTest || (brush && mode == 3)) {
+                        if (g[yy][xx] == test || paintTest || (brush && mode == 2)) {
                             // let tx = 0, ty = 0;
                             let sc = 0.8;
                             // tx = openSimplex.noise3D((x + (xx * 1e-1)) * 0.1, (y + (yy * 1e-1)) * 0.1, drawCount * 0.5e-1) * 0.0;
@@ -3121,7 +3121,7 @@ files["js"][0].data.replace(/(ansi = `)([^`]*)(`)/g, function(a, b, c, d, e) {
 onmousemove = function(e){
     mouse.x = e.clientX;
     mouse.y = e.clientY;
-    if (mode == 3 && ge.activeTab !== null) {
+    if (mode == 2 && ge.activeTab !== null) {
         resetBrushPositions();
     }
 };
@@ -3148,7 +3148,7 @@ face = [
     "......................................................................................."
 ];
 
-pchar = "a";
+pchar = "↨";
 
 // mouseClicked = function(e) {
     // editing
@@ -3178,7 +3178,7 @@ window.addEventListener('mousedown', e => {
         }
     }
     //  drawing
-    if (mode == 2) {
+    if (mode == 0) {
         let t = ge.activeTab;
         if (t !== null) {
             if (!e.shiftKey) {
@@ -3210,10 +3210,12 @@ window.addEventListener('mousedown', e => {
                         }
                     }
                     t.data[fmouse[1] + t.scroll.y] = y.substring(0, fmouse[0]) + add + y.substr(fmouse[0] + pchar.length);
+                } else if (fmouse[1] == 23) {
+                    pchar = swatchesArr[fmouse[0]];
                 }
             } else {
                 // console.log(face[fmouse[1]][fmouse[0]]);
-                console.log(swatchesArr[fmouse[0]]);
+                // console.log(swatchesArr[fmouse[0]]);
                 let newChar;
                 if (fmouse[1] == 23) {
                     newChar = swatchesArr[fmouse[0]];
@@ -3239,7 +3241,7 @@ window.addEventListener('mousedown', e => {
             }
         }
     }
-    if (mode == 3) {
+    if (mode == 2) {
         if (fmouse[1] >= 23) {
             // ge.activePattern = patterns[Math.floor(fmouse[0] / 5)]; 
             ge.activePattern = patterns[Math.floor(pmouse[0] / (7*5-2))]; 
@@ -3254,7 +3256,7 @@ window.addEventListener('mousedown', e => {
     }
 });
 mouseDragged = function(e) {
-    if (mode == 2) {
+    if (mode == 0) {
         if (grimoire && fmouse[1] < 23) {
             let t = ge.activeTab;
             if (t !== null) {
@@ -3288,7 +3290,7 @@ mouseDragged = function(e) {
             }
         }
     }
-    if (mode == 3 && fmouse[1] < 23) {
+    if (mode == 2 && fmouse[1] < 23) {
         let val = (e.shiftKey) ? 0 : 1;
         // paint(fmouse[0], fmouse[1], smouse[0], smouse[1], val);
         paint(val);

@@ -12,6 +12,7 @@ swatchesArr = "░▒▓█▀▄▌▐┌─┬┐│┤┘┴└├┼╔═�
 tab = function(s) {
     if (s == null) {
         ge.activeTab = null;
+        mode = 0;
         return;
     }
     for (let i = 0; i < ge.files.scd.length; i++) {
@@ -24,7 +25,7 @@ tab = function(s) {
                 ge.activeBrush = types[typeIndex][brushIndex];
             }
             if (ge.activePattern == null) {
-                ge.activePattern = patterns[3];
+                ge.activePattern = patterns[5];
             }
             resetBrushPositions();
         }
@@ -40,7 +41,7 @@ tab = function(s) {
                 ge.activeBrush = types[typeIndex][brushIndex];
             }
             if (ge.activePattern == null) {
-                ge.activePattern = patterns[3];
+                ge.activePattern = patterns[5];
             }
             resetBrushPositions();
         }
@@ -880,7 +881,7 @@ gc = new GrimoireCanvas();
 
 
 window.addEventListener('mousemove', e => {
-    if (e.altKey && ge.activeTab && mode == 3) {
+    if (e.altKey && ge.activeTab && mode == 2) {
         let val = (e.shiftKey) ? 0 : 1;
         // paint(fmouse[0], fmouse[1], smouse[0], smouse[1], val);
         paint(val);

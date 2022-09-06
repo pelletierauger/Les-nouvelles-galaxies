@@ -584,21 +584,18 @@ tl0 = function(d = 0) {
 keyDown = function() {
     if (keysActive) {
         // console.log(event.keyCode);
-        if (event.keyCode == 27) {
-            mode = (mode + 1) % 4;
+        if (event.keyCode == 27 && ge.activeTab !== null) {
+            mode = (mode + 1) % 3;
         }
-        if (mode == 0 || mode == 2) {
+        if (mode == 0) {
                 if (vtActive) {
                     vt.update(event);
                     // ljs(event.keyCode);
                 }
+            updateDrawing(event);
         } else if (mode == 1) {
             ge.update(event);
-        } 
-        if (mode == 2) {
-            updateDrawing(event);
-        }
-        if (mode == 3) {
+        } else if (mode == 2) {
             paintingKeys(event);
         }
     }
