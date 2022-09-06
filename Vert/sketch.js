@@ -1,10 +1,11 @@
 let looping = false;
 let grimoire = false;
+let tabsLoaded = false;
 let gr;
 let mode = 0;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
-let fileName = "/Users/guillaumepelletier/Desktop/alligator";
+let fileName = "/Volumes/Volumina/frames/grimoire/gri";
 let JSONs = [];
 let maxFrames = Infinity;
 let gl;
@@ -12,6 +13,7 @@ let time;
 let positive = true;
 let intensity;
 let drawCount = 0;
+let exportCount = 0;
 let drawIncrement = 1;
 let vertexBuffer;
 let fvertices = [];
@@ -250,6 +252,22 @@ function setup() {
             }   
         }, false);
     }, 1);
+    if (batchExport) {
+        exportCount = batchMin;
+        exporting = true;
+        redraw();
+        songPlay = false;
+        noLoop();
+        looping = false;
+    }
+    socket.on('getNextImage', function(data) {
+        if (drawCount <= batchMax) {
+            // redraw();
+            window.setTimeout(function() {
+                redraw();
+            }, 3000);
+        }
+    });
 }
 
 function clearSelection() {
@@ -474,10 +492,12 @@ draw = function() {
 // 
     gl.drawArrays(gl.TRIANGLES, 0, numItems);
 // 
-    drawCount += drawIncrement;
-    // if (exporting && frameCount < maxFrames && drawCount > 1113) {
-    if (exporting && frameCount < maxFrames) {
-        frameExport();
+    if (tabsLoaded) {
+        if (exporting && exportCount < maxFrames) {
+            frameExport();
+        }    
+        drawCount += drawIncrement;
+        exportCount++;
     }
 }
 
