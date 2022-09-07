@@ -7,3 +7,20 @@ ffmpeg -f image2 -framerate 24 \
 -crf 21 -preset medium \
 -threads 1 \
 -shortest /Volumes/Volumina/video-renders/grimoire/gri-crf21.mp4
+
+-frames:v 20
+
+ffmpeg -y -f image2 -framerate 24 \
+-i /Volumes/Volumina/frames/grimoire/gri-%05d.png \
+-c:v libx264 -x264-params "keyint=15:no-deblock=1" -pix_fmt yuv420p \
+-filter_complex "[0:0] gblur=sigma=10:steps=1, \
+colorlevels=rimax=0.6:gimax=0.6:bimax=0.6 [a]; \
+[0:0] gblur=sigma=40:steps=1, colorlevels=rimax=0.6:gimax=0.6:bimax=0.6 [b]; \
+[0:0][a] blend=all_mode='hardlight':all_opacity=0.275 [c]; \
+[c][b] blend=all_mode='softlight':all_opacity=0.1, \
+colorspace=bt709:iall=bt601-6-625:fast=1" \
+-sws_flags spline+accurate_rnd+full_chroma_int \
+-color_range 1 -colorspace 1 -color_primaries 1 -color_trc 1 \
+-crf 21 -preset medium \
+-threads 1 \
+-shortest /Volumes/Volumina/video-renders/grimoire/gri-fg2.mp4
