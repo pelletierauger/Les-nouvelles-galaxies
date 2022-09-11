@@ -664,13 +664,18 @@ gr = function() {
 
 if (false) {
 
+
 receiveOSC = function(s) {
-    // console.log(s);
+    trigger(s);
     // logJavaScriptConsole(s);
     if (s.address == "/eval") {
         eval(s.args[0].value);
     }
-}
+};
+
+trigger = function(s) {
+    // console.log(s);
+};
 
 socket.off('receiveOSC', receiveOSC);
 socket.on('receiveOSC', receiveOSC);
