@@ -288,7 +288,7 @@ draw = function() {
     gl.useProgram(currentProgram);
     nx = openSimplex.noise2D(0, drawCount * 5e-2) * 0.0025;
     ny = openSimplex.noise2D(0, drawCount * 5e-2 + 1e5) * 0.0025;
-    drawAlligatorQuietVert(currentProgram);
+    // drawAlligatorQuietVert(currentProgram);
     currentProgram = getProgram("new-flickering-dots");
     gl.useProgram(currentProgram);
     // drawAlligatorQuiet(currentProgram);
