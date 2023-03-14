@@ -19,8 +19,8 @@ drawTerminal = function(selectedProgram) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 45.0 * sc, 1);
-                vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, (-y * 0.03 * sc - 0.7) - 0.02, 55.0 * sc * 0.9, 1.0);
-                num++;
+                // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, (-y * 0.03 * sc - 0.7) - 0.02, 55.0 * sc * 0.9, 1.0);
+                // num++;
             }
         }
     }
@@ -29,7 +29,7 @@ drawTerminal = function(selectedProgram) {
         let r = Math.random();
         let g = Math.random();
         let b = Math.random();
-        colors.push(0, 0, 0);
+        // colors.push(0, 0, 0);
     }
         for (let x = 0; x <= vt.stringArray[0].length; x++) {
         let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
@@ -39,9 +39,9 @@ drawTerminal = function(selectedProgram) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 40.0 * sc, 1);
-                vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7, 50.0 * sc * 0.9, 1);
-            num++;
-                colors.push(0.75, 0.75, 0.75);
+                // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7, 50.0 * sc * 0.9, 1);
+            // num++;
+                // colors.push(0.75, 0.75, 0.75);
             }
         }
     }
@@ -75,9 +75,9 @@ drawTerminal = function(selectedProgram) {
          for (let y = 0; y < face.length; y++) {
             let p = face[y][x];
              // p = "x";
-             let sc = 1.5;
+             let sc = 2.5;
              // m += Math.cos(x * y * 0.01);
-             let tx = -0.17, ty = 0.65;
+             let tx = -0.27, ty = 0.65;
              let osc = Math.sin(drawCount * 1e-1 + 2e-1 * x) * 0.1;
              if (p == "1") {
                  vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.009 + Math.sin(drawCount * 0.25 + x * 10.25) * 0.015 + ty - 0.02, 20.0 * sc * 0.9, 1);
@@ -197,7 +197,7 @@ roundedSquare.fragText = `
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;
-        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 1.15, 0.48, 0.5);
+        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 2.5, 0.08, 0.15);
         float rando = rand(uv * time) * 0.1;
         gl_FragColor = vec4(cols, color - rando);
     }
@@ -1695,13 +1695,13 @@ TerminalRecorder.prototype.stop = function() {
             ".....111111111111000002211111111111....",
             "....11111111111111111111111111111111...",
             "...1111111111111111111111111111111111..",
-            "..21111111111111111111111111111111112..",
-            ".1121111111111111111111111111111111211.",
-            ".1112211111111111111111111111111122111.",
-            ".1111122211111111111111111111122211111.",
-            "111111111222211111111111112222211111111",
-            "111111111111122222211222221111111111111",
-            "111111111111111111122111111111111111111",
+            "..11111111111111111111111111111111111..",
+            ".1111111111111111111111111111111111111.",
+            ".1111111111111111111111111111111111111.",
+            ".1111111111111111111111111111111111111.",
+            "111111111111111111111111111111111111111",
+            "111111111111111111111111111111111111111",
+            "111111111111111111111111111111111111111",
             "111111111111111111111111111111111111111",
             "111111111111111111111111111111111111111",
             "111111111111111111111111111111111111111",

@@ -8098,10 +8098,10 @@ newFlickeringVert.vertText = `
         float sca = 1.0;
         if (id < 7000.) {
             float oid = id - 0.;
-            pos.x = sin(oid * 1e-1 + t * 5.) * oid * 4e-6;
-            pos.y = cos(oid * 1e-1 + t * 5.) * oid * 4e-6 + 0.05;
-            pos.z = 0.9;
-            sca = 0.75;
+            // pos.x = sin(oid * 1e-1 + t * 5.) * oid * 4e-6;
+            // pos.y = cos(oid * 1e-1 + t * 5.) * oid * 4e-6 + 0.05;
+            // pos.z = 0.9;
+            // sca = 0.75;
         }
         // pos = m * pos;
         gl_Position = vec4(pos.x / ratio * 15., pos.y * 15., 0.0, pos.z * 1.);
@@ -8147,7 +8147,7 @@ newFlickeringVert.fragText = `
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.4 - dist_squared, 2.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph)) * 0.045 + alpha)) * 0.5;
         // gl_FragColor.rgb = gl_FragColor.rbr;
-        gl_FragColor.rgb = cols;
+        gl_FragColor.rgb = cols * 0.5;
         // gl_FragColor.b *= 0.75;
         
     }
