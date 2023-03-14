@@ -19,8 +19,8 @@ drawTerminal = function(selectedProgram) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 45.0 * sc, 1);
-                vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, (-y * 0.03 * sc - 0.7) - 0.02, 55.0 * sc * 0.9, 1.0);
-                num++;
+                // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, (-y * 0.03 * sc - 0.7) - 0.02, 55.0 * sc * 0.9, 1.0);
+                // num++;
             }
         }
     }
@@ -29,7 +29,7 @@ drawTerminal = function(selectedProgram) {
         let r = Math.random();
         let g = Math.random();
         let b = Math.random();
-        colors.push(0, 0, 0);
+        // colors.push(0, 0, 0);
     }
         for (let x = 0; x <= vt.stringArray[0].length; x++) {
         let sel = ((x > sx0 * 7 && x < sx1 * 7) || vt.enter) ? "0" : "1";
@@ -39,9 +39,9 @@ drawTerminal = function(selectedProgram) {
             // if (Math.sin(x * y) > 0.5) {
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7 - (Math.sin(drawCount * 0.25 + y) * 0.5e-2), 40.0 * sc, 1);
             // vertices.push(x * (9 / 16) * 0.02 * sc - 0.9 + Math.sin(y * 1e-1 + drawCount * 1e-1) * 0.05 * sc, -y * 0.03 * sc - 0.6 - (Math.sin(drawCount * 0.25 + y) * 1.5e-2 * sc), 40.0 * sc, 1);
-                vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7, 50.0 * sc * 0.9, 1);
-            num++;
-                colors.push(0.75, 0.75, 0.75);
+                // vertices.push(x * (9 / 16) * 0.02 * sc - 0.87, -y * 0.03 * sc - 0.7, 50.0 * sc * 0.9, 1);
+            // num++;
+                // colors.push(0.75, 0.75, 0.75);
             }
         }
     }
@@ -80,16 +80,16 @@ drawTerminal = function(selectedProgram) {
              let tx = -0.17, ty = 0.85;
              let osc = Math.sin(drawCount * 1e-1 + 2e-1 * x) * 0.1;
              if (p == "1") {
-                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.01 + Math.sin(drawCount * 0.25 + y) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
+                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.01 - 0.15 + Math.sin(drawCount * 0.25 + y * 0.5) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
                              num++;
                 colors.push(0, 0, 0);                 
              } else if (p == "0") {
-                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.01 + Math.sin(drawCount * 0.25 + y) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
+                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.01 - 0.15 + Math.sin(drawCount * 0.25 + y * 0.5) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
                              num++;
                 // colors.push(0.75, 0.75, 0.75);
                 colors.push(0.75 + osc, 0.75 + osc, 0.75 + osc);
              } else if (p == "2") {
-                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.01 + Math.sin(drawCount * 0.25 + y) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
+                 vertices.push(x * 0.0025 * sc * (9 / 16) * 4 + tx, -y * 2.2 * sc * 0.01 - 0.15 + Math.sin(drawCount * 0.25 + y * 0.5) * 0.005 + ty - 0.02, 20.0 * sc * 0.9, 1);
                              num++;
                 // colors.push(0.6, 0.6, 0.6);
                 colors.push(0.6 + osc, 0.6 + osc, 0.6 + osc);
@@ -197,7 +197,7 @@ roundedSquare.fragText = `
          vec2 screenSize = vec2(2560.0, 1440.0) * resolution;
          vec2 uv = gl_PointCoord.xy;
         uv = uv * 2. - 1.;
-        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 1.15, 0.48, 0.5);
+        float color = roundedRectangleFlicker(uv, vec2(0.0, 0.0), vec2(0.125, 0.35) * 2.5, 0.48, 0.1);
         float rando = rand(uv * time) * 0.1;
         gl_FragColor = vec4(cols, color - rando);
     }
@@ -1674,8 +1674,8 @@ TerminalRecorder.prototype.stop = function() {
             ".......0000000000000000000022222.......",
             ".....00000000000000000000000022222.....",
             "....0001111111100000000000111111122....",
-            "...001110000011110000000111122211122...",
-            "..00000222222200000002222222222222222..",
+            "...001100000001110000000111222222112...",
+            "..00000222222200000012222222222222222..",
             "..00002111111120000012222211111112222..",
             ".0000010001000120000122221000100012222.",
             ".0000001111111000000012222111111100222.",
@@ -1684,7 +1684,7 @@ TerminalRecorder.prototype.stop = function() {
             "...000000010000002000002000000012222...",
             "....0000000100002000000020000012222....",
             "......0000000002111111111200000222.....",
-            "........0000000000000122220000222......",
+            "........0000000000000022220000222......",
             "...........00000000222220000222........",
             "..............00000000000022...........",
              ".................0000022..............",
