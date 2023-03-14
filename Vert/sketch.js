@@ -1,14 +1,14 @@
 let looping = true;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
-let fileName = "./frames/alligator/alligator";
-let maxFrames = 15000;
+let fileName = "/Volumes/Volumina/frames/dess-algo/ciel/ciel";
+let maxFrames = 1275;
 let gl;
 let time;
 let positive = true;
 let intensity;
 let drawCount = 1110;
-drawCount = 125000;
+drawCount = 0;
 let drawIncrement = 1;
 let vertexBuffer;
 let fvertices = [];
