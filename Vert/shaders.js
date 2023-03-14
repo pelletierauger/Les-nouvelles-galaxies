@@ -1010,7 +1010,7 @@ void main() {
    float rando = rand(vec2(uv.x, uv.y) * tan(gl_FragCoord.r * 1e3));
    // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
    // gl_FragColor.r = gl_FragColor.r * 0.5;
-   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.1)) * 1.2;
+   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.075)) * 1.2;
     vec3 col = gl_FragColor.rgb;
         // vec3 levels = LevelsControlInputRange(gl_FragColor.rgb, 0.2, 0.95);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b)) / 3.;
@@ -1021,8 +1021,8 @@ void main() {
     gl_FragColor.rgb = blender;
     vec3 blender2 = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.2, 0.0));
     // gl_FragColor.rgb =  vec3(1.0, 0.2, 0.0);
-    gl_FragColor.rgb = mix(gl_FragColor.rgb, blender2, 0.5);
-    gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 1.25 * -uv.y);
+    // gl_FragColor.rgb = mix(gl_FragColor.rgb, blender2, 0.5);
+    // gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 1.25 * -uv.y);
     // gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 3.1);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
