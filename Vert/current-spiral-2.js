@@ -935,7 +935,7 @@ drawAlligatorQuiet = function(selectedProgram) {
         let t2 = Math.abs(Math.cos(t * 1.5 * 1.5))
         let y = Math.cos(t + drawCount * 1e-2 + 1.23) * Math.sqrt(t2) * 0.35;
         let x = Math.sin(t + drawCount * 1e-2 + 1.23) * Math.sqrt(t2) * 0.35;
-        vertices.push(x * (9 / 16), y, 15, al);
+        vertices.push(x * (9 / 16), y - 0.25, 15, al);
         num++;
     }
     //     for (let i = 0; i < 1500; i += 1) {
@@ -966,7 +966,7 @@ drawAlligatorQuiet = function(selectedProgram) {
     // let al = map(openSimplex.noise2D(t3, p * 1e6), -1, 1, 0.001, 1.25);
             let x = lerp(p0[0], p1[0], p) * 0.5;
             let y = lerp(p0[1], p1[1], p) * 0.5;
-            vertices.push(x * (9 / 16), y, 15, al);
+            vertices.push(x * (9 / 16), y - 0.25, 15, al);
             num++;
         }
     }
@@ -979,7 +979,7 @@ drawAlligatorQuiet = function(selectedProgram) {
         for (let p = 0; p < 1; p += 0.01) {
             let x = lerp(p0[0], p1[0], p) * 0.5;
             let y = lerp(p0[1], p1[1], p) * 0.5;
-            vertices.push(x * (9 / 16), y, 15, al);
+            vertices.push(x * (9 / 16), y - 0.25, 15, al);
             num++;
         }
     }
@@ -992,7 +992,7 @@ drawAlligatorQuiet = function(selectedProgram) {
         for (let p = 0; p < 1; p += 0.005) {
             let x = lerp(p0[0], p1[0], p) * 1;
             let y = lerp(p0[1], p1[1], p) * 1;
-            vertices.push(x * (9 / 16), y, 15, al);
+            vertices.push(x * (9 / 16), y - 0.25, 15, al);
             num++;
         }
     }
