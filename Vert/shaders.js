@@ -257,7 +257,7 @@ void main() {
 //     gl_FragColor.r = gl_FragColor.r - rando * 0.1;
     // gl_FragColor = gl_FragColor.grba;
     gl_FragColor.rgb *= 1.;
-        gl_FragColor = gl_FragColor.brga;
+        gl_FragColor = gl_FragColor.brga * 0.25;
         // gl_FragColor.r *= 3.;
 }
 // endGLSL
@@ -762,7 +762,7 @@ void main() {
     // gl_FragColor.r += 0.05;
     // gl_FragColor.rgb = vec3(1.0);
     gl_FragColor.rgb += vec3(0.0, 0.0, 0.15);
-    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.1095 * (16./9.), 0.1015) * 2.1, 0.02, 0.05) * 1.49;
+    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.1095 * (16./9.), 0.1015) * 2.1, 0.02, 0.05) * 1.49 * 0.35;
         // gl_FragColor = gl_FragColor.grra;
     // gl_FragColor.a *= 0.75;
         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
@@ -1023,7 +1023,8 @@ void main() {
     // gl_FragColor.rgb =  vec3(1.0, 0.2, 0.0);
     // gl_FragColor.rgb = mix(gl_FragColor.rgb, blender2, 0.5);
     // gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 1.25 * -uv.y);
-    // gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 3.1);
+//     slurp
+    gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 2.6);
     // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
     // gl_FragColor.r += col.r * 0.975;
     // gl_FragColor.b += col.b * 0.25;
