@@ -1,8 +1,8 @@
 let looping = true;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
-let fileName = "./frames/alligator/alligator";
-let maxFrames = 15000;
+let fileName = "/Volumes/Volumina/frames/dess-algo/messi-cama-stars/messi-cama-stars";
+let maxFrames = 480;
 let gl;
 let time;
 let positive = true;
@@ -70,7 +70,7 @@ function setup() {
     // gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
     // Set the view port
     gl.viewport(0, 0, cnvs.width * 1, cnvs.height * 1);
-    frameRate(20);
+    frameRate(1);
     // background(0);
     // fill(255, 50);
     noStroke();
@@ -355,7 +355,7 @@ draw = function() {
 // 
     drawCount += drawIncrement;
     // if (exporting && frameCount < maxFrames && drawCount > 1113) {
-    if (exporting && frameCount < maxFrames && drawCount > 1449) {
+    if (exporting && frameCount < maxFrames) {
         frameExport();
     }
 }
