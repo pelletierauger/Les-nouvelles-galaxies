@@ -635,6 +635,7 @@ varying vec2 vTexCoord;
 uniform float time;
 const float TURBULENCE = 0.009;
 //noise function from iq: https://www.shadertoy.com/view/Msf3WH
+${blendingMath}
 vec2 hash(vec2 p) {
     p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
     return -1.0 + 2.0 * fract(sin(p) * 43758.5453123);
@@ -761,9 +762,11 @@ void main() {
         gl_FragColor.b += 0.05;
     // gl_FragColor.r += 0.05;
     // gl_FragColor.rgb = vec3(1.0);
-    gl_FragColor.rgb += vec3(0.0, 0.0, 0.15);
-    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.1095 * (16./9.), 0.1015) * 2.1, 0.02, 0.05) * 1.49 * 0.35;
-        // gl_FragColor = gl_FragColor.grra;
+    gl_FragColor.rgb += vec3(0.0, 0.0, 0.15) + 0.05;
+    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.1095 * (16./9.), 0.1015) * 2.1, 0.02, 0.05) * 1.49 * 1.2;
+    gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 3.5);
+    // gl_FragColor.rgb += 0.05;
+        // gl_FragColor = gl_FragColor.grba;
     // gl_FragColor.a *= 0.75;
         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
 }
@@ -8908,3 +8911,59 @@ newFlickeringVert.fragText = `
 newFlickeringVert.vertText = newFlickeringVert.vertText.replace(/[^\x00-\x7F]/g, "");
 newFlickeringVert.fragText = newFlickeringVert.fragText.replace(/[^\x00-\x7F]/g, "");
 newFlickeringVert.init();
+
+
+// The sepia of the magical thaw
+textureShader.vertText = `
+    // beginGLSL
+attribute vec3 a_position;
+attribute vec2 a_texcoord;
+varying vec2 v_texcoord;
+void main() {
+  // Multiply the position by the matrix.
+  vec4 positionVec4 = vec4(a_position, 1.0);
+  // gl_Position = a_position;
+  positionVec4.xy = positionVec4.xy * 2.0 - 1.0;
+  gl_Position = positionVec4;
+  // Pass the texcoord to the fragment shader.
+  v_texcoord = a_texcoord;
+}
+// endGLSL
+`;
+textureShader.fragText = `
+// beginGLSL
+precision mediump float;
+// Passed in from the vertex shader.
+uniform float time;
+varying vec2 v_texcoord;
+// The texture.
+uniform sampler2D u_texture;
+float rand(vec2 co){
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(time)));
+}
+${blendingMath}
+void main() {
+    vec2 uv = vec2(gl_FragCoord.xy) / vec2(1600, 1600);
+   float rando = rand(vec2(uv.x, uv.y));
+   gl_FragColor = texture2D(u_texture, v_texcoord);
+   // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+   // gl_FragColor.r = gl_FragColor.r * 0.5;
+   gl_FragColor.rgb = (gl_FragColor.rgb - (rando * 0.07)) * 1.1;
+    vec3 col = gl_FragColor.rgb;
+        // vec3 levels = LevelsControlInputRange(gl_FragColor.rgb, 0.2, 0.95);
+    // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b)) / 3.;
+            vec3 bw = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
+        // gl_FragColor.rgb = mix(gl_FragColor.rgb, bw, 1.) * 1.1;
+        vec3 blender = BlendSoftLight(gl_FragColor.rgb, vec3(1.0, 0.4, 0.0));
+    // vec3 blend = mix(gl_FragColor.rgb, blender, 1.);
+    gl_FragColor.rgb = mix(gl_FragColor.rgb, blender, 0.75);
+    gl_FragColor.rgb = hueShift2(gl_FragColor.rgb, 3.15);
+    // gl_FragColor.rgb = vec3((gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3.);
+    // gl_FragColor.r += col.r * 0.975;
+    // gl_FragColor.b += col.b * 0.25;
+//gl_FragColor.rgb = gl_FragColor.rbg;
+}
+// endGLSL
+`;
+textureShader.init();
+
