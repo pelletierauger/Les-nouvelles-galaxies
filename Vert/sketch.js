@@ -2,7 +2,7 @@ let looping = true;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
 let fileName = "/Volumes/Volumina/frames/dess-algo/ciel/ciel";
-let maxFrames = 1275;
+let maxFrames = 1285;
 let gl;
 let time;
 let positive = true;
@@ -163,6 +163,9 @@ draw = function() {
     drawTerminal(currentProgram);
     // drawSwirl(currentProgram);
     // drawPulsar(currentProgram);
+        currentProgram = getProgram("new-flickering-dots-vert-bottom");
+    gl.useProgram(currentProgram);
+    drawAlligatorQuietVert(currentProgram);
 // 
     // vb = map(cos(frameCount * 0.01), -1, 1, 0, 4);
 // 
