@@ -8,7 +8,7 @@ let time;
 let positive = true;
 let intensity;
 let drawCount = 1110;
-drawCount = 125000;
+drawCount = 0;
 let drawIncrement = 1;
 let vertexBuffer;
 let fvertices = [];
@@ -152,9 +152,9 @@ draw = function() {
     let currentProgram = getProgram("pulsar-fog");
     gl.useProgram(currentProgram);
     drawBG(currentProgram);
-    currentProgram = getProgram("new-flickering-dots-vert");
+    currentProgram = getProgram("new-flickering-dots");
     gl.useProgram(currentProgram);
-    // drawAlligatorQuietVert(currentProgram);
+    drawAlligatorQuiet(currentProgram);
 // 
 // 
     currentProgram = getProgram("rounded-square");
@@ -163,6 +163,9 @@ draw = function() {
     drawTerminal(currentProgram);
     // drawSwirl(currentProgram);
     // drawPulsar(currentProgram);
+    currentProgram = getProgram("new-flickering-dots");
+    gl.useProgram(currentProgram);
+    drawAlligatorQuietTop(currentProgram);
 // 
     // vb = map(cos(frameCount * 0.01), -1, 1, 0, 4);
 // 

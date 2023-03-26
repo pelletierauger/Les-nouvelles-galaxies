@@ -274,13 +274,25 @@ newFlickering.vertText = `
     varying vec2 myposition;
     varying vec2 center;
     varying float alph;
+    varying float alfsca;
+    float roundedRectangle (vec2 uv, vec2 pos, vec2 size, float radius, float thickness) {
+        float d = length(max(abs(uv - pos),size) - size) - radius;
+        return smoothstep(0.66, 0.33, d / thickness * 5.0);
+    }
     void main(void) {
         gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.0);
         center = vec2(gl_Position.x, gl_Position.y);
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
         alph = coordinates.w;
-        gl_PointSize = (9. + coordinates.z / ((6.0 + alph) * 0.25)) * 1.0;
+        gl_PointSize = (9. + coordinates.z / ((6.0 + alph) * 0.25)) * 1.2;
+                float vig = (roundedRectangle(myposition, vec2(0.0, 0.0), vec2(1.94, 1.905) * 0.48, 0.001, 0.5));
+        gl_PointSize *= vig;
+        alfsca = 1.0;
+        if (vig < 1.0) {
+            alfsca = 0.0;
+        }
+        // alph *= vig;
         // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
         // gl_PointSize = coordinates.z / (alph * (sin(myposition.x * myposition.y * 1.) * 3. + 0.5));
     }
@@ -292,6 +304,7 @@ newFlickering.fragText = `
     varying vec2 myposition;
     varying vec2 center;
     varying float alph;
+   varying float alfsca;
     float rand(vec2 co){
         return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(co.x)));
     }
@@ -318,7 +331,7 @@ newFlickering.fragText = `
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.2 - dist_squared, 0.0 + alpha * 120., ((3. - dist_squared * 24.0 * (0.25 + alph) - (rando * 1.1)) * 0.045 + alpha)) * 1.25;
         
-        
+        gl_FragColor.a *= alfsca;
     }
     // endGLSL
 `;
