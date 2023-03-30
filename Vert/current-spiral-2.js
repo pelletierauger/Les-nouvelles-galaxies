@@ -910,8 +910,8 @@ drawAlligatorQuiet = function(selectedProgram) {
     vertices = [];
     // let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     // let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
-    let shiftedDrawCount = drawCount + 588637 - 200 -  7300;
-    let t = shiftedDrawCount * 0.000125 + 0.5 + 8000000;
+    let shiftedDrawCount = drawCount + 588637 - 200 -  7300 + 1000;
+    let t = shiftedDrawCount * 0.000125 * 0.5 + 0.5 + 8000000;
     let t2 = t * 1e-1;
     let xOffset = openSimplex.noise2D(t2, t2 + 1000);
     let yOffset = openSimplex.noise2D(t2 - 1000, t2 + 500);
@@ -973,15 +973,12 @@ drawAlligatorQuiet = function(selectedProgram) {
     // Draw the triangle
     gl.drawArrays(gl.POINTS, 0, 27000);
 }
-
-
-
 drawAlligatorQuietTop = function(selectedProgram) {
     vertices = [];
     // let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
     // let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
-    let shiftedDrawCount = drawCount + 588637 - 200 -  7300;
-    let t = shiftedDrawCount * 0.000125 + 0.5 + 8000000;
+    let shiftedDrawCount = drawCount + 588637 - 200 -  7300 + 1000;
+    let t = shiftedDrawCount * 0.000125 * 0.5 + 0.5 + 8000000;
     let t2 = t * 1e-1;
     let xOffset = openSimplex.noise2D(t2, t2 + 1000);
     let yOffset = openSimplex.noise2D(t2 - 1000, t2 + 500);

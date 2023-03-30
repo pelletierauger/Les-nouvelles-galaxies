@@ -70,7 +70,7 @@ function setup() {
     // gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
     // Set the view port
     gl.viewport(0, 0, cnvs.width * 1, cnvs.height * 1);
-    frameRate(1);
+    frameRate(20);
     // background(0);
     // fill(255, 50);
     noStroke();
