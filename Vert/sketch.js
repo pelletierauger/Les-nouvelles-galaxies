@@ -23,7 +23,7 @@ let mS = 1;
 let amountOfScratches = 3;
 let fluctuation = 1;
 let namedPrograms = {};
-
+// let disturb = 1;
 // a shader variable
 let texcoordShader;
 let dotsVBuf, termVBuf, dotsCBuf, bgVBuf;
@@ -501,6 +501,21 @@ draw = function() {
     }
 }
 
+draw = function() {
+    if (ge.t) {
+        ge.t.display();
+    } else {
+        GrimoireTab.prototype.display();
+    }
+    if (tabsLoaded) {
+        if (exporting && exportCount < maxFrames) {
+            frameExport();
+        }    
+        drawCount += drawIncrement;
+        exportCount++;
+        drawCount = exportCount;
+    }
+}
 // function keyPressed() {
 //     if (keysActive) {
 //         if (keyCode === 32) {
@@ -755,4 +770,5 @@ scdDisplay();
 
 logLatency = function() {
     logJavaScriptConsole((Date.now() - animationStart)/1000 - (drawCount/24));
-}
+};
+setTabs = function() {};
