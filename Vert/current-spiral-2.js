@@ -923,7 +923,7 @@ drawAlligatorQuiet = function(selectedProgram) {
     let x = 1;
     let y = 1;
     let m = map(sin(t * 0.25e1), -1, 1, 1e-5, 1e-3);
-    let t3 = drawCount * 1e7 * 0.5;
+    let t3 = drawCount * 0.5 * 0.5;
     let al = map(openSimplex.noise2D(t3, t3 + 10000), -1, 1, 0.001, 1.25);
     // al = 0.3;
     num = 0;
@@ -970,19 +970,19 @@ drawAlligatorQuiet = function(selectedProgram) {
             // num++;
         }
     }
-    sides = 5;
+    sides = 3;
     inc = (Math.PI * 2) / sides;
     st = -drawCount * 1e-2;
     for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
         let p0 = [Math.cos(i), Math.sin(i)];
         let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
-        for (let p = 0; p < 1; p += 0.01) {
+        for (let p = 0; p < 1; p += 0.001) {
             for (let k = 0; k < 25; k += 5) {
-            let d = Math.pow(dist(0, p, 1, Math.sin(p * 1.5)), k) * 0.65;
+            let d = Math.pow(dist(0, p, 1, Math.sin(p * 0.5)), k) * 0.65;
             let x = lerp(p0[0], p1[0], p) * 0.5 * d;
             let y = lerp(p0[1], p1[1], p) * 0.5 * d;
-            // vertices.push(x * (9 / 16), y, 15, al);
-            // num++;
+            vertices.push(x * (9 / 16), y, 15, al);
+            num++;
             }
         }
     }
@@ -995,12 +995,12 @@ drawAlligatorQuiet = function(selectedProgram) {
         let p1 = [Math.cos(a1), Math.sin(a1)];
         for (let p = 0; p < 1; p += 0.01) {
             let d = dist(0, p, 0, 0.5) * 1;
-            let x = lerp(p0[0], p1[0], p) * 0.5;
-            let y = lerp(p0[1], p1[1], p) * 0.5;
+            let x = lerp(p0[0], p1[0], p) * 0.5 * 1;
+            let y = lerp(p0[1], p1[1], p) * 0.5 * 1;
             for (let m = 0; m < 4; m++) {
                 let sca = Math.pow(0.75, m);
-                vertices.push(x * (9 / 16) * sca, y * sca, 15, al);
-            num++;
+                // vertices.push(x * (9 / 16) * sca, y * sca, 15, al);
+            // num++;
             }
         }
     }
@@ -1010,14 +1010,14 @@ drawAlligatorQuiet = function(selectedProgram) {
     for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
         let p0 = [Math.cos(i), Math.sin(i)];
         let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
-        for (let p = 0; p < 1; p += 0.005) {
+        for (let p = 0; p < 1; p += 0.0025) {
             let x = lerp(p0[0], p1[0], p) * 1;
             let y = lerp(p0[1], p1[1], p) * 1;
             vertices.push(x * (9 / 16), -y, 15, al);
             num++;
         }
     }
-    inc = (Math.PI * 2) / 500;
+    inc = (Math.PI * 2) / 1000;
     for (let i = 0 ; i < Math.PI * 2; i += inc) {
         let x = Math.cos(i) * 0.5;
         let y = Math.sin(i) * 0.5;
@@ -1056,14 +1056,14 @@ drawAlligatorQuiet = function(selectedProgram) {
     let y = (Math.sin(i) * sc) - Math.sin(Math.PI/4) * sc;
     // ellipse(x + 60, y, 1);
     // vertex(x + 60, y);
-         vertices.push(x * (9 / 16) - 0.7, y, 15, al);
-         num++;         
-         vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
-         num++;
-         vertices.push(x * (9 / 16) + 0.7, y, 15, al);
-         num++;         
-         vertices.push(x * (9 / 16) + 0.7, -y, 15, al);
-         num++;
+         // vertices.push(x * (9 / 16) - 0.7, y, 15, al);
+         // num++;         
+         // vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
+         // num++;
+         // vertices.push(x * (9 / 16) + 0.7, y, 15, al);
+         // num++;         
+         // vertices.push(x * (9 / 16) + 0.7, -y, 15, al);
+         // num++;
     // ellipse(x - 55, y, 1);
     // ellipse(x + 60, y * -1 + 300 - 17, 1);
     // ellipse(x - 55, y * -1 + 300 - 17, 1);
@@ -1086,6 +1086,8 @@ drawAlligatorQuiet = function(selectedProgram) {
     //Bind appropriate array buffer to it
     // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
     // Pass the vertex data to the buffer
+    time2 = gl.getUniformLocation(selectedProgram, "time"); 
+    gl.uniform1f(time2, 602 + drawCount * 0.00025);
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     /*======== Associating shaders to buffer objects ========*/
     // Bind vertex buffer object

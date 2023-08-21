@@ -271,6 +271,7 @@ let newFlickering = new ShaderProgram("new-flickering-dots");
 newFlickering.vertText = `
     // beginGLSL
     attribute vec4 coordinates;
+    uniform float time;
     varying vec2 myposition;
     varying vec2 center;
     varying float alph;
@@ -292,11 +293,16 @@ newFlickering.vertText = `
     }
 void main(void) {
         gl_Position = vec4(coordinates.x, coordinates.y, 0.0, 1.0);
-    gl_Position.xy *= 0.75;
+    gl_Position.xy *= 1.75;
         float n = noise(gl_Position.xy * 1.1);
         // gl_Position.y += tan(n * 100. * 1e2 + alph) * 0.0009 * 2.;
         // gl_Position.x += tan(alph * 1e4) * 10.5;
     // gl_Position.xy += vec2(cos(n * 1.), sin(n * 1.)) * 0.1;
+            float disturbance = (floor(sin(gl_Position.y * 5. + time * 10.25 + tan(gl_Position.y * 1e3) * 0.125) * 2.)) * 0.125 * 0.125;
+        float fluctuate = floor(mod(time * 1e8, 10.)/500.);
+        float distr2 = (floor(sin(gl_Position.y * 1e-7 + time * 100.125 + tan(gl_Position.y * 2. + gl_Position.x * 1e-1) * 0.5) * 0.01)) * 10.1 * fluctuate;
+        // distr2 *= 0.;
+        gl_Position.x += disturbance * 0.01 * (1. + distr2 * 1. * sin(time*1e1*tan(time*1e-2)));
         center = vec2(gl_Position.x, gl_Position.y);
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);

@@ -159,8 +159,8 @@ draw = function() {
     let currentProgram = getProgram("pulsar-fog");
     gl.useProgram(currentProgram);
     drawBG(currentProgram);
-    currentProgram = getProgram("new-flickering-dots-vert");
-    gl.useProgram(currentProgram);
+    // currentProgram = getProgram("new-flickering-dots-vert");
+    // gl.useProgram(currentProgram);
     nx = openSimplex.noise2D(0, drawCount * 5e-2) * 0.02;
     ny = openSimplex.noise2D(0, drawCount * 5e-2 + 1e5) * 0.02;
     drawAlligatorQuietVert(currentProgram);
