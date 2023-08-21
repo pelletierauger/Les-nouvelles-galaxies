@@ -970,15 +970,16 @@ drawAlligatorQuiet = function(selectedProgram) {
             // num++;
         }
     }
-    sides = 3;
+    sides = 7;
     inc = (Math.PI * 2) / sides;
     st = -drawCount * 1e-2;
     for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
         let p0 = [Math.cos(i), Math.sin(i)];
-        let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
+        let a1 = i + (inc * 3) % sides;
+        let p1 = [Math.cos(a1), Math.sin(a1)];
         for (let p = 0; p < 1; p += 0.001 * 0.25) {
             for (let k = 0; k < 25; k += 5) {
-            let d = Math.pow(dist(0, p, 1, Math.pow(Math.cos(p * 1000.5), Math.sin(t*0.125e3)*50)), k) * 0.65;
+            let d = Math.pow(dist(0, Math.cos(p*0.1), 1, Math.pow(Math.cos(p * 0.1), Math.sin(t*0.25e3)*1500*2)), k) * 1;
             let x = lerp(p0[0], p1[0], p) * 0.5 * d;
             let y = lerp(p0[1], p1[1], p) * 0.5 * d;
             vertices.push(x * (9 / 16), y, 15, al);
@@ -1004,7 +1005,7 @@ drawAlligatorQuiet = function(selectedProgram) {
             }
         }
     }
-        sides = 3;
+        sides = 5;
     inc = (Math.PI * 2) / sides;
     st = Math.PI * 0.5;
     for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
