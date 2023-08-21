@@ -302,7 +302,7 @@ void main(void) {
         float fluctuate = floor(mod(time * 1e8, 10.)/500.);
         float distr2 = (floor(sin(gl_Position.y * 1e-7 + time * 100.125 + tan(gl_Position.y * 2. + gl_Position.x * 1e-1) * 0.5) * 0.01)) * 10.1 * fluctuate;
         // distr2 *= 0.;
-        gl_Position.x += disturbance * 0.01 * (1. + distr2 * 1. * sin(time*1e1*tan(time*1e-2)));
+        gl_Position.x += disturbance * 0.01 * (1. + distr2 * 1. * sin(time*1e4*tan(time*1e-2)));
         center = vec2(gl_Position.x, gl_Position.y);
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
