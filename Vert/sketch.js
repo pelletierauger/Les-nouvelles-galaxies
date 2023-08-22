@@ -9,7 +9,7 @@ let time;
 let positive = true;
 let intensity;
 let drawCount = 1110;
-drawCount = 150000
+drawCount = 125000;
 let drawIncrement = 1;
 let vertexBuffer;
 let fvertices = [];
