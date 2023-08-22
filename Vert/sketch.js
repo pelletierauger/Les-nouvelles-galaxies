@@ -163,16 +163,16 @@ draw = function() {
     // gl.useProgram(currentProgram);
     nx = openSimplex.noise2D(0, drawCount * 5e-2) * 0.02;
     ny = openSimplex.noise2D(0, drawCount * 5e-2 + 1e5) * 0.02;
-    drawAlligatorQuietVert(currentProgram);
+    // drawAlligatorQuietVert(currentProgram);
     currentProgram = getProgram("new-flickering-dots");
     gl.useProgram(currentProgram);
     drawAlligatorQuiet(currentProgram);
 // 
 // 
-    currentProgram = getProgram("rounded-square");
-    time = gl.getUniformLocation(currentProgram, "time"); 
-    gl.useProgram(currentProgram);
-    drawTerminal(currentProgram);
+    // currentProgram = getProgram("rounded-square");
+    // time = gl.getUniformLocation(currentProgram, "time"); 
+    // gl.useProgram(currentProgram);
+    // drawTerminal(currentProgram);
     // drawSwirl(currentProgram);
     // drawPulsar(currentProgram);
 // 
