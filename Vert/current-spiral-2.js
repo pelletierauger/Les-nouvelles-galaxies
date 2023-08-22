@@ -976,11 +976,11 @@ drawAlligatorQuiet = function(selectedProgram) {
     for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
         let p0 = [Math.cos(i), Math.sin(i)];
         let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
-        for (let p = 0; p < 1; p += 0.001 * 0.25) {
-            for (let k = 0; k < 25; k += 5) {
-            let d = Math.pow(dist(0, p, 1, Math.cos(p * 0.5)), k) * 0.65;
-            let x = lerp(p0[0], p1[0], p) * 0.5 * d;
-            let y = lerp(p0[1], p1[1], p) * 0.5 * d;
+        for (let p = 0; p < 1; p += 0.001 * 1) {
+            for (let k = 0; k < 25; k += 2) {
+            let d = Math.pow(dist(p0[0], p1[0], p0[1], p1[1]), k*0.1) * 1;
+            let x = lerp(p0[0], p1[0], p) * 1 * d;
+            let y = lerp(p0[1], p1[1], p) * 1 * d;
             vertices.push(x * (9 / 16), y, 15, al);
             num++;
             }
@@ -1013,8 +1013,8 @@ drawAlligatorQuiet = function(selectedProgram) {
         for (let p = 0; p < 1; p += 0.0025) {
             let x = lerp(p0[0], p1[0], p) * 1;
             let y = lerp(p0[1], p1[1], p) * 1;
-            vertices.push(x * (9 / 16), -y, 15, al);
-            num++;
+            // vertices.push(x * (9 / 16), -y, 15, al);
+            // num++;
         }
     }
     inc = (Math.PI * 2) / 1000;
@@ -1031,10 +1031,10 @@ drawAlligatorQuiet = function(selectedProgram) {
         let y = Math.sin(i) * 0.5;
         let c = Math.cos(Math.PI * 0.65) * 0.8;
         x = (x * 2 > c) ? x : -x + c;
-        vertices.push(x * (9 / 16) * 0.75 + 0.7, y * 0.75 + 0.75, 15, al);
-        num++;
-        vertices.push(-x * (9 / 16) * 0.75 - 0.7, y * 0.75 + 0.75, 15, al);
-        num++;
+        // vertices.push(x * (9 / 16) * 0.75 + 0.7, y * 0.75 + 0.75, 15, al);
+        // num++;
+        // vertices.push(-x * (9 / 16) * 0.75 - 0.7, y * 0.75 + 0.75, 15, al);
+        // num++;
     }
     // aaa = 1000;
     // teardrop equation
@@ -1044,10 +1044,10 @@ drawAlligatorQuiet = function(selectedProgram) {
         let sc = 0.25;
         let x = 0.5 * (4 * Math.cos(i * 0.5) * Math.pow(Math.sin(i * 0.5), 4)) * sc; 
         let y = -Math.cos(i) * sc; 
-        vertices.push(x * (9 / 16) + 0.7, -y - (Math.cos(0) * sc) - 0.22, 15, al);
-        num++;
-                vertices.push(x * (9 / 16) - 0.7, -y - (Math.cos(0) * sc) - 0.22, 15, al);
-        num++;
+        // vertices.push(x * (9 / 16) + 0.7, -y - (Math.cos(0) * sc) - 0.22, 15, al);
+        // num++;
+                // vertices.push(x * (9 / 16) - 0.7, -y - (Math.cos(0) * sc) - 0.22, 15, al);
+        // num++;
     }
     inc = PI / 500;
      for (let i = Math.PI / 4; i < Math.PI / 4 * 3; i += inc) {
@@ -1071,15 +1071,17 @@ drawAlligatorQuiet = function(selectedProgram) {
     for (let i = 0; i < 1500; i++) {
         let x = Math.cos(i + drawCount) * i * 0.0001;
         let y = Math.sin(i + drawCount) * i * 0.0001;
-        vertices.push(x * (9 / 16) + 0.7, -y, 15, al);
-        num++;
-        vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
-        num++;
+        // vertices.push(x * (9 / 16) + 0.7, -y, 15, al);
+        // num++;
+        // vertices.push(x * (9 / 16) - 0.7, -y, 15, al);
+        // num++;
     }
     drawScratches();
     for (let i = 0; i < vertices.length; i += 4) {
         vertices[i] += nx;
         vertices[i + 1] += ny;
+                vertices[i] *= 0.5;
+        vertices[i + 1] *= 0.5;
     }
     // Create an empty buffer object to store the vertex buffer
     // var vertex_buffer = gl.createBuffer();
