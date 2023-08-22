@@ -974,13 +974,13 @@ drawAlligatorQuiet = function(selectedProgram) {
     inc = (Math.PI * 2) / sides;
     st = -drawCount * 1e-2;
     for (let i = st; i <= (Math.PI * 2.1) - inc + st; i += inc) {
-        let p0 = [Math.cos(i), Math.sin(i)];
-        let p1 = [Math.cos(i + inc), Math.sin(i + inc)];
+        let p0 = [Math.cos(i*i*i*1e-7), Math.sin(i*i*i*1e-7)];
+        let p1 = [Math.cos(i*i*i*1e-7 + inc), Math.sin(i*i*i*1e-7 + inc)];
         for (let p = 0; p < 1; p += 0.001 * 1) {
-            for (let k = 0; k < 20; k += 2) {
-            let d = Math.pow(dist(p0[0], p1[0], p0[1], p1[1]), k*0.1) * Math.tan(p*k*0.11) * 1;
-            let x = lerp(p0[0], p1[0], p) * 2 * d;
-            let y = lerp(p0[1], p1[1], p) * 2 * d;
+            for (let k = 0; k < 15; k += 1) {
+            let d = Math.pow(dist(p0[0], p1[0], p0[1], p1[1]), k) * 1;
+            let x = lerp(p0[0], p1[0], p);
+            let y = lerp(p0[1], p1[1], p);
             vertices.push(x * (9 / 16), y, 15, al);
             num++;
             }
@@ -1022,19 +1022,27 @@ drawAlligatorQuiet = function(selectedProgram) {
         let x = Math.cos(i) * 0.5;
         let y = Math.sin(i) * 0.5;
         vertices.push(x * (9 / 16), y, 15, al);
-        num++;
+        num++;        
+        // vertices.push(x * (9 / 16) * 2, y * 2, 15, al);
+        // num++;     
+        // x = Math.cos(i * 50*t) * i * 0.25 * 0.125;
+        // y = Math.sin(i * 50*t) * i * 0.25 * 0.125;
+        // vertices.push(x * (9 / 16) * 2, y * 2, 15, al);
+        // num++;        
+        // vertices.push(x * (9 / 16) * 0.25, y * 0.25, 15, al);
+        // num++;
     }
-    inc = (Math.PI * 2) / 250;
+    inc = (Math.PI * 2) / 250/2;
     for (let i = Math.PI * 0.5 ; i < Math.PI * 2.5; i += inc) {
         // let x = Math.cos(i) * ((i < Math.PI * 1.5) ? 1 : -0.5) * 0.5;
-        let x = Math.cos(i) * 0.5;
-        let y = Math.sin(i) * 0.5;
-        let c = Math.cos(Math.PI * 0.65) * 0.8;
+        let x = Math.cos(i) * 1;
+        let y = Math.sin(i) * 1;
+        let c = Math.cos(Math.PI * 0.85) * 0.8;
         x = (x * 2 > c) ? x : -x + c;
-        // vertices.push(x * (9 / 16) * 0.75 + 0.7, y * 0.75 + 0.75, 15, al);
-        // num++;
-        // vertices.push(-x * (9 / 16) * 0.75 - 0.7, y * 0.75 + 0.75, 15, al);
-        // num++;
+        vertices.push(x * (9 / 16) * 0.75 + 0.6, y * 0.75, 15, al);
+        num++;
+        vertices.push(-x * (9 / 16) * 0.75 - 0.6, y * 0.75, 15, al);
+        num++;
     }
     // aaa = 1000;
     // teardrop equation
