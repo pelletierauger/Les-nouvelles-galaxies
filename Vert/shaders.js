@@ -308,7 +308,7 @@ void main(void) {
         myposition = vec2(gl_Position.x, gl_Position.y);
         alph = coordinates.w;
         gl_PointSize = (9. + coordinates.z / ((6.0 + alph) * 0.25)) * alph * 2.5;
-        float vig = (roundedRectangle(gl_Position.xy, vec2(0.0, 0.0), vec2(0.905, 0.87) * 0.99, 0.05, 0.5) + 0.0);
+        float vig = (roundedRectangle(gl_Position.xy, vec2(0.0, -0.005), vec2(0.9, 0.872) * 0.99, 0.05, 0.5) + 0.0);
         // cols = mix(cols, cols * floor(vig), 1.);
     gl_PointSize *= floor(vig);
             // gl_PointSize = 25.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
