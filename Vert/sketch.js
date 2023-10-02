@@ -165,8 +165,8 @@ draw = function() {
 // 
     currentProgram = getProgram("rounded-square");
     time = gl.getUniformLocation(currentProgram, "time"); 
-    gl.useProgram(currentProgram);
-    drawTerminal(currentProgram);
+    // gl.useProgram(currentProgram);
+    // drawTerminal(currentProgram);
     // drawSwirl(currentProgram);
     // drawPulsar(currentProgram);
 // 

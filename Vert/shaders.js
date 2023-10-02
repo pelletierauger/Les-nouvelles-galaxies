@@ -762,7 +762,7 @@ void main() {
     // gl_FragColor.r += 0.05;
     // gl_FragColor.rgb = vec3(1.0);
     gl_FragColor.rgb += vec3(0.0, 0.0, 0.25);
-    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.11 * (16./9.), 0.099) * 2.0, 0.02, 0.25) * 0.9;
+    gl_FragColor.rgb *= roundedRectangle(uv, vec2(0.25 * (16./ 9.), 0.25), vec2(0.1127 * (16./9.), 0.106) * 2.097, 0.005, 0.125) * 0.9;
         // gl_FragColor = gl_FragColor.grra;
         // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
 }
@@ -5273,7 +5273,7 @@ newFlickeringVert.vertText = newFlickeringVert.vertText.replace(/[^\x00-\x7F]/g,
 newFlickeringVert.fragText = newFlickeringVert.fragText.replace(/[^\x00-\x7F]/g, "");
 newFlickeringVert.init();
 
-
+// wool
 newFlickeringVert.vertText = `
     // beginGLSL
     attribute float vertexID;
@@ -5333,7 +5333,7 @@ newFlickeringVert.vertText = `
         alph = 0.25 * 0.75;
         cols = vec3(turb * 2.);
         cols = vec3(sin(turb * 800.) * pow(pos.x, -2.5), cos(turb * 800.), cos(turb * 800.));
-       float vig = (roundedRectangle(pos * 1.67, vec2(0.0, 0.0), vec2(0.9, 0.88) * 1.2, 0.05, 0.5) + 0.0);
+       float vig = (roundedRectangle(pos * 1.67 * vec2(16./9.,1.0), vec2(0.0, 0.0), vec2(0.94*(16./9.), 0.89) * 1.2, 0.05, 0.5) + 0.0);
         cols = mix(cols, cols * floor(vig), 1.);
             gl_PointSize *= floor(vig);
     }
