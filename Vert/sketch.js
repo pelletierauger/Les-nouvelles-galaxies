@@ -166,13 +166,13 @@ draw = function() {
     drawAlligatorQuietVert(currentProgram);
     currentProgram = getProgram("new-flickering-dots");
     gl.useProgram(currentProgram);
-    drawAlligatorQuiet(currentProgram);
+    // drawAlligatorQuiet(currentProgram);
 // 
 // 
     currentProgram = getProgram("rounded-square");
     time = gl.getUniformLocation(currentProgram, "time"); 
     gl.useProgram(currentProgram);
-    drawTerminal(currentProgram);
+    // drawTerminal(currentProgram);
     // drawSwirl(currentProgram);
     // drawPulsar(currentProgram);
 // 
