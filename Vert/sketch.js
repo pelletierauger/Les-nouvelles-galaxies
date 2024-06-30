@@ -1,15 +1,14 @@
 let looping = true;
 let keysActive = true;
 let socket, cnvs, ctx, canvasDOM;
-let fileName = "./frames/alligator/alligator";
+let fileName = "/Volumes/Volumina/frames/megaliths/megalith-06/megalith-06";
 let JSONs = [];
-let maxFrames = 15000;
+let maxFrames = 720;
 let gl;
 let time;
 let positive = true;
 let intensity;
-let drawCount = 1110;
-drawCount = 125000;
+let drawCount = 0;
 let drawIncrement = 1;
 let vertexBuffer;
 let fvertices = [];
@@ -364,7 +363,7 @@ draw = function() {
 // 
     drawCount += drawIncrement;
     // if (exporting && frameCount < maxFrames && drawCount > 1113) {
-    if (exporting && frameCount < maxFrames && drawCount > 1449) {
+    if (exporting && drawCount < maxFrames) {
         frameExport();
     }
 }
