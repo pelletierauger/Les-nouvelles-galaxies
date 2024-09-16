@@ -148,7 +148,7 @@ setDotsShaders = function() {
         center = vec2(gl_Position.x, gl_Position.y);
         center = 512.0 + center * 512.0;
         myposition = vec2(gl_Position.x, gl_Position.y);
-        gl_PointSize = 50.0 + cos((coordinates.x + coordinates.y) * 4000000.) * 5.;
+        gl_PointSize = 50.0;
     }
     // endGLSL
     `;
@@ -189,6 +189,8 @@ setDotsShaders = function() {
         float rando = rand(pos);
         // gl_FragColor = vec4(1.0, (1.0 - dist_squared * 40.) * 0.6, 0.0, alpha + ((0.12 - dist_squared) * 4.) - (rando * 0.2));
         gl_FragColor = vec4(1.0, 0.2 - dist_squared, 0.0 + alpha * 120., (0.25 - dist_squared * 3.0 - (rando * 0.1)) * 0.25 + alpha) * 1.25;
+        // gl_FragColor = mix(gl_FragColor, vec4(1.0), 0.5);
+        // gl_FragColor.rgb = gl_FragColor.gbr;
 //         gl_FragColor = vec4(1.0, 1.0 - dist_squared * 1.0, 0.0, 0.35 - dist_squared - (rando * 0.2));
         // gl_FragColor = vec4(d * 0.001, uv.x, 0.0, 0.25);
     }
@@ -222,8 +224,62 @@ setDotsShaders = function() {
     // Enable the attribute
     gl.enableVertexAttribArray(coord);
 }
+setDotsShaders();
+// drawCount = drawCount -2;
 
-
+setDotsShaders = function() {
+    var vertCode = `
+    // beginGLSL
+    attribute vec3 coordinates;
+    void main(void) {
+        vec3 pos = coordinates;
+        // pos.x *= 9./16.;
+        gl_Position = vec4(pos, 1.0);
+        gl_PointSize = 25.0;
+    }
+    // endGLSL
+    `;
+    var vertShader = gl.createShader(gl.VERTEX_SHADER);
+    gl.shaderSource(vertShader, vertCode);
+    gl.compileShader(vertShader);
+    var fragCode = `
+    // beginGLSL
+    precision mediump float;
+    float rand(vec2 co){
+        return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * (2.0 + sin(co.x)));
+    }
+    void main(void) {
+        vec2 pos = gl_PointCoord - vec2(0.5, 0.5);
+        float dist_squared = dot(pos, pos);
+        float alpha = smoothstep(0.0075, 0.0, dist_squared);
+        float rando = rand(pos);
+        gl_FragColor = vec4(
+            1.0,
+            0.2 - dist_squared, 
+            alpha * 5., 
+            // (0.25 - dist_squared * 3.0 - (rando * 0.1)) * 0.25 + alpha
+            (1. - dist_squared * 3.0 - (rando * 0.2)) * 0.0625 + alpha * 0.6125
+            // (0.25 - dist_squared * 3.0 - (rando * 0.1)) * 0.25
+            // alpha
+        );
+        // gl_FragColor = mix(gl_FragColor, vec4(1.0), 0.5);
+    }
+    // endGLSL
+    `;
+    var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+    gl.shaderSource(fragShader, fragCode);
+    gl.compileShader(fragShader);
+    shaderProgram = gl.createProgram();
+    gl.attachShader(shaderProgram, vertShader);
+    gl.attachShader(shaderProgram, fragShader);
+    gl.linkProgram(shaderProgram);
+    gl.useProgram(shaderProgram);
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    var coord = gl.getAttribLocation(shaderProgram, "coordinates");
+    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(coord);
+}
+setDotsShaders();
 
 setOverlayShaders = function() {
     /*======================= Shaders =======================*/

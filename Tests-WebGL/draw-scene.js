@@ -25,52 +25,24 @@ function drawBG() {
 
 drawDots = function() {
     vertices = [];
-    let xOffset = (noise(frameCount * 0.01) - 0.5) * 0.75;
-    let yOffset = (noise((frameCount + 100) * 0.01) - 0.5) * 0.75;
-    let t = drawCount * 1e2 + 30;
-    let fx = 1;
-    let fy = 1;
-    let x = 1;
-    let y = 1;
-    let numPoints = 15000;
+    let t = drawCount * 0.5;
+    // t = 0;
+    let x = 1, y = 1, fx = 1, fy = 1;
+    let numPoints = 19000;
     let inc = TWO_PI / numPoints;
     for (let i = 0; i < numPoints; i += 1) {
-       x = cos(i * 0.75e-2 + fx) * i * 1.5e-4;
-       y = sin(i * 0.75e-2 + fx) * i * 1.5e-4;
-//        x += cos(i * 1e-4 + t * 1e-1);
-//         x += sin(t * 1e-1);
-        y += cos(fy * 1.125 + t * 1e-1);
-//         y += fy * 2;
+        x = Math.cos(i * 0.75e-2 + fx) * i * 1.5e-4;
+        y = Math.sin(i * 0.75e-2 + fx) * i * 1.5e-4;
+        y += Math.cos(fy * 1.125 + t * 1e-1);
         fx = x;
         fy = y;
-//         x += (Math.random() - 0.5) * 0.00005;
-//         y += (Math.random() - 0.5) * 0.00005;
-        x += xOffset * 0.0125;
-        y += yOffset * 0.0125;
-        vertices.push((x - 0.0) * 0.32 * 1.125, (y - 0.0) * 0.5 * 1.125, 0.0);
+        vertices.push(x * 0.32 * 1.125, y * 0.5 * 1.125, 0.0);
     }
-    // Create an empty buffer object to store the vertex buffer
-    // var vertex_buffer = gl.createBuffer();
-    //Bind appropriate array buffer to it
-    // gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
-    // Pass the vertex data to the buffer
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-    // Unbind the buffer
-    gl.bindBuffer(gl.ARRAY_BUFFER, null);
-    /*======== Associating shaders to buffer objects ========*/
-    // Bind vertex buffer object
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
-    // Get the attribute location
-    var coord = gl.getAttribLocation(shaderProgram, "coordinates");
-    // Point an attribute to the currently bound VBO
-    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
-    // Enable the attribute
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
+    gl.bindBuffer(gl.ARRAY_BUFFER, null)
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer)
+    var coord = gl.getAttribLocation(shaderProgram, "coordinates")
+    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0)
     gl.enableVertexAttribArray(coord);
-    /*============= Drawing the primitive ===============*/
-    // // Clear the canvas
-    // gl.clearColor(0.5, 0.5, 0.5, 0.9);
-    // Clear the color buffer bit
-    // gl.clear(gl.COLOR_BUFFER_BIT);
-    // Draw the triangle
     gl.drawArrays(gl.POINTS, 0, numPoints);
 }

@@ -61,7 +61,7 @@ draw = function() {
 //     setOverlayShaders();
 //     gl.uniform1f(time, drawCount);
 //     drawBG();
-    drawCount += drawIncrement;
+    drawCount++;
 }
 
 // function windowResized() {
